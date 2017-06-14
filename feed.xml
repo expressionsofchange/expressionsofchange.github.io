@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-06-14T16:07:49+02:00</updated>
+<updated>2017-06-14T17:44:29+02:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -108,13 +108,13 @@
     <uri>http://expressionsofchange.com</uri>
     <email>klaas@vanschelven.com</email>
   </author>
-  <content type="html">&lt;p&gt;We’ll take a look at the practice of &lt;em&gt;rewriting history&lt;/em&gt;, why we would want to do that and how it creates two seemingly irreconcilable goals: staying true to what actually happened on the one hand and the ability to tell the most clear story about history on the other. Then we’ll see how we can reconsile these goals by applying the idea of version control to version control itself.&lt;/p&gt;
+  <content type="html">&lt;p&gt;We’ll take a look at the practice of &lt;em&gt;rewriting history&lt;/em&gt;, why we would want to do that and how it creates two seemingly irreconcilable goals: staying true to what actually happened on the one hand and the ability to tell the most clear story about history on the other. Then we’ll see how we can reconcile these goals by applying the idea of version control to version control itself.&lt;/p&gt;
 
 &lt;h2 id=&quot;editing-programs&quot;&gt;Editing Programs&lt;/h2&gt;
 
-&lt;p&gt;To be able to properly discuss all this, we’ll start at the very beginning: by examining some very minimal examples of the contruction of a computer program.&lt;/p&gt;
+&lt;p&gt;To be able to properly discuss all this, we’ll start at the very beginning: by examining some very minimal examples of the construction of a computer program.&lt;/p&gt;
 
-&lt;p&gt;To describe these, we’ll use pen, paper, an eraser and a pair of scissors - this way everything stays simple and visual. Note that this description is no less general than the usual process of constructing programs on an actual computer: wherever we talk about “pieces of paper”, we can simply substitue “one or more files”.&lt;/p&gt;
+&lt;p&gt;To describe these, we’ll use pen, paper, an eraser and a pair of scissors - this way everything stays simple and visual. Note that this description is no less general than the usual process of constructing programs on an actual computer: wherever we talk about “pieces of paper”, we can simply substitute “one or more files”.&lt;/p&gt;
 
 &lt;p&gt;Say that on a given Monday we’re given the task to write a simple program. We do so by writing this on our piece of paper and call it a day.&lt;/p&gt;
 
@@ -142,9 +142,9 @@
 
 &lt;p&gt;An important value for a historic record is its historic accuracy: the fact that it precisely reflects what actually happened. In Version Control as discussed so far, historic accuracy is guaranteed by the means of construction of the historic record. There are various versions of the program, and they each get added to the graph as they are created.&lt;/p&gt;
 
-&lt;p&gt;In the toy example above we estabished the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.&lt;/p&gt;
+&lt;p&gt;In the toy example above we established the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.&lt;/p&gt;
 
-&lt;p&gt;Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplication or cleanup. In such cases a may be useful to &lt;em&gt;rewrite history&lt;/em&gt;. Here are some examples of such rewrites with their equivalent &lt;code&gt;git&lt;/code&gt; commands:&lt;/p&gt;
+&lt;p&gt;Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplification or cleanup. In such cases a may be useful to &lt;em&gt;rewrite history&lt;/em&gt;. Here are some examples of such rewrites with their equivalent &lt;code&gt;git&lt;/code&gt; commands:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -194,7 +194,7 @@
 
 &lt;p&gt;Sure: we can simply add yet another piece of paper containing a historic graph, just like we did in step 2a. The only difference being the content of the nodes of the graph: rather than keeping track of individual programs, we can track the history of historic graphs. Let’s call this graph a 2nd level history.&lt;/p&gt;
 
-&lt;p&gt;Construction of this graph is analogous to the contruction of the regular historic graph: whenever we change the historic record, we add a full copy of the historc graph to the second-level history as a node. We do this both for any history writing operations (such as a &lt;code&gt;git commit&lt;/code&gt;) as for rewriting operations (such as &lt;code&gt;git rebase&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Construction of this graph is analogous to the construction of the regular historic graph: whenever we change the historic record, we add a full copy of the historic graph to the second-level history as a node. We do this both for any history writing operations (such as a &lt;code&gt;git commit&lt;/code&gt;) as for rewriting operations (such as &lt;code&gt;git rebase&lt;/code&gt;).&lt;/p&gt;
 
 &lt;p&gt;Just like in the case of regular Version Management we can navigate through the newly constructed graph. Navigation through a second level history corresponds to changes in the historic graph (rather than changes to the program). In other words: it corresponds to rewrites of history. Here it is in action:&lt;/p&gt;
 
@@ -202,7 +202,7 @@
 
 &lt;p&gt;Note that we’ve achieved our goal now! We can rewrite our first level history to be as clear as possible, while keeping a record of precisely what actually happened available in our second level history. This gives us the ability to un-rewrite history just as easily as reverting back to a previous version of our program.&lt;/p&gt;
 
-&lt;p&gt;We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Verson Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions. &lt;/p&gt;
+&lt;p&gt;We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Version Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions. &lt;/p&gt;
 
 &lt;h2 id=&quot;down-the-rabbit-hole&quot;&gt;Down the rabbit hole&lt;/h2&gt;
 
@@ -224,7 +224,7 @@
 
 &lt;p&gt;This is caused by the following: In the above we made no assumptions about the nature of the pieces of paper - other than that they could be stored as a file on a computer.&lt;/p&gt;
 
-&lt;p&gt;Git and comparable systems, on the contrary, do make specific assumptions: most modern Version Control systemens are built on the assumption that the files they are tracking are almost exclusively text files.  Even though storing the occasional small binary file is certainly technically possible, storing large numbers of large binary files in Git is certainly not recommended, and will not lead to a workable system.&lt;/p&gt;
+&lt;p&gt;Git and comparable systems, on the contrary, do make specific assumptions: most modern Version Control systems are built on the assumption that the files they are tracking are almost exclusively text files.  Even though storing the occasional small binary file is certainly technically possible, storing large numbers of large binary files in Git is certainly not recommended, and will not lead to a workable system.&lt;/p&gt;
 
 &lt;p&gt;The Git repository itself is implemented precisely as a collection of binary files. This means that tracking the history of a Git repository cannot be done efficiently using Git.&lt;/p&gt;
 
@@ -258,7 +258,7 @@
 
 &lt;p&gt;We’ve also seen that having the property of self-applicability is not a given - e.g. Git cannot meaningfully be applied on Git repositories.&lt;/p&gt;
 
-&lt;p&gt;I expect to be adding some exampe programs to this site at some point in the future. Inasmuch as those programs will be like Version Control systems, the ability to self-apply is an important design goal.&lt;/p&gt;
+&lt;p&gt;I expect to be adding some example programs to this site at some point in the future. Inasmuch as those programs will be like Version Control systems, the ability to self-apply is an important design goal.&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/self-applicability/&quot;&gt;Self applicability&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 10, 2017.&lt;/p&gt;</content>
@@ -286,7 +286,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;Security support for older versions is not eternal&lt;/li&gt;
-  &lt;li&gt;The challenge of doing only minimal upgrades is made harder by the fact that the various libraries we build on may have dependendies amongst themselves &lt;/li&gt;
+  &lt;li&gt;The challenge of doing only minimal upgrades is made harder by the fact that the various libraries we build on may have dependencies amongst themselves &lt;/li&gt;
   &lt;li&gt;Our “package manager” may introduce further constraints on the available versions of libraries&lt;/li&gt;
 &lt;/ol&gt;
 

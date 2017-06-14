@@ -86,13 +86,13 @@
           </hgroup>
         </header>
 
-        <p>We’ll take a look at the practice of <em>rewriting history</em>, why we would want to do that and how it creates two seemingly irreconcilable goals: staying true to what actually happened on the one hand and the ability to tell the most clear story about history on the other. Then we’ll see how we can reconsile these goals by applying the idea of version control to version control itself.</p>
+        <p>We’ll take a look at the practice of <em>rewriting history</em>, why we would want to do that and how it creates two seemingly irreconcilable goals: staying true to what actually happened on the one hand and the ability to tell the most clear story about history on the other. Then we’ll see how we can reconcile these goals by applying the idea of version control to version control itself.</p>
 
 <h2 id="editing-programs">Editing Programs</h2>
 
-<p>To be able to properly discuss all this, we’ll start at the very beginning: by examining some very minimal examples of the contruction of a computer program.</p>
+<p>To be able to properly discuss all this, we’ll start at the very beginning: by examining some very minimal examples of the construction of a computer program.</p>
 
-<p>To describe these, we’ll use pen, paper, an eraser and a pair of scissors - this way everything stays simple and visual. Note that this description is no less general than the usual process of constructing programs on an actual computer: wherever we talk about “pieces of paper”, we can simply substitue “one or more files”.</p>
+<p>To describe these, we’ll use pen, paper, an eraser and a pair of scissors - this way everything stays simple and visual. Note that this description is no less general than the usual process of constructing programs on an actual computer: wherever we talk about “pieces of paper”, we can simply substitute “one or more files”.</p>
 
 <p>Say that on a given Monday we’re given the task to write a simple program. We do so by writing this on our piece of paper and call it a day.</p>
 
@@ -120,9 +120,9 @@
 
 <p>An important value for a historic record is its historic accuracy: the fact that it precisely reflects what actually happened. In Version Control as discussed so far, historic accuracy is guaranteed by the means of construction of the historic record. There are various versions of the program, and they each get added to the graph as they are created.</p>
 
-<p>In the toy example above we estabished the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.</p>
+<p>In the toy example above we established the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.</p>
 
-<p>Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplication or cleanup. In such cases a may be useful to <em>rewrite history</em>. Here are some examples of such rewrites with their equivalent <code>git</code> commands:</p>
+<p>Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplification or cleanup. In such cases a may be useful to <em>rewrite history</em>. Here are some examples of such rewrites with their equivalent <code>git</code> commands:</p>
 
 <ul>
   <li>
@@ -172,7 +172,7 @@
 
 <p>Sure: we can simply add yet another piece of paper containing a historic graph, just like we did in step 2a. The only difference being the content of the nodes of the graph: rather than keeping track of individual programs, we can track the history of historic graphs. Let’s call this graph a 2nd level history.</p>
 
-<p>Construction of this graph is analogous to the contruction of the regular historic graph: whenever we change the historic record, we add a full copy of the historc graph to the second-level history as a node. We do this both for any history writing operations (such as a <code>git commit</code>) as for rewriting operations (such as <code>git rebase</code>).</p>
+<p>Construction of this graph is analogous to the construction of the regular historic graph: whenever we change the historic record, we add a full copy of the historic graph to the second-level history as a node. We do this both for any history writing operations (such as a <code>git commit</code>) as for rewriting operations (such as <code>git rebase</code>).</p>
 
 <p>Just like in the case of regular Version Management we can navigate through the newly constructed graph. Navigation through a second level history corresponds to changes in the historic graph (rather than changes to the program). In other words: it corresponds to rewrites of history. Here it is in action:</p>
 
@@ -180,7 +180,7 @@
 
 <p>Note that we’ve achieved our goal now! We can rewrite our first level history to be as clear as possible, while keeping a record of precisely what actually happened available in our second level history. This gives us the ability to un-rewrite history just as easily as reverting back to a previous version of our program.</p>
 
-<p>We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Verson Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions. </p>
+<p>We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Version Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions. </p>
 
 <h2 id="down-the-rabbit-hole">Down the rabbit hole</h2>
 
@@ -202,7 +202,7 @@
 
 <p>This is caused by the following: In the above we made no assumptions about the nature of the pieces of paper - other than that they could be stored as a file on a computer.</p>
 
-<p>Git and comparable systems, on the contrary, do make specific assumptions: most modern Version Control systemens are built on the assumption that the files they are tracking are almost exclusively text files.  Even though storing the occasional small binary file is certainly technically possible, storing large numbers of large binary files in Git is certainly not recommended, and will not lead to a workable system.</p>
+<p>Git and comparable systems, on the contrary, do make specific assumptions: most modern Version Control systems are built on the assumption that the files they are tracking are almost exclusively text files.  Even though storing the occasional small binary file is certainly technically possible, storing large numbers of large binary files in Git is certainly not recommended, and will not lead to a workable system.</p>
 
 <p>The Git repository itself is implemented precisely as a collection of binary files. This means that tracking the history of a Git repository cannot be done efficiently using Git.</p>
 
@@ -236,7 +236,7 @@
 
 <p>We’ve also seen that having the property of self-applicability is not a given - e.g. Git cannot meaningfully be applied on Git repositories.</p>
 
-<p>I expect to be adding some exampe programs to this site at some point in the future. Inasmuch as those programs will be like Version Control systems, the ability to self-apply is an important design goal.</p>
+<p>I expect to be adding some example programs to this site at some point in the future. Inasmuch as those programs will be like Version Control systems, the ability to self-apply is an important design goal.</p>
 
 
 
