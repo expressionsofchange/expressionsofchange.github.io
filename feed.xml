@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-06-14T17:44:29+02:00</updated>
+<updated>2017-06-14T19:14:36+02:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -325,9 +325,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;All computer programs (except unsuccessful ones) will be changed; managing these changes themselves is a core part of the problem space of Software Development.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Well designed systems will reserve a central role for in the &lt;em&gt;solution space&lt;/em&gt; for core aspects of the &lt;em&gt;problem space&lt;/em&gt;.&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Well designed systems will reserve a central role for in the &lt;em&gt;solution space&lt;/em&gt; for core aspects of the &lt;em&gt;problem space&lt;/em&gt;.&lt;/li&gt;
   &lt;li&gt;(Follows from 1 &amp;amp; 2): We need to put the changes to our programs more central in the Software Development process and tooling. We’ll start by defining some &lt;em&gt;Expressions of Change&lt;/em&gt;: ways of precisely (and possibly automatically) reasoning about changes.&lt;/li&gt;
 &lt;/ol&gt;
 
