@@ -1,0 +1,219 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>The power of Undo &#8211; Expressions of Change</title>
+<meta name="description" content="The undo command is probably one of the most powerful commands in any document editor. It is hard to imagine an editor without undo to be taken seriously, let alone gain any popularity - be it an editor of text, images, movies or any other kind of document.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="The power of Undo &#8211; Expressions of Change">
+<meta property="og:description" content="The undo command is probably one of the most powerful commands in any document editor. It is hard to imagine an edito...">
+<meta property="og:url" content="/the-power-of-undo/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/about" >About</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/dassie.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>The power of Undo</h1>
+            <p class="date">Jun 14, 2017</p>
+            <p class="intro">The undo command is probably one of the most powerful commands in any document editor. It is hard to imagine an editor without undo to be taken seriously, let alone gain any popularity - be it an editor of text, images, movies or any other kind of document.
+</p>
+          </hgroup>
+        </header>
+
+        <p>Let’s why this could be so, by considering the following workflow:</p>
+
+<ol>
+  <li>A person is interacting with a computer system with certain goals in mind</li>
+  <li>They try to express these goals in the language of the system, by issuing certain commands.</li>
+  <li>If the command brings you closer to the goal issue another one.</li>
+  <li>If the command brings you further from the goal:
+    <ol>
+      <li>If undo is available as a command, undo.</li>
+      <li>If undo does not exist, it’s not clear how to back on track - and even whether getting back on track is possible at all!</li>
+    </ol>
+  </li>
+</ol>
+
+<p>In other words: the ability to undo amounts to an enormous increase of <em>control</em> of the human actor over the system they are commanding, by allowing them to to roll back mistakes, even potentially very destructive ones. </p>
+
+<p>This increase of control has a 1-to-1 mapping with a decrease in <em>fear</em>: the more sure you are that you can always undo mistakes, the less afraid you will be to make them. Such fear is most obviously visible when observing at those with low computer literacy in their interactions with computers, but it applies to everyone. This very emotion then hinders further learning, because it stands in the way of experimenting and gaining feedback about the way the system works.</p>
+
+<p>Note that the increase of control and decrease of fear that undo brings is available even when your further knowledge of the system is very limited - as long as you’re confident that you can undo any action, you’re free to explore. In other words: Undo brings control in face of the unknown - quite a capability indeed!</p>
+
+<p>By the way: the capability to undo is a typical example of an <em>Expression of Change</em> - the actions to be undone being the change about which we express ourselves.</p>
+
+<h2 id="common-limitations">Common limitations</h2>
+
+<p>Given how powerful the ability to undo is it’s worthwhile examining if it can be made even more powerful. To do so, let’s look at some limitations that typically apply in common desktop applications. The definition of “typically” is obviously up for debate, and thankfully there are many applications which do not suffer from one or more of the below limitations. In any case, “single undo only” and “no redo” are not mentioned below because most reasonably modern applications have virtually infinite undo as well as the ability to redo.</p>
+
+<ol>
+  <li>
+    <p><strong>Discard on close</strong> - the ability to undo is lost when closing and reopening your editor. You may be able to save documents, but saving documents including their full undo history is not possible.</p>
+  </li>
+  <li>
+    <p><strong>Lack of discoverability</strong> - the ability to undo is offered as a menu option and keyboard shortcut, but the historic record of changes cannot itself be inspected visually, saved or manipulated.</p>
+  </li>
+  <li>
+    <p><strong>Linear undo only</strong> - the ability to undo is only available in anti-chronological order, i.e. by undoing the last change first, the second last second etc. It’s not possible to undo (or even more powerfully: edit) arbitrary changes in the past without undoing all follow-ups first.</p>
+  </li>
+  <li>
+    <p><strong>No redo after do</strong> - when undoing a number of changes, and then making an arbitrary new change, the undone changes can no longer be redone. In other words: the state your document was in before undoing is not always reachable after the undo. Equivalently: the action of undo itself cannot always be undone.</p>
+  </li>
+  <li>
+    <p><strong>Monolithic context</strong> - each document has a single undo history; when the document is composed of multiple parts or sections these do not have their own histories. Similarly, when multiple documents form a conceptual unit, such as the source tree of a computer program, undo is not available across documents but only at the level of a single document.</p>
+  </li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Undo is great, let’s have more of it.</p>
+
+<p>We seen what limitations commonly apply in currently existing applications.</p>
+
+<p>The challenge of this site is then simply: to come up with undo-like capabilities that don’t suffer from these limitations, like so:</p>
+
+<ol>
+  <li>
+    <p><strong>Undo after close</strong> - the ability to undo is preserved even after the application has crashed or has been closed.</p>
+  </li>
+  <li>
+    <p><strong>Change as a first level citizen</strong> - the historic record can be inspected, saved and manipulated like any other object in our system.</p>
+  </li>
+  <li>
+    <p><strong>Arbitrary graph traversal</strong> - we have the ability to revert to any state of the document as it once existed.</p>
+  </li>
+  <li>
+    <p><strong>Decompositon of context</strong> - for structured documents undo is available on arbitrary parts of the document, parts consisting of other parts, and the document as a whole.</p>
+  </li>
+</ol>
+
+<p>This site documents work in progress; stay tuned for updates.</p>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-power-of-undo/" title="The power of Undo">The power of Undo </a></span>
+              <span class="date">Jun 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/self-applicability/" title="Self applicability">Self applicability </a></span>
+              <span class="date">Jun 10, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/build-once-maintain-forever/" title="Build once, maintain forever">Build once, maintain forever </a></span>
+              <span class="date">Jun 07, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/about/" title="About">About </a></span>
+              <span class="date">Jun 06, 2017</span>
+            </li>
+        
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

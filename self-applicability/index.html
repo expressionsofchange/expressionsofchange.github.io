@@ -1,0 +1,303 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Self applicability &#8211; Expressions of Change</title>
+<meta name="description" content="_Self applicability_ is one of the most powerful ideas in computer science. In this article we'll see how this idea can be applied to _Expressions of Change_ such as Version Control, and how this compares to existing solutions such as Git.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Self applicability &#8211; Expressions of Change">
+<meta property="og:description" content="_Self applicability_ is one of the most powerful ideas in computer science. In this article we'll see how this idea c...">
+<meta property="og:url" content="/self-applicability/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/about" >About</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/lizard.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Self applicability</h1>
+            <p class="date">Jun 10, 2017</p>
+            <p class="intro"><em>Self applicability</em> is one of the most powerful ideas in computer science. In this article we’ll see how this idea can be applied to <em>Expressions of Change</em> such as Version Control, and how this compares to existing solutions such as Git.
+</p>
+          </hgroup>
+        </header>
+
+        <p>We’ll take a look at the practice of <em>rewriting history</em>, why we would want to do that and how it creates two seemingly irreconcilable goals: staying true to what actually happened on the one hand and the ability to tell the most clear story about history on the other. Then we’ll see how we can reconsile these goals by applying the idea of version control to version control itself.</p>
+
+<h2 id="editing-programs">Editing Programs</h2>
+
+<p>To be able to properly discuss all this, we’ll start at the very beginning: by examining some very minimal examples of the contruction of a computer program.</p>
+
+<p>To describe these, we’ll use pen, paper, an eraser and a pair of scissors - this way everything stays simple and visual. Note that this description is no less general than the usual process of constructing programs on an actual computer: wherever we talk about “pieces of paper”, we can simply substitue “one or more files”.</p>
+
+<p>Say that on a given Monday we’re given the task to write a simple program. We do so by writing this on our piece of paper and call it a day.</p>
+
+<p>At some point soon after, let’s say on Tuesday, the need arises for a more advanced program. We erase part of our program and add some new parts to reflect this, like so:</p>
+
+<p><img src="/images/movies/editing-programs.gif" alt="Editing a program." /></p>
+
+<p>Now, if we discover a bug in our program on Wednesday, we’re faced with a problem: we cannot simply go back to Monday’s version of the program, because it no longer exists. Nor can we compare Monday and Tuesday’s versions to reason about them.</p>
+
+<p>This is caused by the fact that changing the program brings with it the loss of information. This is particularly obvious in our example because we’re literally erasing part of the first program to write the second. Note however that even if we only ever add to the program, we destroy the knowledge of what the program looked like before the additions.</p>
+
+<h2 id="version-control">Version Control</h2>
+
+<p>To be able to keep the old versions around we could use a modern Version Control System such as Git. In addition to the ability to go back or forward to an arbitrary version of the program, this will allow us to compare versions, work together with other people and merge diverging lines of development.</p>
+
+<p>In our pen &amp; paper world we will model Version Control by using an extra piece of paper. On this we draw the versions of the program as nodes, annotate these with some meta-data (date, author, description), and connect them by arrows into a directed acyclic graph that describes the history of the program.</p>
+
+<p>The graph may be constructed by copying a given current state of the program over to this second piece of paper and adding the relevant metadata. This corresponds to a <code>git commit</code>.</p>
+
+<p>We can then navigate through this graph by pointing at a given node with our finger (below: a big red arrow), and copying the node’s content over into the current program state. This corresponds to a <code>git checkout</code>. Because we always have the full history available, we’ve solved our initial problem!</p>
+
+<p><img src="/images/movies/version-control.gif" alt="Version Control" /></p>
+
+<h2 id="rewriting-history">Rewriting History</h2>
+
+<p>An important value for a historic record is its historic accuracy: the fact that it precisely reflects what actually happened. In Version Control as discussed so far, historic accuracy is guaranteed by the means of construction of the historic record. There are various versions of the program, and they each get added to the graph as they are created.</p>
+
+<p>In the toy example above we estabished the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.</p>
+
+<p>Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplication or cleanup. In such cases a may be useful to <em>rewrite history</em>. Here are some examples of such rewrites with their equivalent <code>git</code> commands:</p>
+
+<ul>
+  <li>
+    <p>If you make a mistake while adding a version to the historic record, you may want to fix the mistake in the record rather than adding yet another version to fix the mistake (such a version would only clutter the record). (<code>git commit --ammend</code>)</p>
+  </li>
+  <li>
+    <p>History is not always linear; multiple new version may arise based on a single version of the program. Such diverging histories can later be merged together in a separate “merge” version. However, many such separate version will clutter up the historic record, and are therefore sometimes deemed undesirable. The solution is to rewrite history as if the divergence never took place: one of the diverging branches of history is cut from its actual base, rewritten, and pasted at the tail of the other branch in a single linear fashion. (<code>git --rebase -i</code>)</p>
+  </li>
+</ul>
+
+<p>An animation of a <code>git rebase</code> in our pen &amp; paper world is shown below: the commit “C” is rewritten as if it happened after “B”, rather than independently of it; this simplifies the graph because we no longer need a merging commit.</p>
+
+<p><img src="/images/movies/rewriting-history.gif" alt="Rewriting History" /></p>
+
+<p>As should be obvious from these two examples, rewriting of history can be quite helpful in increasing the clarity of the historic record by removing clutter in the form of irrelevant details. It does, however, come at a price; one which is hinted at by the use of scissors in the animation.</p>
+
+<p>Firstly, it violates precisely the goals as stated in the initial example: a true historic record without loss of information. This is not merely a theoretical problem: consider the case of a rebased version which has some kind of bug. For such a bug it is impossible to say whether it was introduced as a direct consequence of the rebasing or was also present in the unrebased version. Given that such understanding is precisely what version control is about, this is really unfortunate.</p>
+
+<p>Secondly, consider the fact that version control forms an important safety net in our software development process: when we make mistakes we can undo them by going back to an older version. However, while rewriting history we don’t have the capability of reverting mistakes made in the rewriting process itself. This is precisely why most blog articles about rewriting of history in Git are annotated with big red warning boxes.</p>
+
+<p>So far we’ve seen two seemingly irreconcilable goals: “true history” and a “clear history”. Because the goals are presented as an either/or choice, striking some balance is left as a matter of culture or taste to individual users and teams. It has been my personal observation that users of Mercurial often err on the side of accuracy, whereas users of Git prefer clean histories, but your mileage may vary.</p>
+
+<h2 id="self-applicable-version-control">Self Applicable Version Control</h2>
+
+<p>The question that seems to remain unasked is: is it be possible to have a historic record that’s both truthful to what actually happened and a clear description that leaves out irrelevant details?</p>
+
+<p>To answer this, let’s go back to the running example of keeping track of our program and the history of our program on a piece of paper. So far we’ve seen the following:</p>
+
+<ol>
+  <li>The Program
+    <ol>
+      <li>A piece of paper may be used to write a program.</li>
+      <li>At some point new features are requested, and we must edit the program.</li>
+      <li>Once we do this lose information about previous versions of the program.</li>
+    </ol>
+  </li>
+  <li>Version Control
+    <ol>
+      <li>A piece of paper may be used to keep track of a historic graph of all programs from step 1.</li>
+      <li>It may be useful to clean up this graph by rewriting history for reasons of clarity.</li>
+      <li>Once we edit the historic graph we lose information about previous versions of the history.</li>
+    </ol>
+  </li>
+</ol>
+
+<p>We’ve seen that the problem mentioned in step 1c was solved by step 2a; and that we have an as of yet unsolved problem in step 2c. The question then is: can we think of a step 3a to solve this?</p>
+
+<p>Sure: we can simply add yet another piece of paper containing a historic graph, just like we did in step 2a. The only difference being the content of the nodes of the graph: rather than keeping track of individual programs, we can track the history of historic graphs. Let’s call this graph a 2nd level history.</p>
+
+<p>Construction of this graph is analogous to the contruction of the regular historic graph: whenever we change the historic record, we add a full copy of the historc graph to the second-level history as a node. We do this both for any history writing operations (such as a <code>git commit</code>) as for rewriting operations (such as <code>git rebase</code>).</p>
+
+<p>Just like in the case of regular Version Management we can navigate through the newly constructed graph. Navigation through a second level history corresponds to changes in the historic graph (rather than changes to the program). In other words: it corresponds to rewrites of history. Here it is in action:</p>
+
+<p><img src="/images/movies/vcs-squared.gif" alt="History of History" /></p>
+
+<p>Note that we’ve achieved our goal now! We can rewrite our first level history to be as clear as possible, while keeping a record of precisely what actually happened available in our second level history. This gives us the ability to un-rewrite history just as easily as reverting back to a previous version of our program.</p>
+
+<p>We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Verson Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions. </p>
+
+<h2 id="down-the-rabbit-hole">Down the rabbit hole</h2>
+
+<p>Now that we’ve seen that the concept of tracking change is self-applicable, we may ask how often we may want to self-apply. Is it possible to talk about third or nth level histories, i.e. histories of histories of histories or even deeper levels? Secondly: is there any use for such expressions?</p>
+
+<p>The first question is easily answered: yes, we can always keep adding more layers. Any Version Control which doesn’t care what’s under control can always be used to wrap an <em>n - 1</em> level history to yield an <em>n</em> level history.</p>
+
+<p>Now for the second question: are such deep self-applications of any use? To this, I do not yet know the answer.</p>
+
+<p>In general, to get the advantages of Version Control in all parts of your system, you need precisely one more level of history than the amount of levels on which you want to make potentially destructive changes.</p>
+
+<p>So far, we’ve seen that making of destructive changes on the first level of history (“rewriting history”) is occasionally quite useful, and that we may therefore want to introduce a second level of history.</p>
+
+<p>Because we lack actual experience with such a second level history, use cases for destructively editing that have not yet shown themselves. It may be that they don’t actually exist; in which case we’re done. If they do, a third level might be useful. In any case, it would seem that for each level the amount of usage decreases, an that we at some point run out of the need for further levels.</p>
+
+<h2 id="self-applicable-git">Self-applicable Git</h2>
+
+<p>Implementing the above insights using a typical modern Version Control System such as Git does, unfortunately, not lead to very useful results.</p>
+
+<p>This is caused by the following: In the above we made no assumptions about the nature of the pieces of paper - other than that they could be stored as a file on a computer.</p>
+
+<p>Git and comparable systems, on the contrary, do make specific assumptions: most modern Version Control systemens are built on the assumption that the files they are tracking are almost exclusively text files.  Even though storing the occasional small binary file is certainly technically possible, storing large numbers of large binary files in Git is certainly not recommended, and will not lead to a workable system.</p>
+
+<p>The Git repository itself is implemented precisely as a collection of binary files. This means that tracking the history of a Git repository cannot be done efficiently using Git.</p>
+
+<p>In fact: trying this one runs into the fact that adding Git repositories to be tracked inside other repositories has been explicitly forbidden: git repositories are managed using a directory called <code>.git</code>, and Git raises an error when presented with a directory named <code>.git</code> to track.</p>
+
+<h2 id="implementation-hint">Implementation hint</h2>
+
+<p>In the pen-and-paper examples of this article, the trackable items of interest (whether computer programs or complete n-histories) were always presented as files. Tracking such files was presented as adding the full state at any given point in time as a historic node to the graph.</p>
+
+<p>This approach does not generally scale to n-level histories: the storage requirements at each level grow like so:</p>
+
+<ol>
+  <li>the 1-history stores all programs, i.e. growth linearly with program size and version count.</li>
+  <li>the 2-history stores all 1-histories, i.e. growth linearly with [1] and version count.</li>
+</ol>
+
+<p>In this approach, the storage requirements for a given n-history’s are <em>O(p * v<sup>n</sup>)</em>. (<em>p</em> for program size, <em>v</em> for number of stored versions and <em>n</em> for n-level-history)</p>
+
+<p>An important observation is that the actual (human) user actions that give rise to this growth is much more limited. The actual things the user can do are limited to:</p>
+
+<ol>
+  <li>Make direct changes to the program.</li>
+  <li>Calling various commands of (a n-level) Version Control system </li>
+</ol>
+
+<p>If we only store such user-actions into the various levels of Version Control, we’ll get a system that scales linearly with user input.</p>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>In this article I’ve shown (hopefully) how applying the ideas of Version Control on their own data-structures can be quite useful.</p>
+
+<p>We’ve also seen that having the property of self-applicability is not a given - e.g. Git cannot meaningfully be applied on Git repositories.</p>
+
+<p>I expect to be adding some exampe programs to this site at some point in the future. Inasmuch as those programs will be like Version Control systems, the ability to self-apply is an important design goal.</p>
+
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-power-of-undo/" title="The power of Undo">The power of Undo </a></span>
+              <span class="date">Jun 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/self-applicability/" title="Self applicability">Self applicability </a></span>
+              <span class="date">Jun 10, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/build-once-maintain-forever/" title="Build once, maintain forever">Build once, maintain forever </a></span>
+              <span class="date">Jun 07, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/about/" title="About">About </a></span>
+              <span class="date">Jun 06, 2017</span>
+            </li>
+        
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
