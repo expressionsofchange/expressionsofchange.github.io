@@ -6,6 +6,10 @@
 
     
     <url>
+        <loc>/existing-tools/</loc>
+    </url>
+    
+    <url>
         <loc>/the-power-of-undo/</loc>
     </url>
     

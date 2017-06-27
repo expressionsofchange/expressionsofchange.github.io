@@ -4,13 +4,187 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-06-14T19:14:36+02:00</updated>
+<updated>2017-06-27T22:49:56+02:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Existing tools]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/existing-tools/" />
+  <id>http://expressionsofchange.com/existing-tools</id>
+  <published>2017-06-27T00:00:00+02:00</published>
+  <updated>2017-06-27T00:00:00+02:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Arguably, the existence of so many tools is a strong indication that the underlying problem, that of dealing with change in software development, is one which requires tooling to be properly handled.&lt;/p&gt;
+
+&lt;p&gt;The next questions is then: is it also an indication that this is a solved problem? Given that this site documents attempts to come up with better &lt;em&gt;Expressions of Change&lt;/em&gt;, it will not come as a surprise that my answer is an emphatic “NO”.&lt;/p&gt;
+
+&lt;p&gt;My main gripe with currently existing solutions is that they suffer from a lack of generality. Even though all of them deal with managing change in software development, each of them is applicable only to a small part of the process. This means that one must use very different tools to solve almost identical problems. The problem is further exacerbated by the fact that the various tools are very poor at communicating with each other.&lt;/p&gt;
+
+&lt;p&gt;The lack of generality might best be illustrated by examining a “day in the life” of the typical programmer and their interactions with the various tools.&lt;/p&gt;
+
+&lt;h2 id=&quot;editing-programs&quot;&gt;Editing programs&lt;/h2&gt;
+
+&lt;p&gt;Our day starts with some actual &lt;em&gt;programming&lt;/em&gt;. In other words: by editing one or more computer programs in a text editor or IDE. Though we may not explicitly realize it, this brings us into contact with the first tool to manage change: the capabilities of our editor to &lt;em&gt;undo &amp;amp; redo&lt;/em&gt;: In all but the most basic editors each change we make in our program is separately recorded in the working memory and we can always roll back the changes we made in anti-chronological order.&lt;/p&gt;
+
+&lt;p&gt;Note that the capability to undo implies that a historic record is kept. This record is what’s used to be able to revert to any given state of the document.&lt;/p&gt;
+
+&lt;p&gt;The ability to undo is so useful that it’s hard to imagine an editor without it — &lt;a href=&quot;/the-power-of-undo/&quot;&gt;something that I’ve written about in another article&lt;/a&gt;. This article is also where some of the typical limitations of undo are described, such as the fact that your undo-history is lost when you close the editor and the fact that the only way to roll back changes is in often anti-chronological order. Such limitations are not the focus here, instead we’ll zoom in on the discontinuity between undo and other tools. To do so, we’ll start with version control.&lt;/p&gt;
+
+&lt;h2 id=&quot;version-control&quot;&gt;Version control&lt;/h2&gt;
+
+&lt;p&gt;Let’s return to a day in the life of a typical programmer. After successfully making a number of changes in our program these changes are typically &lt;em&gt;committed&lt;/em&gt; to a &lt;em&gt;source repository&lt;/em&gt; using a &lt;em&gt;version control system&lt;/em&gt;, i.e. using some command like &lt;code&gt;git commit&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Version control systems are those systems that we use to track changes to the source code of computer programs. Git is currently the most popular choice (overwhelmingly so), Mercurial is a less popular modern system and Subversion and CVS are older but still-in-use systems. Because tracking changes the explicit goal of version control systems the relationship with the present article should be quite obvious.&lt;/p&gt;
+
+&lt;p&gt;Version control systems are extremely useful: they allow us to go back to older versions of our program, compare versions, record notes about the intent of particular changes and work together with multiple people on the same project, among other things.&lt;/p&gt;
+
+&lt;p&gt;In the above discussion of &lt;em&gt;undo&lt;/em&gt; we established that the capability to undo implies that a full historic record of all recent changes is kept in the editor. In the present discussion we’ve noted that the programmer’s primary tool for keeping long term historic records is a version control system. As such, both version control systems and our editor’s ability to undo deal with the same thing, namely change to the source code of our program, focusing on the short and long term records of changes respectively. This raises a number of questions:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Why do we need two tools for the single task of history-keeping? Is there really a fundamental difference between short term changes and long term changes?&lt;/li&gt;
+  &lt;li&gt;Can the two tools communicate with each other? Do they speak a single language?&lt;/li&gt;
+  &lt;li&gt;What would either tool look like if it gained the capabilities of the other?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I’ll try to answer these in the below.&lt;/p&gt;
+
+&lt;h3 id=&quot;one-task-two-tools&quot;&gt;One task, two tools&lt;/h3&gt;
+
+&lt;p&gt;First let’s examine why we have two tools for a single task. Why do we need a version control system at all, if we already had a historic log of changes in our editor?&lt;/p&gt;
+
+&lt;p&gt;The first potential reason is that the capabilities of the historic record associated with &lt;em&gt;undo&lt;/em&gt; are often quite limited. The record is lost when the editor is closed, the record cannot be cleaned up, annotated or shared. Those limitations are, however, not the fundamental reason; in principle they can be taken away by adding more capabilities to our editor.&lt;/p&gt;
+
+&lt;p&gt;One could also argue that the reason for the split lies in the different meaning attributed to the different tools by the programmer. In this line of reasoning, the undo capabilities of the editor represent private and temporary changes. Only once some stable, tested and cleaned up state is reached this is committed to version control. In other words: the split in tools is caused by a fundamental semantic difference between “private / short term” and “public / long term”.&lt;/p&gt;
+
+&lt;p&gt;Even if such a semantic split would exist, it would not amount to a fundamental reason for a split in tools: the ability to clean up the editor’s undo history could simply be improved. If the tooling for such cleanup would be powerful enough, a cleaned up version of the editor’s history could still be publicly shared.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, the idea that you should commit to version control only once you’re “fully done” runs somewhat contrary to the prevailing wisdom. One of the core ideas that distributed version control systems bring to the table is precisely that there may be many different levels of “doneness”, and that the tooling should provide abilities to house those different levels within a single system. Two such abilities are the ability to work on your own separate branch of history or to commit often and only rewrite your history before sharing it with others.&lt;/p&gt;
+
+&lt;p&gt;In short: there is no fundamental divide between “short term history” and “long term history”, but rather a continuum, and a split in two sets of tools is not a fundamental property of nature.&lt;/p&gt;
+
+&lt;p&gt;Instead, the fundamental reason that we have two tools for a single task follows from the non-central position we have given editors in the dominant paradigm of program construction. This paradigm is roughly the following:&lt;/p&gt;
+
+&lt;p&gt;A computer program is compiled from a collection of source &lt;em&gt;files&lt;/em&gt;. How these files themselves are constructed is &lt;em&gt;not important&lt;/em&gt;, to the compiler they “just are”. In other words: we’re agnostic about our &lt;em&gt;means of construction&lt;/em&gt;, focusing only on &lt;em&gt;constructed&lt;/em&gt; artifacts.&lt;/p&gt;
+
+&lt;p&gt;There are certainly arguments in favor of this paradigm: because we’re agnostic about the editor, each developer can use their own set of tools, and even a single developer can switch between various editors and other tools in the construction of the program.&lt;/p&gt;
+
+&lt;p&gt;It’s worth noting, however, how dominant this implicit paradigm is, even in situations where it’s not necessarily the most fitting one. Consider for example that even an IDE that fully integrates the whole workflow of the programmer, including version management is bound by the same paradigm, even when the programmer never leaves the IDE and the capability to use different editors or tools is never actually used in practice.&lt;/p&gt;
+
+&lt;p&gt;The drawbacks of this paradigm become obvious when considering that version control systems are bound by it too. From the perspective of the version control system, editors do not exist, only files. Each time a commit is made, the current state of all relevant files is inspected, and the VCS makes educated guesses as to how this evolved from the previous state.&lt;/p&gt;
+
+&lt;h3 id=&quot;talking-tools&quot;&gt;Talking tools&lt;/h3&gt;
+
+&lt;p&gt;Now that we know what the prevailing paradigm is, we can also answer the second question: Is any meaningful communication between the editor’s short term historic records and the long term historic records of the VCS possible?&lt;/p&gt;
+
+&lt;p&gt;Obviously not! From the perspective of the VCS, we are agnostic about what an editor even &lt;em&gt;is&lt;/em&gt;, let alone that we could communicate with it. This means that the fine grained historic record stored by the editor will never be made available to the VCS, and will be lost forever.&lt;/p&gt;
+
+&lt;p&gt;Let’s take a look at two examples where such information could in fact be useful:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Intra-commit chronology&lt;/strong&gt; — often it’s semantically meaningful to present the changes within a single commit in a particular logical order. The goal would be: when examining the changes introduced by the commit, it’s easier to understand these if they’re presented in a meaningful order than any random order.&lt;/p&gt;
+
+&lt;p&gt;For example: when a function’s call signature is updated, all calling locations must also be updated. It makes sense to present such a change in exactly that order: first show the change in the definition; then show all calling locations being updated.&lt;/p&gt;
+
+&lt;p&gt;This happens to be the same order in which such a change would typically be made by the original programmer. This is not a coincidence: the actual order of construction is often a good starting point in coming up with a good order in explaining a change.&lt;/p&gt;
+
+&lt;p&gt;It would be great if our tools would:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;allow us to present the changes of a single diff in a logical order and&lt;/li&gt;
+  &lt;li&gt;allow us to use the actual order in which we made changes the diff as a basis for this logical order — possibly cleaning up the actual result before presenting it to others.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;However, version management systems don’t have ordering inside a single commit, and they cannot communicate with editors to find out what this basis chronology could be.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Post-hoc commit splitting&lt;/strong&gt; — when committing changes to the VCS, it’s best practice to make &lt;em&gt;atomic commits&lt;/em&gt;, i.e. to ensure that each commit deals with only one single conceptual change. However, when editing a computer program it’s not always possible to be concerned with only one thing at at a time. For example, the change you’re working on might necessitate some other changes, leading you to get “sucked into a rabbit hole” of refactorings.&lt;/p&gt;
+
+&lt;p&gt;If you happen to have made a large number of changes without intermediate commits, you’re left to your own devices to construct such atomic commits after the fact. This is typically done using “patch mode”, i.e. by manually marking various hunks of code as either part of either a given commit.&lt;/p&gt;
+
+&lt;p&gt;However, in actuality, the changes that are about to be committed have been made in a particular order. In many cases, this actual chronological order could be of great help in the construction of the atomic commits. (This assumes that changes that were made consecutively are more likely to be related than non-consecutive changes, which is indeed usually the case). This chronological information lives in the editor’s undo history, but is unfortunately not available while constructing the patch.&lt;/p&gt;
+
+&lt;h3 id=&quot;capabilities&quot;&gt;Capabilities&lt;/h3&gt;
+
+&lt;p&gt;Version control systems are in many ways more powerful than most editors’ capabilities to undo. The third question is: consider what kind of capabilities could be gained by transposing the full expressiveness of version control systems to the undo history of the editor. In this transposition the granularity that’s currently associated with the undo command, namely that of the single edit-action, should be preserved. Here are two examples:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;The ability to work together on a single project on two or more computers, currently only realistically possible on the granularity of a version control “commit”, would become available while editing the program with the granularity of a single keystroke. In other words: proper support for Pair Programming.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The ability to visually inspect, navigate through and manipulate the history of the edit-process would become available at a lower level than the commit. Note that the current standard capabilities of typical editors, namely the combination of undo &amp;amp; redo, makes for a rather incomplete navigational commands. Consider for example the case where you undo a large number of changes and then make a new change: in that scenario the undone changes can no longer be restored using the “redo” command. Having full navigation through history available, this problem disappears.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;package-management&quot;&gt;Package management&lt;/h2&gt;
+
+&lt;p&gt;Back to a day in the life of our programmer. Let’s say the program under consideration depends on a number of external libraries. Such libraries may depend on a number of other libraries themselves, which may depend on further libraries etc, forming a &lt;em&gt;dependency graph&lt;/em&gt;. Furthermore, each of these dependencies is to some specific version or range of versions; we cannot generally assume that each version of each library works well with each library it depends on, so we must specify which versions are known to work correctly. Such a situation is a natural consequence of two simple facts of life: The ever-changing nature of programs and the justified desire of programmers to decompose their programs into submodules.&lt;/p&gt;
+
+&lt;p&gt;The tools to resolve the various dependencies mentioned above are known as “package management systems”. They typically come in either one of two flavors. Firstly various Operating Systems bundle a package manager to do system-wide installations of software, Examples are &lt;code&gt;apt&lt;/code&gt;, &lt;code&gt;yum&lt;/code&gt;, &lt;code&gt;pacman&lt;/code&gt; and &lt;code&gt;nix&lt;/code&gt;. Secondly there’s a great number of package management systems specific to a particular programming language — almost all programming languages seem to come with their own package manager (&lt;code&gt;pip&lt;/code&gt;, &lt;code&gt;gem&lt;/code&gt;, &lt;code&gt;cargo&lt;/code&gt;, to name just a few).&lt;/p&gt;
+
+&lt;p&gt;One of of the main arguments of this article is that there are too many incompatible tools to deal with changing software. Regarding package management in particular, we can drive this point home in two ways. First, the sheer amount of different package management solutions is almost comical. One can also not help but wonder why so many tools of the same kind are necessary, and whether this is not an indication of a fundamental flaw in their design. Second, the fact that package managers are not only poorly able to talk with other tools for managing change, but can hardly speak among themselves, is a further indication of a deep problem.&lt;/p&gt;
+
+&lt;p&gt;On the subject of inter-operation with other tools for managing change the following: Note that package management is yet another tool to deal with changing software, albeit with a slightly different focus than version control systems. The capabilities that each of the tools lack with respect to the other follow directly from this different focus:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Package management deals with the dependencies on and between a number of external “packages” which are taken more or less as a given. Package management systems have only very limited support for tracking history inside a single package. Some of the primary operations of version management systems, such as constructing histories, comparing versions and cooperating in teams are missing.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Version control systems, on the other hand, deals with a single repository of code under control of the user. This means that they lack the ability to naturally track versions across composed systems in a composed manner. Even though git offers some workarounds for this, such as &lt;code&gt;gitmodules&lt;/code&gt; and &lt;code&gt;git-subtree&lt;/code&gt;, such workarounds are fundamentally limited, for example because it’s not possible to arbitrarily nest them.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Version control systems’ assumption that there is a single repository of code forces the programmer to make a rather arbitrary decision: what is the single thing whose history they want to track? Possible choices are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Putting the entire company’s software development efforts in a single repository. Drawback: This conflates various tools and programs that may be entirely unrelated.&lt;/li&gt;
+  &lt;li&gt;Identifying “projects” and giving each project (including its modules) its own repository. Drawback: The projects may in fact contain multiple modules that are reused across multiple projects; including their history as a part of one or more particular projects will make it harder to reuse improvements across projects.&lt;/li&gt;
+  &lt;li&gt;Breaking up the projects into modules and managing each module’s history independently. Drawback: the relationship between changes to programs and their modules is hard to express.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each of the mentioned choices will have some drawbacks. This is only natural: the ability to recursively decompose programs into smaller sub parts is one of the core values of programming, so if we do away with it (as version control systems do) we will run into trouble immediately!&lt;/p&gt;
+
+&lt;p&gt;Taking inspiration from package management tools, we could imagine a form of composable version management: the ability to manage the history of an arbitrary sub part of a program, while preserving the ability to have an integrated view of the history of any component that combines a number of parts.&lt;/p&gt;
+
+&lt;p&gt;Taking such an approach to its radical extreme we can make the parts almost arbitrarily small or big: tracking the history of expressions, statements, methods, classes, modules, programs and systems, whereby each level of history is expressed as a composition of the histories at lower levels. The consequences of such an approach will be further explored in a later article.&lt;/p&gt;
+
+&lt;p&gt;As far as I can see, version management with decent capabilities for composition would render package management tools entirely obsolete. For that reason the consequences of applying the ideas of VCSes to package management are not explored here.&lt;/p&gt;
+
+&lt;h2 id=&quot;other-examples&quot;&gt;Other examples&lt;/h2&gt;
+
+&lt;p&gt;There are a great number of other tools that deal with changing programs; They are mentioned here mostly to give an indication as to the quantity of such tools. I might explore the possible inter-relationships between them in a follow-up article.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Data/schema-migrations&lt;/strong&gt; — When the program is changed, its expectations about the data it interacts with may also change. For the case that the data is stored in a database, the tools to migrate data are usually called “data migrations” or “schema migrations”. Similar cases are that of a newer version of the program that expects a different configuration file format, and the case of a program that simply changes its document-format.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Provisioning &amp;amp; Containers&lt;/strong&gt; — tools such as &lt;code&gt;chef&lt;/code&gt;, &lt;code&gt;puppet&lt;/code&gt; and &lt;code&gt;ansible&lt;/code&gt; are often used when managing environments of similarly configured machines. They deal with many of the same challenges as package managers: getting the right versions of the right dependencies in the right place. Similar remarks can be made about &lt;em&gt;containers&lt;/em&gt; (Docker being a currently popular solution): one might say that their greatest value is in being able to precisely reproduce an entire environment of dependencies to a specific set of versions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Build tools&lt;/strong&gt; — build tools such as &lt;code&gt;make&lt;/code&gt;, &lt;code&gt;maven&lt;/code&gt; and &lt;code&gt;ant&lt;/code&gt; take responsibility for the compilation of larger programs. They relate to change in software in the sense that [a] they’re responsible for detecting which parts of the system have changed, and must therefore be rebuilt and [b] they may specifically talk about particular versions of dependencies of the build.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;There is a large amount of tools to manage the ever-changing nature of software.&lt;/p&gt;
+
+&lt;p&gt;One could argue that this is an indication that we’re dealing with a solved problem and that further thinking about &lt;em&gt;Expressions of Change&lt;/em&gt; is not required.&lt;/p&gt;
+
+&lt;p&gt;Personally, I’m taking as an indication of the opposite; I’m especially emboldened by the fact that the various tools cannot even properly talk to each other, despite them being (largely) dealing with problems in the same sphere.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/existing-tools/&quot;&gt;Existing tools&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 27, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -38,7 +212,7 @@
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;In other words: the ability to undo amounts to an enormous increase of &lt;em&gt;control&lt;/em&gt; of the human actor over the system they are commanding, by allowing them to to roll back mistakes, even potentially very destructive ones. &lt;/p&gt;
+&lt;p&gt;In other words: the ability to undo amounts to an enormous increase of &lt;em&gt;control&lt;/em&gt; of the human actor over the system they are commanding, by allowing them to to roll back mistakes, even potentially very destructive ones.&lt;/p&gt;
 
 &lt;p&gt;This increase of control has a 1-to-1 mapping with a decrease in &lt;em&gt;fear&lt;/em&gt;: the more sure you are that you can always undo mistakes, the less afraid you will be to make them. Such fear is most obviously visible when observing at those with low computer literacy in their interactions with computers, but it applies to everyone. This very emotion then hinders further learning, because it stands in the way of experimenting and gaining feedback about the way the system works.&lt;/p&gt;
 
@@ -202,7 +376,7 @@
 
 &lt;p&gt;Note that we’ve achieved our goal now! We can rewrite our first level history to be as clear as possible, while keeping a record of precisely what actually happened available in our second level history. This gives us the ability to un-rewrite history just as easily as reverting back to a previous version of our program.&lt;/p&gt;
 
-&lt;p&gt;We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Version Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions. &lt;/p&gt;
+&lt;p&gt;We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Version Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions.&lt;/p&gt;
 
 &lt;h2 id=&quot;down-the-rabbit-hole&quot;&gt;Down the rabbit hole&lt;/h2&gt;
 
@@ -247,7 +421,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;Make direct changes to the program.&lt;/li&gt;
-  &lt;li&gt;Calling various commands of (a n-level) Version Control system &lt;/li&gt;
+  &lt;li&gt;Calling various commands of (a n-level) Version Control system&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;If we only store such user-actions into the various levels of Version Control, we’ll get a system that scales linearly with user input.&lt;/p&gt;
@@ -286,7 +460,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;Security support for older versions is not eternal&lt;/li&gt;
-  &lt;li&gt;The challenge of doing only minimal upgrades is made harder by the fact that the various libraries we build on may have dependencies amongst themselves &lt;/li&gt;
+  &lt;li&gt;The challenge of doing only minimal upgrades is made harder by the fact that the various libraries we build on may have dependencies amongst themselves&lt;/li&gt;
   &lt;li&gt;Our “package manager” may introduce further constraints on the available versions of libraries&lt;/li&gt;
 &lt;/ol&gt;
 
