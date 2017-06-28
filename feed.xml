@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-06-27T22:49:56+02:00</updated>
+<updated>2017-06-28T15:11:37+02:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -481,31 +481,6 @@
 &lt;/div&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/build-once-maintain-forever/&quot;&gt;Build once, maintain forever&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 07, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[About]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/about/" />
-  <id>http://expressionsofchange.com/about</id>
-  <published>2017-06-06T00:00:00+02:00</published>
-  <updated>2017-06-06T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;To clarify what these &lt;em&gt;“Expressions of Change”&lt;/em&gt; are, let’s make some observations and a hypothesis:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;All computer programs (except unsuccessful ones) will be changed; managing these changes themselves is a core part of the problem space of Software Development.&lt;/li&gt;
-  &lt;li&gt;Well designed systems will reserve a central role for in the &lt;em&gt;solution space&lt;/em&gt; for core aspects of the &lt;em&gt;problem space&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;(Follows from 1 &amp;amp; 2): We need to put the changes to our programs more central in the Software Development process and tooling. We’ll start by defining some &lt;em&gt;Expressions of Change&lt;/em&gt;: ways of precisely (and possibly automatically) reasoning about changes.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;This site documents some experiments with such &lt;em&gt;Expressions of Change&lt;/em&gt; in the form of various articles and small demo programs. Everything presented here is work in progress.&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/about/&quot;&gt;About&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 06, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>

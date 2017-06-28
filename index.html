@@ -1,13 +1,13 @@
 <html lang="en">
 <meta charset="utf-8">
-<title>Recent Posts &#8211; Expressions of Change</title>
-<meta name="description" content="">
-<meta name="keywords" content="Jekyll, theme, responsive, blog, template">
+<title>Expressions of Change</title>
+<meta name="description" content="_Expressions of Change_ is a research project that aims to radically improve the tools for constructing ever-changing computer programs.">
+<meta name="keywords" content="">
 
 
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Recent Posts &#8211; Expressions of Change">
-<meta property="og:description" content="">
+<meta property="og:title" content="Expressions of Change">
+<meta property="og:description" content="_Expressions of Change_ is a research project that aims to radically improve the tools for constructing ever-changing...">
 <meta property="og:url" content="/">
 <meta property="og:site_name" content="Expressions of Change">
 
@@ -49,7 +49,9 @@
 
 <div id="bump">
   <body class="">
+     
     <header class="site-header">
+    
       <div class="wrap">
         <hgroup>
           <h1><a href="/">Expressions of Change</a></h1>
@@ -62,7 +64,7 @@
             </li>
             
             
-                <li><a href="/about" >About</a></li>
+                <li><a href="/recent/" >Recent posts</a></li>
             
 
           </ul>
@@ -71,63 +73,90 @@
     </header>
 
 
-        <section class="article">
+<section class="article">
 
-          <div class="overlay"></div>
-          <div class="featured-image" style="background-image: url(/images/features/impala.jpg"></div>
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/impala.jpg)"></div>
 
-          <article class="archive-wrap">
-              <ol class="post-list">
-                 <lh><h2><span class="bb">Recent Posts</span></h2></lh>
-                  
-                  <li>
-                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-                        <h1><a href="/existing-tools/">Existing tools</a></h1>
-                        <p class="date"><time datetime="2017-06-27T00:00:00+02:00" itemprop="datePublished">June 27, 2017</time></p>
-                        <p class="">Because dealing with change of the software itself is such a central part of the challenge of software development, a myriad of tools to manage these changes has sprung up. Examples are version control systems, build systems, provisioning tools and package management.
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            
+            <p class="intro"><em>Expressions of Change</em> is a research project that aims to radically improve the tools for constructing ever-changing computer programs.
 </p>
-                    </div>
-                  </li>
-                  
-                  <li>
-                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-                        <h1><a href="/the-power-of-undo/">The power of Undo</a></h1>
-                        <p class="date"><time datetime="2017-06-14T00:00:00+02:00" itemprop="datePublished">June 14, 2017</time></p>
-                        <p class="">The undo command is probably one of the most powerful commands in any document editor. It is hard to imagine an editor without undo to be taken seriously, let alone gain any popularity - be it an editor of text, images, movies or any other kind of document.
-</p>
-                    </div>
-                  </li>
-                  
-                  <li>
-                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-                        <h1><a href="/self-applicability/">Self applicability</a></h1>
-                        <p class="date"><time datetime="2017-06-10T00:00:00+02:00" itemprop="datePublished">June 10, 2017</time></p>
-                        <p class=""><em>Self applicability</em> is one of the most powerful ideas in computer science. In this article we’ll see how this idea can be applied to <em>Expressions of Change</em> such as Version Control, and how this compares to existing solutions such as Git.
-</p>
-                    </div>
-                  </li>
-                  
-                  <li>
-                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-                        <h1><a href="/build-once-maintain-forever/">Build once, maintain forever</a></h1>
-                        <p class="date"><time datetime="2017-06-07T00:00:00+02:00" itemprop="datePublished">June 07, 2017</time></p>
-                        <p class="">The state of the art of running a small website is to build once, manually maintain forever. This burden of maintenance is largely caused by changes in other software, as opposed to changes in our own requirements.
-</p>
-                    </div>
-                  </li>
-                  
-                  <li>
-                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-                        <h1><a href="/about/">About</a></h1>
-                        <p class="date"><time datetime="2017-06-06T00:00:00+02:00" itemprop="datePublished">June 06, 2017</time></p>
-                        <p class="">This site documents the idea of <em>“Expressions of Change”</em> using blog articles and demo programs.
-</p>
-                    </div>
-                  </li>
-                  
-              </ol>
-          </article>
-        </section>
+          </hgroup>
+        </header>
+
+        <p>The need for such a project stems from two observations:</p>
+
+<ol>
+  <li><strong>Computer programs <em>will</em> be changed</strong> — and managing those changes themselves forms a large part of a computer programmer’s work.</li>
+  <li><strong>Existing tools are afterthoughts</strong> — the creation of Version Management Systems postdates the programming languages whose programs’ versions they manage.</li>
+</ol>
+
+<p>The fact that most computer programs are destined to evolve <a href="https://en.wikipedia.org/wiki/Lehman%27s_laws_of_software_evolution">has been well known since at least 1974</a>. This has only become more obvious since then, so much that currently popular paradigms such as <a href="https://en.wikipedia.org/wiki/Agile_software_development">Agile Development</a> even put it at the core of their philosophy.</p>
+
+<p>The basic building block of programming, however, does not acknowledge this ever-changing nature: to the compiler a program appears as one or more historyless text files.</p>
+
+<p>Because of the central importance of software evolution, <a href="/existing-tools/">a myriad of tools has sprung up to manage it</a>. However, these tools invariably take historyless files as a given and proceed to add history on top of it. They are therefore doomed to yield incomplete solutions.</p>
+
+<h3 id="design-goals">Design goals</h3>
+
+<p>The design goals of this project follow directly from the problem definition above. By not accepting history-less files as a basic building block we get:</p>
+
+<ul>
+  <li><strong>Change</strong> to the program itself should be a <strong>primitive</strong>.</li>
+  <li><strong>Combining</strong> arbitrarily sized parts of programs <strong>across time</strong> should be possible.</li>
+</ul>
+
+<p>Arbitrarily combining parts of programs across time is a radical new idea. Here are just a few examples of what becomes possible in that paradigm:</p>
+
+<ul>
+  <li>Refactoring a function definition while postponing to update some of the calling locations.</li>
+  <li>Real-time large team cooperation on a single codebase — modules that are currently being edited by others can be referenced or ignored at will.</li>
+  <li>Reproducing bugs by simply replaying them — any version of the program is referencable and executable; combined with a reference to the data reproducing bugs becomes trivial.</li>
+  <li>Using multiple different versions of the same external or internal library across a single program.</li>
+  <li>Running 2 or more versions of the program simultaneously, switching out one of them gradually.</li>
+</ul>
+
+<p>And much more…</p>
+
+<h3 id="implementation-direction">Implementation direction</h3>
+
+<p>The main goal of the project is to demonstrate a prototype that is an implementation of the design goals mentioned above — i.e. some sort of <em>Programming Language</em>.</p>
+
+<p>Because the project rejects the history-less file as a basic building block, the first step towards this is to build an <em>editor</em> that constructs the primitives of change instead.</p>
+
+<p>For practical reasons (the scope of the project is large enough as it stands), the first editor will only supports constructions a minimal syntax: S-Expressions.</p>
+
+<p>Whether a more advanced syntax is required, e.g. to be able to express type information properly, is an open question.</p>
+
+<h3 id="status">Status</h3>
+
+<p>This is an ongoing project. Progress will be documented on this site in two forms:</p>
+
+<ol>
+  <li><a href="/recent/">Articles</a> describing the progress of the project and its philosophical underpinnings.</li>
+  <li>Demo (research) implementations.  A very first version of this editor has been built in the first months of 2017; it will be presented on this site in July.</li>
+</ol>
+
+
+
+      <div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      
+
+      </article>
+    </section>
 </div>
 
 <div class="push"></div>
@@ -155,12 +184,10 @@
               <span class="recent-title"><a href="/build-once-maintain-forever/" title="Build once, maintain forever">Build once, maintain forever </a></span>
               <span class="date">Jun 07, 2017</span>
             </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/about/" title="About">About </a></span>
-              <span class="date">Jun 06, 2017</span>
-            </li>
         
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
       </ol>
 
       <div class="social">
