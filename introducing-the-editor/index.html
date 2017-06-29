@@ -1,0 +1,360 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Introducing the Editor &#8211; Expressions of Change</title>
+<meta name="description" content="The first step towards making expressions of change available in some programming language is to build an editor that can construct them. The first steps towards this editor have been made and are presented here.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Introducing the Editor &#8211; Expressions of Change">
+<meta property="og:description" content="The first step towards making expressions of change available in some programming language is to build an editor that...">
+<meta property="og:url" content="/introducing-the-editor/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+     
+    <header class="site-header">
+    
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/recent/" >Recent posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/waterbuck.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Introducing the Editor</h1>
+            <p class="date">Jun 29, 2017</p>
+            <p class="intro"><em>Expressions of Change</em> is a research project which represents a radical departure from mainstream programming tools: it refuses to take text files as central building blocks.
+</p>
+          </hgroup>
+        </header>
+
+        <p>The proposed alternative is to make <em>changes to programs</em> the primitive building blocks, instead of the <em>programs that result from such changes</em>. In this view, the means of construction are seen as equally important as the constructed artifacts. The idea is simply that, to be able meaningfully to reason about change, it is easier to keep the actual change at hand than to guess what it might have been.</p>
+
+<p>The decision to abandon text files as a possible input format has an important consequence for the roadmap of this project: editors that create text files are plentiful, but the type of editor that could be used to create changes as a primitive has yet to be designed. The first step in the project is therefore to design and implement such an editor.</p>
+
+<p>This will allow us to get some feedback on what works and what doesn’t, and on what the major challenges for such an editor are.</p>
+
+<p>Also, importantly, it will allow us to actually create the inputs for the yet to be designed programming language.</p>
+
+<p>In the below, we will sketch some important properties of such an editor.</p>
+
+<h3 id="means-of-combination">Means of combination</h3>
+
+<p>The first goal for our editor was mentioned already: the changes to programs shall be primitive entities in our editor. The second goal is that it shall be possible to combine these primitives in meaningful ways.<sup id="fnref:sicp"><a href="#fn:sicp" class="footnote">1</a></sup></p>
+
+<p>The most straightforward such combination is to take of a linear sequence of such changes; we’ll call this a “history”.</p>
+
+<p>A more subtle means of combination arises when editing hierarchically structured documents, such as computer programs. Hierarchical documents, by definition, compose larger parts out of smaller parts. This leads to the question: how do the histories of the parts relate to their sub-parts?</p>
+
+<p>For the editor presented below, the answer is: the histories between relate in a meaningful way. In particular, the history of some part of our program will be composed of the histories of its subparts.</p>
+
+<h3 id="structured-editing">Structured editing</h3>
+
+<p>In the above we’ve established three things: first that we need to create an editor for computer programs, second that changes shall be its primitives and third that histories of changes shall be meaningfully composable along the lines of the document’s structure.</p>
+
+<p>These goals point strongly in the direction of a <a href="https://en.wikipedia.org/wiki/Structure_editor">structured editor</a>, meaning an editor that is aware of the document’s structure. There are two main reasons for this:</p>
+
+<ol>
+  <li>
+    <p>To establish a good inventory of primitive operation of change: If we would treat the structure of the edited document as a black box, we could not say anything meaningful about changes to it. We must thus take the opposite approach and acknowledge the document’s structure.</p>
+  </li>
+  <li>
+    <p>To be able to compose and decompose histories along structural lines — that we need to acknowledge the document’s structure to be able to do this should be obvious.</p>
+  </li>
+</ol>
+
+<p>Incidentally, structured editing brings with it many other advantages: certain classes of incorrect programs cannot be constructed, there is no need to write a parser, meaningful reporting on errors is much easier etc. etc. We shall gladly make use of such advantages, but they are not the initial cause for the decision.</p>
+
+<p>Finally, note that the decision to create a structured editor rather than an unstructured one incurs no extra cost on our implementation. Because a radical departure from the main paradigms of text editing is the starting point of our design, we are free to drop any defaults from that paradigm, such as the fact that everything is unstructured text.</p>
+
+<h3 id="structure-s-expressions">Structure: S-Expressions</h3>
+
+<p>So far we have established that the editor to be is to be a structured editor and that its primitives will be the changes to some structure. Now then, before we can turn our attention to those primitives, we must first decide what that structure looks like.</p>
+
+<p>For the first prototype, I have decided on the simplest thing that could possibly work: <a href="https://en.wikipedia.org/wiki/S-expression">s-expressions</a>.</p>
+
+<p>S-Expressions are</p>
+
+<ul>
+  <li>an atom (some symbol), or</li>
+  <li>a list of 0 or more s-expressions<sup id="fnref:lists-not-tuples"><a href="#fn:lists-not-tuples" class="footnote">2</a></sup></li>
+</ul>
+
+<p>With these two types of elements we can build tree like structures with at the leaves either empty lists or atoms.</p>
+
+<p>The primary motivation for picking such a minimal syntax is a practical one: the scope of the project is rather large as it stands and a programming language family which is expressed in S-Expressions is readily available (<a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a>).</p>
+
+<p>From a usability perspective, S-Expressions are also desirable. There are only two kinds of S-Expression (atoms &amp; lists) and the mapping between S-Expressions and their visual representation is very straightforward. Since the structure of the program is readily visible, the programmer needs not create a separate mental model of it in their head; this makes structured editing feasible.</p>
+
+<p>Most advances in programming language research in the last few decades, most notably in type systems, have been made in <a href="https://en.wikipedia.org/wiki/ML_(programming_language)">ML</a> and its derivatives. To be able to incorporate those while retaining elegance an upgrade to a less minimal syntax may be required at some point. However, for the first version of the editor a minimal syntax is sufficient — the focus on change as a primitive will yield sufficient insights to make the experiment worthwhile.</p>
+
+<h3 id="a-clef-for-construction">A Clef for Construction</h3>
+
+<p>Having established what the structure of our documents will be, we can turn our attention to the primitives of construction. In other words, we’ll have to decide on a set of operations to construct and modify S-Expressions. We’ll call such a set of primitives a <em>Clef</em>.</p>
+
+<p>This is just as much a design decision as picking the syntax of the language in the first place. Here too, the space from which we can choose is infinite.<sup id="fnref:infinite-space"><a href="#fn:infinite-space" class="footnote">3</a></sup> The forces working on this decision are similar too; they are roughly:</p>
+
+<ul>
+  <li>Adding more elements to the <em>clef</em> potentially allows for more precise descriptions of history and expressions of intent (good).</li>
+  <li>Adding more elements imposes an implementation cost (bad).</li>
+  <li>Adding more elements imposes a mental burden on the programmer (bad).</li>
+  <li>Adding more elements increases the risk that multiple mechanisms exist to construct the same result, without being able to assign a different semantics to these mechanisms (bad).</li>
+</ul>
+
+<p>In the below I will present a particular clef as decided upon (for now); leaving the description of the thought-process of the decision itself to another (yet to be written) article.</p>
+
+<p>The clef defines the following operations:<sup id="fnref:imperative-functional-equivalence"><a href="#fn:imperative-functional-equivalence" class="footnote">4</a></sup></p>
+
+<ul>
+  <li><code>BecomeAtom atom</code> — Out of nothingness, spawn a given atom; or replace an existing atom with the given atom.</li>
+  <li><code>BecomeList</code> - Out of nothingness, spawn an empty list.</li>
+  <li><code>Insert index history</code> For a list, insert at the index the s-expr that can be constructed from the history; shifting items to the right as required.</li>
+  <li><code>Delete index</code> — For a list, delete the element at the index; shifting items to the left as required.</li>
+  <li><code>Replace index history</code> — For a list, replace the element at the index with the s-expr that can be constructed from the history.</li>
+</ul>
+
+<p>Using this clef we can both construct any s-expressions from scratch and modify any given s-expression into any other (a formal proof is left as an exercise to the reader). As an example, consider a possible way to construct the s-expression <code>(+ (* 6 9) 12)</code>:</p>
+
+<ul>
+  <li><code>BecomeList</code> — starting with an empty list expression</li>
+  <li><code>Insert 0 (BecomeAtom +))</code> — as the first item, insert the history which consists of the creation of the atom <code>+</code></li>
+  <li><code>Insert 1 ...</code> — as the second item, insert the result of the following history:
+    <ul>
+      <li><code>BecomeList</code> — starting with an empty list (sub)expression</li>
+      <li><code>Insert 0 (BecomeAtom *))</code> — introducing the atoms one…</li>
+      <li><code>Insert 1 (BecomeAtom 6))</code> — by one…</li>
+      <li><code>Insert 2 (BecomeAtom 9))</code> — by one.</li>
+    </ul>
+  </li>
+  <li><code>Insert 2 (BecomeAtom 12))</code> — similar to the construction of <code>+</code></li>
+</ul>
+
+<p>The above example is quite trivial, because the order of construction is precisely identical to the ordering of the result. In practice the order might be quite different, and might also include deletions (and therefore: insertions whose effects are not visible in the final result).</p>
+
+<p>Another history leading to the same result is shown below. Note that the indices are not the same as in the first example, but the result is the same.</p>
+
+<ul>
+  <li><code>BecomeList</code></li>
+  <li><code>Insert 0 (BecomeAtom 12))</code> — we start with a single element <code>12</code></li>
+  <li><code>Insert 0 (BecomeAtom +))</code> — to the left of it, we introduce the <code>+</code></li>
+  <li><code>Insert 1 ...</code> — assuming the same history on the ellipses as in the first example</li>
+</ul>
+
+<p>Importantly, the clef also allows us to express the histories of larger parts of our document as being composed of the histories of their subparts.</p>
+
+<p>To see how this is so, consider the following: The s-expressions form a tree. If the history of a given node is extended by some change, we can apply <code>Replace</code> on its parent node, providing the node’s index in the parent and the extended history. Because this <code>Replace</code> represents a change at the level of the parent, we can repeat this process until we reach the root of the tree. Using this mechanism, the same example might look like this:</p>
+
+<ul>
+  <li>
+    <p><code>BecomeList</code></p>
+  </li>
+  <li>
+    <p><code>Insert 0 (BecomeAtom +))</code></p>
+  </li>
+  <li><code>Insert 1 ...</code> — We start by adding an empty sub-expression…
+    <ul>
+      <li><code>BecomeList</code></li>
+    </ul>
+  </li>
+  <li><code>Replace 1 ...</code> — which is then extended with <code>*</code>
+    <ul>
+      <li><code>BecomeList</code></li>
+      <li><code>Insert 0 (BecomeAtom *))</code></li>
+    </ul>
+  </li>
+  <li><code>Replace 1 ...</code> — and extended with <code>6</code>
+    <ul>
+      <li><code>BecomeList</code></li>
+      <li><code>Insert 0 (BecomeAtom *))</code></li>
+      <li><code>Insert 1 (BecomeAtom 6))</code></li>
+    </ul>
+  </li>
+  <li>
+    <p><code>Insert 2 (BecomeAtom 12))</code> — intermezzo on the top-level</p>
+  </li>
+  <li><code>Replace 1 ...</code> — and extended with <code>9</code>
+    <ul>
+      <li><code>BecomeList</code></li>
+      <li><code>Insert 0 (BecomeAtom *))</code></li>
+      <li><code>Insert 1 (BecomeAtom 6))</code></li>
+      <li><code>Insert 2 (BecomeAtom 9))</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>This example makes a number of things clear: first that we can see the full ordering of events from the top level, and that work on sub-expressions may be arbitrarily interleaved. In the example above this is demonstrated by the insertion of the atom <code>12</code> before the completion of the sub-expression <code>(* 6 9)</code></p>
+
+<p>Second, that from each sub-level we see the ordering of events relevant to that sub-level. In this case, the precise ordering of the creation of the atoms <code>*</code>, <code>6</code> and <code>9</code>.</p>
+
+<p>Third, it shines some light on some challenges. Namely, the example as given is horribly verbose, which makes it hard to read for humans and has implications on the performance characteristics of the implementation. For both these problems solutions have already been found, which will be presented in the next parts.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>This concludes the most basic introduction to the editor.</p>
+
+<p>We’ve seen the goal: having change available as a primitive, and being able to meaningfully express compositions over change. We’ve seen that it is a structured editor and why this should be so.</p>
+
+<p>We’ve also encountered the first design decisions: the decision for s-expressions as a basic syntax, and a particular choice for a <em>clef</em> and how this is sufficient for the stated goals.</p>
+
+<p>In the next parts I’ll show the current prototype in action, and will discuss some of the open questions and implementation details.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:sicp">
+      <p>Asking the three questions “What are your primitives, what are your means of combination and what are your means of abstraction?” is directly inspired by Abelson &amp; Sussman’s excellent lectures and book on the <a href="https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs">Structure and Interpretation of Computer Programs</a>. <a href="#fnref:sicp" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:lists-not-tuples">
+      <p>The canonical definition of S-Expressions treats lists as mere syntactic sugar for nested pairs; i.e. <code>(x y z)</code> is simply a shorthand for <code>(x . (y . (z . NIL)))</code>. In this implementation the opposite approach is taken as to allow for primitives of change on such lists that are sufficiently expressive. <a href="#fnref:lists-not-tuples" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:infinite-space">
+      <p>To see that there are literally infinitely many possible primitive operations of change, consider the following: there are infinitely many s-expressions, and we can always define a special operation of change for any given s-expression. <a href="#fnref:infinite-space" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:imperative-functional-equivalence">
+      <p>The definitions are formulated in the imperative style (e.g. “delete at i”); an equivalent functional definition can be trivially constructed (“given a list, return an list without element i”). <a href="#fnref:imperative-functional-equivalence" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/introducing-the-editor/" title="Introducing the Editor">Introducing the Editor </a></span>
+              <span class="date">Jun 29, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/existing-tools/" title="Existing tools">Existing tools </a></span>
+              <span class="date">Jun 27, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-power-of-undo/" title="The power of Undo">The power of Undo </a></span>
+              <span class="date">Jun 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/self-applicability/" title="Self applicability">Self applicability </a></span>
+              <span class="date">Jun 10, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/build-once-maintain-forever/" title="Build once, maintain forever">Build once, maintain forever </a></span>
+              <span class="date">Jun 07, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
