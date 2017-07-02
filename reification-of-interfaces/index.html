@@ -1,0 +1,277 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Reification of Interaction &#8211; Expressions of Change</title>
+<meta name="description" content="Command Line Interfaces make their commands available as a first level citizen. ">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Reification of Interaction &#8211; Expressions of Change">
+<meta property="og:description" content="Command Line Interfaces make their commands available as a first level citizen. ">
+<meta property="og:url" content="/reification-of-interfaces/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+     
+    <header class="site-header">
+    
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/recent/" >Recent posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/lizard.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Reification of Interaction</h1>
+            <p class="date">Jul 02, 2017</p>
+            <p class="intro">Two main paradigms of interaction between humans and computers are Command Line Interfaces (CLIs) and Graphical User Interfaces (GUIs). In CLIs the user interacts with the computer by sequentially typing various textual commands, to which the computer replies, also in text. Graphical interfaces base the interaction with the computer on graphical icons and widgets and navigation typically depends on a pointing device such as the mouse.
+</p>
+          </hgroup>
+        </header>
+
+        <p>Proponents of GUIs typically stress their ease of use, especially for non-experts. The primary cause is <em>discoverability</em>: at any time the various available options are laid out on the screen and can be further explored with the mouse.</p>
+
+<p>CLIs predate GUIs. Despite of the ease of use of the latter, usage of CLIs persists, especially in UNIX-like systems. This has come as a surprise to some. Typically offered explanations are:</p>
+
+<ul>
+  <li><strong>Power of the keyboard</strong> — the keyboard allows for faster input than the alternation of keyboard &amp; mouse usage.</li>
+  <li><strong>Reproducability</strong> - because all commands are text, they may be more easily reproduced and shared.</li>
+  <li><strong>Composable commands</strong> — commands on the command line may be arbitrarily composed, using the output of one command as the input of another. This allows for powerful means of expression.</li>
+  <li><strong>Scripting</strong> — the interactive session may be used as the basis for a script (a computer program), allowing for the automation of certain tasks.</li>
+</ul>
+
+<p>Rather than rehashing old debates, I’ll try to present a somewhat new perspective on the matter. I’ll do so by examining the CLI through the lens of the present project,  <em>Expressions of Change</em>.</p>
+
+<h2 id="reification-of-interaction">Reification of Interaction</h2>
+
+<p>I’ll start by stating the obvious: In a command-line interface the textual commands are displayed on screen as typed. The output of each command is displayed below it. Previously entered commands and outputs are scrolled up as required, i.e. when the screen is full.</p>
+
+<p>This means that the human-computer interaction is being expressed in a tangible and visible way. This can be said for both individual parts of the interaction (individual commands) and for the interaction as a whole (the history of an entire session).</p>
+
+<p>A more fancy way to say this is: the user-computer interaction is <a href="https://en.wikipedia.org/wiki/Reification_(computer_science)">reified</a>.</p>
+
+<p>Note how this contrasts with the typical interaction in a GUI: There, after clicking on some button or icon, the GUI will respond in some way, e.g. by opening a new screen or copying a file. However, the action of clicking the button itself can no longer be observed, manipulated or shared after it has happened.<sup id="fnref:gui-reification"><a href="#fn:gui-reification" class="footnote">1</a></sup>_</p>
+
+<p>In CLIs, as mentioned above, the commands as given and their outputs are displayed on screen. In typical setups the support for reification is a bit more powerful than that:</p>
+
+<ul>
+  <li>
+    <p><strong>Keyboard shortcuts</strong> — several keyboard shortcuts allow for usage of past commands, e.g. arrow-up typically shows the previously issued command, and CTRL+R typically opens a search prompt which allows for searching previously issued commands. Previously commands are not just visible on screen, but can be selected with minimal effort.</p>
+  </li>
+  <li>
+    <p><strong>Copy/paste</strong> — support for copy/paste makes it so that arbitrary text from the screen may be copied, and that text from arbitrary sources (including the screen itself) may be pasted as a new command. Note the symmetry between the input and output formats: everything is text. This allows for the copying of an entire session’s output into the documentation, an internet forum or script. Conversely, solutions from internet forums may be copied into the session without friction.</p>
+  </li>
+  <li>
+    <p><strong>Persistent history</strong> — the full history of commands is written to a file, which can include the date and time they were issued.<sup id="fnref:config-notes"><a href="#fn:config-notes" class="footnote">2</a></sup> This allows for the answering of questions such as:</p>
+    <ul>
+      <li>“How did I use this command last time I used it?”</li>
+      <li>“Which packages have been installed on this system?”</li>
+      <li>“I thought I already solved this yesterday, am I losing my mind?”</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The relationship with the project that this site is about, <em>Expressions of Change</em>, is quite simple. The commands, or at least some of them, affect the system, and are thus the changes. The fact that they are reified is simply another way of saying that commands are available as a first level citizens. We can see them, copy them, and even generate them using other commands. In other words: reification of interaction as in CLIs is an actually existing and quite popular example of an expression of change!</p>
+
+<p>As an aside: A number of the often cited advantages of CLIs might be interpreted simply as natural consequences of the reification: looking at the list of advantages from the introduction of the article, we see that both reproducability across sessions and the ability to take an interactive session as the basis for a script are simply direct consequences of the reification.</p>
+
+<h3 id="guis">GUIs</h3>
+
+<p>The above is not to be taken as an argument that CLIs are a fundamentally better paradigm of user-computer interaction than GUIs. The point is rather that reification of interaction is extremely valuable, and that it is worthwhile to consider how to include it in <em>any</em> interface, even a GUI.</p>
+
+<p>There is, after all, no <em>fundamental</em> reason a GUI could not be designed with the goal of reification of interaction in mind; it’s just that it is rarely done in practice.</p>
+
+<p>The main way in which reification of interaction shows up in GUIs is through the undo command. Unfortunately this is often implemented in ways that are <a href="/the-power-of-undo/">much less generally applicable</a> than those we’ve seen of CLIs.</p>
+
+<h2 id="limits-to-the-reification">Limits to the reification</h2>
+
+<p>Having established that CLIs reify the user-computer interaction to some degree, it is interesting to consider some typically applying practical limitations.</p>
+
+<p>As mentioned above, the commands as given by the user are stored in a sequential history. One standard for history-keeping is the following: If we start with a clean system, and replay all the commands from the history, will we end up with the same system? This is a way of measuring how much of the relationship between the past and the present is actually captured by the history.</p>
+
+<p>For CLIs in the UNIX-like world, the answer to the question is “we will typically not end up with the same system”. There are a number of reasons for this:</p>
+
+<ul>
+  <li>
+    <p>The history is not properly organized. The commands may interact with one another via their “environment”, but the relevant information to reproduce the interactions is not stored. For example, the <code>cd</code> command may change the working directory; consecutive commands should then be interpreted as being executed from that directory. However, the history does not reflect the closing of sessions or the creation of new ones, so we cannot say about a command from which directory it was executed.</p>
+  </li>
+  <li>
+    <p>The history is incomplete. Your interaction with the system as a whole is not restricted to the interaction via the CLI but will typically include interaction with arbitray applicationsand the meaning of the commands themselves is not constricted in any way. We cannot make <em>any</em> statement about how these arbitrary commands and applications affect the system with certainty.</p>
+  </li>
+</ul>
+
+<p>Out of these limitations other follow. For example: the undo-command is not available in CLIs, because it would imply some limit on the available commands (namely: commands should be limited to those that can be undone).</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>A unique advantage that Command Line Interfaces typically offer over Graphical User Interfaces is that the interaction between user and computer is reified: it is made visible, and the user can directly interact with it, for example by copy/pasting commands.</p>
+
+<p>Many of the typically cited advantages of the command line are simply a consequence of this important fact.</p>
+
+<p>The reification of interaction is, however, not fundamentally limited to CLIs, and the concept may just as well be applied to GUIs.</p>
+
+<p>We have also seen a number of typical limitations to the reification of interaction as typically available in the CLIs of UNIX-like systems; such limitations are not fundamental to the reification, but are a consequence of the reification being accidental rather than being an explicit design goal in the design of the UNIX.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:gui-reification">
+      <p>Tools to record interactions with GUIs do exist, but they are significantly less useful and robust than their (built-in) counterpart in CLIs. <a href="#fnref:gui-reification" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:config-notes">
+      <p>Making sure the saved history has (virtually — from the human perspective) unlimited length and saving the timestamps typically requires some configuration. <a href="#fnref:config-notes" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/reification-of-interfaces/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
+              <span class="date">Jul 01, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/introducing-the-editor/" title="Introducing the Editor">Introducing the Editor </a></span>
+              <span class="date">Jun 29, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/existing-tools/" title="Existing tools">Existing tools </a></span>
+              <span class="date">Jun 27, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-power-of-undo/" title="The power of Undo">The power of Undo </a></span>
+              <span class="date">Jun 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/self-applicability/" title="Self applicability">Self applicability </a></span>
+              <span class="date">Jun 10, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/build-once-maintain-forever/" title="Build once, maintain forever">Build once, maintain forever </a></span>
+              <span class="date">Jun 07, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
