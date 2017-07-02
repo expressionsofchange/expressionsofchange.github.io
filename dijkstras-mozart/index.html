@@ -1,0 +1,281 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Dijkstra's Mozart &#8211; Expressions of Change</title>
+<meta name="description" content="Approximately two years before his death, [Edsger Dijkstra](https://en.wikipedia.org/wiki/Edsger_W._Dijkstra) was interviewed by the Dutch television program Noorderlicht. On that occasion he made an interesting comparison between two programming styles, which he characterized as Mozart versus Beethoven.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Dijkstra's Mozart &#8211; Expressions of Change">
+<meta property="og:description" content="Approximately two years before his death, [Edsger Dijkstra](https://en.wikipedia.org/wiki/Edsger_W._Dijkstra) was int...">
+<meta property="og:url" content="/dijkstras-mozart/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+     
+    <header class="site-header">
+    
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/recent/" >Recent posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/mozart-manuscript.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Dijkstra's Mozart</h1>
+            <p class="date">Jul 02, 2017</p>
+            <p class="intro">Approximately two years before his death, <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra">Edsger Dijkstra</a> was interviewed by the Dutch television program Noorderlicht. On that occasion he made an interesting comparison between two programming styles, which he characterized as Mozart versus Beethoven.
+</p>
+          </hgroup>
+        </header>
+
+        <p>The full quote, transcribed here from the subtitles, is as such:</p>
+
+<blockquote>
+  <p>There are very different programming styles. I tend to see them as Mozart versus Beethoven. When Mozart started to write, the composition was finished. He wrote the manuscript in one go. In beautiful handwriting too. Beethoven was a doubter and a struggler who started writing before he finished the composition. And then glued corrections onto the page. In one place he did this nine times. When they peeled them, the last version proved identical to the first one.</p>
+
+  <p>That iterative method of programming is somehow a very Anglo-Saxon custom. British education is pervaded by it. People learn, when they write, not to try to get it right the first time. Just write what’s on your mind and then rewrite repeatedly to get the product you want. That’s partly why word processors are marketed so aggressively and partly why they have been so successful here. While it is one of the advantages of working with pen and paper that when you start a sentence you should have it ready.</p>
+
+  <p>— Edsger W. Dijkstra<sup id="fnref:noorderlicht"><a href="#fn:noorderlicht" class="footnote">1</a></sup></p>
+</blockquote>
+
+<p>Although it is not mentioned explicitly in the above, there can be little doubt that Dijkstra considers the Mozart style to be superior – especially if you consider that Anglo-Saxon is a pejorative in Dijkstra’s vocabulary.</p>
+
+<p>Admittedly, the metaphor is an inspiring one: the image of a wise man pondering a problem on long walks, writing down the whole thing only when all is clear in a single sitting (preferably with a fountain pen) is certainly romantic.</p>
+
+<p>The image may especially rouse feelings of nostalgia when contrasted with the daily reality of trying to stay afloat in an ever increasing see of garbage. In a time where getting software out the door as quickly as possible is the all-overriding concern Dijkstra’s focus on elegance comes as a breath of fresh air.</p>
+
+<p>However, like most romantic images, the metaphor does not survive a closer examination.</p>
+
+<h2 id="the-mythological-mozart">The Mythological Mozart</h2>
+
+<p>The first problem with the Mozart style of programming is that the image that Dijkstra presents of Mozart is itself largely a mythological construction.</p>
+
+<p>The myth that Mozart composed his music fully in his head before committing anything to paper has its roots in a large part in a letter of which a key passage is presented below. It was published in 1815, more than two decades after his death, and addresses a certain “Baron von —”:</p>
+
+<blockquote>
+  <p>When I am, as it were, completely myself, entirely alone, and of good cheer; say travelling in a carriage, or walking after a good meal, or during the night, when I cannot sleep; it is on such occasions that my ideas flow best and most abundantly. [..] Those ideas that please me, I retain in memory [..] and provided I am not disturbed, my subject enlarges itself, becomes methodized and defined, and the whole, though it be long, stands almost finished and complete in my mind, so that I can survey it, like a fine picture or a beautiful statue, at a glance. Nor do I hear in my imagination the parts successively, but I hear them, as it were, all at once. [..] What has been thus produced I do not easily forget [..]</p>
+
+  <p>When I proceed to write down my ideas, I take out of the bag of my memory, if I may use that phrase, what has previously been collected into it, in the way I have mentioned. For this reason, the committing to paper is done quickly enough, for every thing is, as I said before, already finished; and it rarely differs on paper, from what it was in my imagination. At this occupation I can therefore suffer myself to be disturbed; for whatever may be going on around me, still I write.</p>
+
+  <p>— not Mozart<sup id="fnref:baron-von-x"><a href="#fn:baron-von-x" class="footnote">2</a></sup></p>
+</blockquote>
+
+<p>This letter was already exposed as a forgery in the 1860s<sup id="fnref:otto-jahn"><a href="#fn:otto-jahn" class="footnote">3</a></sup>, but this did not stop the myth from being perpetuated.</p>
+
+<p>Contrasting with the forgery are multiple surviving letters that are known to be authentic. First, letters sent by Mozart’s mother on their joint arrival in Paris describe first how bored he is without a keyboard in the room. A second letter describes hat, when it turns out that the stairs are too narrow to carry a keyboard to the room, that Mozart will need to do his composing away from home. A third, sent Three years later by Mozart himself upon moving to Vienna, describes how renting a keyboard is his first priority, so that he may turn to composing as soon as possible.<sup id="fnref:authentic-letters"><a href="#fn:authentic-letters" class="footnote">4</a></sup></p>
+
+<p>The decision, made after his death by his widow Constanze, to throw away all drafts of completed works, and keep only sketches and drafts of uncompleted ones helped to establish the .<sup id="fnref:constanze"><a href="#fn:constanze" class="footnote">5</a></sup> myth that Mozart wrote down his compositions in a single writing. Fortunately, plenty of sketches  remain to show to us that Mozart used sketches extensively in his creative process (albeit perhaps not as extensively as Beethoven) throughout his career; one of such sketches is shown at the bottom of the image below.</p>
+
+<p>The research into the myth versus reality of the Mozart’s compositional method is extensive enough to have its own <a href="https://en.wikipedia.org/wiki/Mozart's_compositional_method">Wikipedia page</a>.</p>
+
+<p><img src="/images/mozart-jottings.jpg" alt="An example of surviving &quot;work in progress&quot; by Mozart" /></p>
+
+<h2 id="bigger-problems">Bigger problems</h2>
+
+<p>Let’s step away from the specifics of Mozart for a moment, and consider the merits of the Mozart programming style independently of the truth of chosen example.</p>
+
+<p>A simple observation is that even the greatest genius has a limited mental capacity. Assuming an equivalent of the mythological Mozart exists in the realm of programming, at some point this mental capacity runs out. Applied to programming: you may be able to understand a single small or medium-sized program fully at once; but at some point, the program as a whole becomes too large to fit in a single person’s head in full.</p>
+
+<p>With the risk of of starting a flame war, we might also wonder which art has the greater capacity for complexity: that of composing music or programs? Firstly, we might observe that the length of programs has almost no theoretical upper bound, whereas a musical composition’s length is bounded by the endurance of the human bladder. Secondly, let’s see what Dijkstra himself has to say about the subject:</p>
+
+<blockquote>
+  <p>Programming is one of the most difficult branches of applied mathematics; the poorer mathematicians had better remain pure mathematicians.</p>
+
+  <p>— Edsger W. Dijkstra, <a href="https://www.cs.utexas.edu/users/EWD/ewd04xx/EWD498.PDF">EWD498</a></p>
+</blockquote>
+
+<p>In short: If you can solve a problem entirely in your head, perhaps you should be working on bigger problems.</p>
+
+<h2 id="changing-circumstances">Changing circumstances</h2>
+
+<p>There is one more critical difference with with music: whereas a piece of music may at some point be finished, many programs are, by design, never finished.</p>
+
+<p>This is at least true for the class of software that is often labeled “business software”: Software that models the processes of a real-world organization to be able to facilitate its real-world processes. Examples are programs to calculate insurances premiums, facilitate logistics and collect taxes; some of such programs are implemented specifically for any given organization, others serve an entire market. All such software must be changed whenever the real world it is modelling changes, and is only finished when the organization it’s supporting dies.</p>
+
+<p>The ever changing nature of programs is also caused by the fact that the existence of the software may create further wishes to change it. Just like Mozart couldn’t compose without a piano and many programmers cannot program without a keyboard, many organizations cannot compose their requirements without the feedback of an actually working program. That learning about the requirements of a given program can only be meaningfully done with an actual running version of the program is one of the central tenets of the <em>Agile</em> movement.</p>
+
+<p>Applying the model of the mythological Mozart to ever changing requirements asks of us to believe in a programmer that cannot only see the current version of a program in their head in its entirety, but also possesses the skill of foreseeing the future - quite a feat indeed!</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Aspiring to elegance in programming is laudable; given the state of our field it can’t really hurt to raise the bar a bit by listening to Dijkstra’s words.</p>
+
+<p>Let’s not base this aspiration on a mythical vision of Mozart and the human creative process though. The creative process is messy; requiring experimentation, drafts and interaction with our instruments. Let’s look out for tools that facilitate this, rather than base our hopes on a small group of geniuses.</p>
+
+<p>Let’s also realize that software does not operate in a static environment: writing the best version 1.0 we can, knowing full well that there will be a version 2.0.</p>
+
+<p>Beethoven is still widely considered one of the world’s best composers by any measure. Perhaps his methods weren’t so crazy after after all.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:noorderlicht">
+      <p>The video is available at the <a href="http://www.cs.utexas.edu/users/EWD/video-audio/NoorderlichtVideo.html">Edsger W. Dijkstra Archive</a> and on <a href="https://youtu.be/RCCigccBzIU?t=4m20s">YouTube</a>; the relevant quote starts at 4:20. <a href="#fnref:noorderlicht" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:baron-von-x">
+      <p>The letter was published in German 1815 in the <a href="https://books.google.nl/books?id=MxNDAAAAcAAJ&amp;pg=PA561#v=onepage&amp;q&amp;f=true">Allgemeine Musikalische Zeitung</a>, the English translation above is from the <a href="https://books.google.nl/books?id=9jFDAAAAcAAJ&amp;dq=harmonicon&amp;pg=PA198#v=onepage&amp;q&amp;f=false">1825 Harmonicon</a> <a href="#fnref:baron-von-x" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:otto-jahn">
+      <p>The fact that the letter is a forgery was first pointed out by Otto Jahn, in his biography “Life of Mozart”. <a href="#fnref:otto-jahn" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:authentic-letters">
+      <p>From the <a href="http://rmc.library.cornell.edu/mozart/myth/TellTale_Letters.htm">Cornell University Library’s Division of Rare and Manuscript Collections - Tell-Tale Letters</a> <a href="#fnref:authentic-letters" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:constanze">
+      <p>From the <a href="http://rmc.library.cornell.edu/mozart/compose.htm">Cornell University Library’s Division of Rare and Manuscript Collections - How did Mozart Compose?</a> <a href="#fnref:constanze" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/reification-of-interfaces/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
+              <span class="date">Jul 01, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/introducing-the-editor/" title="Introducing the Editor">Introducing the Editor </a></span>
+              <span class="date">Jun 29, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/existing-tools/" title="Existing tools">Existing tools </a></span>
+              <span class="date">Jun 27, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-power-of-undo/" title="The power of Undo">The power of Undo </a></span>
+              <span class="date">Jun 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/self-applicability/" title="Self applicability">Self applicability </a></span>
+              <span class="date">Jun 10, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
