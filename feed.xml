@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-07-04T11:06:47+02:00</updated>
+<updated>2017-07-04T11:20:20+02:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -24,11 +24,8 @@
     <uri>http://expressionsofchange.com</uri>
     <email>klaas@vanschelven.com</email>
   </author>
-  <content type="html">&lt;p&gt;In which we quickly explore an implementation choice of the editor.&lt;/p&gt;
-
-&lt;p&gt;When &lt;a href=&quot;/introducing-the-editor/&quot;&gt;introducing the editor&lt;/a&gt; we introduced a set of operations that represent changes (we called this a &lt;em&gt;clef&lt;/em&gt;).&lt;/p&gt;
-
-&lt;p&gt;Two of the operations presented so far take a full history as one of their parameters:&lt;/p&gt;
+  <content type="html">
+&lt;p&gt;When &lt;a href=&quot;/introducing-the-editor/&quot;&gt;introducing the editor&lt;/a&gt; we introduced a set of operations that represent changes (we called this a &lt;em&gt;clef&lt;/em&gt;). Two of the operations presented so far take a full history as one of their parameters:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;code&gt;Insert index history&lt;/code&gt;&lt;/li&gt;

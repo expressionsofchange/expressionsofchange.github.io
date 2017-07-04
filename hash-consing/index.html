@@ -1,13 +1,13 @@
 <html lang="en">
 <meta charset="utf-8">
 <title>Hash Consing &#8211; Expressions of Change</title>
-<meta name="description" content="">
+<meta name="description" content="Some operations from our _clef_ take a full history as one of their arguments. In this article we'll show how this can be efficiently implemented using a technique similar to Hash Consing.">
 <meta name="keywords" content="">
 
 
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Hash Consing &#8211; Expressions of Change">
-<meta property="og:description" content="">
+<meta property="og:description" content="Some operations from our _clef_ take a full history as one of their arguments. In this article we'll show how this ca...">
 <meta property="og:url" content="/hash-consing/">
 <meta property="og:site_name" content="Expressions of Change">
 
@@ -83,16 +83,13 @@
           <hgroup>
             <h1>Hash Consing</h1>
             <p class="date">Jul 04, 2017</p>
-            <p class="intro">
+            <p class="intro">Some operations from our <em>clef</em> take a full history as one of their arguments. In this article we’ll show how this can be efficiently implemented using a technique similar to Hash Consing.
 </p>
           </hgroup>
         </header>
 
-        <p>In which we quickly explore an implementation choice of the editor.</p>
-
-<p>When <a href="/introducing-the-editor/">introducing the editor</a> we introduced a set of operations that represent changes (we called this a <em>clef</em>).</p>
-
-<p>Two of the operations presented so far take a full history as one of their parameters:</p>
+        
+<p>When <a href="/introducing-the-editor/">introducing the editor</a> we introduced a set of operations that represent changes (we called this a <em>clef</em>). Two of the operations presented so far take a full history as one of their parameters:</p>
 
 <ul>
   <li><code>Insert index history</code></li>
