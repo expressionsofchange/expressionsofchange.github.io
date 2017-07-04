@@ -6,6 +6,10 @@
 
     
     <url>
+        <loc>/lehman-spe-classification/</loc>
+    </url>
+    
+    <url>
         <loc>/hash-consing/</loc>
     </url>
     

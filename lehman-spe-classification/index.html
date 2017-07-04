@@ -1,0 +1,245 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Lehman's SPE-classfication &#8211; Expressions of Change</title>
+<meta name="description" content="In the 1980 article “Programs, Life Cycles, and Laws of Software Evolution” by Meir Lehman, a  classification of computer programs into 3 types (S, P & E) is put forth. This classification forms a useful background against which to understand software evolution.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Lehman's SPE-classfication &#8211; Expressions of Change">
+<meta property="og:description" content="In the 1980 article “Programs, Life Cycles, and Laws of Software Evolution” by Meir Lehman, a  classification of comp...">
+<meta property="og:url" content="/lehman-spe-classification/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+     
+    <header class="site-header">
+    
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/recent/" >Recent posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/lizard.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Lehman's SPE-classfication</h1>
+            <p class="date">Jul 04, 2017</p>
+            <p class="intro">In the 1980 article “Programs, Life Cycles, and Laws of Software Evolution” by Meir Lehman, a  classification of computer programs into 3 types (S, P &amp; E) is put forth. This classification forms a useful background against which to understand software evolution.
+</p>
+          </hgroup>
+        </header>
+
+        <ul>
+  <li><strong>S-type programs</strong> — programs whose function is formally defined by and derivable from a <em>specification</em>.</li>
+  <li><strong>P-type programs</strong> — programs for which the <em>problem</em> may be precisely formulated, but for which the solution must inevitably reflect an approximation of the real world.</li>
+  <li><strong>E-type programs</strong> — programs that mechanize a human or societal activity and are <em>embedded</em> in the real world.</li>
+</ul>
+
+<p>P-type and E-type programs differ from S-type programs in that they represent a computer <em>application</em> in the real world. They are together called A-type programs.</p>
+
+<p>It is A-type programs that are most prone to change.</p>
+
+<p>A longer summary of Lehman’s SPE-classification is given below, quoting heavily from the <a href="https://cs.uwaterloo.ca/~a78khan/cs446/additional-material/scribe/27-refactoring/Lehman-LawsOfSoftwareEvolution.pdf">original article</a>.</p>
+
+<h3 id="s-type-programs">S-type programs</h3>
+
+<p>S-programs are programs whose function is formally defined by and derivable from a specification (hence the <em>S</em>).</p>
+
+<p>Examples are the lowest common multiple of two integers, eight queens and dining philosophers.</p>
+
+<p>Such problems may relate directly and primarily to the external world, but be completely defined.</p>
+
+<p>Correct solution of the problem as stated, in terms of the programming language being used, becomes the programmer’s sole concern. At most, questions of elegance or efficiency may also creep in.</p>
+
+<p>When this view can be legitimately taken the resultant program is conceptually static. One may change it to improve its clarity or its elegance, to decrease resource usage when the program is executed, even to increase confidence in its correctness.  But any such changes must not effect the mapping between input and output that it achieves in execution.</p>
+
+<p>In S-programs, judgments about the correctness, and therefore the value, of the programs relate by definition only to its specification.</p>
+
+<h3 id="p-type-programs">P-type programs</h3>
+
+<p>P-programs are programs for which the problem may be precisely formulated, but for which the solution must inevitably reflect an approximation of the real world. (<em>P</em> for real world <em>problem</em> solution).</p>
+
+<p>As an example, consider a program to play chess. The rules of the game of chess are completely specified; a procedure to make the best move at any given position can also be completely specified formally. Such a procedure is for example to, at any given position, create the tree of all games that may develop from it and adopt a minimax evaluation strategy to select the next move.</p>
+
+<p>Because this search tree is very large, such an approach is not feasible in practice. Practical approaches to chess programs must therefore make some approximations.</p>
+
+<p>The process of creating P-programs happens in the context of an intrinsic feedback loop.</p>
+
+<p>Despite the fact that the problem to be solved can be precisely defined, the acceptability of a solution is determined by the environment in which it is embedded.</p>
+
+<p>The solution obtained will be evaluated by comparison with the real environment.</p>
+
+<p>In P-programs, the concern is not centered on the problem statement but on the value and validity of the solution obtained in its real-world context.</p>
+
+<h3 id="e-type-programs">E-type programs</h3>
+
+<p>E-programs are those programs that mechanize a human or societal activity. The program has become a part of the world it models, it is embedded in it (hence the <em>E</em>).</p>
+
+<p>They are are inherently even more change prone than P-programs in the following ways:</p>
+
+<ul>
+  <li>
+    <p>It is not necessarily possible to precisely formulate the problem in the first place; the formulation of the specification must involve opinion and judgement. Once the program starts to be used, it creates feedback about this problem formulation, which leads to pressure for change.</p>
+  </li>
+  <li>
+    <p>The program affects the world it is embedded in: the usage patterns, habits, capabilities and expectations of its users and others. By so affecting the world, further pressure for change is created.</p>
+  </li>
+  <li>
+    <p>The world that’s being modeled may itself change, independently from the program. To stay relevant in the changing world, the program must change.</p>
+  </li>
+</ul>
+
+<p>Examples of such programs are plentiful: Operating Systems, business administration software, inventory management, stock trading etc.</p>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/lehman-spe-classification/" title="Lehman's SPE-classfication">Lehman's SPE-classfication </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/hash-consing/" title="Hash Consing">Hash Consing </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/reification-of-interfaces/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
+              <span class="date">Jul 01, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/introducing-the-editor/" title="Introducing the Editor">Introducing the Editor </a></span>
+              <span class="date">Jun 29, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/existing-tools/" title="Existing tools">Existing tools </a></span>
+              <span class="date">Jun 27, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
