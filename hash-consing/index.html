@@ -1,0 +1,266 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Hash Consing &#8211; Expressions of Change</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Hash Consing &#8211; Expressions of Change">
+<meta property="og:description" content="">
+<meta property="og:url" content="/hash-consing/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+     
+    <header class="site-header">
+    
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/recent/" >Recent posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/lizard.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Hash Consing</h1>
+            <p class="date">Jul 04, 2017</p>
+            <p class="intro">
+</p>
+          </hgroup>
+        </header>
+
+        <p>In which we quickly explore an implementation choice of the editor.</p>
+
+<p>When <a href="/introducing-the-editor/">introducing the editor</a> we introduced a set of operations that represent changes (we called this a <em>clef</em>).</p>
+
+<p>Two of the operations presented so far take a full history as one of their parameters:</p>
+
+<ul>
+  <li><code>Insert index history</code></li>
+  <li><code>Replace index history</code></li>
+</ul>
+
+<p>We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter <code>history</code>.</p>
+
+<p>In this article we’ll show how this is presently implemented in the editor.</p>
+
+<h3 id="the-problem-history-size">The problem: history-size</h3>
+
+<p>In a naive implementation we might serialize the full history and include it into the serialization of the <code>Replace</code> operation. The problem with this approach is that histories tend to grow over time (by definition).</p>
+
+<p>To see to which degree this would be an unworkable approach, consider the following. The <em>raison d’être</em> of the <code>Replace</code> operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.</p>
+
+<p>As an example of a practical application of that principle would be to keep track of the history of a single computer’s Operating System and applications. In the composed approach, such a system-level history is composed of the histories of each application, which are composed of the histories of their modules, functions, etc. down to the histories of the smallest expressions of which the applications are composed.</p>
+
+<p>The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the <code>Replace</code> operation. This would then result in the following <code>Replace</code> operations:</p>
+
+<ul>
+  <li>The history of the system as a whole is extended with a <code>Replace</code> operation which takes as a parameter…</li>
+  <li>The history of some software application as it was previously, but extended with a <code>Replace</code> operation which takes as a parameter…</li>
+  <li>The history of some module as it was previously, but extended with a <code>Replace</code> operation which takes as a parameter…</li>
+</ul>
+
+<p>etc.</p>
+
+<p>If we model the serialization of such <code>Replace</code> operations naively, by including the full history as a parameter, the top-level <code>Replace</code> from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).</p>
+
+<p>The challenge is therefore: include arbitrarily large histories at a low cost.</p>
+
+<h3 id="hashes-to-the-rescue">Hashes to the rescue</h3>
+
+<p>The present prototype of the editor solves this problem as such:</p>
+
+<p>First, we recognise that the history is a list of changes; the oldest change being the first element, the newest change being the last element in the list.</p>
+
+<p>Any list of serializable elements may be modeled as a collection of records, where each record consists of 2 fields:</p>
+
+<ol>
+  <li>The element, as a serialized string of bytes.</li>
+  <li>Either [a] a hash of the previous record [b] a special value to denote no such record exists.</li>
+</ol>
+
+<p>We can compute such a hash if the layout of the record is well-defined; the simplest such defintion (which is the one used in the editor) is to concatenate the serialized values of the 2 fields.</p>
+
+<p>If we keep a single hash table in which we can look up records given their hash, and this hash table contains (at least) all records from a given list, we can always reconstruct lists from a given the hash of the last element of the list.</p>
+
+<p>A similar technique in Lisp implementations is called <a href="https://en.wikipedia.org/wiki/Hash_consing">Hash Consing</a>.<sup id="fnref:terminology-notes"><a href="#fn:terminology-notes" class="footnote">1</a></sup> More recent analogues are git’s commit object structure (though it implements a directed acyclic graph rather than a list because multiple ‘previous’ records may be referenced) and bitcoin’s blockchain.</p>
+
+<p>Recognizing that any list can be written in the Hash Consing style, and that histories are lists, we’ve implemented histories as such.</p>
+
+<p>It is precisely the hash of such a record that we can refer to from when serializing the operations <code>Insert</code> and <code>Replace</code>, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.</p>
+
+<h3 id="considerations">Considerations</h3>
+
+<p>Finally, we’ll look at some considerations.</p>
+
+<p>It is not strictly necessary to use a hash-based scheme to achieve the above-mentioned advantages in space-complexity. In principle, any scheme that deduplicates shared histories would suffice.</p>
+
+<p>For exampe, we might implement the histories as backlinked lists in-memory, and implement <code>Replace</code> to contain a pointer to the relevant item from the list.</p>
+
+<p>However, using a hash-based scheme brings several advantages over such an approach:</p>
+
+<ul>
+  <li>There is no tie-in to the memory addressing scheme of a particular process; the in-memory format may thus be used as a serialization format for storage on disk or sharing over the network.</li>
+  <li>Deduplication of any shared history is automatic, there is no need to keep track of shared histories programatically.</li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:terminology-notes">
+      <p>It would be tempting but incorrect to use the term <a href="https://en.wikipedia.org/wiki/Hash_list">“hash list”</a> to describe such a construct: that term is used to denote a structure where a list of hashses is used as an input to a single root hash. In other words: the individual elements of a hash list are not linking to each other, but are linked together at a single point. The term <a href="https://en.wikipedia.org/wiki/Hash_chain">“hash chain”</a> seems to be reserved for repeated application a hash function to a single input. <a href="#fnref:terminology-notes" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/hash-consing/" title="Hash Consing">Hash Consing </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/reification-of-interfaces/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
+              <span class="date">Jul 01, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/introducing-the-editor/" title="Introducing the Editor">Introducing the Editor </a></span>
+              <span class="date">Jun 29, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/existing-tools/" title="Existing tools">Existing tools </a></span>
+              <span class="date">Jun 27, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-power-of-undo/" title="The power of Undo">The power of Undo </a></span>
+              <span class="date">Jun 14, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

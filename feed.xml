@@ -4,13 +4,111 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-07-02T21:45:45+02:00</updated>
+<updated>2017-07-04T11:06:47+02:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Hash Consing]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/hash-consing/" />
+  <id>http://expressionsofchange.com/hash-consing</id>
+  <published>2017-07-04T00:00:00+02:00</published>
+  <updated>2017-07-04T00:00:00+02:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;In which we quickly explore an implementation choice of the editor.&lt;/p&gt;
+
+&lt;p&gt;When &lt;a href=&quot;/introducing-the-editor/&quot;&gt;introducing the editor&lt;/a&gt; we introduced a set of operations that represent changes (we called this a &lt;em&gt;clef&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Two of the operations presented so far take a full history as one of their parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;Insert index history&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Replace index history&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter &lt;code&gt;history&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this article we’ll show how this is presently implemented in the editor.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-problem-history-size&quot;&gt;The problem: history-size&lt;/h3&gt;
+
+&lt;p&gt;In a naive implementation we might serialize the full history and include it into the serialization of the &lt;code&gt;Replace&lt;/code&gt; operation. The problem with this approach is that histories tend to grow over time (by definition).&lt;/p&gt;
+
+&lt;p&gt;To see to which degree this would be an unworkable approach, consider the following. The &lt;em&gt;raison d’être&lt;/em&gt; of the &lt;code&gt;Replace&lt;/code&gt; operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.&lt;/p&gt;
+
+&lt;p&gt;As an example of a practical application of that principle would be to keep track of the history of a single computer’s Operating System and applications. In the composed approach, such a system-level history is composed of the histories of each application, which are composed of the histories of their modules, functions, etc. down to the histories of the smallest expressions of which the applications are composed.&lt;/p&gt;
+
+&lt;p&gt;The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the &lt;code&gt;Replace&lt;/code&gt; operation. This would then result in the following &lt;code&gt;Replace&lt;/code&gt; operations:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The history of the system as a whole is extended with a &lt;code&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
+  &lt;li&gt;The history of some software application as it was previously, but extended with a &lt;code&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
+  &lt;li&gt;The history of some module as it was previously, but extended with a &lt;code&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;etc.&lt;/p&gt;
+
+&lt;p&gt;If we model the serialization of such &lt;code&gt;Replace&lt;/code&gt; operations naively, by including the full history as a parameter, the top-level &lt;code&gt;Replace&lt;/code&gt; from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).&lt;/p&gt;
+
+&lt;p&gt;The challenge is therefore: include arbitrarily large histories at a low cost.&lt;/p&gt;
+
+&lt;h3 id=&quot;hashes-to-the-rescue&quot;&gt;Hashes to the rescue&lt;/h3&gt;
+
+&lt;p&gt;The present prototype of the editor solves this problem as such:&lt;/p&gt;
+
+&lt;p&gt;First, we recognise that the history is a list of changes; the oldest change being the first element, the newest change being the last element in the list.&lt;/p&gt;
+
+&lt;p&gt;Any list of serializable elements may be modeled as a collection of records, where each record consists of 2 fields:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The element, as a serialized string of bytes.&lt;/li&gt;
+  &lt;li&gt;Either [a] a hash of the previous record [b] a special value to denote no such record exists.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We can compute such a hash if the layout of the record is well-defined; the simplest such defintion (which is the one used in the editor) is to concatenate the serialized values of the 2 fields.&lt;/p&gt;
+
+&lt;p&gt;If we keep a single hash table in which we can look up records given their hash, and this hash table contains (at least) all records from a given list, we can always reconstruct lists from a given the hash of the last element of the list.&lt;/p&gt;
+
+&lt;p&gt;A similar technique in Lisp implementations is called &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_consing&quot;&gt;Hash Consing&lt;/a&gt;.&lt;sup id=&quot;fnref:terminology-notes&quot;&gt;&lt;a href=&quot;#fn:terminology-notes&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; More recent analogues are git’s commit object structure (though it implements a directed acyclic graph rather than a list because multiple ‘previous’ records may be referenced) and bitcoin’s blockchain.&lt;/p&gt;
+
+&lt;p&gt;Recognizing that any list can be written in the Hash Consing style, and that histories are lists, we’ve implemented histories as such.&lt;/p&gt;
+
+&lt;p&gt;It is precisely the hash of such a record that we can refer to from when serializing the operations &lt;code&gt;Insert&lt;/code&gt; and &lt;code&gt;Replace&lt;/code&gt;, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.&lt;/p&gt;
+
+&lt;h3 id=&quot;considerations&quot;&gt;Considerations&lt;/h3&gt;
+
+&lt;p&gt;Finally, we’ll look at some considerations.&lt;/p&gt;
+
+&lt;p&gt;It is not strictly necessary to use a hash-based scheme to achieve the above-mentioned advantages in space-complexity. In principle, any scheme that deduplicates shared histories would suffice.&lt;/p&gt;
+
+&lt;p&gt;For exampe, we might implement the histories as backlinked lists in-memory, and implement &lt;code&gt;Replace&lt;/code&gt; to contain a pointer to the relevant item from the list.&lt;/p&gt;
+
+&lt;p&gt;However, using a hash-based scheme brings several advantages over such an approach:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;There is no tie-in to the memory addressing scheme of a particular process; the in-memory format may thus be used as a serialization format for storage on disk or sharing over the network.&lt;/li&gt;
+  &lt;li&gt;Deduplication of any shared history is automatic, there is no need to keep track of shared histories programatically.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:terminology-notes&quot;&gt;
+      &lt;p&gt;It would be tempting but incorrect to use the term &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_list&quot;&gt;“hash list”&lt;/a&gt; to describe such a construct: that term is used to denote a structure where a list of hashses is used as an input to a single root hash. In other words: the individual elements of a hash list are not linking to each other, but are linked together at a single point. The term &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_chain&quot;&gt;“hash chain”&lt;/a&gt; seems to be reserved for repeated application a hash function to a single input. &lt;a href=&quot;#fnref:terminology-notes&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/hash-consing/&quot;&gt;Hash Consing&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>

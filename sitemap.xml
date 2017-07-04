@@ -6,6 +6,10 @@
 
     
     <url>
+        <loc>/hash-consing/</loc>
+    </url>
+    
+    <url>
         <loc>/reification-of-interfaces/</loc>
     </url>
     
