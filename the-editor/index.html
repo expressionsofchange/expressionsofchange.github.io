@@ -1,14 +1,14 @@
 <html lang="en">
 <meta charset="utf-8">
-<title>Expressions of Change</title>
-<meta name="description" content="_Expressions of Change_ is a research project that aims to radically improve the tools for constructing ever-changing computer programs.">
+<title>The Editor &#8211; Expressions of Change</title>
+<meta name="description" content="Part of this project is an editor which takes Expressions of Change as primitives.">
 <meta name="keywords" content="">
 
 
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Expressions of Change">
-<meta property="og:description" content="_Expressions of Change_ is a research project that aims to radically improve the tools for constructing ever-changing...">
-<meta property="og:url" content="/">
+<meta property="og:title" content="The Editor &#8211; Expressions of Change">
+<meta property="og:description" content="Part of this project is an editor which takes Expressions of Change as primitives.">
+<meta property="og:url" content="/the-editor/">
 <meta property="og:site_name" content="Expressions of Change">
 
 
@@ -77,82 +77,53 @@
     </header>
 
 
-<section class="article">
+        <section class="article">
 
-  <div class="overlay"></div>
-  <div class="featured-image" style="background-image: url(/images/features/impala.jpg)"></div>
+          <div class="overlay"></div>
+          <div class="featured-image" style="background-image: url(/images/features/wet-tree.jpg"></div>
 
-      <article class="wrap post">
-        <header class="post-header">
-          <hgroup>
-            
-            <p class="intro"><em>Expressions of Change</em> is a research project that aims to radically improve the tools for constructing ever-changing computer programs.
+          <article class="archive-wrap">
+              <ol class="post-list">
+                 <lh><h2><span class="bb">The Editor</span></h2></lh>
+
+                  <p class="intro">Part of this project is an editor which takes Expressions of Change as primitives.
 </p>
-          </hgroup>
-        </header>
+                  <p>In the articles below this editor is presented in more detail; starting with the general design but drilling down to include various implementation details in later articles.</p>
 
-        <p>The need for such a project stems from two observations:</p>
+                  <p>&nbsp;</p>
 
-<ol>
-  <li><strong>Computer programs <em>will</em> be changed</strong> — and managing those changes themselves forms a large part of a computer programmer’s work.</li>
-  <li><strong>Existing tools are afterthoughts</strong> — the creation of Version Management Systems postdates the programming languages whose programs’ versions they manage.</li>
-</ol>
-
-<p>The fact that most computer programs are destined to evolve <a href="https://en.wikipedia.org/wiki/Lehman%27s_laws_of_software_evolution">has been well known since at least 1974</a>. This has only become more obvious since then, so much that currently popular paradigms such as <a href="https://en.wikipedia.org/wiki/Agile_software_development">Agile Development</a> even put it at the core of their philosophy.</p>
-
-<p>The basic building block of programming, however, does not acknowledge this ever-changing nature: to the compiler a program appears as one or more historyless text files.</p>
-
-<p>Because of the central importance of software evolution, <a href="/existing-tools/">a myriad of tools has sprung up to manage it</a>. However, these tools invariably take historyless files as a given and proceed to add history on top of it. They are therefore doomed to yield incomplete solutions.</p>
-
-<h3 id="design-goals">Design goals</h3>
-
-<p>The design goals of this project follow directly from the problem definition above. By not accepting history-less files as a basic building block we get:</p>
-
-<ul>
-  <li><strong>Change</strong> to the program itself should be a <strong>primitive</strong>.</li>
-  <li><strong>Combining</strong> arbitrarily sized parts of programs <strong>across time</strong> should be possible.</li>
-</ul>
-
-<p>Arbitrarily combining parts of programs across time is a radical new idea. Here are just a few examples of what becomes possible in that paradigm:</p>
-
-<ul>
-  <li>Refactoring a function definition while postponing to update some of the calling locations.</li>
-  <li>Real-time large team cooperation on a single codebase — modules that are currently being edited by others can be referenced or ignored at will.</li>
-  <li>Reproducing bugs by simply replaying them — any version of the program is referencable and executable; combined with a reference to the data reproducing bugs becomes trivial.</li>
-  <li>Using multiple different versions of the same external or internal library across a single program.</li>
-  <li>Running 2 or more versions of the program simultaneously, switching out one of them gradually.</li>
-</ul>
-
-<p>And much more…</p>
-
-<h3 id="implementation-direction">Implementation direction</h3>
-
-<p>The main goal of the project is to demonstrate a prototype that is an implementation of the design goals mentioned above — i.e. some sort of <em>Programming Language</em>.</p>
-
-<p>Because the project rejects the history-less file as a basic building block, the first step towards this is to build an <em>editor</em> that constructs the primitives of change instead.</p>
-
-<p>For practical reasons (the scope of the project is large enough as it stands), the first editor will only supports constructions a minimal syntax: S-Expressions.</p>
-
-<p>Whether a more advanced syntax is required, e.g. to be able to express type information properly, is an open question.</p>
-
-<h3 id="status">Status</h3>
-
-<p>This is an ongoing project. Progress will be documented on this site in two forms:</p>
-
-<ol>
-  <li><a href="/recent/">Articles</a> describing the progress of the project and its philosophical underpinnings.</li>
-  <li>Demo (research) implementations.  A very first version of this editor has been built in the first months of 2017; it will be presented on this site in July.</li>
-</ol>
-
-
-
-      
-
-
-      
-
-      </article>
-    </section>
+                  
+                  
+                  <li>
+                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+                        <h1><a href="/introducing-the-editor/">Introducing the Editor</a></h1>
+                        <p class="date"><time datetime="2017-06-29T00:00:00+02:00" itemprop="datePublished">June 29, 2017</time></p>
+                        <p class="">The first step towards making expressions of change available in some programming language is to build an editor that can construct them. The first steps towards this editor have been made and are presented here.
+</p>
+                    </div>
+                  </li>
+                  
+                  <li>
+                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+                        <h1><a href="/the-editor-a-video/">The Editor - First Video</a></h1>
+                        <p class="date"><time datetime="2017-07-01T00:00:00+02:00" itemprop="datePublished">July 01, 2017</time></p>
+                        <p class="">A short video of the editor has been posted to YouTube. It can be viewed below.
+</p>
+                    </div>
+                  </li>
+                  
+                  <li>
+                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+                        <h1><a href="/hash-consing/">Hash Consing</a></h1>
+                        <p class="date"><time datetime="2017-07-04T00:00:00+02:00" itemprop="datePublished">July 04, 2017</time></p>
+                        <p class="">Some operations from our <em>clef</em> take a full history as one of their arguments. In this article we’ll show how this can be efficiently implemented using a technique similar to Hash Consing.
+</p>
+                    </div>
+                  </li>
+                  
+              </ol>
+          </article>
+        </section>
 </div>
 
 <div class="push"></div>
