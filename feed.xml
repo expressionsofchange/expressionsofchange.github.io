@@ -4,13 +4,136 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-07-05T15:04:28+02:00</updated>
+<updated>2017-07-12T14:57:17+02:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Ship of Theseus]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/ship-of-theseus/" />
+  <id>http://expressionsofchange.com/ship-of-theseus</id>
+  <published>2017-07-12T00:00:00+02:00</published>
+  <updated>2017-07-12T00:00:00+02:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;In the original form &lt;a href=&quot;https://en.wikipedia.org/wiki/Theseus&quot;&gt;Theseus&lt;/a&gt; returns to Athens on a ship after defeating the Minotaur.  After his return, the Athenians preserve his ship for many centuries for it to serve in religious ceremonies. Over the years they replace the planks one by one as they were affected by rot.&lt;/p&gt;
+
+&lt;p&gt;The puzzle is: at some point all planks of the ship have been replaced. Is it still the same ship as before? Is it still Theseus ship?&lt;/p&gt;
+
+&lt;p&gt;The paradoxical nature of the thought experiment seems to arise as such:&lt;/p&gt;
+
+&lt;p&gt;Repairing objects, in this case by replacing a single plank, does not fundamentally alter their identity. If the ship was Theseus ship before the repair, it clearly is Theseus ship after the repair too.&lt;/p&gt;
+
+&lt;p&gt;After many such repairs however, the original ship and the ship with all planks replaced have nothing in common. How can two things that have nothing in common be the same? Is a thing not that out of which it consists?&lt;/p&gt;
+
+&lt;p&gt;Before answering, consider a variation on the theme, as put forward by Thomas Hobbes:&lt;/p&gt;
+
+&lt;p&gt;In it, we use the planks that are taken away from the original ship are used to construct a new ship. After all planks have been replaced, we have 2 ships: one which started out as the original, but has each plank replaced, and one which consists entirely of the original planks. Which of these ships is Theseus ship? If it is the newly constructed one, at which point is the identity transferred?&lt;/p&gt;
+
+&lt;h2 id=&quot;potential-solutions&quot;&gt;Potential solutions&lt;/h2&gt;
+
+&lt;p&gt;Since the Ship of Theseus is an ancient thought experiment, numerous solutions have been put forth over time. We explore some of them and their ramifications below.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;A thing is (exclusively) its parts&lt;/strong&gt; — in this solution, the ship of Theseus is exclusively the planks out of which it was originally made. In the original version, by replacing the planks, the ship slowly dissolves over time. After 40% of the planks have been replaced, we can only speak of the “60% ship of Theseus”. In Hobbes’ version, the second ship slowly assumes the identity of Theseus ship over time. This solution is unsatisfying, if only for the fact that we don’t use such gradual notions of identity in day to day speech.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Threshold value&lt;/strong&gt; — we might instead consider setting some threshold number of planks that carry with it the identity.  The problem with this solution is that it seems quite hard to come up with a non-arbitrary such threshold, that can be applied across various sorts of objects. It is quite easy to come up with new variants of the riddle that make this evident. For example: what if we distribute the planks from the original ship over 5 new ships?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Reject identity in the face of change&lt;/strong&gt; — having seen two failed approaches, we might reject the idea of persistent identity in the face of change altogether. Each time a plank is replaced, we end up with a fully new ship, the previous one having been destroyed. The problem with this solution is that it’s not a solution at all: it simply amounts to giving up in the face of a seemingly hard problem. As a consequence, we lose the ability to meaningfully talk about identity in the face of change.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;4-dimensionalism&lt;/strong&gt; — in the &lt;a href=&quot;https://en.wikipedia.org/wiki/Perdurantism&quot;&gt;4-dimenionalist&lt;/a&gt; view we say that Theseus ship is an object that exists across 3 spatial dimensions and 1 dimension of time. In this view the ship before and after the replacement of the planks are 3 dimensional slices of the 4-dimensional object which extends across time. This solution works for the original problem, but it’s not immediately clear how it answers the further complications as proposed by Hobbes, because it does help us answer which of the 2 ships is the ship of Theseus.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;“Semantics”&lt;/strong&gt; — finally, we might say that the mistake is in assigning identity to objects in the first place. In this view, identity is simply a definition given in language by people to objects, but no property of the object itself. Asking questions about the object’s identity as if it is, as we do in the riddle, is nonsensical. In other words: the ship of Theseus is simply that what we call the ship of Theseus, or what the Athenians deem to be it, or even just the ship that is currently legally owned by Theseus. This solution seems to be the most  useful, but by saying that it’s all just semantics, it’s also somewhat dismissive of how such semantics may come to be.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;revisiting-the-problem&quot;&gt;Revisiting the problem&lt;/h2&gt;
+
+&lt;p&gt;By carefully examining the original puzzle we can point at the introduction of such semantics.&lt;/p&gt;
+
+&lt;p&gt;In the setup, a ship is described, whose planks are replaced one by one. By this very formulation, an identity across time is implied: the thing whose planks are replaced is something we can talk about, all the way up the last plank. It is the formulation of the puzzle itself that creates the identity of the single ship, consisting of different planks over time.&lt;/p&gt;
+
+&lt;p&gt;After this setup comes the trick: in the final line of the riddle we’re asked to consider the ship’s material form at two points in time, and question whether these are the same. The paradoxical nature of the riddle then arises from 2 sources:&lt;/p&gt;
+
+&lt;p&gt;First, there’s the fact that the setup talks about the historical ship and the process of plank-replacing at length. By doing so, we imply that it is somehow relevant to the question at hand. But in the question at the end this historical context is ignored, and only the first and last form of the ship are presented, asking us to make a statement about these forms while precisely ignoring this historical context.&lt;/p&gt;
+
+&lt;p&gt;(In cases where the riddle is presented as a video-animation, we can actually see this source of the confusion in the animation. In such videos the final part of the riddle is invariably modeled as the morphing of a long series of ships into 2 unequal instances of such ships)&lt;/p&gt;
+
+&lt;p&gt;Second, and perhaps more to the point, there’s the fact that the forms of the ship at any given point in time are not distinguished from the identity of the ship across time, despite them being of an entirely different class.&lt;/p&gt;
+
+&lt;p&gt;When such a distinction is properly made, the paradox disappears. We might ask then:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;is the form of the ship as it appears after the planks are replaced the same as before it? — no.&lt;/li&gt;
+  &lt;li&gt;is the form of the ship at some point in time the same as the ship in all time? — no.&lt;/li&gt;
+  &lt;li&gt;are both the forms of the ship before and after the planks have been replaced forms of the ship at some point in time? — yes.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Regarding the name of this ship the following.  In the above we established the existence of a single ship across time, as implied by the very phrasing of the riddle itself. Whether this single ship should be called the “ship of Theseus” is slightly less evident. We could argue it should be: At the beginning of the puzzle the puzzle speaks of the ship of Theseus, and since there is only one ship, there is no real ambiguity if we speak of the ship of Theseus by the end of the puzzle as well. If such lack of ambiguity is not sufficient to our taste, we could always speak of “the ship from the riddle” instead.&lt;/p&gt;
+
+&lt;p&gt;Summarizing, the original riddle is only paradoxical because it defines a historical identity and then, in imprecise language, asks us whether certain ships are this historical identity. In the form of a Q &amp;amp; A:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Q&lt;/strong&gt;: “what is the ship of Theseus?”&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;A&lt;/strong&gt;: “didn’t you just tell me?”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;hobbes&quot;&gt;Hobbes&lt;/h2&gt;
+
+&lt;p&gt;The paradoxical nature of the Hobbes variation is caused by quite a different error in reasoning.&lt;/p&gt;
+
+&lt;p&gt;In this version of the riddle, the riddle does not describe a process of plank-replacing on a single ship. Instead, 2 ships are described, as well as a process of transferring planks from one to the other. After these descriptions, the question is put to us: “which of these is the ship of Theseus?”&lt;/p&gt;
+
+&lt;p&gt;We are, in short, dealing with the opposite situation from the original problem. In the original, we were asked to clarify muddled language after a definition was implicitly provided to us. Here, the task of defining a single ship of Theseus is put squarely in our court.&lt;/p&gt;
+
+&lt;p&gt;The problem is that, for each such definition, it’s quite possible to come up with arguments as to why this definition does not work well.&lt;/p&gt;
+
+&lt;p&gt;Which raises the question: why should we expect that it’s possible to come up with a meaningful such definition in the first place? The answer to this question would seem to be: because it was possible to do so in the original problem.&lt;/p&gt;
+
+&lt;p&gt;However, in the original problem there was only a single ship, changing in form over time; in the Hobbes formulation there are multiple such ships.&lt;/p&gt;
+
+&lt;p&gt;In other words: the Hobbes formulation is only paradoxical if you believe that, just because it is sometimes possible to come up with meaningful definitions, it is always possible to do so.&lt;/p&gt;
+
+&lt;p&gt;In short:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Q&lt;/strong&gt;: “what is the ship of Theseus?”&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;A&lt;/strong&gt;: “why don’t &lt;em&gt;you&lt;/em&gt; tell me?”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;Having examined the ship of Theseus in two variations we may ask ourselves what was actually achieved. Setting up a riddle, only to solve it by showing the errors of logic in the riddle itself surely smells of trickery. This is surely how some of the commentators on the videos about the subject feel (“Moot semantics”, “This is why I hate philosophy”, “Merely a matter of semantics, but it pays better to try and make a great deal out of it.”)&lt;/p&gt;
+
+&lt;p&gt;One might counter that any problem once understood is trivial — including those that flow directly from bad definitions. In particular, the riddles and their solutions provide a number of useful insights when modeling the world, for example while writing computer programs.&lt;/p&gt;
+
+&lt;p&gt;First, the semantics of identity as implied in the original puzzle, namely those of a single historical object which changes over time, are common and useful. Identifying it as a pattern is helpful.&lt;/p&gt;
+
+&lt;p&gt;Second, errors such as the ones presented in the riddles above are extremely easy to make and common. Having a clear thought experiment available to us to clarify the error is useful.&lt;/p&gt;
+
+&lt;p&gt;In fact, such confusion of semantics may happen any time we talk informally about mutable objects. Examples of those are everywhere in everyday computing: files, web pages, rows in databases, variables etc.&lt;/p&gt;
+
+&lt;p&gt;Each time we talk about such a thing, we run into exactly the same problems of the original puzzle. Consider the question “is the file &lt;code&gt;/etc/passwords&lt;/code&gt; the same file as it was 10 minutes ago?” — and how it is phrased quite similarly to the original problem. This is the more pressing an issue, because in many cases the only thing our tools and languages allow us to talk about are the things across all of time. In HTML, for example, one may link to a web page, but there is no way to link to a particular version of a web page.&lt;/p&gt;
+
+&lt;p&gt;Third, the Hobbes variation tells us that any of multiple definitions of (historical) identity may the most appropriate if history is non-linear; and that which such definition is the best choice may depend on context.&lt;/p&gt;
+
+&lt;p&gt;This knowledge will come in handy when engaging in philosophical debates about the best way to express histories, such as in the project that this website is about. In many cases, the right answer in such debates is not to take on a particular view of history from the tooling, but rather to have the tooling be flexible enough so that the user can pick the right view.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/ship-of-theseus/&quot;&gt;Ship of Theseus&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 12, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>

@@ -1,0 +1,299 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Ship of Theseus &#8211; Expressions of Change</title>
+<meta name="description" content="The ship of Theseus is an ancient thought experiment that poses some questions about the nature of identity of changing objects. In this article we examine the real life implications on modeling the world in computer programs.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Ship of Theseus &#8211; Expressions of Change">
+<meta property="og:description" content="The ship of Theseus is an ancient thought experiment that poses some questions about the nature of identity of changi...">
+<meta property="og:url" content="/ship-of-theseus/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+     
+    <header class="site-header">
+    
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/project-motivation/" >Project Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/recent/" >Recent posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/trireme.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Ship of Theseus</h1>
+            <p class="date">Jul 12, 2017
+
+              
+            </p>
+
+            <p class="intro"><a href="https://en.wikipedia.org/wiki/Ship_of_Theseus">The ship of Theseus</a> is an ancient thought experiment that poses some questions about the nature of identity of changing objects.
+</p>
+          </hgroup>
+        </header>
+
+        <p>In the original form <a href="https://en.wikipedia.org/wiki/Theseus">Theseus</a> returns to Athens on a ship after defeating the Minotaur.  After his return, the Athenians preserve his ship for many centuries for it to serve in religious ceremonies. Over the years they replace the planks one by one as they were affected by rot.</p>
+
+<p>The puzzle is: at some point all planks of the ship have been replaced. Is it still the same ship as before? Is it still Theseus ship?</p>
+
+<p>The paradoxical nature of the thought experiment seems to arise as such:</p>
+
+<p>Repairing objects, in this case by replacing a single plank, does not fundamentally alter their identity. If the ship was Theseus ship before the repair, it clearly is Theseus ship after the repair too.</p>
+
+<p>After many such repairs however, the original ship and the ship with all planks replaced have nothing in common. How can two things that have nothing in common be the same? Is a thing not that out of which it consists?</p>
+
+<p>Before answering, consider a variation on the theme, as put forward by Thomas Hobbes:</p>
+
+<p>In it, we use the planks that are taken away from the original ship are used to construct a new ship. After all planks have been replaced, we have 2 ships: one which started out as the original, but has each plank replaced, and one which consists entirely of the original planks. Which of these ships is Theseus ship? If it is the newly constructed one, at which point is the identity transferred?</p>
+
+<h2 id="potential-solutions">Potential solutions</h2>
+
+<p>Since the Ship of Theseus is an ancient thought experiment, numerous solutions have been put forth over time. We explore some of them and their ramifications below.</p>
+
+<ol>
+  <li>
+    <p><strong>A thing is (exclusively) its parts</strong> — in this solution, the ship of Theseus is exclusively the planks out of which it was originally made. In the original version, by replacing the planks, the ship slowly dissolves over time. After 40% of the planks have been replaced, we can only speak of the “60% ship of Theseus”. In Hobbes’ version, the second ship slowly assumes the identity of Theseus ship over time. This solution is unsatisfying, if only for the fact that we don’t use such gradual notions of identity in day to day speech.</p>
+  </li>
+  <li>
+    <p><strong>Threshold value</strong> — we might instead consider setting some threshold number of planks that carry with it the identity.  The problem with this solution is that it seems quite hard to come up with a non-arbitrary such threshold, that can be applied across various sorts of objects. It is quite easy to come up with new variants of the riddle that make this evident. For example: what if we distribute the planks from the original ship over 5 new ships?</p>
+  </li>
+  <li>
+    <p><strong>Reject identity in the face of change</strong> — having seen two failed approaches, we might reject the idea of persistent identity in the face of change altogether. Each time a plank is replaced, we end up with a fully new ship, the previous one having been destroyed. The problem with this solution is that it’s not a solution at all: it simply amounts to giving up in the face of a seemingly hard problem. As a consequence, we lose the ability to meaningfully talk about identity in the face of change.</p>
+  </li>
+  <li>
+    <p><strong>4-dimensionalism</strong> — in the <a href="https://en.wikipedia.org/wiki/Perdurantism">4-dimenionalist</a> view we say that Theseus ship is an object that exists across 3 spatial dimensions and 1 dimension of time. In this view the ship before and after the replacement of the planks are 3 dimensional slices of the 4-dimensional object which extends across time. This solution works for the original problem, but it’s not immediately clear how it answers the further complications as proposed by Hobbes, because it does help us answer which of the 2 ships is the ship of Theseus.</p>
+  </li>
+  <li>
+    <p><strong>“Semantics”</strong> — finally, we might say that the mistake is in assigning identity to objects in the first place. In this view, identity is simply a definition given in language by people to objects, but no property of the object itself. Asking questions about the object’s identity as if it is, as we do in the riddle, is nonsensical. In other words: the ship of Theseus is simply that what we call the ship of Theseus, or what the Athenians deem to be it, or even just the ship that is currently legally owned by Theseus. This solution seems to be the most  useful, but by saying that it’s all just semantics, it’s also somewhat dismissive of how such semantics may come to be.</p>
+  </li>
+</ol>
+
+<h2 id="revisiting-the-problem">Revisiting the problem</h2>
+
+<p>By carefully examining the original puzzle we can point at the introduction of such semantics.</p>
+
+<p>In the setup, a ship is described, whose planks are replaced one by one. By this very formulation, an identity across time is implied: the thing whose planks are replaced is something we can talk about, all the way up the last plank. It is the formulation of the puzzle itself that creates the identity of the single ship, consisting of different planks over time.</p>
+
+<p>After this setup comes the trick: in the final line of the riddle we’re asked to consider the ship’s material form at two points in time, and question whether these are the same. The paradoxical nature of the riddle then arises from 2 sources:</p>
+
+<p>First, there’s the fact that the setup talks about the historical ship and the process of plank-replacing at length. By doing so, we imply that it is somehow relevant to the question at hand. But in the question at the end this historical context is ignored, and only the first and last form of the ship are presented, asking us to make a statement about these forms while precisely ignoring this historical context.</p>
+
+<p>(In cases where the riddle is presented as a video-animation, we can actually see this source of the confusion in the animation. In such videos the final part of the riddle is invariably modeled as the morphing of a long series of ships into 2 unequal instances of such ships)</p>
+
+<p>Second, and perhaps more to the point, there’s the fact that the forms of the ship at any given point in time are not distinguished from the identity of the ship across time, despite them being of an entirely different class.</p>
+
+<p>When such a distinction is properly made, the paradox disappears. We might ask then:</p>
+
+<ul>
+  <li>is the form of the ship as it appears after the planks are replaced the same as before it? — no.</li>
+  <li>is the form of the ship at some point in time the same as the ship in all time? — no.</li>
+  <li>are both the forms of the ship before and after the planks have been replaced forms of the ship at some point in time? — yes.</li>
+</ul>
+
+<p>Regarding the name of this ship the following.  In the above we established the existence of a single ship across time, as implied by the very phrasing of the riddle itself. Whether this single ship should be called the “ship of Theseus” is slightly less evident. We could argue it should be: At the beginning of the puzzle the puzzle speaks of the ship of Theseus, and since there is only one ship, there is no real ambiguity if we speak of the ship of Theseus by the end of the puzzle as well. If such lack of ambiguity is not sufficient to our taste, we could always speak of “the ship from the riddle” instead.</p>
+
+<p>Summarizing, the original riddle is only paradoxical because it defines a historical identity and then, in imprecise language, asks us whether certain ships are this historical identity. In the form of a Q &amp; A:</p>
+
+<ul>
+  <li><strong>Q</strong>: “what is the ship of Theseus?”</li>
+  <li><strong>A</strong>: “didn’t you just tell me?”</li>
+</ul>
+
+<h2 id="hobbes">Hobbes</h2>
+
+<p>The paradoxical nature of the Hobbes variation is caused by quite a different error in reasoning.</p>
+
+<p>In this version of the riddle, the riddle does not describe a process of plank-replacing on a single ship. Instead, 2 ships are described, as well as a process of transferring planks from one to the other. After these descriptions, the question is put to us: “which of these is the ship of Theseus?”</p>
+
+<p>We are, in short, dealing with the opposite situation from the original problem. In the original, we were asked to clarify muddled language after a definition was implicitly provided to us. Here, the task of defining a single ship of Theseus is put squarely in our court.</p>
+
+<p>The problem is that, for each such definition, it’s quite possible to come up with arguments as to why this definition does not work well.</p>
+
+<p>Which raises the question: why should we expect that it’s possible to come up with a meaningful such definition in the first place? The answer to this question would seem to be: because it was possible to do so in the original problem.</p>
+
+<p>However, in the original problem there was only a single ship, changing in form over time; in the Hobbes formulation there are multiple such ships.</p>
+
+<p>In other words: the Hobbes formulation is only paradoxical if you believe that, just because it is sometimes possible to come up with meaningful definitions, it is always possible to do so.</p>
+
+<p>In short:</p>
+
+<ul>
+  <li><strong>Q</strong>: “what is the ship of Theseus?”</li>
+  <li><strong>A</strong>: “why don’t <em>you</em> tell me?”</li>
+</ul>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Having examined the ship of Theseus in two variations we may ask ourselves what was actually achieved. Setting up a riddle, only to solve it by showing the errors of logic in the riddle itself surely smells of trickery. This is surely how some of the commentators on the videos about the subject feel (“Moot semantics”, “This is why I hate philosophy”, “Merely a matter of semantics, but it pays better to try and make a great deal out of it.”)</p>
+
+<p>One might counter that any problem once understood is trivial — including those that flow directly from bad definitions. In particular, the riddles and their solutions provide a number of useful insights when modeling the world, for example while writing computer programs.</p>
+
+<p>First, the semantics of identity as implied in the original puzzle, namely those of a single historical object which changes over time, are common and useful. Identifying it as a pattern is helpful.</p>
+
+<p>Second, errors such as the ones presented in the riddles above are extremely easy to make and common. Having a clear thought experiment available to us to clarify the error is useful.</p>
+
+<p>In fact, such confusion of semantics may happen any time we talk informally about mutable objects. Examples of those are everywhere in everyday computing: files, web pages, rows in databases, variables etc.</p>
+
+<p>Each time we talk about such a thing, we run into exactly the same problems of the original puzzle. Consider the question “is the file <code>/etc/passwords</code> the same file as it was 10 minutes ago?” — and how it is phrased quite similarly to the original problem. This is the more pressing an issue, because in many cases the only thing our tools and languages allow us to talk about are the things across all of time. In HTML, for example, one may link to a web page, but there is no way to link to a particular version of a web page.</p>
+
+<p>Third, the Hobbes variation tells us that any of multiple definitions of (historical) identity may the most appropriate if history is non-linear; and that which such definition is the best choice may depend on context.</p>
+
+<p>This knowledge will come in handy when engaging in philosophical debates about the best way to express histories, such as in the project that this website is about. In many cases, the right answer in such debates is not to take on a particular view of history from the tooling, but rather to have the tooling be flexible enough so that the user can pick the right view.</p>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/ship-of-theseus/" title="Ship of Theseus">Ship of Theseus </a></span>
+              <span class="date">Jul 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/lehman-spe-classification/" title="Lehman's SPE-classfication">Lehman's SPE-classfication </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/hash-consing/" title="Hash Consing">Hash Consing </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/reification-of-interaction/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
+              <span class="date">Jul 01, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/introducing-the-editor/" title="Introducing the Editor">Introducing the Editor </a></span>
+              <span class="date">Jun 29, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
