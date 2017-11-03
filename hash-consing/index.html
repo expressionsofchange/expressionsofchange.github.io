@@ -133,7 +133,7 @@
 
 <p>If we model the serialization of such <code>Replace</code> operations naively, by including the full history as a parameter, the top-level <code>Replace</code> from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).</p>
 
-<p>The challenge is therefore: include arbitrarily large histories at a low cost.</p>
+<p>The challenge is therefore: being able to reference arbitrarily large histories at a constant cost.</p>
 
 <h3 id="hashes-to-the-rescue">Hashes to the rescue</h3>
 
@@ -228,7 +228,7 @@ s.setAttribute('data-timestamp', +new Date());
             </li>
          <!-- for1 -->
             <li>
-              <span class="recent-title"><a href="/reification-of-interaction/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="recent-title"><a href="/reification-of-interaction/" title="CLIs are reified UIs">CLIs are reified UIs </a></span>
               <span class="date">Jul 02, 2017</span>
             </li>
          <!-- for1 -->

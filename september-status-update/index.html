@@ -1,13 +1,13 @@
 <html lang="en">
 <meta charset="utf-8">
 <title>September status update &#8211; Expressions of Change</title>
-<meta name="description" content="After spending some time on the editor, I have now switched my attention to working on a small LISP interpreter which takes the editor's output as its input.">
+<meta name="description" content="After spending some time on the editor, I have now switched my attention to working on a small Lisp interpreter which takes the editor's output as its input.">
 <meta name="keywords" content="">
 
 
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="September status update &#8211; Expressions of Change">
-<meta property="og:description" content="After spending some time on the editor, I have now switched my attention to working on a small LISP interpreter which...">
+<meta property="og:description" content="After spending some time on the editor, I have now switched my attention to working on a small Lisp interpreter which...">
 <meta property="og:url" content="/september-status-update/">
 <meta property="og:site_name" content="Expressions of Change">
 
@@ -91,7 +91,7 @@
               
             </p>
 
-            <p class="intro">After spending some time on the editor, I have now switched my attention to working on a small LISP interpreter which takes the editor’s output as its input.
+            <p class="intro">After spending some time on the editor, I have now switched my attention to working on a small Lisp interpreter which takes the editor’s output as its input.
 </p>
           </hgroup>
         </header>
@@ -100,19 +100,19 @@
 
 <p>In this project I experiment with better tooling for constructing ever-changing computer programs. The project is split into 2 major related parts: an editor in which changes take a central role, and the interpretation of artifacts as produced by the editor as computer programs.</p>
 
-<p>I have decided to let the editor be for now, and have recently switched my attention to working on a small LISP interpreter. This takes as its input a mechanism of construction of an S-Expression, rather than just the constructed end-product.</p>
+<p>I have decided to let the editor be for now, and have recently switched my attention to working on a small Lisp interpreter. This takes as its input a mechanism of construction of an S-Expression, rather than just the constructed end-product.</p>
 
 <p>As some key parts of the modelling I have identified:</p>
 
 <ul>
-  <li>A small set of LISP forms</li>
+  <li>A small set of Lisp forms</li>
   <li>A vocabulary of change on these forms (A “<em>Clef</em>”).</li>
-  <li>A mapping of changes to S-Expressions to changes to LISP forms.</li>
+  <li>A mapping of changes to S-Expressions to changes to Lisp forms.</li>
 </ul>
 
 <p>The above is (roughly) implemented.</p>
 
-<p>The current step is to make sure the LISP forms lead to an actually functioning interpreter. Doing so as a prototype should, hopefully, be fairly simple.</p>
+<p>The current step is to make sure the Lisp forms lead to an actually functioning interpreter. Doing so as a prototype should, hopefully, be fairly simple.</p>
 
 <p>An important goal in the implementation of this interpreter is to stay faithful to the notion of expressions of change. In particular: rather than interpret fully constructed programs, the focus is in interpreting the meaning of changes to existing programs.</p>
 
@@ -178,7 +178,7 @@ s.setAttribute('data-timestamp', +new Date());
             </li>
          <!-- for1 -->
             <li>
-              <span class="recent-title"><a href="/reification-of-interaction/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="recent-title"><a href="/reification-of-interaction/" title="CLIs are reified UIs">CLIs are reified UIs </a></span>
               <span class="date">Jul 02, 2017</span>
             </li>
          <!-- for1 -->

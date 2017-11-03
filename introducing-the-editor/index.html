@@ -150,13 +150,13 @@
 <p>S-Expressions are</p>
 
 <ul>
-  <li>an atom (some symbol), or</li>
+  <li>an atom (some symbol or value), or</li>
   <li>a list of 0 or more s-expressions<sup id="fnref:lists-not-tuples"><a href="#fn:lists-not-tuples" class="footnote">2</a></sup></li>
 </ul>
 
 <p>With these two types of elements we can build tree like structures with at the leaves either empty lists or atoms.</p>
 
-<p>The primary motivation for picking such a minimal syntax is a practical one: the scope of the project is rather large as it stands and a programming language family which is expressed in S-Expressions is readily available (<a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a>).</p>
+<p>The primary motivation for picking such a minimal syntax is a practical one: the scope of the project is rather large as it stands and a programming language family which is expressed in S-Expressions is readily available (<a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a>).</p>
 
 <p>From a usability perspective, S-Expressions are also desirable. There are only two kinds of S-Expression (atoms &amp; lists) and the mapping between S-Expressions and their visual representation is very straightforward. Since the structure of the program is readily visible, the programmer needs not create a separate mental model of it in their head; this makes structured editing feasible.</p>
 
@@ -164,20 +164,20 @@
 
 <h3 id="a-clef-for-construction">A Clef for Construction</h3>
 
-<p>Having established what the structure of our documents will be, we can turn our attention to the primitives of construction. In other words, we’ll have to decide on a set of operations to construct and modify S-Expressions. We’ll call such a set of primitives a <em>Clef</em>.</p>
+<p>Having established what the structure of our documents will be, we can turn our attention to the primitives of construction. In other words, we’ll have to decide on a set of operations to construct and modify S-Expressions. We’ll call such a set of primitives a <em>Clef</em><sup id="fnref:why-clef"><a href="#fn:why-clef" class="footnote">3</a></sup>.</p>
 
-<p>This is just as much a design decision as picking the syntax of the language in the first place. Here too, the space from which we can choose is infinite.<sup id="fnref:infinite-space"><a href="#fn:infinite-space" class="footnote">3</a></sup> The forces working on this decision are similar too; they are roughly:</p>
+<p>This is just as much a design decision as picking the syntax of the language in the first place. Here too, the space from which we can choose is infinite.<sup id="fnref:infinite-space"><a href="#fn:infinite-space" class="footnote">4</a></sup> The forces working on this decision are similar too; they are roughly:</p>
 
 <ul>
   <li>Adding more elements to the <em>clef</em> potentially allows for more precise descriptions of history and expressions of intent (good).</li>
   <li>Adding more elements imposes an implementation cost (bad).</li>
   <li>Adding more elements imposes a mental burden on the programmer (bad).</li>
-  <li>Adding more elements increases the risk that multiple mechanisms exist to construct the same result, without being able to assign a different semantics to these mechanisms (bad).</li>
+  <li>Adding more elements increases the risk that multiple equivalent mechanisms exist to construct the same result, even in cases when there is no meaningful underlying reason for this (bad).</li>
 </ul>
 
 <p>In the below I will present a particular clef as decided upon (for now); leaving the description of the thought-process of the decision itself to another (yet to be written) article.</p>
 
-<p>The clef defines the following operations:<sup id="fnref:imperative-functional-equivalence"><a href="#fn:imperative-functional-equivalence" class="footnote">4</a></sup></p>
+<p>The clef defines the following operations:<sup id="fnref:imperative-functional-equivalence"><a href="#fn:imperative-functional-equivalence" class="footnote">5</a></sup></p>
 
 <ul>
   <li><code>BecomeAtom atom</code> — Out of nothingness, spawn a given atom; or replace an existing atom with the given atom.</li>
@@ -280,6 +280,9 @@
     <li id="fn:lists-not-tuples">
       <p>The canonical definition of S-Expressions treats lists as mere syntactic sugar for nested pairs; i.e. <code>(x y z)</code> is simply a shorthand for <code>(x . (y . (z . NIL)))</code>. In this implementation the opposite approach is taken as to allow for primitives of change on such lists that are sufficiently expressive. <a href="#fnref:lists-not-tuples" class="reversefootnote">&#8617;</a></p>
     </li>
+    <li id="fn:why-clef">
+      <p>The name <em>Clef</em> refers to a <a href="https://en.wikipedia.org/wiki/Clef">musical clef</a>; musical notation serves as a metaphore for <em>expressions of change</em> because it’s a nice real world example of a sequential list of instructions for “construction”. In this metaphore, the <em>Clef</em> defines which notes are playable, i.e. what our vocabulary of change is. <a href="#fnref:why-clef" class="reversefootnote">&#8617;</a></p>
+    </li>
     <li id="fn:infinite-space">
       <p>To see that there are literally infinitely many possible primitive operations of change, consider the following: there are infinitely many s-expressions, and we can always define a special operation of change for any given s-expression. <a href="#fnref:infinite-space" class="reversefootnote">&#8617;</a></p>
     </li>
@@ -336,7 +339,7 @@ s.setAttribute('data-timestamp', +new Date());
             </li>
          <!-- for1 -->
             <li>
-              <span class="recent-title"><a href="/reification-of-interaction/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="recent-title"><a href="/reification-of-interaction/" title="CLIs are reified UIs">CLIs are reified UIs </a></span>
               <span class="date">Jul 02, 2017</span>
             </li>
          <!-- for1 -->

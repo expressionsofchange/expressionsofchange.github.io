@@ -1,13 +1,13 @@
 <html lang="en">
 <meta charset="utf-8">
-<title>Reification of Interaction &#8211; Expressions of Change</title>
-<meta name="description" content="Command Line Interfaces make their commands available as a first level citizen. ">
+<title>CLIs are reified UIs &#8211; Expressions of Change</title>
+<meta name="description" content="Many of the advantages of Command Line Interfaces can be attributed to the fact that they _reify_ the user interaction: the interaction itself is made into something that's visible and can be interacted with.">
 <meta name="keywords" content="">
 
 
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Reification of Interaction &#8211; Expressions of Change">
-<meta property="og:description" content="Command Line Interfaces make their commands available as a first level citizen. ">
+<meta property="og:title" content="CLIs are reified UIs &#8211; Expressions of Change">
+<meta property="og:description" content="Many of the advantages of Command Line Interfaces can be attributed to the fact that they _reify_ the user interactio...">
 <meta property="og:url" content="/reification-of-interaction/">
 <meta property="og:site_name" content="Expressions of Change">
 
@@ -85,18 +85,26 @@
       <article class="wrap post">
         <header class="post-header">
           <hgroup>
-            <h1>Reification of Interaction</h1>
+            <h1>CLIs are reified UIs</h1>
             <p class="date">Jul 02, 2017
 
               
+                  — Tags:
+                  
+                  <a href="/musings/">Musings</a>
+                  
+                  
+              
             </p>
 
-            <p class="intro">Two main paradigms of interaction between humans and computers are Command Line Interfaces (CLIs) and Graphical User Interfaces (GUIs). In CLIs the user interacts with the computer by sequentially typing various textual commands, to which the computer replies, also in text. Graphical interfaces base the interaction with the computer on graphical icons and widgets and navigation typically depends on a pointing device such as the mouse.
+            <p class="intro">In this article we’ll shine a new light on the age old debate about the advantages of CLIs vs. GUIs: Many of the advantages of Command Line Interfaces can be attributed to the fact that they <em>reify</em> the user interaction: the interaction itself is made into something that’s visible and can be interacted with.
 </p>
           </hgroup>
         </header>
 
-        <p>Proponents of GUIs typically stress their ease of use, especially for non-experts. The primary cause is <em>discoverability</em>: at any time the various available options are laid out on the screen and can be further explored with the mouse.</p>
+        <p>First, some definitions: Two main paradigms of interaction between humans and computers are Command Line Interfaces (CLIs) and Graphical User Interfaces (GUIs). In CLIs the user interacts with the computer by sequentially typing various textual commands, to which the computer replies, also in text. Graphical interfaces base the interaction with the computer on graphical icons and widgets and navigation typically depends on a pointing device such as the mouse. The debate on the respective advantages and disadvantages of these paradigms stretches back decades.</p>
+
+<p>Proponents of GUIs typically stress their ease of use, especially for non-experts. A key contributer to GUIs ease of use is <em>discoverability</em>: at any time the various available options are laid out on the screen and can be further explored with the mouse.</p>
 
 <p>CLIs predate GUIs. Despite of the ease of use of the latter, usage of CLIs persists, especially in UNIX-like systems. This has come as a surprise to some. Typically offered explanations are:</p>
 
@@ -111,19 +119,19 @@
 
 <h2 id="reification-of-interaction">Reification of Interaction</h2>
 
-<p>I’ll start by stating the obvious: In a command-line interface the textual commands are displayed on screen as typed. The output of each command is displayed below it. Previously entered commands and outputs are scrolled up as required, i.e. when the screen is full.</p>
+<p>Let’s start by stating the obvious: In a command-line interface the textual commands are displayed on screen as typed. The output of each command is displayed below it. Previously entered commands and outputs are scrolled up as required, i.e. when the screen is full.</p>
 
 <p>This means that the human-computer interaction is being expressed in a tangible and visible way. This can be said for both individual parts of the interaction (individual commands) and for the interaction as a whole (the history of an entire session).</p>
 
 <p>A more fancy way to say this is: the user-computer interaction is <a href="https://en.wikipedia.org/wiki/Reification_(computer_science)">reified</a>.</p>
 
-<p>Note how this contrasts with the typical interaction in a GUI: There, after clicking on some button or icon, the GUI will respond in some way, e.g. by opening a new screen or copying a file. However, the action of clicking the button itself can no longer be observed, manipulated or shared after it has happened.<sup id="fnref:gui-reification"><a href="#fn:gui-reification" class="footnote">1</a></sup>_</p>
+<p>Note how this contrasts with the typical interaction in a GUI: There, after clicking on some button or icon, the GUI will respond in some way, e.g. by opening a new screen or copying a file. However, the action of clicking the button itself can no longer be observed, manipulated or shared after it has happened.<sup id="fnref:gui-reification"><a href="#fn:gui-reification" class="footnote">1</a></sup></p>
 
 <p>In CLIs, as mentioned above, the commands as given and their outputs are displayed on screen. In typical setups the support for reification is a bit more powerful than that:</p>
 
 <ul>
   <li>
-    <p><strong>Keyboard shortcuts</strong> — several keyboard shortcuts allow for usage of past commands, e.g. arrow-up typically shows the previously issued command, and CTRL+R typically opens a search prompt which allows for searching previously issued commands. Previously commands are not just visible on screen, but can be selected with minimal effort.</p>
+    <p><strong>Keyboard shortcuts</strong> — several keyboard shortcuts allow for usage of past commands, e.g. arrow-up typically shows the previously issued command, and CTRL+R typically opens a search prompt which allows for searching previously issued commands. Previous commands are not just visible on screen, but can be selected with minimal effort.</p>
   </li>
   <li>
     <p><strong>Copy/paste</strong> — support for copy/paste makes it so that arbitrary text from the screen may be copied, and that text from arbitrary sources (including the screen itself) may be pasted as a new command. Note the symmetry between the input and output formats: everything is text. This allows for the copying of an entire session’s output into the documentation, an internet forum or script. Conversely, solutions from internet forums may be copied into the session without friction.</p>
@@ -167,7 +175,7 @@
   </li>
 </ul>
 
-<p>Out of these limitations other follow. For example: the undo-command is not available in CLIs, because it would imply some limit on the available commands (namely: commands should be limited to those that can be undone).</p>
+<p>Out of these limitations other follow. For example: the undo-command is not available in CLIs, because it would imply some constraint on the available commands (namely: commands should be limited to those that can be undone).</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
@@ -237,7 +245,7 @@ s.setAttribute('data-timestamp', +new Date());
             </li>
          <!-- for1 -->
             <li>
-              <span class="recent-title"><a href="/reification-of-interaction/" title="Reification of Interaction">Reification of Interaction </a></span>
+              <span class="recent-title"><a href="/reification-of-interaction/" title="CLIs are reified UIs">CLIs are reified UIs </a></span>
               <span class="date">Jul 02, 2017</span>
             </li>
          <!-- for1 -->
