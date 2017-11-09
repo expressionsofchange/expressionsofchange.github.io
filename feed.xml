@@ -4,13 +4,214 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-11-03T16:09:48+01:00</updated>
+<updated>2017-11-09T10:40:29+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Git is ignorant by design]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/git-is-ignorant-by-design/" />
+  <id>http://expressionsofchange.com/git-is-ignorant-by-design</id>
+  <published>2017-11-08T00:00:00+01:00</published>
+  <updated>2017-11-08T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;h3 id=&quot;an-example&quot;&gt;An example&lt;/h3&gt;
+
+&lt;p&gt;The concept is best explained using an example. Consider the following output of &lt;code class=&quot;highlighter-rouge&quot;&gt;git show&lt;/code&gt;, which shows a change to a piece of Python code:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;commit 9dadc2.........
+Author: ......
+Date: ......
+
+    Refactoring: move method_c and method_d
+    
+    These methods are moved from OneClass to AnotherClass, as the latter
+    is the correct location because of some reasons that would certainly
+    exist if this wasn&#39;t a toy example.
+
+&lt;span class=&quot;gh&quot;&gt;diff --git a/example.py b/example.py
+index 1cde8fb..f487c7e 100644
+&lt;/span&gt;&lt;span class=&quot;gd&quot;&gt;--- a/example.py
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ b/example.py
+&lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -2,17 +2,17 @@ class AnotherClass(object):
+&lt;/span&gt;     def method_a(self):
+         pass  # implementation of method_a ...
+ 
+&lt;span class=&quot;gd&quot;&gt;-
+-class OneClass(object):
+-    def method_b(self):
+-        pass  # implementation of method_b ...
+-
+&lt;/span&gt;     def method_c(self):
+         pass  # implementation of method_c ...
+ 
+     def method_d(self):
+         pass  # implementation of method_d ...
+ 
+&lt;span class=&quot;gi&quot;&gt;+
++class OneClass(object):
++    def method_b(self):
++        pass  # implementation of method_b ...
++
+&lt;/span&gt;     def method_e(self):
+         pass  # implementation of method_e
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;How should we interpret this diff?&lt;/p&gt;
+
+&lt;p&gt;Let’s start by reading what the author ostensibly intended. The commit message talks about moving the two methods &lt;code class=&quot;highlighter-rouge&quot;&gt;method_c&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;method_d&lt;/code&gt; from &lt;code class=&quot;highlighter-rouge&quot;&gt;OneClass&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;AnotherClass&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;However, if we look at the actual diff, we see something else entirely: the removal of the definition of &lt;code class=&quot;highlighter-rouge&quot;&gt;OneClass&lt;/code&gt; and its method &lt;code class=&quot;highlighter-rouge&quot;&gt;method_b&lt;/code&gt; in one place, and the reintroduction of these elements in another place.&lt;/p&gt;
+
+&lt;p&gt;It might seem that either the commit message or the actual contents of the commit are wrong. It turns out that neither is the case. Instead, the source of confusion lies in the way &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; works&lt;sup id=&quot;fnref:or-any-text-based-vcs&quot;&gt;&lt;a href=&quot;#fn:or-any-text-based-vcs&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;snapshots-on-text-files&quot;&gt;Snapshots on text files&lt;/h3&gt;
+
+&lt;p&gt;Git views the world as a collection of files (usually: text files), of which snapshots are made each time a commit is made. This means that, for the example above, &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; got to see the following two versions:&lt;/p&gt;
+
+&lt;h4 id=&quot;before-the-commit&quot;&gt;Before the commit:&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_a ...&lt;/span&gt;
+ 
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OneClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_b ...&lt;/span&gt;
+
+     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_c ...&lt;/span&gt;
+ 
+     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_d ...&lt;/span&gt;
+ 
+     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_e&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;after-the-commit&quot;&gt;After the commit:&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+             &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_a ...&lt;/span&gt;
+     
+         &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+             &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_c ...&lt;/span&gt;
+     
+         &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+             &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_d ...&lt;/span&gt;
+     
+
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OneClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_b ...&lt;/span&gt;
+
+         &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+             &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_e&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;First note that these 2 versions actually correspond to the commit message: the 2 methods &lt;code class=&quot;highlighter-rouge&quot;&gt;method_c&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;method_d&lt;/code&gt; are indeed moved from &lt;code class=&quot;highlighter-rouge&quot;&gt;OneClass&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;AnotherClass&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, why does &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; present a diff that seems to tell a different story? To answer this, we must first understand what &lt;code class=&quot;highlighter-rouge&quot;&gt;git diff&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;git show&lt;/code&gt; do in the first place: Given two versions of a file these commands attempt to calculate the smallest difference between them and present this.&lt;/p&gt;
+
+&lt;p&gt;Regarding the meaning of the content of the files Git makes only a very minimal number of assumptions. Most of these have to do with “plain text files”. For example, it knows the special meaning of newline-characters. Using this knowledge the goal of finding a minimal difference is interpreted to mean “with a minimal number of different lines”.&lt;/p&gt;
+
+&lt;p&gt;Given these goals, the diff as presented in the original example is exactly what you’d expect: removing &lt;code class=&quot;highlighter-rouge&quot;&gt;OneClass&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;method_b&lt;/code&gt; in one place and adding them in another is simply more efficient than the alternative of removing and adding &lt;code class=&quot;highlighter-rouge&quot;&gt;method_c&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;method_d&lt;/code&gt;. The former affects 5 removed lines and 5 added lines for a total of 10 while the latter affects 2 × 6 = 12 lines. (In both cases empty lines contribute to the numbers). Given that &lt;em&gt;Git&lt;/em&gt; attempts to show the smallest diff, it prefers the former options over the latter.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-problem-defined&quot;&gt;The problem defined&lt;/h3&gt;
+
+&lt;p&gt;Given that &lt;code class=&quot;highlighter-rouge&quot;&gt;git diff&lt;/code&gt; behaves according to specification, what’s the problem? Can we make the suggestion that the original example is confusing more precise? In fact we can!&lt;/p&gt;
+
+&lt;p&gt;The key to this is in realizing the following: Our example deals with a piece of Python code, in which concepts such as “classes” and “methods” exist. These concepts have a hierarchical nature: classes are structures that may contain other structures such as methods. When editing the file, we are aware of this structure – in fact, it forms the very reason we edit the file, an intent that the author even captured in the commit message.&lt;/p&gt;
+
+&lt;p&gt;Moving part of a hierarchical structure to a different container is quite a useful and natural thing to be able to express. For comparison, consider the following phrases: “moving files to another directory” and “moving marbles to a different vase”.  Contrast this with the unnatural alternative of saying that the containers have, so to speak, “wrapped around newly contained items”: We don’t usually say “we’ve moved a directory-ending somewhat, so that it now contains 3 more files”, nor do we say “a vase has been moved to a location where it happens to contain more marbles”.&lt;/p&gt;
+
+&lt;p&gt;Git, however, occasionally does precisely that, as demonstrated in the original example: it moves a class definition relative to its contents rather than vice versa.&lt;/p&gt;
+
+&lt;p&gt;This is because Git remains agnostic of the structure of the files under its control, noting only that they are text files. Given that it can simply do no better than calculating the smallest difference in number of changed lines. This smallest number of lines happens to include the class definition, rather than the lower-level methods contained therein.&lt;/p&gt;
+
+&lt;p&gt;It is for this reason that we can say “Git is &lt;em&gt;ignorant&lt;/em&gt;” – it’s ignorant of the structure of the files it’s diffing.&lt;/p&gt;
+
+&lt;h3 id=&quot;closing-remarks&quot;&gt;Closing remarks&lt;/h3&gt;
+
+&lt;p&gt;This concludes the main discussion of the problem. Some final thoughts are below.&lt;/p&gt;
+
+&lt;p&gt;First, one might wonder how serious of a problem this really is. On this I can only speak from personal experience: I personally run into some version of this problem approximately once a week. Admittedly, the most regular occurrences are also less confusing than the example at the top of this article, which was contrived specifically to be maximally confusing.&lt;/p&gt;
+
+&lt;p&gt;A more regular occurrence is a diff like the below:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/example.py
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ b/example.py
+&lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -1,3 +1,8 @@
+&lt;/span&gt; @decorated_function
+&lt;span class=&quot;gi&quot;&gt;+def newfunction():
++    pass  # this is newfunction
++
++
++@decorated_function
+&lt;/span&gt; def oldfunction():
+     pass  # this is oldfunction
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In the above example, the more logical diff would identify the first of the 2 decorators (&lt;code class=&quot;highlighter-rouge&quot;&gt;@decorated_function&lt;/code&gt;) as being the newly added one. However, git cannot distinguish between the 2 identical occurrences of that line, and identifies the second one as the new one.&lt;/p&gt;
+
+&lt;p&gt;If we read this diff like a story, git seems to tell us the following: the decorator of the function &lt;code class=&quot;highlighter-rouge&quot;&gt;oldfunction&lt;/code&gt; was repurposed for a newly added function &lt;code class=&quot;highlighter-rouge&quot;&gt;newfunction&lt;/code&gt;. The function &lt;code class=&quot;highlighter-rouge&quot;&gt;oldfunction&lt;/code&gt; was then given a new (identical) decorator to compensate for its loss. A simpler and more correct story would be: a new function &lt;code class=&quot;highlighter-rouge&quot;&gt;newfunction&lt;/code&gt; was added with its own decorator.&lt;/p&gt;
+
+&lt;p&gt;A final example uses lists, in which it would be more logical to show the earlier opening bracket as the new addition. Such an approach would lead to a diff with balanced brackets, as opposed to the close-then-open we get now:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/matrix.py
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ b/matrix.py
+&lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -5,6 +5,11 @@ matrix = [
+&lt;/span&gt;         3,
+     ],
+     [
+&lt;span class=&quot;gi&quot;&gt;+        7,
++        8,
++        9,
++    ],
++    [
+&lt;/span&gt;         4,
+         5,
+         6,
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In short: examples of the problem are easily found. However: the most regular occurrences are also generally the least confusing.&lt;/p&gt;
+
+&lt;p&gt;As of yet, I have not been able to find other people reporting a similar experience. Whether this is because others don’t experience this phenomenon as a problem, or whether they have resigned themselves to Git’s set of assumptions, I do not know. You are invited let me know, possibly by presenting any of your own real-life examples in the comment section below.&lt;/p&gt;
+
+&lt;h3 id=&quot;heuristics-and-fundamental-solutions&quot;&gt;Heuristics and fundamental solutions&lt;/h3&gt;
+
+&lt;p&gt;As noted in the above, git’s ignorance is a fundamentally unsolvable problem: diffs that are based on text alone can never fundamentally know what the underlying structures of those text files were. This does not mean that finding better heuristics for presenting diffs is entirely impossible.&lt;/p&gt;
+
+&lt;p&gt;The option &lt;code class=&quot;highlighter-rouge&quot;&gt;--indent-heuristic&lt;/code&gt;, introduced in Git version 2.11, attempts to do just that: it uses indentation as a heuristic for hierarchical structure; this corresponds to the reality in many programming languages and data formats.&lt;/p&gt;
+
+&lt;p&gt;However, for obvious reasons, a solution using heuristics can only lead to limited results. Thoughts on more fundamental solutions which require no heuristics at all are the subject of the rest of this website.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:or-any-text-based-vcs&quot;&gt;
+      &lt;p&gt;Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control. &lt;a href=&quot;#fnref:or-any-text-based-vcs&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/git-is-ignorant-by-design/&quot;&gt;Git is ignorant by design&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 08, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -168,9 +369,9 @@
 
 &lt;p&gt;In fact, such confusion of semantics may happen any time we talk informally about mutable objects. Examples of those are everywhere in everyday computing: files, web pages, rows in databases, variables etc.&lt;/p&gt;
 
-&lt;p&gt;Each time we talk about such a thing, we run into exactly the same problems of the original puzzle. Consider the question “is the file &lt;code&gt;/etc/passwords&lt;/code&gt; the same file as it was 10 minutes ago?” — and how it is phrased quite similarly to the original problem. This is the more pressing an issue, because in many cases the only thing our tools and languages allow us to talk about are the things across all of time. In HTML, for example, one may link to a web page, but there is no way to link to a particular version of a web page. In many programming languages, all variables are references to mutable objects.&lt;/p&gt;
+&lt;p&gt;Each time we talk about such a thing, we run into exactly the same problems of the original puzzle. Consider the question “is the file &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/passwords&lt;/code&gt; the same file as it was 10 minutes ago?” — and how it is phrased quite similarly to the original problem. This is the more pressing an issue, because in many cases the only thing our tools and languages allow us to talk about are the things across all of time. In HTML, for example, one may link to a web page, but there is no way to link to a particular version of a web page. In many programming languages, all variables are references to mutable objects.&lt;/p&gt;
 
-&lt;p&gt;Third, the Hobbes variation tells us that it is not always immediately clear which defintion of historical identity is the most appropriate.
+&lt;p&gt;Third, the Hobbes variation tells us that it is not always immediately clear which defintion of historical identity is the most appropriate.&lt;br /&gt;
 This also applies to the way we model the evolution of computer programs, such as we do in the project that this website is about.&lt;/p&gt;
 
 &lt;p&gt;Examples of real-life changes to computer programs that may lead to direct parallels with Hobbes’ riddle are:&lt;/p&gt;
@@ -278,33 +479,33 @@ This also applies to the way we model the evolution of computer programs, such a
   <content type="html">&lt;p&gt;When introducing the editor we introduced &lt;a href=&quot;/introducing-the-editor/#a-clef-for-construction&quot;&gt;a set of operations that represent changes&lt;/a&gt; (we called this a &lt;em&gt;clef&lt;/em&gt;). Two of the operations presented so far take a full history as one of their parameters:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;Insert index history&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Replace index history&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert index history&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace index history&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter &lt;code&gt;history&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter &lt;code class=&quot;highlighter-rouge&quot;&gt;history&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;In this article we’ll show how this is presently implemented in the editor.&lt;/p&gt;
 
 &lt;h3 id=&quot;the-problem-history-size&quot;&gt;The problem: history-size&lt;/h3&gt;
 
-&lt;p&gt;In a naive implementation we might serialize the full history and include it into the serialization of the &lt;code&gt;Replace&lt;/code&gt; operation. The problem with this approach is that histories tend to grow over time (by definition).&lt;/p&gt;
+&lt;p&gt;In a naive implementation we might serialize the full history and include it into the serialization of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation. The problem with this approach is that histories tend to grow over time (by definition).&lt;/p&gt;
 
-&lt;p&gt;To see to which degree this would be an unworkable approach, consider the following. The &lt;em&gt;raison d’être&lt;/em&gt; of the &lt;code&gt;Replace&lt;/code&gt; operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.&lt;/p&gt;
+&lt;p&gt;To see to which degree this would be an unworkable approach, consider the following. The &lt;em&gt;raison d’être&lt;/em&gt; of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.&lt;/p&gt;
 
 &lt;p&gt;As an example of a practical application of that principle would be to keep track of the history of a single computer’s Operating System and applications. In the composed approach, such a system-level history is composed of the histories of each application, which are composed of the histories of their modules, functions, etc. down to the histories of the smallest expressions of which the applications are composed.&lt;/p&gt;
 
-&lt;p&gt;The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the &lt;code&gt;Replace&lt;/code&gt; operation. This would then result in the following &lt;code&gt;Replace&lt;/code&gt; operations:&lt;/p&gt;
+&lt;p&gt;The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation. This would then result in the following &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operations:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;The history of the system as a whole is extended with a &lt;code&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
-  &lt;li&gt;The history of some software application as it was previously, but extended with a &lt;code&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
-  &lt;li&gt;The history of some module as it was previously, but extended with a &lt;code&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
+  &lt;li&gt;The history of the system as a whole is extended with a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
+  &lt;li&gt;The history of some software application as it was previously, but extended with a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
+  &lt;li&gt;The history of some module as it was previously, but extended with a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;etc.&lt;/p&gt;
 
-&lt;p&gt;If we model the serialization of such &lt;code&gt;Replace&lt;/code&gt; operations naively, by including the full history as a parameter, the top-level &lt;code&gt;Replace&lt;/code&gt; from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).&lt;/p&gt;
+&lt;p&gt;If we model the serialization of such &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operations naively, by including the full history as a parameter, the top-level &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).&lt;/p&gt;
 
 &lt;p&gt;The challenge is therefore: being able to reference arbitrarily large histories at a constant cost.&lt;/p&gt;
 
@@ -329,7 +530,7 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;Recognizing that any list can be written in the Hash Consing style, and that histories are lists, we’ve implemented histories as such.&lt;/p&gt;
 
-&lt;p&gt;It is precisely the hash of such a record that we can refer to from when serializing the operations &lt;code&gt;Insert&lt;/code&gt; and &lt;code&gt;Replace&lt;/code&gt;, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.&lt;/p&gt;
+&lt;p&gt;It is precisely the hash of such a record that we can refer to from when serializing the operations &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt;, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.&lt;/p&gt;
 
 &lt;h3 id=&quot;considerations&quot;&gt;Considerations&lt;/h3&gt;
 
@@ -337,7 +538,7 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;It is not strictly necessary to use a hash-based scheme to achieve the above-mentioned advantages in space-complexity. In principle, any scheme that deduplicates shared histories would suffice.&lt;/p&gt;
 
-&lt;p&gt;For exampe, we might implement the histories as backlinked lists in-memory, and implement &lt;code&gt;Replace&lt;/code&gt; to contain a pointer to the relevant item from the list.&lt;/p&gt;
+&lt;p&gt;For exampe, we might implement the histories as backlinked lists in-memory, and implement &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; to contain a pointer to the relevant item from the list.&lt;/p&gt;
 
 &lt;p&gt;However, using a hash-based scheme brings several advantages over such an approach:&lt;/p&gt;
 
@@ -435,7 +636,7 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;The history is not properly organized. The commands may interact with one another via their “environment”, but the relevant information to reproduce the interactions is not stored. For example, the &lt;code&gt;cd&lt;/code&gt; command may change the working directory; consecutive commands should then be interpreted as being executed from that directory. However, the history does not reflect the closing of sessions or the creation of new ones, so we cannot say about a command from which directory it was executed.&lt;/p&gt;
+    &lt;p&gt;The history is not properly organized. The commands may interact with one another via their “environment”, but the relevant information to reproduce the interactions is not stored. For example, the &lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt; command may change the working directory; consecutive commands should then be interpreted as being executed from that directory. However, the history does not reflect the closing of sessions or the creation of new ones, so we cannot say about a command from which directory it was executed.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;The history is incomplete. Your interaction with the system as a whole is not restricted to the interaction via the CLI but will typically include interaction with arbitray applicationsand the meaning of the commands themselves is not constricted in any way. We cannot make &lt;em&gt;any&lt;/em&gt; statement about how these arbitrary commands and applications affect the system with certainty.&lt;/p&gt;
@@ -688,27 +889,27 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;p&gt;The clef defines the following operations:&lt;sup id=&quot;fnref:imperative-functional-equivalence&quot;&gt;&lt;a href=&quot;#fn:imperative-functional-equivalence&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;BecomeAtom atom&lt;/code&gt; — Out of nothingness, spawn a given atom; or replace an existing atom with the given atom.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt; - Out of nothingness, spawn an empty list.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert index history&lt;/code&gt; For a list, insert at the index the s-expr that can be constructed from the history; shifting items to the right as required.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Delete index&lt;/code&gt; — For a list, delete the element at the index; shifting items to the left as required.&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Replace index history&lt;/code&gt; — For a list, replace the element at the index with the s-expr that can be constructed from the history.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeAtom atom&lt;/code&gt; — Out of nothingness, spawn a given atom; or replace an existing atom with the given atom.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt; - Out of nothingness, spawn an empty list.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert index history&lt;/code&gt; For a list, insert at the index the s-expr that can be constructed from the history; shifting items to the right as required.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Delete index&lt;/code&gt; — For a list, delete the element at the index; shifting items to the left as required.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace index history&lt;/code&gt; — For a list, replace the element at the index with the s-expr that can be constructed from the history.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Using this clef we can both construct any s-expressions from scratch and modify any given s-expression into any other (a formal proof is left as an exercise to the reader). As an example, consider a possible way to construct the s-expression &lt;code&gt;(+ (* 6 9) 12)&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Using this clef we can both construct any s-expressions from scratch and modify any given s-expression into any other (a formal proof is left as an exercise to the reader). As an example, consider a possible way to construct the s-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(+ (* 6 9) 12)&lt;/code&gt;:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt; — starting with an empty list expression&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert 0 (BecomeAtom +))&lt;/code&gt; — as the first item, insert the history which consists of the creation of the atom &lt;code&gt;+&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert 1 ...&lt;/code&gt; — as the second item, insert the result of the following history:
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt; — starting with an empty list expression&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt; — as the first item, insert the history which consists of the creation of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 ...&lt;/code&gt; — as the second item, insert the result of the following history:
     &lt;ul&gt;
-      &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt; — starting with an empty list (sub)expression&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 0 (BecomeAtom *))&lt;/code&gt; — introducing the atoms one…&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt; — by one…&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 2 (BecomeAtom 9))&lt;/code&gt; — by one.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt; — starting with an empty list (sub)expression&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt; — introducing the atoms one…&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt; — by one…&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 9))&lt;/code&gt; — by one.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert 2 (BecomeAtom 12))&lt;/code&gt; — similar to the construction of &lt;code&gt;+&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 12))&lt;/code&gt; — similar to the construction of &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;The above example is quite trivial, because the order of construction is precisely identical to the ordering of the result. In practice the order might be quite different, and might also include deletions (and therefore: insertions whose effects are not visible in the final result).&lt;/p&gt;
@@ -716,57 +917,57 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;p&gt;Another history leading to the same result is shown below. Note that the indices are not the same as in the first example, but the result is the same.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert 0 (BecomeAtom 12))&lt;/code&gt; — we start with a single element &lt;code&gt;12&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert 0 (BecomeAtom +))&lt;/code&gt; — to the left of it, we introduce the &lt;code&gt;+&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert 1 ...&lt;/code&gt; — assuming the same history on the ellipses as in the first example&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom 12))&lt;/code&gt; — we start with a single element &lt;code class=&quot;highlighter-rouge&quot;&gt;12&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt; — to the left of it, we introduce the &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 ...&lt;/code&gt; — assuming the same history on the ellipses as in the first example&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Importantly, the clef also allows us to express the histories of larger parts of our document as being composed of the histories of their subparts.&lt;/p&gt;
 
-&lt;p&gt;To see how this is so, consider the following: The s-expressions form a tree. If the history of a given node is extended by some change, we can apply &lt;code&gt;Replace&lt;/code&gt; on its parent node, providing the node’s index in the parent and the extended history. Because this &lt;code&gt;Replace&lt;/code&gt; represents a change at the level of the parent, we can repeat this process until we reach the root of the tree. Using this mechanism, the same example might look like this:&lt;/p&gt;
+&lt;p&gt;To see how this is so, consider the following: The s-expressions form a tree. If the history of a given node is extended by some change, we can apply &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; on its parent node, providing the node’s index in the parent and the extended history. Because this &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; represents a change at the level of the parent, we can repeat this process until we reach the root of the tree. Using this mechanism, the same example might look like this:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code&gt;BecomeList&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code&gt;Insert 0 (BecomeAtom +))&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Insert 1 ...&lt;/code&gt; — We start by adding an empty sub-expression…
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 ...&lt;/code&gt; — We start by adding an empty sub-expression…
     &lt;ul&gt;
-      &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Replace 1 ...&lt;/code&gt; — which is then extended with &lt;code&gt;*&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 1 ...&lt;/code&gt; — which is then extended with &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Replace 1 ...&lt;/code&gt; — and extended with &lt;code&gt;6&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 1 ...&lt;/code&gt; — and extended with &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code&gt;Insert 2 (BecomeAtom 12))&lt;/code&gt; — intermezzo on the top-level&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 12))&lt;/code&gt; — intermezzo on the top-level&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;Replace 1 ...&lt;/code&gt; — and extended with &lt;code&gt;9&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 1 ...&lt;/code&gt; — and extended with &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;Insert 2 (BecomeAtom 9))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 9))&lt;/code&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;This example makes a number of things clear: first that we can see the full ordering of events from the top level, and that work on sub-expressions may be arbitrarily interleaved. In the example above this is demonstrated by the insertion of the atom &lt;code&gt;12&lt;/code&gt; before the completion of the sub-expression &lt;code&gt;(* 6 9)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This example makes a number of things clear: first that we can see the full ordering of events from the top level, and that work on sub-expressions may be arbitrarily interleaved. In the example above this is demonstrated by the insertion of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;12&lt;/code&gt; before the completion of the sub-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(* 6 9)&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Second, that from each sub-level we see the ordering of events relevant to that sub-level. In this case, the precise ordering of the creation of the atoms &lt;code&gt;*&lt;/code&gt;, &lt;code&gt;6&lt;/code&gt; and &lt;code&gt;9&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Second, that from each sub-level we see the ordering of events relevant to that sub-level. In this case, the precise ordering of the creation of the atoms &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Third, it shines some light on some challenges. Namely, the example as given is horribly verbose, which makes it hard to read for humans and has implications on the performance characteristics of the implementation. For both these problems solutions have already been found, which will be presented in the next parts.&lt;/p&gt;
 
@@ -786,7 +987,7 @@ This also applies to the way we model the evolution of computer programs, such a
       &lt;p&gt;Asking the three questions “What are your primitives, what are your means of combination and what are your means of abstraction?” is directly inspired by Abelson &amp;amp; Sussman’s excellent lectures and book on the &lt;a href=&quot;https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt;. &lt;a href=&quot;#fnref:sicp&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:lists-not-tuples&quot;&gt;
-      &lt;p&gt;The canonical definition of S-Expressions treats lists as mere syntactic sugar for nested pairs; i.e. &lt;code&gt;(x y z)&lt;/code&gt; is simply a shorthand for &lt;code&gt;(x . (y . (z . NIL)))&lt;/code&gt;. In this implementation the opposite approach is taken as to allow for primitives of change on such lists that are sufficiently expressive. &lt;a href=&quot;#fnref:lists-not-tuples&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;The canonical definition of S-Expressions treats lists as mere syntactic sugar for nested pairs; i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;(x y z)&lt;/code&gt; is simply a shorthand for &lt;code class=&quot;highlighter-rouge&quot;&gt;(x . (y . (z . NIL)))&lt;/code&gt;. In this implementation the opposite approach is taken as to allow for primitives of change on such lists that are sufficiently expressive. &lt;a href=&quot;#fnref:lists-not-tuples&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:why-clef&quot;&gt;
       &lt;p&gt;The name &lt;em&gt;Clef&lt;/em&gt; refers to a &lt;a href=&quot;https://en.wikipedia.org/wiki/Clef&quot;&gt;musical clef&lt;/a&gt;; musical notation serves as a metaphore for &lt;em&gt;expressions of change&lt;/em&gt; because it’s a nice real world example of a sequential list of instructions for “construction”. In this metaphore, the &lt;em&gt;Clef&lt;/em&gt; defines which notes are playable, i.e. what our vocabulary of change is. &lt;a href=&quot;#fnref:why-clef&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
@@ -833,7 +1034,7 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;h2 id=&quot;version-control&quot;&gt;Version control&lt;/h2&gt;
 
-&lt;p&gt;Let’s return to a day in the life of a typical programmer. After successfully making a number of changes in our program these changes are typically &lt;em&gt;committed&lt;/em&gt; to a &lt;em&gt;source repository&lt;/em&gt; using a &lt;em&gt;version control system&lt;/em&gt;, i.e. using some command like &lt;code&gt;git commit&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let’s return to a day in the life of a typical programmer. After successfully making a number of changes in our program these changes are typically &lt;em&gt;committed&lt;/em&gt; to a &lt;em&gt;source repository&lt;/em&gt; using a &lt;em&gt;version control system&lt;/em&gt;, i.e. using some command like &lt;code class=&quot;highlighter-rouge&quot;&gt;git commit&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Version control systems are those systems that we use to track changes to the source code of computer programs. Git is currently the most popular choice (overwhelmingly so), Mercurial is a less popular modern system and Subversion and CVS are older but still-in-use systems. Because tracking changes the explicit goal of version control systems the relationship with the present article should be quite obvious.&lt;/p&gt;
 
@@ -919,7 +1120,7 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;Back to a day in the life of our programmer. Let’s say the program under consideration depends on a number of external libraries. Such libraries may depend on a number of other libraries themselves, which may depend on further libraries etc, forming a &lt;em&gt;dependency graph&lt;/em&gt;. Furthermore, each of these dependencies is to some specific version or range of versions; we cannot generally assume that each version of each library works well with each library it depends on, so we must specify which versions are known to work correctly. Such a situation is a natural consequence of two simple facts of life: The ever-changing nature of programs and the justified desire of programmers to decompose their programs into submodules.&lt;/p&gt;
 
-&lt;p&gt;The tools to resolve the various dependencies mentioned above are known as “package management systems”. They typically come in either one of two flavors. Firstly various Operating Systems bundle a package manager to do system-wide installations of software, Examples are &lt;code&gt;apt&lt;/code&gt;, &lt;code&gt;yum&lt;/code&gt;, &lt;code&gt;pacman&lt;/code&gt; and &lt;code&gt;nix&lt;/code&gt;. Secondly there’s a great number of package management systems specific to a particular programming language — almost all programming languages seem to come with their own package manager (&lt;code&gt;pip&lt;/code&gt;, &lt;code&gt;gem&lt;/code&gt;, &lt;code&gt;cargo&lt;/code&gt;, to name just a few).&lt;/p&gt;
+&lt;p&gt;The tools to resolve the various dependencies mentioned above are known as “package management systems”. They typically come in either one of two flavors. Firstly various Operating Systems bundle a package manager to do system-wide installations of software, Examples are &lt;code class=&quot;highlighter-rouge&quot;&gt;apt&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;yum&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;pacman&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;nix&lt;/code&gt;. Secondly there’s a great number of package management systems specific to a particular programming language — almost all programming languages seem to come with their own package manager (&lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;gem&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;cargo&lt;/code&gt;, to name just a few).&lt;/p&gt;
 
 &lt;p&gt;One of of the main arguments of this article is that there are too many incompatible tools to deal with changing software. Regarding package management in particular, we can drive this point home in two ways. First, the sheer amount of different package management solutions is almost comical. One can also not help but wonder why so many tools of the same kind are necessary, and whether this is not an indication of a fundamental flaw in their design. Second, the fact that package managers are not only poorly able to talk with other tools for managing change, but can hardly speak among themselves, is a further indication of a deep problem.&lt;/p&gt;
 
@@ -930,7 +1131,7 @@ This also applies to the way we model the evolution of computer programs, such a
     &lt;p&gt;Package management deals with the dependencies on and between a number of external “packages” which are taken more or less as a given. Package management systems have only very limited support for tracking history inside a single package. Some of the primary operations of version management systems, such as constructing histories, comparing versions and cooperating in teams are missing.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Version control systems, on the other hand, deals with a single repository of code under control of the user. This means that they lack the ability to naturally track versions across composed systems in a composed manner. Even though git offers some workarounds for this, such as &lt;code&gt;gitmodules&lt;/code&gt; and &lt;code&gt;git-subtree&lt;/code&gt;, such workarounds are fundamentally limited, for example because it’s not possible to arbitrarily nest them.&lt;/p&gt;
+    &lt;p&gt;Version control systems, on the other hand, deals with a single repository of code under control of the user. This means that they lack the ability to naturally track versions across composed systems in a composed manner. Even though git offers some workarounds for this, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;gitmodules&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;git-subtree&lt;/code&gt;, such workarounds are fundamentally limited, for example because it’s not possible to arbitrarily nest them.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -959,10 +1160,10 @@ This also applies to the way we model the evolution of computer programs, such a
     &lt;p&gt;&lt;strong&gt;Data/schema-migrations&lt;/strong&gt; — When the program is changed, its expectations about the data it interacts with may also change. For the case that the data is stored in a database, the tools to migrate data are usually called “data migrations” or “schema migrations”. Similar cases are that of a newer version of the program that expects a different configuration file format, and the case of a program that simply changes its document-format.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Provisioning &amp;amp; Containers&lt;/strong&gt; — tools such as &lt;code&gt;chef&lt;/code&gt;, &lt;code&gt;puppet&lt;/code&gt; and &lt;code&gt;ansible&lt;/code&gt; are often used when managing environments of similarly configured machines. They deal with many of the same challenges as package managers: getting the right versions of the right dependencies in the right place. Similar remarks can be made about &lt;em&gt;containers&lt;/em&gt; (Docker being a currently popular solution): one might say that their greatest value is in being able to precisely reproduce an entire environment of dependencies to a specific set of versions.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Provisioning &amp;amp; Containers&lt;/strong&gt; — tools such as &lt;code class=&quot;highlighter-rouge&quot;&gt;chef&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;puppet&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ansible&lt;/code&gt; are often used when managing environments of similarly configured machines. They deal with many of the same challenges as package managers: getting the right versions of the right dependencies in the right place. Similar remarks can be made about &lt;em&gt;containers&lt;/em&gt; (Docker being a currently popular solution): one might say that their greatest value is in being able to precisely reproduce an entire environment of dependencies to a specific set of versions.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Build tools&lt;/strong&gt; — build tools such as &lt;code&gt;make&lt;/code&gt;, &lt;code&gt;maven&lt;/code&gt; and &lt;code&gt;ant&lt;/code&gt; take responsibility for the compilation of larger programs. They relate to change in software in the sense that [a] they’re responsible for detecting which parts of the system have changed, and must therefore be rebuilt and [b] they may specifically talk about particular versions of dependencies of the build.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Build tools&lt;/strong&gt; — build tools such as &lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;maven&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ant&lt;/code&gt; take responsibility for the compilation of larger programs. They relate to change in software in the sense that [a] they’re responsible for detecting which parts of the system have changed, and must therefore be rebuilt and [b] they may specifically talk about particular versions of dependencies of the build.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1097,9 +1298,9 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;In our pen &amp;amp; paper world we will model Version Control by using an extra piece of paper. On this we draw the versions of the program as nodes, annotate these with some meta-data (date, author, description), and connect them by arrows into a directed acyclic graph that describes the history of the program.&lt;/p&gt;
 
-&lt;p&gt;The graph may be constructed by copying a given current state of the program over to this second piece of paper and adding the relevant metadata. This corresponds to a &lt;code&gt;git commit&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The graph may be constructed by copying a given current state of the program over to this second piece of paper and adding the relevant metadata. This corresponds to a &lt;code class=&quot;highlighter-rouge&quot;&gt;git commit&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;We can then navigate through this graph by pointing at a given node with our finger (below: a big red arrow), and copying the node’s content over into the current program state. This corresponds to a &lt;code&gt;git checkout&lt;/code&gt;. Because we always have the full history available, we’ve solved our initial problem!&lt;/p&gt;
+&lt;p&gt;We can then navigate through this graph by pointing at a given node with our finger (below: a big red arrow), and copying the node’s content over into the current program state. This corresponds to a &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout&lt;/code&gt;. Because we always have the full history available, we’ve solved our initial problem!&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/movies/version-control.gif&quot; alt=&quot;Version Control&quot; /&gt;&lt;/p&gt;
 
@@ -1109,18 +1310,18 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;In the toy example above we established the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.&lt;/p&gt;
 
-&lt;p&gt;Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplification or cleanup. In such cases a may be useful to &lt;em&gt;rewrite history&lt;/em&gt;. Here are some examples of such rewrites with their equivalent &lt;code&gt;git&lt;/code&gt; commands:&lt;/p&gt;
+&lt;p&gt;Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplification or cleanup. In such cases a may be useful to &lt;em&gt;rewrite history&lt;/em&gt;. Here are some examples of such rewrites with their equivalent &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; commands:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;If you make a mistake while adding a version to the historic record, you may want to fix the mistake in the record rather than adding yet another version to fix the mistake (such a version would only clutter the record). (&lt;code&gt;git commit --ammend&lt;/code&gt;)&lt;/p&gt;
+    &lt;p&gt;If you make a mistake while adding a version to the historic record, you may want to fix the mistake in the record rather than adding yet another version to fix the mistake (such a version would only clutter the record). (&lt;code class=&quot;highlighter-rouge&quot;&gt;git commit --ammend&lt;/code&gt;)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;History is not always linear; multiple new version may arise based on a single version of the program. Such diverging histories can later be merged together in a separate “merge” version. However, many such separate version will clutter up the historic record, and are therefore sometimes deemed undesirable. The solution is to rewrite history as if the divergence never took place: one of the diverging branches of history is cut from its actual base, rewritten, and pasted at the tail of the other branch in a single linear fashion. (&lt;code&gt;git --rebase -i&lt;/code&gt;)&lt;/p&gt;
+    &lt;p&gt;History is not always linear; multiple new version may arise based on a single version of the program. Such diverging histories can later be merged together in a separate “merge” version. However, many such separate version will clutter up the historic record, and are therefore sometimes deemed undesirable. The solution is to rewrite history as if the divergence never took place: one of the diverging branches of history is cut from its actual base, rewritten, and pasted at the tail of the other branch in a single linear fashion. (&lt;code class=&quot;highlighter-rouge&quot;&gt;git --rebase -i&lt;/code&gt;)&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;An animation of a &lt;code&gt;git rebase&lt;/code&gt; in our pen &amp;amp; paper world is shown below: the commit “C” is rewritten as if it happened after “B”, rather than independently of it; this simplifies the graph because we no longer need a merging commit.&lt;/p&gt;
+&lt;p&gt;An animation of a &lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase&lt;/code&gt; in our pen &amp;amp; paper world is shown below: the commit “C” is rewritten as if it happened after “B”, rather than independently of it; this simplifies the graph because we no longer need a merging commit.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/movies/rewriting-history.gif&quot; alt=&quot;Rewriting History&quot; /&gt;&lt;/p&gt;
 
@@ -1159,7 +1360,7 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;Sure: we can simply add yet another piece of paper containing a historic graph, just like we did in step 2a. The only difference being the content of the nodes of the graph: rather than keeping track of individual programs, we can track the history of historic graphs. Let’s call this graph a 2nd level history.&lt;/p&gt;
 
-&lt;p&gt;Construction of this graph is analogous to the construction of the regular historic graph: whenever we change the historic record, we add a full copy of the historic graph to the second-level history as a node. We do this both for any history writing operations (such as a &lt;code&gt;git commit&lt;/code&gt;) as for rewriting operations (such as &lt;code&gt;git rebase&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Construction of this graph is analogous to the construction of the regular historic graph: whenever we change the historic record, we add a full copy of the historic graph to the second-level history as a node. We do this both for any history writing operations (such as a &lt;code class=&quot;highlighter-rouge&quot;&gt;git commit&lt;/code&gt;) as for rewriting operations (such as &lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase&lt;/code&gt;).&lt;/p&gt;
 
 &lt;p&gt;Just like in the case of regular Version Management we can navigate through the newly constructed graph. Navigation through a second level history corresponds to changes in the historic graph (rather than changes to the program). In other words: it corresponds to rewrites of history. Here it is in action:&lt;/p&gt;
 
@@ -1193,7 +1394,7 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;The Git repository itself is implemented precisely as a collection of binary files. This means that tracking the history of a Git repository cannot be done efficiently using Git.&lt;/p&gt;
 
-&lt;p&gt;In fact: trying this one runs into the fact that adding Git repositories to be tracked inside other repositories has been explicitly forbidden: git repositories are managed using a directory called &lt;code&gt;.git&lt;/code&gt;, and Git raises an error when presented with a directory named &lt;code&gt;.git&lt;/code&gt; to track.&lt;/p&gt;
+&lt;p&gt;In fact: trying this one runs into the fact that adding Git repositories to be tracked inside other repositories has been explicitly forbidden: git repositories are managed using a directory called &lt;code class=&quot;highlighter-rouge&quot;&gt;.git&lt;/code&gt;, and Git raises an error when presented with a directory named &lt;code class=&quot;highlighter-rouge&quot;&gt;.git&lt;/code&gt; to track.&lt;/p&gt;
 
 &lt;h2 id=&quot;implementation-hint&quot;&gt;Implementation hint&lt;/h2&gt;
 

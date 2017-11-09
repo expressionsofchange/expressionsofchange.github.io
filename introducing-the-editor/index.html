@@ -32,6 +32,7 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
 
 <!-- Fresh Squeezed jQuery -->
 
@@ -180,27 +181,27 @@
 <p>The clef defines the following operations:<sup id="fnref:imperative-functional-equivalence"><a href="#fn:imperative-functional-equivalence" class="footnote">5</a></sup></p>
 
 <ul>
-  <li><code>BecomeAtom atom</code> — Out of nothingness, spawn a given atom; or replace an existing atom with the given atom.</li>
-  <li><code>BecomeList</code> - Out of nothingness, spawn an empty list.</li>
-  <li><code>Insert index history</code> For a list, insert at the index the s-expr that can be constructed from the history; shifting items to the right as required.</li>
-  <li><code>Delete index</code> — For a list, delete the element at the index; shifting items to the left as required.</li>
-  <li><code>Replace index history</code> — For a list, replace the element at the index with the s-expr that can be constructed from the history.</li>
+  <li><code class="highlighter-rouge">BecomeAtom atom</code> — Out of nothingness, spawn a given atom; or replace an existing atom with the given atom.</li>
+  <li><code class="highlighter-rouge">BecomeList</code> - Out of nothingness, spawn an empty list.</li>
+  <li><code class="highlighter-rouge">Insert index history</code> For a list, insert at the index the s-expr that can be constructed from the history; shifting items to the right as required.</li>
+  <li><code class="highlighter-rouge">Delete index</code> — For a list, delete the element at the index; shifting items to the left as required.</li>
+  <li><code class="highlighter-rouge">Replace index history</code> — For a list, replace the element at the index with the s-expr that can be constructed from the history.</li>
 </ul>
 
-<p>Using this clef we can both construct any s-expressions from scratch and modify any given s-expression into any other (a formal proof is left as an exercise to the reader). As an example, consider a possible way to construct the s-expression <code>(+ (* 6 9) 12)</code>:</p>
+<p>Using this clef we can both construct any s-expressions from scratch and modify any given s-expression into any other (a formal proof is left as an exercise to the reader). As an example, consider a possible way to construct the s-expression <code class="highlighter-rouge">(+ (* 6 9) 12)</code>:</p>
 
 <ul>
-  <li><code>BecomeList</code> — starting with an empty list expression</li>
-  <li><code>Insert 0 (BecomeAtom +))</code> — as the first item, insert the history which consists of the creation of the atom <code>+</code></li>
-  <li><code>Insert 1 ...</code> — as the second item, insert the result of the following history:
+  <li><code class="highlighter-rouge">BecomeList</code> — starting with an empty list expression</li>
+  <li><code class="highlighter-rouge">Insert 0 (BecomeAtom +))</code> — as the first item, insert the history which consists of the creation of the atom <code class="highlighter-rouge">+</code></li>
+  <li><code class="highlighter-rouge">Insert 1 ...</code> — as the second item, insert the result of the following history:
     <ul>
-      <li><code>BecomeList</code> — starting with an empty list (sub)expression</li>
-      <li><code>Insert 0 (BecomeAtom *))</code> — introducing the atoms one…</li>
-      <li><code>Insert 1 (BecomeAtom 6))</code> — by one…</li>
-      <li><code>Insert 2 (BecomeAtom 9))</code> — by one.</li>
+      <li><code class="highlighter-rouge">BecomeList</code> — starting with an empty list (sub)expression</li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code> — introducing the atoms one…</li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code> — by one…</li>
+      <li><code class="highlighter-rouge">Insert 2 (BecomeAtom 9))</code> — by one.</li>
     </ul>
   </li>
-  <li><code>Insert 2 (BecomeAtom 12))</code> — similar to the construction of <code>+</code></li>
+  <li><code class="highlighter-rouge">Insert 2 (BecomeAtom 12))</code> — similar to the construction of <code class="highlighter-rouge">+</code></li>
 </ul>
 
 <p>The above example is quite trivial, because the order of construction is precisely identical to the ordering of the result. In practice the order might be quite different, and might also include deletions (and therefore: insertions whose effects are not visible in the final result).</p>
@@ -208,57 +209,57 @@
 <p>Another history leading to the same result is shown below. Note that the indices are not the same as in the first example, but the result is the same.</p>
 
 <ul>
-  <li><code>BecomeList</code></li>
-  <li><code>Insert 0 (BecomeAtom 12))</code> — we start with a single element <code>12</code></li>
-  <li><code>Insert 0 (BecomeAtom +))</code> — to the left of it, we introduce the <code>+</code></li>
-  <li><code>Insert 1 ...</code> — assuming the same history on the ellipses as in the first example</li>
+  <li><code class="highlighter-rouge">BecomeList</code></li>
+  <li><code class="highlighter-rouge">Insert 0 (BecomeAtom 12))</code> — we start with a single element <code class="highlighter-rouge">12</code></li>
+  <li><code class="highlighter-rouge">Insert 0 (BecomeAtom +))</code> — to the left of it, we introduce the <code class="highlighter-rouge">+</code></li>
+  <li><code class="highlighter-rouge">Insert 1 ...</code> — assuming the same history on the ellipses as in the first example</li>
 </ul>
 
 <p>Importantly, the clef also allows us to express the histories of larger parts of our document as being composed of the histories of their subparts.</p>
 
-<p>To see how this is so, consider the following: The s-expressions form a tree. If the history of a given node is extended by some change, we can apply <code>Replace</code> on its parent node, providing the node’s index in the parent and the extended history. Because this <code>Replace</code> represents a change at the level of the parent, we can repeat this process until we reach the root of the tree. Using this mechanism, the same example might look like this:</p>
+<p>To see how this is so, consider the following: The s-expressions form a tree. If the history of a given node is extended by some change, we can apply <code class="highlighter-rouge">Replace</code> on its parent node, providing the node’s index in the parent and the extended history. Because this <code class="highlighter-rouge">Replace</code> represents a change at the level of the parent, we can repeat this process until we reach the root of the tree. Using this mechanism, the same example might look like this:</p>
 
 <ul>
   <li>
-    <p><code>BecomeList</code></p>
+    <p><code class="highlighter-rouge">BecomeList</code></p>
   </li>
   <li>
-    <p><code>Insert 0 (BecomeAtom +))</code></p>
+    <p><code class="highlighter-rouge">Insert 0 (BecomeAtom +))</code></p>
   </li>
-  <li><code>Insert 1 ...</code> — We start by adding an empty sub-expression…
+  <li><code class="highlighter-rouge">Insert 1 ...</code> — We start by adding an empty sub-expression…
     <ul>
-      <li><code>BecomeList</code></li>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
     </ul>
   </li>
-  <li><code>Replace 1 ...</code> — which is then extended with <code>*</code>
+  <li><code class="highlighter-rouge">Replace 1 ...</code> — which is then extended with <code class="highlighter-rouge">*</code>
     <ul>
-      <li><code>BecomeList</code></li>
-      <li><code>Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
     </ul>
   </li>
-  <li><code>Replace 1 ...</code> — and extended with <code>6</code>
+  <li><code class="highlighter-rouge">Replace 1 ...</code> — and extended with <code class="highlighter-rouge">6</code>
     <ul>
-      <li><code>BecomeList</code></li>
-      <li><code>Insert 0 (BecomeAtom *))</code></li>
-      <li><code>Insert 1 (BecomeAtom 6))</code></li>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
     </ul>
   </li>
   <li>
-    <p><code>Insert 2 (BecomeAtom 12))</code> — intermezzo on the top-level</p>
+    <p><code class="highlighter-rouge">Insert 2 (BecomeAtom 12))</code> — intermezzo on the top-level</p>
   </li>
-  <li><code>Replace 1 ...</code> — and extended with <code>9</code>
+  <li><code class="highlighter-rouge">Replace 1 ...</code> — and extended with <code class="highlighter-rouge">9</code>
     <ul>
-      <li><code>BecomeList</code></li>
-      <li><code>Insert 0 (BecomeAtom *))</code></li>
-      <li><code>Insert 1 (BecomeAtom 6))</code></li>
-      <li><code>Insert 2 (BecomeAtom 9))</code></li>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
+      <li><code class="highlighter-rouge">Insert 2 (BecomeAtom 9))</code></li>
     </ul>
   </li>
 </ul>
 
-<p>This example makes a number of things clear: first that we can see the full ordering of events from the top level, and that work on sub-expressions may be arbitrarily interleaved. In the example above this is demonstrated by the insertion of the atom <code>12</code> before the completion of the sub-expression <code>(* 6 9)</code></p>
+<p>This example makes a number of things clear: first that we can see the full ordering of events from the top level, and that work on sub-expressions may be arbitrarily interleaved. In the example above this is demonstrated by the insertion of the atom <code class="highlighter-rouge">12</code> before the completion of the sub-expression <code class="highlighter-rouge">(* 6 9)</code></p>
 
-<p>Second, that from each sub-level we see the ordering of events relevant to that sub-level. In this case, the precise ordering of the creation of the atoms <code>*</code>, <code>6</code> and <code>9</code>.</p>
+<p>Second, that from each sub-level we see the ordering of events relevant to that sub-level. In this case, the precise ordering of the creation of the atoms <code class="highlighter-rouge">*</code>, <code class="highlighter-rouge">6</code> and <code class="highlighter-rouge">9</code>.</p>
 
 <p>Third, it shines some light on some challenges. Namely, the example as given is horribly verbose, which makes it hard to read for humans and has implications on the performance characteristics of the implementation. For both these problems solutions have already been found, which will be presented in the next parts.</p>
 
@@ -278,7 +279,7 @@
       <p>Asking the three questions “What are your primitives, what are your means of combination and what are your means of abstraction?” is directly inspired by Abelson &amp; Sussman’s excellent lectures and book on the <a href="https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs">Structure and Interpretation of Computer Programs</a>. <a href="#fnref:sicp" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:lists-not-tuples">
-      <p>The canonical definition of S-Expressions treats lists as mere syntactic sugar for nested pairs; i.e. <code>(x y z)</code> is simply a shorthand for <code>(x . (y . (z . NIL)))</code>. In this implementation the opposite approach is taken as to allow for primitives of change on such lists that are sufficiently expressive. <a href="#fnref:lists-not-tuples" class="reversefootnote">&#8617;</a></p>
+      <p>The canonical definition of S-Expressions treats lists as mere syntactic sugar for nested pairs; i.e. <code class="highlighter-rouge">(x y z)</code> is simply a shorthand for <code class="highlighter-rouge">(x . (y . (z . NIL)))</code>. In this implementation the opposite approach is taken as to allow for primitives of change on such lists that are sufficiently expressive. <a href="#fnref:lists-not-tuples" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:why-clef">
       <p>The name <em>Clef</em> refers to a <a href="https://en.wikipedia.org/wiki/Clef">musical clef</a>; musical notation serves as a metaphore for <em>expressions of change</em> because it’s a nice real world example of a sequential list of instructions for “construction”. In this metaphore, the <em>Clef</em> defines which notes are playable, i.e. what our vocabulary of change is. <a href="#fnref:why-clef" class="reversefootnote">&#8617;</a></p>
@@ -319,6 +320,11 @@ s.setAttribute('data-timestamp', +new Date());
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
               <span class="date">Sep 12, 2017</span>
             </li>
@@ -346,11 +352,6 @@ s.setAttribute('data-timestamp', +new Date());
             <li>
               <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
               <span class="date">Jul 02, 2017</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
-              <span class="date">Jul 01, 2017</span>
             </li>
         
             <li>

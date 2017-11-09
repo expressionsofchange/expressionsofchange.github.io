@@ -1,0 +1,384 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Git is ignorant by design &#8211; Expressions of Change</title>
+<meta name="description" content="This article explores a very particular problem of _Git_, namely its ignorance, in some detail.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Git is ignorant by design &#8211; Expressions of Change">
+<meta property="og:description" content="This article explores a very particular problem of _Git_, namely its ignorance, in some detail.">
+<meta property="og:url" content="/git-is-ignorant-by-design/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+     
+    <header class="site-header">
+    
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/project-motivation/" >Project Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/recent/" >Recent posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url(/images/features/dassie.jpg)"></div>
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Git is ignorant by design</h1>
+            <p class="date">Nov 08, 2017
+
+              
+                  — Tags:
+                  
+                  <a href="/musings/">Musings</a>
+                  
+                  
+              
+            </p>
+
+            <p class="intro">This article explores a very particular problem of <em>Git</em>, namely its ignorance. The main motivation for doing so is that the described problem is a regular source of confusion for me personally. At the same time, I have not been able to find an official term for it, or even just an article describing it, so I wrote one myself.
+</p>
+          </hgroup>
+        </header>
+
+        <h3 id="an-example">An example</h3>
+
+<p>The concept is best explained using an example. Consider the following output of <code class="highlighter-rouge">git show</code>, which shows a change to a piece of Python code:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>commit 9dadc2.........
+Author: ......
+Date: ......
+
+    Refactoring: move method_c and method_d
+    
+    These methods are moved from OneClass to AnotherClass, as the latter
+    is the correct location because of some reasons that would certainly
+    exist if this wasn't a toy example.
+
+<span class="gh">diff --git a/example.py b/example.py
+index 1cde8fb..f487c7e 100644
+</span><span class="gd">--- a/example.py
+</span><span class="gi">+++ b/example.py
+</span><span class="gu">@@ -2,17 +2,17 @@ class AnotherClass(object):
+</span>     def method_a(self):
+         pass  # implementation of method_a ...
+ 
+<span class="gd">-
+-class OneClass(object):
+-    def method_b(self):
+-        pass  # implementation of method_b ...
+-
+</span>     def method_c(self):
+         pass  # implementation of method_c ...
+ 
+     def method_d(self):
+         pass  # implementation of method_d ...
+ 
+<span class="gi">+
++class OneClass(object):
++    def method_b(self):
++        pass  # implementation of method_b ...
++
+</span>     def method_e(self):
+         pass  # implementation of method_e
+</code></pre>
+</div>
+
+<p>How should we interpret this diff?</p>
+
+<p>Let’s start by reading what the author ostensibly intended. The commit message talks about moving the two methods <code class="highlighter-rouge">method_c</code> and <code class="highlighter-rouge">method_d</code> from <code class="highlighter-rouge">OneClass</code> to <code class="highlighter-rouge">AnotherClass</code>.</p>
+
+<p>However, if we look at the actual diff, we see something else entirely: the removal of the definition of <code class="highlighter-rouge">OneClass</code> and its method <code class="highlighter-rouge">method_b</code> in one place, and the reintroduction of these elements in another place.</p>
+
+<p>It might seem that either the commit message or the actual contents of the commit are wrong. It turns out that neither is the case. Instead, the source of confusion lies in the way <code class="highlighter-rouge">git</code> works<sup id="fnref:or-any-text-based-vcs"><a href="#fn:or-any-text-based-vcs" class="footnote">1</a></sup>.</p>
+
+<h3 id="snapshots-on-text-files">Snapshots on text files</h3>
+
+<p>Git views the world as a collection of files (usually: text files), of which snapshots are made each time a commit is made. This means that, for the example above, <code class="highlighter-rouge">git</code> got to see the following two versions:</p>
+
+<h4 id="before-the-commit">Before the commit:</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+     <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c"># implementation of method_a ...</span>
+ 
+
+<span class="k">class</span> <span class="nc">OneClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c"># implementation of method_b ...</span>
+
+     <span class="k">def</span> <span class="nf">method_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c"># implementation of method_c ...</span>
+ 
+     <span class="k">def</span> <span class="nf">method_d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c"># implementation of method_d ...</span>
+ 
+     <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c"># implementation of method_e</span>
+</code></pre>
+</div>
+
+<h4 id="after-the-commit">After the commit:</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+         <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c"># implementation of method_a ...</span>
+     
+         <span class="k">def</span> <span class="nf">method_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c"># implementation of method_c ...</span>
+     
+         <span class="k">def</span> <span class="nf">method_d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c"># implementation of method_d ...</span>
+     
+
+    <span class="k">class</span> <span class="nc">OneClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">pass</span>  <span class="c"># implementation of method_b ...</span>
+
+         <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c"># implementation of method_e</span>
+</code></pre>
+</div>
+
+<p>First note that these 2 versions actually correspond to the commit message: the 2 methods <code class="highlighter-rouge">method_c</code> and <code class="highlighter-rouge">method_d</code> are indeed moved from <code class="highlighter-rouge">OneClass</code> to <code class="highlighter-rouge">AnotherClass</code>.</p>
+
+<p>Now, why does <code class="highlighter-rouge">git</code> present a diff that seems to tell a different story? To answer this, we must first understand what <code class="highlighter-rouge">git diff</code> and <code class="highlighter-rouge">git show</code> do in the first place: Given two versions of a file these commands attempt to calculate the smallest difference between them and present this.</p>
+
+<p>Regarding the meaning of the content of the files Git makes only a very minimal number of assumptions. Most of these have to do with “plain text files”. For example, it knows the special meaning of newline-characters. Using this knowledge the goal of finding a minimal difference is interpreted to mean “with a minimal number of different lines”.</p>
+
+<p>Given these goals, the diff as presented in the original example is exactly what you’d expect: removing <code class="highlighter-rouge">OneClass</code> and <code class="highlighter-rouge">method_b</code> in one place and adding them in another is simply more efficient than the alternative of removing and adding <code class="highlighter-rouge">method_c</code> and <code class="highlighter-rouge">method_d</code>. The former affects 5 removed lines and 5 added lines for a total of 10 while the latter affects 2 × 6 = 12 lines. (In both cases empty lines contribute to the numbers). Given that <em>Git</em> attempts to show the smallest diff, it prefers the former options over the latter.</p>
+
+<h3 id="the-problem-defined">The problem defined</h3>
+
+<p>Given that <code class="highlighter-rouge">git diff</code> behaves according to specification, what’s the problem? Can we make the suggestion that the original example is confusing more precise? In fact we can!</p>
+
+<p>The key to this is in realizing the following: Our example deals with a piece of Python code, in which concepts such as “classes” and “methods” exist. These concepts have a hierarchical nature: classes are structures that may contain other structures such as methods. When editing the file, we are aware of this structure – in fact, it forms the very reason we edit the file, an intent that the author even captured in the commit message.</p>
+
+<p>Moving part of a hierarchical structure to a different container is quite a useful and natural thing to be able to express. For comparison, consider the following phrases: “moving files to another directory” and “moving marbles to a different vase”.  Contrast this with the unnatural alternative of saying that the containers have, so to speak, “wrapped around newly contained items”: We don’t usually say “we’ve moved a directory-ending somewhat, so that it now contains 3 more files”, nor do we say “a vase has been moved to a location where it happens to contain more marbles”.</p>
+
+<p>Git, however, occasionally does precisely that, as demonstrated in the original example: it moves a class definition relative to its contents rather than vice versa.</p>
+
+<p>This is because Git remains agnostic of the structure of the files under its control, noting only that they are text files. Given that it can simply do no better than calculating the smallest difference in number of changed lines. This smallest number of lines happens to include the class definition, rather than the lower-level methods contained therein.</p>
+
+<p>It is for this reason that we can say “Git is <em>ignorant</em>” – it’s ignorant of the structure of the files it’s diffing.</p>
+
+<h3 id="closing-remarks">Closing remarks</h3>
+
+<p>This concludes the main discussion of the problem. Some final thoughts are below.</p>
+
+<p>First, one might wonder how serious of a problem this really is. On this I can only speak from personal experience: I personally run into some version of this problem approximately once a week. Admittedly, the most regular occurrences are also less confusing than the example at the top of this article, which was contrived specifically to be maximally confusing.</p>
+
+<p>A more regular occurrence is a diff like the below:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gd">--- a/example.py
+</span><span class="gi">+++ b/example.py
+</span><span class="gu">@@ -1,3 +1,8 @@
+</span> @decorated_function
+<span class="gi">+def newfunction():
++    pass  # this is newfunction
++
++
++@decorated_function
+</span> def oldfunction():
+     pass  # this is oldfunction
+</code></pre>
+</div>
+
+<p>In the above example, the more logical diff would identify the first of the 2 decorators (<code class="highlighter-rouge">@decorated_function</code>) as being the newly added one. However, git cannot distinguish between the 2 identical occurrences of that line, and identifies the second one as the new one.</p>
+
+<p>If we read this diff like a story, git seems to tell us the following: the decorator of the function <code class="highlighter-rouge">oldfunction</code> was repurposed for a newly added function <code class="highlighter-rouge">newfunction</code>. The function <code class="highlighter-rouge">oldfunction</code> was then given a new (identical) decorator to compensate for its loss. A simpler and more correct story would be: a new function <code class="highlighter-rouge">newfunction</code> was added with its own decorator.</p>
+
+<p>A final example uses lists, in which it would be more logical to show the earlier opening bracket as the new addition. Such an approach would lead to a diff with balanced brackets, as opposed to the close-then-open we get now:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gd">--- a/matrix.py
+</span><span class="gi">+++ b/matrix.py
+</span><span class="gu">@@ -5,6 +5,11 @@ matrix = [
+</span>         3,
+     ],
+     [
+<span class="gi">+        7,
++        8,
++        9,
++    ],
++    [
+</span>         4,
+         5,
+         6,
+</code></pre>
+</div>
+
+<p>In short: examples of the problem are easily found. However: the most regular occurrences are also generally the least confusing.</p>
+
+<p>As of yet, I have not been able to find other people reporting a similar experience. Whether this is because others don’t experience this phenomenon as a problem, or whether they have resigned themselves to Git’s set of assumptions, I do not know. You are invited let me know, possibly by presenting any of your own real-life examples in the comment section below.</p>
+
+<h3 id="heuristics-and-fundamental-solutions">Heuristics and fundamental solutions</h3>
+
+<p>As noted in the above, git’s ignorance is a fundamentally unsolvable problem: diffs that are based on text alone can never fundamentally know what the underlying structures of those text files were. This does not mean that finding better heuristics for presenting diffs is entirely impossible.</p>
+
+<p>The option <code class="highlighter-rouge">--indent-heuristic</code>, introduced in Git version 2.11, attempts to do just that: it uses indentation as a heuristic for hierarchical structure; this corresponds to the reality in many programming languages and data formats.</p>
+
+<p>However, for obvious reasons, a solution using heuristics can only lead to limited results. Thoughts on more fundamental solutions which require no heuristics at all are the subject of the rest of this website.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:or-any-text-based-vcs">
+      <p>Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control. <a href="#fnref:or-any-text-based-vcs" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
+              <span class="date">Sep 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/ship-of-theseus/" title="Ship of Theseus">Ship of Theseus </a></span>
+              <span class="date">Jul 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/lehman-spe-classification/" title="Lehman's SPE-classfication">Lehman's SPE-classfication </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/hash-consing/" title="Hash Consing">Hash Consing </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/reification-of-interaction/" title="CLIs are reified UIs">CLIs are reified UIs </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
+              <span class="date">Jul 02, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

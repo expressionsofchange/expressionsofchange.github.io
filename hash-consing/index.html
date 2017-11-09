@@ -32,6 +32,7 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
 
 <!-- Fresh Squeezed jQuery -->
 
@@ -105,33 +106,33 @@
         <p>When introducing the editor we introduced <a href="/introducing-the-editor/#a-clef-for-construction">a set of operations that represent changes</a> (we called this a <em>clef</em>). Two of the operations presented so far take a full history as one of their parameters:</p>
 
 <ul>
-  <li><code>Insert index history</code></li>
-  <li><code>Replace index history</code></li>
+  <li><code class="highlighter-rouge">Insert index history</code></li>
+  <li><code class="highlighter-rouge">Replace index history</code></li>
 </ul>
 
-<p>We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter <code>history</code>.</p>
+<p>We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter <code class="highlighter-rouge">history</code>.</p>
 
 <p>In this article we’ll show how this is presently implemented in the editor.</p>
 
 <h3 id="the-problem-history-size">The problem: history-size</h3>
 
-<p>In a naive implementation we might serialize the full history and include it into the serialization of the <code>Replace</code> operation. The problem with this approach is that histories tend to grow over time (by definition).</p>
+<p>In a naive implementation we might serialize the full history and include it into the serialization of the <code class="highlighter-rouge">Replace</code> operation. The problem with this approach is that histories tend to grow over time (by definition).</p>
 
-<p>To see to which degree this would be an unworkable approach, consider the following. The <em>raison d’être</em> of the <code>Replace</code> operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.</p>
+<p>To see to which degree this would be an unworkable approach, consider the following. The <em>raison d’être</em> of the <code class="highlighter-rouge">Replace</code> operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.</p>
 
 <p>As an example of a practical application of that principle would be to keep track of the history of a single computer’s Operating System and applications. In the composed approach, such a system-level history is composed of the histories of each application, which are composed of the histories of their modules, functions, etc. down to the histories of the smallest expressions of which the applications are composed.</p>
 
-<p>The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the <code>Replace</code> operation. This would then result in the following <code>Replace</code> operations:</p>
+<p>The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the <code class="highlighter-rouge">Replace</code> operation. This would then result in the following <code class="highlighter-rouge">Replace</code> operations:</p>
 
 <ul>
-  <li>The history of the system as a whole is extended with a <code>Replace</code> operation which takes as a parameter…</li>
-  <li>The history of some software application as it was previously, but extended with a <code>Replace</code> operation which takes as a parameter…</li>
-  <li>The history of some module as it was previously, but extended with a <code>Replace</code> operation which takes as a parameter…</li>
+  <li>The history of the system as a whole is extended with a <code class="highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
+  <li>The history of some software application as it was previously, but extended with a <code class="highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
+  <li>The history of some module as it was previously, but extended with a <code class="highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
 </ul>
 
 <p>etc.</p>
 
-<p>If we model the serialization of such <code>Replace</code> operations naively, by including the full history as a parameter, the top-level <code>Replace</code> from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).</p>
+<p>If we model the serialization of such <code class="highlighter-rouge">Replace</code> operations naively, by including the full history as a parameter, the top-level <code class="highlighter-rouge">Replace</code> from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).</p>
 
 <p>The challenge is therefore: being able to reference arbitrarily large histories at a constant cost.</p>
 
@@ -156,7 +157,7 @@
 
 <p>Recognizing that any list can be written in the Hash Consing style, and that histories are lists, we’ve implemented histories as such.</p>
 
-<p>It is precisely the hash of such a record that we can refer to from when serializing the operations <code>Insert</code> and <code>Replace</code>, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.</p>
+<p>It is precisely the hash of such a record that we can refer to from when serializing the operations <code class="highlighter-rouge">Insert</code> and <code class="highlighter-rouge">Replace</code>, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.</p>
 
 <h3 id="considerations">Considerations</h3>
 
@@ -164,7 +165,7 @@
 
 <p>It is not strictly necessary to use a hash-based scheme to achieve the above-mentioned advantages in space-complexity. In principle, any scheme that deduplicates shared histories would suffice.</p>
 
-<p>For exampe, we might implement the histories as backlinked lists in-memory, and implement <code>Replace</code> to contain a pointer to the relevant item from the list.</p>
+<p>For exampe, we might implement the histories as backlinked lists in-memory, and implement <code class="highlighter-rouge">Replace</code> to contain a pointer to the relevant item from the list.</p>
 
 <p>However, using a hash-based scheme brings several advantages over such an approach:</p>
 
@@ -208,6 +209,11 @@ s.setAttribute('data-timestamp', +new Date());
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
               <span class="date">Sep 12, 2017</span>
             </li>
@@ -235,11 +241,6 @@ s.setAttribute('data-timestamp', +new Date());
             <li>
               <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
               <span class="date">Jul 02, 2017</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
-              <span class="date">Jul 01, 2017</span>
             </li>
         
             <li>

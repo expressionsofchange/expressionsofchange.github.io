@@ -32,6 +32,7 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
 
 <!-- Fresh Squeezed jQuery -->
 
@@ -120,7 +121,7 @@
 
 <h2 id="version-control">Version control</h2>
 
-<p>Let’s return to a day in the life of a typical programmer. After successfully making a number of changes in our program these changes are typically <em>committed</em> to a <em>source repository</em> using a <em>version control system</em>, i.e. using some command like <code>git commit</code>.</p>
+<p>Let’s return to a day in the life of a typical programmer. After successfully making a number of changes in our program these changes are typically <em>committed</em> to a <em>source repository</em> using a <em>version control system</em>, i.e. using some command like <code class="highlighter-rouge">git commit</code>.</p>
 
 <p>Version control systems are those systems that we use to track changes to the source code of computer programs. Git is currently the most popular choice (overwhelmingly so), Mercurial is a less popular modern system and Subversion and CVS are older but still-in-use systems. Because tracking changes the explicit goal of version control systems the relationship with the present article should be quite obvious.</p>
 
@@ -206,7 +207,7 @@
 
 <p>Back to a day in the life of our programmer. Let’s say the program under consideration depends on a number of external libraries. Such libraries may depend on a number of other libraries themselves, which may depend on further libraries etc, forming a <em>dependency graph</em>. Furthermore, each of these dependencies is to some specific version or range of versions; we cannot generally assume that each version of each library works well with each library it depends on, so we must specify which versions are known to work correctly. Such a situation is a natural consequence of two simple facts of life: The ever-changing nature of programs and the justified desire of programmers to decompose their programs into submodules.</p>
 
-<p>The tools to resolve the various dependencies mentioned above are known as “package management systems”. They typically come in either one of two flavors. Firstly various Operating Systems bundle a package manager to do system-wide installations of software, Examples are <code>apt</code>, <code>yum</code>, <code>pacman</code> and <code>nix</code>. Secondly there’s a great number of package management systems specific to a particular programming language — almost all programming languages seem to come with their own package manager (<code>pip</code>, <code>gem</code>, <code>cargo</code>, to name just a few).</p>
+<p>The tools to resolve the various dependencies mentioned above are known as “package management systems”. They typically come in either one of two flavors. Firstly various Operating Systems bundle a package manager to do system-wide installations of software, Examples are <code class="highlighter-rouge">apt</code>, <code class="highlighter-rouge">yum</code>, <code class="highlighter-rouge">pacman</code> and <code class="highlighter-rouge">nix</code>. Secondly there’s a great number of package management systems specific to a particular programming language — almost all programming languages seem to come with their own package manager (<code class="highlighter-rouge">pip</code>, <code class="highlighter-rouge">gem</code>, <code class="highlighter-rouge">cargo</code>, to name just a few).</p>
 
 <p>One of of the main arguments of this article is that there are too many incompatible tools to deal with changing software. Regarding package management in particular, we can drive this point home in two ways. First, the sheer amount of different package management solutions is almost comical. One can also not help but wonder why so many tools of the same kind are necessary, and whether this is not an indication of a fundamental flaw in their design. Second, the fact that package managers are not only poorly able to talk with other tools for managing change, but can hardly speak among themselves, is a further indication of a deep problem.</p>
 
@@ -217,7 +218,7 @@
     <p>Package management deals with the dependencies on and between a number of external “packages” which are taken more or less as a given. Package management systems have only very limited support for tracking history inside a single package. Some of the primary operations of version management systems, such as constructing histories, comparing versions and cooperating in teams are missing.</p>
   </li>
   <li>
-    <p>Version control systems, on the other hand, deals with a single repository of code under control of the user. This means that they lack the ability to naturally track versions across composed systems in a composed manner. Even though git offers some workarounds for this, such as <code>gitmodules</code> and <code>git-subtree</code>, such workarounds are fundamentally limited, for example because it’s not possible to arbitrarily nest them.</p>
+    <p>Version control systems, on the other hand, deals with a single repository of code under control of the user. This means that they lack the ability to naturally track versions across composed systems in a composed manner. Even though git offers some workarounds for this, such as <code class="highlighter-rouge">gitmodules</code> and <code class="highlighter-rouge">git-subtree</code>, such workarounds are fundamentally limited, for example because it’s not possible to arbitrarily nest them.</p>
   </li>
 </ul>
 
@@ -246,10 +247,10 @@
     <p><strong>Data/schema-migrations</strong> — When the program is changed, its expectations about the data it interacts with may also change. For the case that the data is stored in a database, the tools to migrate data are usually called “data migrations” or “schema migrations”. Similar cases are that of a newer version of the program that expects a different configuration file format, and the case of a program that simply changes its document-format.</p>
   </li>
   <li>
-    <p><strong>Provisioning &amp; Containers</strong> — tools such as <code>chef</code>, <code>puppet</code> and <code>ansible</code> are often used when managing environments of similarly configured machines. They deal with many of the same challenges as package managers: getting the right versions of the right dependencies in the right place. Similar remarks can be made about <em>containers</em> (Docker being a currently popular solution): one might say that their greatest value is in being able to precisely reproduce an entire environment of dependencies to a specific set of versions.</p>
+    <p><strong>Provisioning &amp; Containers</strong> — tools such as <code class="highlighter-rouge">chef</code>, <code class="highlighter-rouge">puppet</code> and <code class="highlighter-rouge">ansible</code> are often used when managing environments of similarly configured machines. They deal with many of the same challenges as package managers: getting the right versions of the right dependencies in the right place. Similar remarks can be made about <em>containers</em> (Docker being a currently popular solution): one might say that their greatest value is in being able to precisely reproduce an entire environment of dependencies to a specific set of versions.</p>
   </li>
   <li>
-    <p><strong>Build tools</strong> — build tools such as <code>make</code>, <code>maven</code> and <code>ant</code> take responsibility for the compilation of larger programs. They relate to change in software in the sense that [a] they’re responsible for detecting which parts of the system have changed, and must therefore be rebuilt and [b] they may specifically talk about particular versions of dependencies of the build.</p>
+    <p><strong>Build tools</strong> — build tools such as <code class="highlighter-rouge">make</code>, <code class="highlighter-rouge">maven</code> and <code class="highlighter-rouge">ant</code> take responsibility for the compilation of larger programs. They relate to change in software in the sense that [a] they’re responsible for detecting which parts of the system have changed, and must therefore be rebuilt and [b] they may specifically talk about particular versions of dependencies of the build.</p>
   </li>
 </ul>
 
@@ -288,6 +289,11 @@ s.setAttribute('data-timestamp', +new Date());
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
               <span class="date">Sep 12, 2017</span>
             </li>
@@ -315,11 +321,6 @@ s.setAttribute('data-timestamp', +new Date());
             <li>
               <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
               <span class="date">Jul 02, 2017</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
-              <span class="date">Jul 01, 2017</span>
             </li>
         
             <li>

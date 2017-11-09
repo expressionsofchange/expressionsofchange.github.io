@@ -32,6 +32,7 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
 
 <!-- Fresh Squeezed jQuery -->
 
@@ -126,9 +127,9 @@
 
 <p>In our pen &amp; paper world we will model Version Control by using an extra piece of paper. On this we draw the versions of the program as nodes, annotate these with some meta-data (date, author, description), and connect them by arrows into a directed acyclic graph that describes the history of the program.</p>
 
-<p>The graph may be constructed by copying a given current state of the program over to this second piece of paper and adding the relevant metadata. This corresponds to a <code>git commit</code>.</p>
+<p>The graph may be constructed by copying a given current state of the program over to this second piece of paper and adding the relevant metadata. This corresponds to a <code class="highlighter-rouge">git commit</code>.</p>
 
-<p>We can then navigate through this graph by pointing at a given node with our finger (below: a big red arrow), and copying the node’s content over into the current program state. This corresponds to a <code>git checkout</code>. Because we always have the full history available, we’ve solved our initial problem!</p>
+<p>We can then navigate through this graph by pointing at a given node with our finger (below: a big red arrow), and copying the node’s content over into the current program state. This corresponds to a <code class="highlighter-rouge">git checkout</code>. Because we always have the full history available, we’ve solved our initial problem!</p>
 
 <p><img src="/images/movies/version-control.gif" alt="Version Control" /></p>
 
@@ -138,18 +139,18 @@
 
 <p>In the toy example above we established the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.</p>
 
-<p>Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplification or cleanup. In such cases a may be useful to <em>rewrite history</em>. Here are some examples of such rewrites with their equivalent <code>git</code> commands:</p>
+<p>Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplification or cleanup. In such cases a may be useful to <em>rewrite history</em>. Here are some examples of such rewrites with their equivalent <code class="highlighter-rouge">git</code> commands:</p>
 
 <ul>
   <li>
-    <p>If you make a mistake while adding a version to the historic record, you may want to fix the mistake in the record rather than adding yet another version to fix the mistake (such a version would only clutter the record). (<code>git commit --ammend</code>)</p>
+    <p>If you make a mistake while adding a version to the historic record, you may want to fix the mistake in the record rather than adding yet another version to fix the mistake (such a version would only clutter the record). (<code class="highlighter-rouge">git commit --ammend</code>)</p>
   </li>
   <li>
-    <p>History is not always linear; multiple new version may arise based on a single version of the program. Such diverging histories can later be merged together in a separate “merge” version. However, many such separate version will clutter up the historic record, and are therefore sometimes deemed undesirable. The solution is to rewrite history as if the divergence never took place: one of the diverging branches of history is cut from its actual base, rewritten, and pasted at the tail of the other branch in a single linear fashion. (<code>git --rebase -i</code>)</p>
+    <p>History is not always linear; multiple new version may arise based on a single version of the program. Such diverging histories can later be merged together in a separate “merge” version. However, many such separate version will clutter up the historic record, and are therefore sometimes deemed undesirable. The solution is to rewrite history as if the divergence never took place: one of the diverging branches of history is cut from its actual base, rewritten, and pasted at the tail of the other branch in a single linear fashion. (<code class="highlighter-rouge">git --rebase -i</code>)</p>
   </li>
 </ul>
 
-<p>An animation of a <code>git rebase</code> in our pen &amp; paper world is shown below: the commit “C” is rewritten as if it happened after “B”, rather than independently of it; this simplifies the graph because we no longer need a merging commit.</p>
+<p>An animation of a <code class="highlighter-rouge">git rebase</code> in our pen &amp; paper world is shown below: the commit “C” is rewritten as if it happened after “B”, rather than independently of it; this simplifies the graph because we no longer need a merging commit.</p>
 
 <p><img src="/images/movies/rewriting-history.gif" alt="Rewriting History" /></p>
 
@@ -188,7 +189,7 @@
 
 <p>Sure: we can simply add yet another piece of paper containing a historic graph, just like we did in step 2a. The only difference being the content of the nodes of the graph: rather than keeping track of individual programs, we can track the history of historic graphs. Let’s call this graph a 2nd level history.</p>
 
-<p>Construction of this graph is analogous to the construction of the regular historic graph: whenever we change the historic record, we add a full copy of the historic graph to the second-level history as a node. We do this both for any history writing operations (such as a <code>git commit</code>) as for rewriting operations (such as <code>git rebase</code>).</p>
+<p>Construction of this graph is analogous to the construction of the regular historic graph: whenever we change the historic record, we add a full copy of the historic graph to the second-level history as a node. We do this both for any history writing operations (such as a <code class="highlighter-rouge">git commit</code>) as for rewriting operations (such as <code class="highlighter-rouge">git rebase</code>).</p>
 
 <p>Just like in the case of regular Version Management we can navigate through the newly constructed graph. Navigation through a second level history corresponds to changes in the historic graph (rather than changes to the program). In other words: it corresponds to rewrites of history. Here it is in action:</p>
 
@@ -222,7 +223,7 @@
 
 <p>The Git repository itself is implemented precisely as a collection of binary files. This means that tracking the history of a Git repository cannot be done efficiently using Git.</p>
 
-<p>In fact: trying this one runs into the fact that adding Git repositories to be tracked inside other repositories has been explicitly forbidden: git repositories are managed using a directory called <code>.git</code>, and Git raises an error when presented with a directory named <code>.git</code> to track.</p>
+<p>In fact: trying this one runs into the fact that adding Git repositories to be tracked inside other repositories has been explicitly forbidden: git repositories are managed using a directory called <code class="highlighter-rouge">.git</code>, and Git raises an error when presented with a directory named <code class="highlighter-rouge">.git</code> to track.</p>
 
 <h2 id="implementation-hint">Implementation hint</h2>
 
@@ -282,6 +283,11 @@ s.setAttribute('data-timestamp', +new Date());
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
               <span class="date">Sep 12, 2017</span>
             </li>
@@ -309,11 +315,6 @@ s.setAttribute('data-timestamp', +new Date());
             <li>
               <span class="recent-title"><a href="/dijkstras-mozart/" title="Dijkstra's Mozart">Dijkstra's Mozart </a></span>
               <span class="date">Jul 02, 2017</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/the-editor-a-video/" title="The Editor - First Video">The Editor - First Video </a></span>
-              <span class="date">Jul 01, 2017</span>
             </li>
         
             <li>
