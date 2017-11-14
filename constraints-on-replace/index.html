@@ -1,0 +1,412 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Constraints on Replace &#8211; Expressions of Change</title>
+<meta name="description" content="The operation Replace replaces a child node with a new one. This new node is recursively described using a history of changes. In this article we compare two...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Constraints on Replace &#8211; Expressions of Change">
+<meta property="og:description" content="The operation Replace replaces a child node with a new one. This new node is recursively described using a history of changes. In this article we compare two...">
+<meta property="og:url" content="/constraints-on-replace/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/" title="Expressions of Change">Home</a>
+            </li>
+            
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Constraints on Replace</h1>
+            <p class="date">Nov 14, 2017
+
+              
+                  — Tags:
+                  
+                  <a href="/the-editor/">The editor</a>
+                  
+                  
+              
+            </p>
+
+            <p class="intro">The operation <code class="highlighter-rouge">Replace</code> replaces a child node with a new one. This new node is recursively described using a history of changes. In this article we compare two scenarios: in one we impose the constraint that the new history must be an continuation of the history so far. In the other we don’t impose this constraint, which is to say that the new history may be anything.
+</p>
+          </hgroup>
+        </header>
+
+        <p>Before we do so, some quick pointers to important background information.</p>
+
+<p>The context of this article is <a href="/introducing-the-editor/">an editor of s-expressions</a> in which the primitives are the mechanisms of construction rather than the resulting structures.</p>
+
+<p>Important examples of such primitives are the operations (<code class="highlighter-rouge">Insert</code>, <code class="highlighter-rouge">Delete</code> and <code class="highlighter-rouge">Replace</code>). These primitives may be composed; a list of them is called a history.</p>
+
+<p>The operation <code class="highlighter-rouge">Replace</code>, in particular, replaces a child-node with a new one, where the new node is described recursively using a full history <code class="highlighter-rouge">h</code>; the child to be replaced is denoted by an index <code class="highlighter-rouge">i</code>.</p>
+
+<p>In this article we will consider a possible constraint on this history <code class="highlighter-rouge">h</code> and its ramifications.</p>
+
+<h2 id="a-continuation-of-history">A continuation of history</h2>
+
+<p>The potential constraint that we will consider is the following: that <code class="highlighter-rouge">h</code> must be continuation of the history of the node previously existing at index <code class="highlighter-rouge">i</code>. We shall call this constraint “<em>continuation-only</em>” and cases in which it does not apply “<em>any-history</em>”.</p>
+
+<p>Let’s make this notion of history being a continuation of a previously existing history a bit more precise.</p>
+
+<p>First, note that we can always meaningfully talk about such a thing as “the history of the node at index <code class="highlighter-rouge">i</code>”: This is because the only way to add or modify children in the first place is by using the operations <code class="highlighter-rouge">Insert</code> and <code class="highlighter-rouge">Replace</code>, and both of these operations take a history as an argument. All we need to do is, during construction of each child, keep a reference to the history out of which it was constructed. In the below, we will refer to such a pre-existing history as <code class="highlighter-rouge">h-pre</code>.</p>
+
+<p>So what is the relationship between <code class="highlighter-rouge">h</code> and <code class="highlighter-rouge">h-pre</code> if a history is a continuation of another? As noted in the above, a history is simply a list of operations of change. Given that definition, we may formulate <em>continuation</em> as follows: A history <code class="highlighter-rouge">h</code> is a continuation of another history <code class="highlighter-rouge">h-pre</code> if the latter is a prefix of the former. In other words: the list <code class="highlighter-rouge">h</code> fully contains the list <code class="highlighter-rouge">h-pre</code> at its beginning.</p>
+
+<p>An alternative, equivalent, formulation, is based on the following implementation detail for histories: In practice, we implement histories using a technique called <a href="/hash-consing/">hash consing</a>. In short: the list is implemented as a linked list, where each element points to its predecessor using a hash. In this view, we can say that a history <code class="highlighter-rouge">h</code> is a continuation of another history <code class="highlighter-rouge">h-pre</code> if you, by following the hashes from <code class="highlighter-rouge">h</code>, at some point will encounter the hash <code class="highlighter-rouge">h-pre</code>.</p>
+
+<p>To clarify what history continuation means in practice, let’s consider two examples:</p>
+
+<h3 id="continuation-only">Continuation-only</h3>
+
+<p>In the first example the history with which we replace is a continuation of the previously existing history:</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">BecomeList</code></p>
+  </li>
+  <li><code class="highlighter-rouge">Insert 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">Replace 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
+      <li><code class="highlighter-rouge">Delete 1</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>(The notation of nested lists in the above should be interpreted as follows: each of the ellipses (<code class="highlighter-rouge">...</code>) are a single parameter <code class="highlighter-rouge">h</code>, which is further detailed in the indented bullet points below it.)</p>
+
+<p>This is an example of a continuation of history, because the first 3 operations, up until <code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code> are shared between the pre-existing history <code class="highlighter-rouge">h-pre</code> and the new history <code class="highlighter-rouge">h</code>.</p>
+
+<h3 id="any-history">Any-history</h3>
+
+<p>In the second example the history with which we replace is <em>not</em> a continuation of the pre-existing one.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">BecomeList</code></p>
+  </li>
+  <li><code class="highlighter-rouge">Insert 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">Replace 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom +))</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>This is an example where the constraint does not apply: the operations <code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code> and <code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code> from <code class="highlighter-rouge">h-pre</code> are not reflected in the history <code class="highlighter-rouge">h</code>.</p>
+
+<p>In the below, we’ll consider the consequences enforcing <em>continuation-only</em> from two perspectives: the perspective of the mental model of our programmers, and the perspective of potential simplifications and optimizations we can make to our tooling. We’ll start with the human perspective.</p>
+
+<h3 id="continuation-only-mental-model">Continuation-only: Mental model</h3>
+
+<p>Enforcing the constraint <em>continuation-only</em> makes for a much more simple mental model of the nodes and histories under consideration than the alternative.</p>
+
+<p>To see why this is the case, consider the following: One of the reasons <code class="highlighter-rouge">Replace</code> is a separate operation in the first place is that it allows for a <a href="/t-indices/">semantics of identity in the face of change</a>. In particular: we can talk about the node which is “replaced” as a single thing which exists over time, interpreting the <code class="highlighter-rouge">Replace</code> as a change to its current value and history, but not to its fundamental identity.</p>
+
+<p>The constraint <em>continuation-only</em> fits nicely into that model. If the constraint applies, the node to which we attach this identity has a single linear history. At times, new things may happen in that history, but those things that have once happened will never “unhappen”.</p>
+
+<p>This mental model also maps quite nicely to a typical use case: that of editing a document. Each time a part of the document is edited, that part’s history is simply extended with the edit-operation.</p>
+
+<p>Contrast this model with the alternative, being  <em>any_history</em>. In that scenario, each time a node is replaced, its history may be arbitrarily rewritten.</p>
+
+<p>In such a scenario we cannot speak of <em>the</em> history of any of our children, since the view of what that history is may itself change over time. Because of that, we must, for each of a node’s children, distinguish between one of two different histories:</p>
+
+<ul>
+  <li>The history <code class="highlighter-rouge">h</code> as set in the latest <code class="highlighter-rouge">Insert</code> or <code class="highlighter-rouge">Replace</code> for the child.</li>
+  <li>The history of such histories.</li>
+</ul>
+
+<p>Such a distinction makes reasoning about a node and the histories of its subnodes quite a bit more complex!</p>
+
+<h3 id="continuation-only-t-paths">Continuation-only: T-paths</h3>
+
+<p>In an editor which takes operations of change as its primitives we get the ability to reference the children of any given node by their order of appearance “for free”. This is quite useful, because such a reference will keep pointing at the same child over time. This was discussed in depth in <a href="/t-indices/">a separate article</a>, in which we called such references <em>t-indices</em>.</p>
+
+<p>In that article we also mentioned <em>t-paths</em>. The interpretation of such a <em>t-path</em> is to consider it to be a list of <em>t-indices</em>; to follow the path means to consider the elements of the path one by one and descend into the relevant child accordingly. As such a <em>t-path</em> can point to an arbitrary descendant, not just a child.</p>
+
+<p>The possible utility of both <em>t-indices</em> and <em>t-paths</em> lies in the fact that, for some structure, they give us a reference to a descendant that keeps pointing at “the same” descendant in the face of changes to the structure over time. We could say that it is this utility that makes it so that the <em>t-index</em> or <em>t-path</em> does what you expect.</p>
+
+<p>For <em>t-indices</em>, whether they do what you’d expect holds for both the cases <em>continuation-only</em> and <em>any-history</em>. This is because, in a single node with a single linear history, the assignment of t-indices to its children is only influenced by the occurrences of <code class="highlighter-rouge">Insert</code> in that history. The interpretation of the attribute <code class="highlighter-rouge">h</code> of any given <code class="highlighter-rouge">Replace</code> operation does not come into play at all. By extension, neither does any constraint on <code class="highlighter-rouge">Replace</code>’s arguments.</p>
+
+<p><em>T-paths</em>, however, only do what you expect for the case <em>continuation-only</em>. This is perhaps best shown with a counter-example. Consider again the history as provided at the beginning of this article of an <em>any-history</em>, which is shown here annotated with the resulting <em>t-paths</em>:</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">BecomeList</code></p>
+  </li>
+  <li><code class="highlighter-rouge">Insert 0 ...</code> –  inserts a new node at <code class="highlighter-rouge">t-index = 0</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code>  –  resulting <em>t-path:</em> <code class="highlighter-rouge">0 0</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code>  –  resulting <em>t-path:</em> <code class="highlighter-rouge">0 1</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">Replace 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom +))</code>  –  resulting <em>t-path:</em> <code class="highlighter-rouge">0 0</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>As should be obvious from the above, the <em>t-path</em> <code class="highlighter-rouge">0 0</code> does not constitute a meaningful reference to a node with a single identity: it initially points at the atom <code class="highlighter-rouge">*</code>, and later at the atom <code class="highlighter-rouge">+</code>, despite these two nodes being unrelated entirely: they exist in separate histories.</p>
+
+<p>When the constraint <em>continuation-only</em> applies, it is not possible to construct such a counter-example: in that scenario it is not possible to replace a history with an entirely unrelated one by definition.</p>
+
+<h3 id="algorithms">Algorithms</h3>
+
+<p>Further consequences <em>continuation-only</em> may be found in the algorithms that make use of histories of operations.</p>
+
+<p>What could such algorithms be? First, there is the algorithm that constructs an actual s-expression out of a history of changes – something we will inevitably be interested in at some point. When compared to an editor that stores s-expressions directly, such an algorithm forms a computational overhead by default. If only for that reason, it is worthwhile to consider its performance characteristics.</p>
+
+<p>First, let’s consider a naive implementation: For each <code class="highlighter-rouge">Replace</code> operation, construct the resulting structure from scratch by considering each element of the history in turn. Such an approach is not scalable: Each <code class="highlighter-rouge">Replace</code> operation takes a full history as one of its parameters and such histories grow linearly in time. Moreover, the histories are recursively composed of further <code class="highlighter-rouge">Replace</code> operations. The result is an exponential growth of the required runtime.</p>
+
+<p>A less naive approach is the following: make use of the fact that each <code class="highlighter-rouge">Replace</code> operations replaces an already existing node, which already has some structure. If we can use this existing structure in such a way that we don’t have to consider the full provided history each time we replace, we may reduce the required runtime considerably.</p>
+
+<p>If <em>continuation-only</em> applies, this is quite straightforward: we can simply take the existing structure as our starting point, and apply to it only those operations in <code class="highlighter-rouge">h</code> that are new. Such an approach is only linear in time with the amount of new operations.</p>
+
+<h2 id="any-history-1"><em>any-history</em></h2>
+
+<p>Finally, let’s considert the respective drawbacks and advantages of the alternative to <em>continuation-only</em>, namely those of <em>any-history</em>.</p>
+
+<p>The drawbacks should be obvious: they are precisely the inverse of the aformentioned advantages. In particular: the mental model of what <code class="highlighter-rouge">Replace</code> means becomes more complex; arbitrary descendants may no longer be referenced meaningfully using a <em>t-path</em> and performant algorithms for construction of nodes are less obvious.</p>
+
+<p>Having said that, there is still something to be said for this approach: Relaxing the constraint gives us certain features almost by definition. Namely: the ability to rewrite the histories of children-nodes, while retaining, at the level at which the rewriting is done, a reference to the history as it existed before it was rewritten. This means we get both the advantages of rewriting of history (cleaner histories) and those of never rewriting history (no loss of information).</p>
+
+<p>To see how this is so, consider the example with which we started this article:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Insert 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">Replace 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom +))</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>In the above, from the perspective of the node whose history is rewritten, all that ever happened is the insertion of the atom <code class="highlighter-rouge">+</code>. However, from the root node we can still see that at some point there was a different history for that node.</p>
+
+<p>Note that this ability to rewrite history is <em>integrated</em> into our main means of expression: we do not require a separate layer of abstraction for it. One caveat does apply though: it is only available on items that are at least one level lower in the tree. This also implies that rewriting history is not available for the root of the tree.</p>
+
+<p>It remains to be seen whether this integrated approach to rewriting of history should be seen as a useful means of expression, or an undesirable conflation of ideas.</p>
+
+<h3 id="meaningful-rewrites">Meaningful rewrites</h3>
+
+<p>That rewriting history is useful in the first place should perhaps be made clear with a separate example.</p>
+
+<p>The running example of <em>any-rewrite</em> has been to present a rewriting of history that is truly arbitrary: in the example above there is truly no relationship between the history pre and post rewrite.</p>
+
+<p>In practice, rewriting of history will often not be so arbitrary. For an example of this, consider the concept of <em>undo</em>, which can be modeled by replacing the history of a node by a history in which the last operation is no longer present:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Insert 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
+      <li><code class="highlighter-rouge">Insert 2 (BecomeAtom 9))</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">Replace 0 ...</code>
+    <ul>
+      <li><code class="highlighter-rouge">BecomeList</code></li>
+      <li><code class="highlighter-rouge">Insert 0 (BecomeAtom *))</code></li>
+      <li><code class="highlighter-rouge">Insert 1 (BecomeAtom 6))</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="conclusions--final-thoughts">Conclusions / final thoughts</h3>
+
+<p>In the above we’ve seen the respective advantages and disadvantages of either enforcing the constraint that histories must be append-only or not. A few final thoughts are below.</p>
+
+<p>First, as noted in the above, a naive approach to <em>t-paths</em> does not yield meaningful results. It is however, even in environments in which nodes can be replaced by arbitrary histories, possible to come up with a scheme of referencing children that does in fact yield meaningful references across time. This scheme will be explained in a future article.</p>
+
+<p>Second, we noted that in <em>continuation-only</em> a performant algorithm for construction is readily available, whereas for for <em>any-history</em> it is not as obvious what such an algorithm should look like. We simply postulate here that such algorithms can still be devised. In particular it is possible to come up with algorithms that are linear in runtime with respect to the amount of history-rewriting.</p>
+
+<p>Finally: given the above advantages and disadvantages, we are left with a question: should we apply the constraint or not?  Or should we perhaps make a distinction between environments in which the constraint applies, and environments in which it doesn’t? Or should we perhaps have 2 distinct operations for <code class="highlighter-rouge">Replace</code>, one for each scenario?</p>
+
+<p>These are, as it stands, open questions. The present version of the edtior is <em>any-history</em>. The rationale is: this forces me to think about the annoying corner-cases which exist only if the constraint does not apply. However, this is certainly subject to change.</p>
+
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
+              <span class="date">Nov 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
+              <span class="date">Nov 09, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
+              <span class="date">Sep 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/ship-of-theseus/" title="Ship of Theseus">Ship of Theseus </a></span>
+              <span class="date">Jul 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/lehman-spe-classification/" title="Lehman's SPE-classfication">Lehman's SPE-classfication </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/hash-consing/" title="Hash Consing">Hash Consing </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

@@ -4,13 +4,247 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-11-09T11:20:36+01:00</updated>
+<updated>2017-11-14T16:40:37+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Constraints on Replace]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/constraints-on-replace/" />
+  <id>http://expressionsofchange.com/constraints-on-replace</id>
+  <published>2017-11-14T00:00:00+01:00</published>
+  <updated>2017-11-14T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Before we do so, some quick pointers to important background information.&lt;/p&gt;
+
+&lt;p&gt;The context of this article is &lt;a href=&quot;/introducing-the-editor/&quot;&gt;an editor of s-expressions&lt;/a&gt; in which the primitives are the mechanisms of construction rather than the resulting structures.&lt;/p&gt;
+
+&lt;p&gt;Important examples of such primitives are the operations (&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Delete&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt;). These primitives may be composed; a list of them is called a history.&lt;/p&gt;
+
+&lt;p&gt;The operation &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt;, in particular, replaces a child-node with a new one, where the new node is described recursively using a full history &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;; the child to be replaced is denoted by an index &lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this article we will consider a possible constraint on this history &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; and its ramifications.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-continuation-of-history&quot;&gt;A continuation of history&lt;/h2&gt;
+
+&lt;p&gt;The potential constraint that we will consider is the following: that &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; must be continuation of the history of the node previously existing at index &lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt;. We shall call this constraint “&lt;em&gt;continuation-only&lt;/em&gt;” and cases in which it does not apply “&lt;em&gt;any-history&lt;/em&gt;”.&lt;/p&gt;
+
+&lt;p&gt;Let’s make this notion of history being a continuation of a previously existing history a bit more precise.&lt;/p&gt;
+
+&lt;p&gt;First, note that we can always meaningfully talk about such a thing as “the history of the node at index &lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt;”: This is because the only way to add or modify children in the first place is by using the operations &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt;, and both of these operations take a history as an argument. All we need to do is, during construction of each child, keep a reference to the history out of which it was constructed. In the below, we will refer to such a pre-existing history as &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;So what is the relationship between &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt; if a history is a continuation of another? As noted in the above, a history is simply a list of operations of change. Given that definition, we may formulate &lt;em&gt;continuation&lt;/em&gt; as follows: A history &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; is a continuation of another history &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt; if the latter is a prefix of the former. In other words: the list &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; fully contains the list &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt; at its beginning.&lt;/p&gt;
+
+&lt;p&gt;An alternative, equivalent, formulation, is based on the following implementation detail for histories: In practice, we implement histories using a technique called &lt;a href=&quot;/hash-consing/&quot;&gt;hash consing&lt;/a&gt;. In short: the list is implemented as a linked list, where each element points to its predecessor using a hash. In this view, we can say that a history &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; is a continuation of another history &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt; if you, by following the hashes from &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;, at some point will encounter the hash &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To clarify what history continuation means in practice, let’s consider two examples:&lt;/p&gt;
+
+&lt;h3 id=&quot;continuation-only&quot;&gt;Continuation-only&lt;/h3&gt;
+
+&lt;p&gt;In the first example the history with which we replace is a continuation of the previously existing history:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Delete 1&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(The notation of nested lists in the above should be interpreted as follows: each of the ellipses (&lt;code class=&quot;highlighter-rouge&quot;&gt;...&lt;/code&gt;) are a single parameter &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;, which is further detailed in the indented bullet points below it.)&lt;/p&gt;
+
+&lt;p&gt;This is an example of a continuation of history, because the first 3 operations, up until &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt; are shared between the pre-existing history &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt; and the new history &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;any-history&quot;&gt;Any-history&lt;/h3&gt;
+
+&lt;p&gt;In the second example the history with which we replace is &lt;em&gt;not&lt;/em&gt; a continuation of the pre-existing one.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is an example where the constraint does not apply: the operations &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt; from &lt;code class=&quot;highlighter-rouge&quot;&gt;h-pre&lt;/code&gt; are not reflected in the history &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In the below, we’ll consider the consequences enforcing &lt;em&gt;continuation-only&lt;/em&gt; from two perspectives: the perspective of the mental model of our programmers, and the perspective of potential simplifications and optimizations we can make to our tooling. We’ll start with the human perspective.&lt;/p&gt;
+
+&lt;h3 id=&quot;continuation-only-mental-model&quot;&gt;Continuation-only: Mental model&lt;/h3&gt;
+
+&lt;p&gt;Enforcing the constraint &lt;em&gt;continuation-only&lt;/em&gt; makes for a much more simple mental model of the nodes and histories under consideration than the alternative.&lt;/p&gt;
+
+&lt;p&gt;To see why this is the case, consider the following: One of the reasons &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; is a separate operation in the first place is that it allows for a &lt;a href=&quot;/t-indices/&quot;&gt;semantics of identity in the face of change&lt;/a&gt;. In particular: we can talk about the node which is “replaced” as a single thing which exists over time, interpreting the &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; as a change to its current value and history, but not to its fundamental identity.&lt;/p&gt;
+
+&lt;p&gt;The constraint &lt;em&gt;continuation-only&lt;/em&gt; fits nicely into that model. If the constraint applies, the node to which we attach this identity has a single linear history. At times, new things may happen in that history, but those things that have once happened will never “unhappen”.&lt;/p&gt;
+
+&lt;p&gt;This mental model also maps quite nicely to a typical use case: that of editing a document. Each time a part of the document is edited, that part’s history is simply extended with the edit-operation.&lt;/p&gt;
+
+&lt;p&gt;Contrast this model with the alternative, being  &lt;em&gt;any_history&lt;/em&gt;. In that scenario, each time a node is replaced, its history may be arbitrarily rewritten.&lt;/p&gt;
+
+&lt;p&gt;In such a scenario we cannot speak of &lt;em&gt;the&lt;/em&gt; history of any of our children, since the view of what that history is may itself change over time. Because of that, we must, for each of a node’s children, distinguish between one of two different histories:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The history &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; as set in the latest &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; for the child.&lt;/li&gt;
+  &lt;li&gt;The history of such histories.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Such a distinction makes reasoning about a node and the histories of its subnodes quite a bit more complex!&lt;/p&gt;
+
+&lt;h3 id=&quot;continuation-only-t-paths&quot;&gt;Continuation-only: T-paths&lt;/h3&gt;
+
+&lt;p&gt;In an editor which takes operations of change as its primitives we get the ability to reference the children of any given node by their order of appearance “for free”. This is quite useful, because such a reference will keep pointing at the same child over time. This was discussed in depth in &lt;a href=&quot;/t-indices/&quot;&gt;a separate article&lt;/a&gt;, in which we called such references &lt;em&gt;t-indices&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;In that article we also mentioned &lt;em&gt;t-paths&lt;/em&gt;. The interpretation of such a &lt;em&gt;t-path&lt;/em&gt; is to consider it to be a list of &lt;em&gt;t-indices&lt;/em&gt;; to follow the path means to consider the elements of the path one by one and descend into the relevant child accordingly. As such a &lt;em&gt;t-path&lt;/em&gt; can point to an arbitrary descendant, not just a child.&lt;/p&gt;
+
+&lt;p&gt;The possible utility of both &lt;em&gt;t-indices&lt;/em&gt; and &lt;em&gt;t-paths&lt;/em&gt; lies in the fact that, for some structure, they give us a reference to a descendant that keeps pointing at “the same” descendant in the face of changes to the structure over time. We could say that it is this utility that makes it so that the &lt;em&gt;t-index&lt;/em&gt; or &lt;em&gt;t-path&lt;/em&gt; does what you expect.&lt;/p&gt;
+
+&lt;p&gt;For &lt;em&gt;t-indices&lt;/em&gt;, whether they do what you’d expect holds for both the cases &lt;em&gt;continuation-only&lt;/em&gt; and &lt;em&gt;any-history&lt;/em&gt;. This is because, in a single node with a single linear history, the assignment of t-indices to its children is only influenced by the occurrences of &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; in that history. The interpretation of the attribute &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; of any given &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation does not come into play at all. By extension, neither does any constraint on &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt;’s arguments.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;T-paths&lt;/em&gt;, however, only do what you expect for the case &lt;em&gt;continuation-only&lt;/em&gt;. This is perhaps best shown with a counter-example. Consider again the history as provided at the beginning of this article of an &lt;em&gt;any-history&lt;/em&gt;, which is shown here annotated with the resulting &lt;em&gt;t-paths&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 ...&lt;/code&gt; –  inserts a new node at &lt;code class=&quot;highlighter-rouge&quot;&gt;t-index = 0&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;  –  resulting &lt;em&gt;t-path:&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;0 0&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;  –  resulting &lt;em&gt;t-path:&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;0 1&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt;  –  resulting &lt;em&gt;t-path:&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;0 0&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As should be obvious from the above, the &lt;em&gt;t-path&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;0 0&lt;/code&gt; does not constitute a meaningful reference to a node with a single identity: it initially points at the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;, and later at the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;, despite these two nodes being unrelated entirely: they exist in separate histories.&lt;/p&gt;
+
+&lt;p&gt;When the constraint &lt;em&gt;continuation-only&lt;/em&gt; applies, it is not possible to construct such a counter-example: in that scenario it is not possible to replace a history with an entirely unrelated one by definition.&lt;/p&gt;
+
+&lt;h3 id=&quot;algorithms&quot;&gt;Algorithms&lt;/h3&gt;
+
+&lt;p&gt;Further consequences &lt;em&gt;continuation-only&lt;/em&gt; may be found in the algorithms that make use of histories of operations.&lt;/p&gt;
+
+&lt;p&gt;What could such algorithms be? First, there is the algorithm that constructs an actual s-expression out of a history of changes – something we will inevitably be interested in at some point. When compared to an editor that stores s-expressions directly, such an algorithm forms a computational overhead by default. If only for that reason, it is worthwhile to consider its performance characteristics.&lt;/p&gt;
+
+&lt;p&gt;First, let’s consider a naive implementation: For each &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation, construct the resulting structure from scratch by considering each element of the history in turn. Such an approach is not scalable: Each &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation takes a full history as one of its parameters and such histories grow linearly in time. Moreover, the histories are recursively composed of further &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operations. The result is an exponential growth of the required runtime.&lt;/p&gt;
+
+&lt;p&gt;A less naive approach is the following: make use of the fact that each &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operations replaces an already existing node, which already has some structure. If we can use this existing structure in such a way that we don’t have to consider the full provided history each time we replace, we may reduce the required runtime considerably.&lt;/p&gt;
+
+&lt;p&gt;If &lt;em&gt;continuation-only&lt;/em&gt; applies, this is quite straightforward: we can simply take the existing structure as our starting point, and apply to it only those operations in &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; that are new. Such an approach is only linear in time with the amount of new operations.&lt;/p&gt;
+
+&lt;h2 id=&quot;any-history-1&quot;&gt;&lt;em&gt;any-history&lt;/em&gt;&lt;/h2&gt;
+
+&lt;p&gt;Finally, let’s considert the respective drawbacks and advantages of the alternative to &lt;em&gt;continuation-only&lt;/em&gt;, namely those of &lt;em&gt;any-history&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The drawbacks should be obvious: they are precisely the inverse of the aformentioned advantages. In particular: the mental model of what &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; means becomes more complex; arbitrary descendants may no longer be referenced meaningfully using a &lt;em&gt;t-path&lt;/em&gt; and performant algorithms for construction of nodes are less obvious.&lt;/p&gt;
+
+&lt;p&gt;Having said that, there is still something to be said for this approach: Relaxing the constraint gives us certain features almost by definition. Namely: the ability to rewrite the histories of children-nodes, while retaining, at the level at which the rewriting is done, a reference to the history as it existed before it was rewritten. This means we get both the advantages of rewriting of history (cleaner histories) and those of never rewriting history (no loss of information).&lt;/p&gt;
+
+&lt;p&gt;To see how this is so, consider the example with which we started this article:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In the above, from the perspective of the node whose history is rewritten, all that ever happened is the insertion of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;. However, from the root node we can still see that at some point there was a different history for that node.&lt;/p&gt;
+
+&lt;p&gt;Note that this ability to rewrite history is &lt;em&gt;integrated&lt;/em&gt; into our main means of expression: we do not require a separate layer of abstraction for it. One caveat does apply though: it is only available on items that are at least one level lower in the tree. This also implies that rewriting history is not available for the root of the tree.&lt;/p&gt;
+
+&lt;p&gt;It remains to be seen whether this integrated approach to rewriting of history should be seen as a useful means of expression, or an undesirable conflation of ideas.&lt;/p&gt;
+
+&lt;h3 id=&quot;meaningful-rewrites&quot;&gt;Meaningful rewrites&lt;/h3&gt;
+
+&lt;p&gt;That rewriting history is useful in the first place should perhaps be made clear with a separate example.&lt;/p&gt;
+
+&lt;p&gt;The running example of &lt;em&gt;any-rewrite&lt;/em&gt; has been to present a rewriting of history that is truly arbitrary: in the example above there is truly no relationship between the history pre and post rewrite.&lt;/p&gt;
+
+&lt;p&gt;In practice, rewriting of history will often not be so arbitrary. For an example of this, consider the concept of &lt;em&gt;undo&lt;/em&gt;, which can be modeled by replacing the history of a node by a history in which the last operation is no longer present:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 9))&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 0 ...&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;conclusions--final-thoughts&quot;&gt;Conclusions / final thoughts&lt;/h3&gt;
+
+&lt;p&gt;In the above we’ve seen the respective advantages and disadvantages of either enforcing the constraint that histories must be append-only or not. A few final thoughts are below.&lt;/p&gt;
+
+&lt;p&gt;First, as noted in the above, a naive approach to &lt;em&gt;t-paths&lt;/em&gt; does not yield meaningful results. It is however, even in environments in which nodes can be replaced by arbitrary histories, possible to come up with a scheme of referencing children that does in fact yield meaningful references across time. This scheme will be explained in a future article.&lt;/p&gt;
+
+&lt;p&gt;Second, we noted that in &lt;em&gt;continuation-only&lt;/em&gt; a performant algorithm for construction is readily available, whereas for for &lt;em&gt;any-history&lt;/em&gt; it is not as obvious what such an algorithm should look like. We simply postulate here that such algorithms can still be devised. In particular it is possible to come up with algorithms that are linear in runtime with respect to the amount of history-rewriting.&lt;/p&gt;
+
+&lt;p&gt;Finally: given the above advantages and disadvantages, we are left with a question: should we apply the constraint or not?  Or should we perhaps make a distinction between environments in which the constraint applies, and environments in which it doesn’t? Or should we perhaps have 2 distinct operations for &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt;, one for each scenario?&lt;/p&gt;
+
+&lt;p&gt;These are, as it stands, open questions. The present version of the edtior is &lt;em&gt;any-history&lt;/em&gt;. The rationale is: this forces me to think about the annoying corner-cases which exist only if the constraint does not apply. However, this is certainly subject to change.&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/constraints-on-replace/&quot;&gt;Constraints on Replace&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 14, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -57,7 +291,7 @@
 
 &lt;p&gt;Because we we look at the node through the lens of &lt;em&gt;time&lt;/em&gt; as opposed to its current &lt;em&gt;spatial&lt;/em&gt; layout in this approach, we’ll denote this indexing scheme as the &lt;em&gt;t-index&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;Note that the same generalization to paths to arbitrary descendants is available for t-indices as it was in the case of regular indices.&lt;/p&gt;
+&lt;p&gt;Note that the same generalization to paths to arbitrary descendants is available for t-indices as it was in the case of regular indices, &lt;a href=&quot;/constraints-on-replace/&quot;&gt;although some constraints must apply on replace’s paramters for the path to be stable over time&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h4 id=&quot;delete&quot;&gt;Delete&lt;/h4&gt;
 

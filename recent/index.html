@@ -50,9 +50,7 @@
 
 <div id="bump">
   <body class="">
-     
     <header class="site-header">
-    
       <div class="wrap">
         <hgroup>
           <h1><a href="/">Expressions of Change</a></h1>
@@ -65,11 +63,11 @@
             </li>
             
             
-                <li><a href="/project-motivation/" >Project Motivation</a></li>
+                <li><a href="/project-motivation/" >Motivation</a></li>
             
                 <li><a href="/the-editor/" >The Editor</a></li>
             
-                <li><a href="/recent/" >Recent posts</a></li>
+                <li><a href="/recent/" >Recent</a></li>
             
 
           </ul>
@@ -80,13 +78,19 @@
 
         <section class="article">
 
-          <div class="overlay"></div>
-          <div class="featured-image" style="background-image: url(/images/features/wet-tree.jpg"></div>
-
           <article class="archive-wrap">
               <ol class="post-list">
                  <lh><h2><span class="bb">Recent Posts</span></h2></lh>
 
+                  
+                  <li>
+                    <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+                        <h1><a href="/constraints-on-replace/">Constraints on Replace</a></h1>
+                        <p class="date"><time datetime="2017-11-14T00:00:00+01:00" itemprop="datePublished">November 14, 2017</time></p>
+                        <p class="">The operation <code class="highlighter-rouge">Replace</code> replaces a child node with a new one. This new node is recursively described using a history of changes. In this article we compare two scenarios: in one we impose the constraint that the new history must be an continuation of the history so far. In the other we don’t impose this constraint, which is to say that the new history may be anything.
+</p>
+                    </div>
+                  </li>
                   
                   <li>
                     <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
@@ -226,6 +230,11 @@
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
+              <span class="date">Nov 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
               <span class="date">Nov 09, 2017</span>
             </li>
@@ -253,11 +262,6 @@
             <li>
               <span class="recent-title"><a href="/hash-consing/" title="Hash Consing">Hash Consing </a></span>
               <span class="date">Jul 04, 2017</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/reification-of-interaction/" title="CLIs are reified UIs">CLIs are reified UIs </a></span>
-              <span class="date">Jul 02, 2017</span>
             </li>
         
             <li>
