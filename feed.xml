@@ -4,13 +4,71 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-11-14T16:40:37+01:00</updated>
+<updated>2017-11-15T11:15:25+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Static Analysis - Introduction]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/static-analysis-intro/" />
+  <id>http://expressionsofchange.com/static-analysis-intro</id>
+  <published>2017-11-15T00:00:00+01:00</published>
+  <updated>2017-11-15T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Static program analysis is the analysis of computer programs that is performed without actually executing programs. Some examples are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;identifying variables that are declared, but never used;&lt;/li&gt;
+  &lt;li&gt;identifying variables that are used, but never declared;&lt;/li&gt;
+  &lt;li&gt;any kind of type-checker.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Such analyses are useful in helping the programmer identify potential errors as soon as possible.&lt;/p&gt;
+
+&lt;p&gt;Case in point: running a program with undeclared variables will lead to failure at the point the variable is used, which is why running such programs is ruled out in many (but not all) programming environments.&lt;/p&gt;
+
+&lt;p&gt;Let’s see how such analyses relate to the present project. This project is about &lt;em&gt;Expressions of Change&lt;/em&gt;: environments in which the changes to programs take a central role, e.g. by having an editor which stores histories of structured changes to documents rather than the resulting documents.&lt;/p&gt;
+
+&lt;p&gt;In the context of such an editor, doing such static analyses for each version of the program yields an extra dimension of valuable information: in addition to giving information about &lt;em&gt;what&lt;/em&gt; is wrong and &lt;em&gt;where&lt;/em&gt;, such step by step analyses provide insight into &lt;em&gt;when&lt;/em&gt; something went wrong, in terms of the edit-history of your program. This extra dimension may be quite helpful in answering the most important question, which is the question as to &lt;em&gt;why&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;As an example, consider an analysis which identifies (attempted) usage of undeclared variables. A traditional such analysis will point at the location in our program where an unknown variable is used. Doing the same analysis for each version of the program (where &lt;em&gt;every&lt;/em&gt; modification of the program yields a new version) will help us pinpoint &lt;em&gt;when&lt;/em&gt; the problem was introduced. In other words: it will pinpoint a precise modification of the program. By examining this modification, the question of &lt;em&gt;why&lt;/em&gt; may be more readily answered. Examples of possible answers are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;the variable was renamed at its usage-location;&lt;/li&gt;
+  &lt;li&gt;the variable was renamed at the location of its definition;&lt;/li&gt;
+  &lt;li&gt;the location of the variable’s definition was removed entirely;&lt;/li&gt;
+  &lt;li&gt;the variable has never been defined.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This principle, of applying a given static analysis on each version of the program as a whole, gives us a new axis of analysis “for free”, namely that along the history of the program’s construction. By “for free”, we mean that we need not write any code: we simply take an existing tool for static analysis and run it at each step of the program’s construction. One might call this principle the naive approach to step by step program analysis.&lt;/p&gt;
+
+&lt;p&gt;In addition to this naive approach, we could consider approaches to step-wise static analysis which try to utilize both the structured nature of our editor and the stream of change-operations it produces. Such approaches to static analysis will take as input:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;a previous version of the program,&lt;/li&gt;
+  &lt;li&gt;a finished analysis for that previous version of the program and&lt;/li&gt;
+  &lt;li&gt;a single change to the program (or part of it).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are two important reasons to do so:&lt;/p&gt;
+
+&lt;p&gt;The first is that the approach of running a full static analysis for each change to a program, might be “free” in terms of the effort to develop the analyses, but is certainly not free in terms of processing power! When we take this approach the amount of required processing power and time is multiplied by the number of changes we wish to analyze. This likely excludes many interesting use-cases, such as the one of interactive feedback on the output of static analyses.&lt;/p&gt;
+
+&lt;p&gt;A second reason to consider a more incremental approach to static analysis is that such analyses, by virtue of their incremental formulation, may occasionally lead to output that is more easily understood by the human end-user of the analysis. In such analyses we spend quite some effort in precisely defining how various changes may affect the output of an analysis, and how information flows through a program, with the goal of reducing the analyses’ runtimes. It turns out this has the fortunate side-effect of saving processing power of the human interpreter of the result as well!&lt;/p&gt;
+
+&lt;p&gt;In the past month I have written a number of such incremental static analyses; I will present the results here as a series of articles (as of yet: to be written).&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/static-analysis-intro/&quot;&gt;Static Analysis - Introduction&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 15, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>

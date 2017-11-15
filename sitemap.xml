@@ -6,6 +6,10 @@
 
     
     <url>
+        <loc>/static-analysis-intro/</loc>
+    </url>
+    
+    <url>
         <loc>/constraints-on-replace/</loc>
     </url>
     

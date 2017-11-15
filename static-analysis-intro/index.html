@@ -1,0 +1,234 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Static Analysis - Introduction &#8211; Expressions of Change</title>
+<meta name="description" content="In this project, we put changes to computer programs more central in the programming experience. As a result, the ability to do static analyses is lifted fro...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Static Analysis - Introduction &#8211; Expressions of Change">
+<meta property="og:description" content="In this project, we put changes to computer programs more central in the programming experience. As a result, the ability to do static analyses is lifted fro...">
+<meta property="og:url" content="/static-analysis-intro/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/static-analysis/" >Static Analysis</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Static Analysis - Introduction</h1>
+            <p class="date">Nov 15, 2017
+
+              
+                  — Tags:
+                  
+                  <a href="/static-analysis/">Static analysis</a>
+                  
+                  
+              
+            </p>
+
+            <p class="intro">In this project, we put changes to computer programs more central in the programming experience. As a result, the ability to do static analyses is lifted from single programs to the full dimension of any program’s construction. This has some useful applications, which are demonstrated in a series of articles.
+</p>
+          </hgroup>
+        </header>
+
+        <p>Static program analysis is the analysis of computer programs that is performed without actually executing programs. Some examples are:</p>
+
+<ul>
+  <li>identifying variables that are declared, but never used;</li>
+  <li>identifying variables that are used, but never declared;</li>
+  <li>any kind of type-checker.</li>
+</ul>
+
+<p>Such analyses are useful in helping the programmer identify potential errors as soon as possible.</p>
+
+<p>Case in point: running a program with undeclared variables will lead to failure at the point the variable is used, which is why running such programs is ruled out in many (but not all) programming environments.</p>
+
+<p>Let’s see how such analyses relate to the present project. This project is about <em>Expressions of Change</em>: environments in which the changes to programs take a central role, e.g. by having an editor which stores histories of structured changes to documents rather than the resulting documents.</p>
+
+<p>In the context of such an editor, doing such static analyses for each version of the program yields an extra dimension of valuable information: in addition to giving information about <em>what</em> is wrong and <em>where</em>, such step by step analyses provide insight into <em>when</em> something went wrong, in terms of the edit-history of your program. This extra dimension may be quite helpful in answering the most important question, which is the question as to <em>why</em>.</p>
+
+<p>As an example, consider an analysis which identifies (attempted) usage of undeclared variables. A traditional such analysis will point at the location in our program where an unknown variable is used. Doing the same analysis for each version of the program (where <em>every</em> modification of the program yields a new version) will help us pinpoint <em>when</em> the problem was introduced. In other words: it will pinpoint a precise modification of the program. By examining this modification, the question of <em>why</em> may be more readily answered. Examples of possible answers are:</p>
+
+<ul>
+  <li>the variable was renamed at its usage-location;</li>
+  <li>the variable was renamed at the location of its definition;</li>
+  <li>the location of the variable’s definition was removed entirely;</li>
+  <li>the variable has never been defined.</li>
+</ul>
+
+<p>This principle, of applying a given static analysis on each version of the program as a whole, gives us a new axis of analysis “for free”, namely that along the history of the program’s construction. By “for free”, we mean that we need not write any code: we simply take an existing tool for static analysis and run it at each step of the program’s construction. One might call this principle the naive approach to step by step program analysis.</p>
+
+<p>In addition to this naive approach, we could consider approaches to step-wise static analysis which try to utilize both the structured nature of our editor and the stream of change-operations it produces. Such approaches to static analysis will take as input:</p>
+
+<ul>
+  <li>a previous version of the program,</li>
+  <li>a finished analysis for that previous version of the program and</li>
+  <li>a single change to the program (or part of it).</li>
+</ul>
+
+<p>There are two important reasons to do so:</p>
+
+<p>The first is that the approach of running a full static analysis for each change to a program, might be “free” in terms of the effort to develop the analyses, but is certainly not free in terms of processing power! When we take this approach the amount of required processing power and time is multiplied by the number of changes we wish to analyze. This likely excludes many interesting use-cases, such as the one of interactive feedback on the output of static analyses.</p>
+
+<p>A second reason to consider a more incremental approach to static analysis is that such analyses, by virtue of their incremental formulation, may occasionally lead to output that is more easily understood by the human end-user of the analysis. In such analyses we spend quite some effort in precisely defining how various changes may affect the output of an analysis, and how information flows through a program, with the goal of reducing the analyses’ runtimes. It turns out this has the fortunate side-effect of saving processing power of the human interpreter of the result as well!</p>
+
+<p>In the past month I have written a number of such incremental static analyses; I will present the results here as a series of articles (as of yet: to be written).</p>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/static-analysis-intro/" title="Static Analysis - Introduction">Static Analysis - Introduction </a></span>
+              <span class="date">Nov 15, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
+              <span class="date">Nov 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
+              <span class="date">Nov 09, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
+              <span class="date">Sep 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/ship-of-theseus/" title="Ship of Theseus">Ship of Theseus </a></span>
+              <span class="date">Jul 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/lehman-spe-classification/" title="Lehman's SPE-classfication">Lehman's SPE-classfication </a></span>
+              <span class="date">Jul 04, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
