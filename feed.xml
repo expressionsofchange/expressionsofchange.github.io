@@ -4,13 +4,85 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-11-15T11:15:25+01:00</updated>
+<updated>2017-11-16T17:18:51+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[L - A toy language]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/l-a-toy-language/" />
+  <id>http://expressionsofchange.com/l-a-toy-language</id>
+  <published>2017-11-16T00:00:00+01:00</published>
+  <updated>2017-11-16T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;The &lt;a href=&quot;/the-editor/&quot;&gt;editor that is part of this project&lt;/a&gt; puts changes to documents more centrally in the editing experience than traditional editors. In defining a language for static analysis, however, we shall start by focusing on the structure that can be constructed from these changes: an s-expression.&lt;/p&gt;
+
+&lt;p&gt;S-expressions are perhaps most well-known for being the basic building block of the syntax of Lisp and its various dialects. In this series we will stay true to that tradition, defining a minimal Lisp as the basis for further discussion. In the below, we shall refer to this language as &lt;em&gt;L&lt;/em&gt;. Despite being quite minimal, &lt;em&gt;L&lt;/em&gt; is sufficiently complete for actual usage, and for various static analyses to yield interesting results.&lt;/p&gt;
+
+&lt;p&gt;The given language is a subset of Scheme. In the interest of brevity the definition below is somewhat imprecise; for a full definition of Scheme the reader is referred to &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;the excellent book by Abelson &amp;amp; Sussman&lt;/a&gt; or the accompanying &lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/video-lectures/&quot;&gt;video lectures&lt;/a&gt;. A more precise definition of the language under consideration here may be obtained by taking Scheme as defined in those sources, and limiting it to the special forms as defined below.&lt;/p&gt;
+
+&lt;h2 id=&quot;operational-semantics&quot;&gt;Operational semantics&lt;/h2&gt;
+
+&lt;p&gt;In the below we provide an &lt;em&gt;operational semantics&lt;/em&gt;, which is to say: the meaning of the language is entirely defined by its behavior in some imaginary machine. In particular, given an s-expression and an environment, we provide a mechanism for evaluation.&lt;/p&gt;
+
+&lt;p&gt;S-expressions have been talked about at length &lt;a href=&quot;/introducing-the-editor/&quot;&gt;in our description of the editor&lt;/a&gt;; With regards to environments, it suffices to say two things:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Environments bind values to names; after a value has been bound to a name, looking up the name returns the value.&lt;/li&gt;
+  &lt;li&gt;Environments may be nested; if a name is looked up in a nested environment and not found there, lookup recursively proceeds in the enclosing environment.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;case-analysis&quot;&gt;Case-analysis&lt;/h3&gt;
+
+&lt;p&gt;We define evaluation in terms of a case-analysis on the shape of the s-expression. For list expressions, we use a pattern-matching-like notation for this shape; the reader is expected to be able to either deal with the lack of precision, or look up a more precise definition in the above-mentioned sources. Note that the definition is recursive: some of the mechanisms of evaluation below are defined in terms of further evaluation.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;an atom which is either a string or a numbers is a &lt;strong&gt;value&lt;/strong&gt;; its evaluation results in this value itself.&lt;/li&gt;
+  &lt;li&gt;any other atom is a &lt;strong&gt;variable&lt;/strong&gt;; its evaluation results in the value resulting from looking up this variable in the present environment.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(quote «s-expr»)&lt;/code&gt; is a &lt;strong&gt;quoted expression&lt;/strong&gt;; its evaluation results in the quoted s-expression as-is (i.e., specifically by not further evaluation the quoted s-expression).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(quote «predicate» «consequent» «alternative»)&lt;/code&gt; is an &lt;strong&gt;if-expression&lt;/strong&gt;; its evaluation depends on the value resulting from evaluating the &lt;em&gt;predicate&lt;/em&gt;; if this is &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;, it is the result of evaluating of the &lt;em&gt;conseqeuent&lt;/em&gt;, otherwise that of evaluating the &lt;em&gt;alternative&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(define «variable-name» «definition»)&lt;/code&gt; is a &lt;strong&gt;definition&lt;/strong&gt;; its evaluation does not result in a (meaningful) value; however, as an effect of evaluating the result of evaluating the definition is bound to the variable-name in the present environment.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(lambda «parameter names» «body ...»)&lt;/code&gt; is a &lt;strong&gt;lambda&lt;/strong&gt;; it evaluates to a procedure object which contains the parameter names and body. (Note: unlike in Scheme, in which a special form of &lt;code class=&quot;highlighter-rouge&quot;&gt;define&lt;/code&gt; is interpreted as a procedure, in &lt;em&gt;L&lt;/em&gt; lambda’s can only be defined directly using the associated special form)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(begin «... ...»)&lt;/code&gt; is a &lt;strong&gt;sequence&lt;/strong&gt;; it evaluates each s-expression in turn, the evaluation of the sequence results in the last element’s evaluation.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(«procedure» «arguments ...»)&lt;/code&gt; is an &lt;strong&gt;procedure application&lt;/strong&gt;; evaluation results in the value that is arrived at as follows: first, evaluate the procedure and all arguments in the present environment. Create a new (sub-)environment in which each of the procedure’s parameter names is bound to the value of the associated argument. Evaluate the procedure’s body in this environment. This is the result of evaluating the procedure application.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For the sake of simplicity, &lt;em&gt;L&lt;/em&gt; has no primitive procedures; this is no problem, since we can always evaluate programs in some “global” environment in which all required primitive procedures are bound to some name.&lt;/p&gt;
+
+&lt;h3 id=&quot;an-example&quot;&gt;An example&lt;/h3&gt;
+
+&lt;p&gt;As an example, given this definition, consider the following s-expression:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;factorial&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))))&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Evaluating this in an environment where the mathematical symbols are bound to procedures expressing their usual meaning yields the value &lt;code class=&quot;highlighter-rouge&quot;&gt;120&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h3&gt;
+
+&lt;p&gt;This concludes the definition of the language &lt;em&gt;L&lt;/em&gt;;&lt;/p&gt;
+
+&lt;p&gt;In the next article in this series (as of yet: to be written) we will see a very first example of a static analysis on programs in &lt;em&gt;L&lt;/em&gt;, namely the analysis on the forms in such programs.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/l-a-toy-language/&quot;&gt;L - A toy language&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 16, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -65,7 +137,7 @@
 
 &lt;p&gt;A second reason to consider a more incremental approach to static analysis is that such analyses, by virtue of their incremental formulation, may occasionally lead to output that is more easily understood by the human end-user of the analysis. In such analyses we spend quite some effort in precisely defining how various changes may affect the output of an analysis, and how information flows through a program, with the goal of reducing the analyses’ runtimes. It turns out this has the fortunate side-effect of saving processing power of the human interpreter of the result as well!&lt;/p&gt;
 
-&lt;p&gt;In the past month I have written a number of such incremental static analyses; I will present the results here as a series of articles (as of yet: to be written).&lt;/p&gt;
+&lt;p&gt;In the past month I have written a number of such incremental static analyses; I will present the results here as a &lt;a href=&quot;/static-analysis/&quot;&gt;series of articles&lt;/a&gt;. In the &lt;a href=&quot;/l-a-toy-language/&quot;&gt;next article&lt;/a&gt; in the series we will define a small language, called &lt;em&gt;L&lt;/em&gt;, as a basis for various analyses.&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/static-analysis-intro/&quot;&gt;Static Analysis - Introduction&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 15, 2017.&lt;/p&gt;</content>
 </entry>

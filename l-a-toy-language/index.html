@@ -1,0 +1,251 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>L - A toy language &#8211; Expressions of Change</title>
+<meta name="description" content="Before turning our attention to static analysis we need to define the semantics of the programs under consideration. We do so by describing a small language ...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="L - A toy language &#8211; Expressions of Change">
+<meta property="og:description" content="Before turning our attention to static analysis we need to define the semantics of the programs under consideration. We do so by describing a small language ...">
+<meta property="og:url" content="/l-a-toy-language/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/static-analysis/" >Static Analysis</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>L - A toy language</h1>
+            <p class="date">Nov 16, 2017
+
+              
+                  
+                      — Part of a
+                      
+                      <a href="/static-analysis/">series on Static analysis</a>
+                      
+                      
+
+                  
+              
+            </p>
+
+            <p class="intro">In this series we will examine a number of static analyses of programs, and how they might be formulated in terms of the changes to programs. Before turning our attention to such analyses, however, we need to define the semantics of the programs under consideration.
+</p>
+          </hgroup>
+        </header>
+
+        <p>The <a href="/the-editor/">editor that is part of this project</a> puts changes to documents more centrally in the editing experience than traditional editors. In defining a language for static analysis, however, we shall start by focusing on the structure that can be constructed from these changes: an s-expression.</p>
+
+<p>S-expressions are perhaps most well-known for being the basic building block of the syntax of Lisp and its various dialects. In this series we will stay true to that tradition, defining a minimal Lisp as the basis for further discussion. In the below, we shall refer to this language as <em>L</em>. Despite being quite minimal, <em>L</em> is sufficiently complete for actual usage, and for various static analyses to yield interesting results.</p>
+
+<p>The given language is a subset of Scheme. In the interest of brevity the definition below is somewhat imprecise; for a full definition of Scheme the reader is referred to <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">the excellent book by Abelson &amp; Sussman</a> or the accompanying <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/video-lectures/">video lectures</a>. A more precise definition of the language under consideration here may be obtained by taking Scheme as defined in those sources, and limiting it to the special forms as defined below.</p>
+
+<h2 id="operational-semantics">Operational semantics</h2>
+
+<p>In the below we provide an <em>operational semantics</em>, which is to say: the meaning of the language is entirely defined by its behavior in some imaginary machine. In particular, given an s-expression and an environment, we provide a mechanism for evaluation.</p>
+
+<p>S-expressions have been talked about at length <a href="/introducing-the-editor/">in our description of the editor</a>; With regards to environments, it suffices to say two things:</p>
+
+<ul>
+  <li>Environments bind values to names; after a value has been bound to a name, looking up the name returns the value.</li>
+  <li>Environments may be nested; if a name is looked up in a nested environment and not found there, lookup recursively proceeds in the enclosing environment.</li>
+</ul>
+
+<h3 id="case-analysis">Case-analysis</h3>
+
+<p>We define evaluation in terms of a case-analysis on the shape of the s-expression. For list expressions, we use a pattern-matching-like notation for this shape; the reader is expected to be able to either deal with the lack of precision, or look up a more precise definition in the above-mentioned sources. Note that the definition is recursive: some of the mechanisms of evaluation below are defined in terms of further evaluation.</p>
+
+<ul>
+  <li>an atom which is either a string or a numbers is a <strong>value</strong>; its evaluation results in this value itself.</li>
+  <li>any other atom is a <strong>variable</strong>; its evaluation results in the value resulting from looking up this variable in the present environment.</li>
+  <li><code class="highlighter-rouge">(quote «s-expr»)</code> is a <strong>quoted expression</strong>; its evaluation results in the quoted s-expression as-is (i.e., specifically by not further evaluation the quoted s-expression).</li>
+  <li><code class="highlighter-rouge">(quote «predicate» «consequent» «alternative»)</code> is an <strong>if-expression</strong>; its evaluation depends on the value resulting from evaluating the <em>predicate</em>; if this is <code class="highlighter-rouge">true</code>, it is the result of evaluating of the <em>conseqeuent</em>, otherwise that of evaluating the <em>alternative</em>.</li>
+  <li><code class="highlighter-rouge">(define «variable-name» «definition»)</code> is a <strong>definition</strong>; its evaluation does not result in a (meaningful) value; however, as an effect of evaluating the result of evaluating the definition is bound to the variable-name in the present environment.</li>
+  <li><code class="highlighter-rouge">(lambda «parameter names» «body ...»)</code> is a <strong>lambda</strong>; it evaluates to a procedure object which contains the parameter names and body. (Note: unlike in Scheme, in which a special form of <code class="highlighter-rouge">define</code> is interpreted as a procedure, in <em>L</em> lambda’s can only be defined directly using the associated special form)</li>
+  <li><code class="highlighter-rouge">(begin «... ...»)</code> is a <strong>sequence</strong>; it evaluates each s-expression in turn, the evaluation of the sequence results in the last element’s evaluation.</li>
+  <li><code class="highlighter-rouge">(«procedure» «arguments ...»)</code> is an <strong>procedure application</strong>; evaluation results in the value that is arrived at as follows: first, evaluate the procedure and all arguments in the present environment. Create a new (sub-)environment in which each of the procedure’s parameter names is bound to the value of the associated argument. Evaluate the procedure’s body in this environment. This is the result of evaluating the procedure application.</li>
+</ul>
+
+<p>For the sake of simplicity, <em>L</em> has no primitive procedures; this is no problem, since we can always evaluate programs in some “global” environment in which all required primitive procedures are bound to some name.</p>
+
+<h3 id="an-example">An example</h3>
+
+<p>As an example, given this definition, consider the following s-expression:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">begin</span>
+  <span class="p">(</span><span class="k">define</span> <span class="nv">factorial</span>
+    <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">n</span><span class="p">)</span>
+      <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="mi">1</span>
+        <span class="p">(</span><span class="nb">*</span> <span class="nv">n</span> <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))))))</span>
+  <span class="p">(</span><span class="nf">factorial</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Evaluating this in an environment where the mathematical symbols are bound to procedures expressing their usual meaning yields the value <code class="highlighter-rouge">120</code>.</p>
+
+<h3 id="conclusions">Conclusions</h3>
+
+<p>This concludes the definition of the language <em>L</em>;</p>
+
+<p>In the next article in this series (as of yet: to be written) we will see a very first example of a static analysis on programs in <em>L</em>, namely the analysis on the forms in such programs.</p>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/l-a-toy-language/" title="L - A toy language">L - A toy language </a></span>
+              <span class="date">Nov 16, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/static-analysis-intro/" title="Static Analysis - Introduction">Static Analysis - Introduction </a></span>
+              <span class="date">Nov 15, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
+              <span class="date">Nov 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
+              <span class="date">Nov 09, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
+              <span class="date">Sep 12, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/ship-of-theseus/" title="Ship of Theseus">Ship of Theseus </a></span>
+              <span class="date">Jul 12, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
