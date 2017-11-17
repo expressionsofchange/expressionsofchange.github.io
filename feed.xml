@@ -4,13 +4,156 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-11-16T17:18:51+01:00</updated>
+<updated>2017-11-17T17:48:16+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Static Form Analysis]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/form-analysis/" />
+  <id>http://expressionsofchange.com/form-analysis</id>
+  <published>2017-11-17T00:00:00+01:00</published>
+  <updated>2017-11-17T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Before we dive into a definition of &lt;em&gt;form analysis&lt;/em&gt;, let’s consider the context of what we’re talking about. The &lt;a href=&quot;/l-a-toy-language/#case-analysis&quot;&gt;model for evaluation presented in the previous article&lt;/a&gt; defines evaluation for s-expressions in environments.&lt;/p&gt;
+
+&lt;p&gt;A first step in this evaluation is a case-analysis on the form of the s-expression. For each evaluated s-expression, we first check whether the s-expression is an if-statement, lambda, function application or any of the other forms; only then we proceed accordingly. The case-analysis is reproduced below for reference (leaving out the semantics of evaluation).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;an atom which is either a string or a numbers is a &lt;strong&gt;value&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;any other atom is a &lt;strong&gt;variable&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(quote «s-expr»)&lt;/code&gt; is a &lt;strong&gt;quoted expression&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(quote «predicate» «consequent» «alternative»)&lt;/code&gt; is an &lt;strong&gt;if-expression&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(define «variable-name» «definition»)&lt;/code&gt; is a &lt;strong&gt;definition&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(lambda «parameter names» «body ...»)&lt;/code&gt; is a &lt;strong&gt;lambda&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(begin «... ...»)&lt;/code&gt; is a &lt;strong&gt;sequence&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(«procedure» «arguments ...»)&lt;/code&gt; is an &lt;strong&gt;procedure application&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Because of the recursive nature of evaluation of s-expressions, any given s-expression may be evaluated multiple times in the process of evaluation. For each such evaluation the case-analysis as discussed is repeated.&lt;/p&gt;
+
+&lt;p&gt;Consider for example how, in &lt;a href=&quot;/l-a-toy-language/#an-example&quot;&gt;our running example&lt;/a&gt; of the &lt;code class=&quot;highlighter-rouge&quot;&gt;factorial&lt;/code&gt; procedure, which is called with &lt;code class=&quot;highlighter-rouge&quot;&gt;(factorial 5)&lt;/code&gt;, the body of that procedure is subjected to the case analysis for each invocation for a total of 5 times.&lt;/p&gt;
+
+&lt;h3 id=&quot;static-nature-of-the-problem&quot;&gt;Static nature of the problem&lt;/h3&gt;
+
+&lt;p&gt;A closer look at the case-analysis, however, reveals the following: the outcome of the analysis depends exclusively on the structural aspects of the s-expression under consideration. The first such aspect is whether it is an atom or a list; the second, in the case it’s a list, whether its first element is one of a specific set of atoms (&lt;code class=&quot;highlighter-rouge&quot;&gt;lambda&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt;, …).&lt;/p&gt;
+
+&lt;p&gt;This means that, for any given s-expression, the result of the case-analysis will always be the same, independent of any dynamic aspects of the evaluation. Another way to say this is: the case-analysis can be done &lt;em&gt;statically&lt;/em&gt;. &lt;sup id=&quot;fnref:sicp-form-analysis&quot;&gt;&lt;a href=&quot;#fn:sicp-form-analysis&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;why-do-static-analysis&quot;&gt;Why do static analysis?&lt;/h3&gt;
+
+&lt;p&gt;Doing this analysis, on the &lt;em&gt;form&lt;/em&gt; of s-expressions &lt;em&gt;statically&lt;/em&gt; is useful for a number of reasons:&lt;/p&gt;
+
+&lt;p&gt;First, as implied in the above, an interpreter which statically analyses its s-expression only once, before evaluation, can avoid repeating the same case analysis over an over at evaluation-time. This is beneficial for the interpreter’s performance.&lt;/p&gt;
+
+&lt;p&gt;Second, not every form is a legal form. For example, an s-expression denoting an &lt;em&gt;if-form&lt;/em&gt; must have precisely 4 elements: [1] the symbol &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt;, [2] a &lt;em&gt;predicate&lt;/em&gt;, [3] a &lt;em&gt;consequent&lt;/em&gt; and [4] an &lt;em&gt;alternative&lt;/em&gt;. A static analysis of forms will bring any clearly malformed forms to light before evaluation-time.&lt;/p&gt;
+
+&lt;p&gt;Third, doing form-analysis statically is trivial enough to be a good introduction into the subject of static analysis, but still non-trivial enough to provide some insights that can be useful when considering later analyses.&lt;/p&gt;
+
+&lt;p&gt;Finally, a static model of the program’s forms is a prerequisite for nearly all other forms of static analysis. We better do it before proceeding.&lt;/p&gt;
+
+&lt;h3 id=&quot;static-analysis-a-sketch&quot;&gt;Static analysis: a sketch&lt;/h3&gt;
+
+&lt;p&gt;In the below, we provide a rough sketch of a static form analysis.&lt;/p&gt;
+
+&lt;p&gt;Form analysis is defined recursively on s-expressions. For each s-expression under consideration we do a case-analysis on the structure of the s-expression, using the same patterns as described in the operational semantics.&lt;/p&gt;
+
+&lt;p&gt;After the initial case-analysis, we recurse. The paths of recursion are dependent on the form currently under consideration. For most cases, these paths are analogous to those for evaluation. Some examples:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;for an &lt;em&gt;if-form&lt;/em&gt; we recursively analyze the &lt;em&gt;predicate&lt;/em&gt;, &lt;em&gt;consequent&lt;/em&gt; and &lt;em&gt;alternative&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;for a &lt;em&gt;sequence&lt;/em&gt; we recursively analyze all s-expressions that make up the sequence.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For two cases, however, the recursion follows a different path than in the case of evaluation.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For &lt;em&gt;lambda-form&lt;/em&gt; we recursively analyze the body of the form – contrast this with the case of evaluation, in which the body of a lambda is not evaluated when the lambda is evaluated but instead stored in a procedure object.&lt;/li&gt;
+  &lt;li&gt;Analysis of function-application only recursively analyses the application’s sub-expressions – contrast this with the case of evaluation, which proceeds to evaluate the body of the procedure object.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These two differences from the recursive definition of evaluation have the important consequence that the analysis is linear in time with the size of the s-expression under consideration including all its descendants – contrast this with evaluation, which may take infinite time.&lt;/p&gt;
+
+&lt;p&gt;The result of each case-analysis is stored in an object of some sort, with attributes specific to the form at hand. For example, for an &lt;em&gt;if-form&lt;/em&gt; we create an &lt;em&gt;if-form&lt;/em&gt; object, which has the 3 attributes &lt;em&gt;predicte&lt;/em&gt;, &lt;em&gt;consequent&lt;/em&gt; and &lt;em&gt;alternative&lt;/em&gt;, each themselves being a form object. (How an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc.)&lt;/p&gt;
+
+&lt;p&gt;Forms which are not well formed, such as a list-expression representing an &lt;em&gt;if-form&lt;/em&gt; with any other number than 4 elements, may be stored in a special &lt;em&gt;malformed-form&lt;/em&gt;. For malformed forms we do not recurse.&lt;/p&gt;
+
+&lt;h3 id=&quot;context-dependent-analysis&quot;&gt;Context-dependent analysis&lt;/h3&gt;
+
+&lt;p&gt;The fact that this analysis is recursively defined might seem to imply that an analysis of a list-expression always recurses into all elements of that list. However, this is not the case: not each sub-expression of an analyzed s-expression is subjected to further form-analysis.&lt;/p&gt;
+
+&lt;p&gt;Examples of sub-expressions that are not subjected to further form-analysis are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;the quoted s-expressions of &lt;em&gt;quote&lt;/em&gt; forms&lt;/li&gt;
+  &lt;li&gt;the form-identifying atoms (&lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;lambda&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;begin&lt;/code&gt; etc.)&lt;/li&gt;
+  &lt;li&gt;the single variable name in &lt;code class=&quot;highlighter-rouge&quot;&gt;define&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;the list of parameter-names in &lt;code class=&quot;highlighter-rouge&quot;&gt;lambda&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This observation implies that we &lt;em&gt;must&lt;/em&gt; approach the analysis in a top-down manner, because even the question as to whether we must analyze an s-expression to begin with is entirely dependent on its location in the tree.&lt;/p&gt;
+
+&lt;p&gt;Once we turn our attention to incremental analysis of forms, we will see that this is an important observation: it implies that we cannot take the history of a single s-expression in isolation and take it as the basis for an analysis of the history of the associated form, but must instead view it in relation with its parent.&lt;/p&gt;
+
+&lt;p&gt;Contrast this with the history of the s-expression itself, which can be fully understood without referring to its parent.&lt;/p&gt;
+
+&lt;h3 id=&quot;as-a-picture&quot;&gt;As a picture&lt;/h3&gt;
+
+&lt;p&gt;Readers who prefer pictures over words may find the following section useful. In it, we show two diagrams.&lt;/p&gt;
+
+&lt;p&gt;In the first diagram an s-expression is presented, representing the expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(if (= 1 2) 3 4)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this diagram list-expressions simply show up as pairs of brackets, i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;()&lt;/code&gt;, with the elements of those expressions below them.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/if-s-expr.jpg&quot; alt=&quot;An s-expression representing an if&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The second diagram represents the output of the form-analysis. In it, each special form has been recognized and labeled as such. The outgoing branches of the tree also have labels, which denote the specific role of each child-node in the tree.&lt;/p&gt;
+
+&lt;p&gt;Note that the structure of the two trees is not identical. For example: the top-level list-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;()&lt;/code&gt; and its first element, the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt;, are combined into a single node in the form-analysis. Similarly: both the atoms &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;2&lt;/code&gt; are folded into a single attribute of the function application representing all the function’s arguments.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/if-form.jpg&quot; alt=&quot;The associated form&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;terminology&quot;&gt;Terminology&lt;/h3&gt;
+
+&lt;p&gt;Finally, a few words on the chosen terminology.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Sussman &amp;amp; Abelson&lt;/a&gt; call the phase described here &lt;em&gt;syntactic analysis&lt;/em&gt;. We have not followed that tradition, because it leaves us without a noun to denoted the analyzed objects.&lt;/p&gt;
+
+&lt;p&gt;Although the present phase has some properties that a reminiscent of “parsing”, I have refrained from using that word here, because it is generally associated with the parsing of strings – a phase which is entirely absent, given the fact that our point of departure is already a structured editor of s-expressions.&lt;/p&gt;
+
+&lt;p&gt;“Abstract Syntax Tree” was also ruled out as a term, because it does not tell us whether it’s the abstract syntax of s-expressions (the previous step of analysis) or the abstract syntax of forms (the current step).&lt;/p&gt;
+
+&lt;p&gt;Regarding the term “&lt;em&gt;forms&lt;/em&gt;” the following: In Lisp Forms are &lt;a href=&quot;http://www.gnu.org/software/emacs/manual/html_node/elisp/Intro-Eval.html&quot;&gt;“any Lisp object that is intended to be evaluated”&lt;/a&gt;. Here we additionally mean “containing the relevant information on how this evaluation may take place given the object’s position in the full program tree”. Some people mean “Lisp Form” to be an implication of static correctness of the form. We don’t do that, and instead say that incorrect forms are a subset of forms. They are simply those lisp objects that are intended to be evaluated, but malformed.&lt;/p&gt;
+
+&lt;h3 id=&quot;concluding-remarks&quot;&gt;Concluding remarks&lt;/h3&gt;
+
+&lt;p&gt;In this article, we have seen why static form analysis could be useful and how it could be implemented.&lt;/p&gt;
+
+&lt;p&gt;So far, we have only talked about the form-analysis of any given s-expression.&lt;/p&gt;
+
+&lt;p&gt;What we can want next is to implement an analysis that does a minimal amount of re-analyzing, given a previous version of the program, a completed analysis and a small change to the program.&lt;/p&gt;
+
+&lt;p&gt;Such an incremental form analysis is the subject of the next (as of yet to be written) article.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:sicp-form-analysis&quot;&gt;
+      &lt;p&gt;This is not a unique idea; it is, for example, explored in quite some detail in the &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt; in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328. &lt;a href=&quot;#fnref:sicp-form-analysis&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/form-analysis/&quot;&gt;Static Form Analysis&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 17, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -77,9 +220,7 @@
 
 &lt;h3 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h3&gt;
 
-&lt;p&gt;This concludes the definition of the language &lt;em&gt;L&lt;/em&gt;;&lt;/p&gt;
-
-&lt;p&gt;In the next article in this series (as of yet: to be written) we will see a very first example of a static analysis on programs in &lt;em&gt;L&lt;/em&gt;, namely the analysis on the forms in such programs.&lt;/p&gt;
+&lt;p&gt;This concludes the definition of the language &lt;em&gt;L&lt;/em&gt;. In the next &lt;a href=&quot;/form-analysis/&quot;&gt;article in this series&lt;/a&gt; we will see a very first example of a static analysis on programs in &lt;em&gt;L&lt;/em&gt;, namely the analysis on the forms in such programs.&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/l-a-toy-language/&quot;&gt;L - A toy language&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 16, 2017.&lt;/p&gt;</content>
 </entry>

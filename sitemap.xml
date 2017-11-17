@@ -6,6 +6,10 @@
 
     
     <url>
+        <loc>/form-analysis/</loc>
+    </url>
+    
+    <url>
         <loc>/l-a-toy-language/</loc>
     </url>
     

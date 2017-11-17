@@ -1,0 +1,322 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Static Form Analysis &#8211; Expressions of Change</title>
+<meta name="description" content="A first step in the static analysis of our language L is to identify the various special forms as they occur in the s-expression that is our program.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Static Form Analysis &#8211; Expressions of Change">
+<meta property="og:description" content="A first step in the static analysis of our language L is to identify the various special forms as they occur in the s-expression that is our program.">
+<meta property="og:url" content="/form-analysis/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/static-analysis/" >Static Analysis</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Static Form Analysis</h1>
+            <p class="date">Nov 17, 2017
+
+              
+                  
+                      — Part of a
+                      
+                      <a href="/static-analysis/">series on Static analysis</a>
+                      
+                      
+
+                  
+              
+            </p>
+
+            <p class="intro">A first step in the static analysis of our language <em>L</em> is to identify the various <em>special forms</em> as they occur in the s-expression that is our program.
+</p>
+          </hgroup>
+        </header>
+
+        <p>Before we dive into a definition of <em>form analysis</em>, let’s consider the context of what we’re talking about. The <a href="/l-a-toy-language/#case-analysis">model for evaluation presented in the previous article</a> defines evaluation for s-expressions in environments.</p>
+
+<p>A first step in this evaluation is a case-analysis on the form of the s-expression. For each evaluated s-expression, we first check whether the s-expression is an if-statement, lambda, function application or any of the other forms; only then we proceed accordingly. The case-analysis is reproduced below for reference (leaving out the semantics of evaluation).</p>
+
+<ul>
+  <li>an atom which is either a string or a numbers is a <strong>value</strong></li>
+  <li>any other atom is a <strong>variable</strong></li>
+  <li><code class="highlighter-rouge">(quote «s-expr»)</code> is a <strong>quoted expression</strong></li>
+  <li><code class="highlighter-rouge">(quote «predicate» «consequent» «alternative»)</code> is an <strong>if-expression</strong></li>
+  <li><code class="highlighter-rouge">(define «variable-name» «definition»)</code> is a <strong>definition</strong></li>
+  <li><code class="highlighter-rouge">(lambda «parameter names» «body ...»)</code> is a <strong>lambda</strong></li>
+  <li><code class="highlighter-rouge">(begin «... ...»)</code> is a <strong>sequence</strong></li>
+  <li><code class="highlighter-rouge">(«procedure» «arguments ...»)</code> is an <strong>procedure application</strong></li>
+</ul>
+
+<p>Because of the recursive nature of evaluation of s-expressions, any given s-expression may be evaluated multiple times in the process of evaluation. For each such evaluation the case-analysis as discussed is repeated.</p>
+
+<p>Consider for example how, in <a href="/l-a-toy-language/#an-example">our running example</a> of the <code class="highlighter-rouge">factorial</code> procedure, which is called with <code class="highlighter-rouge">(factorial 5)</code>, the body of that procedure is subjected to the case analysis for each invocation for a total of 5 times.</p>
+
+<h3 id="static-nature-of-the-problem">Static nature of the problem</h3>
+
+<p>A closer look at the case-analysis, however, reveals the following: the outcome of the analysis depends exclusively on the structural aspects of the s-expression under consideration. The first such aspect is whether it is an atom or a list; the second, in the case it’s a list, whether its first element is one of a specific set of atoms (<code class="highlighter-rouge">lambda</code>, <code class="highlighter-rouge">if</code>, …).</p>
+
+<p>This means that, for any given s-expression, the result of the case-analysis will always be the same, independent of any dynamic aspects of the evaluation. Another way to say this is: the case-analysis can be done <em>statically</em>. <sup id="fnref:sicp-form-analysis"><a href="#fn:sicp-form-analysis" class="footnote">1</a></sup></p>
+
+<h3 id="why-do-static-analysis">Why do static analysis?</h3>
+
+<p>Doing this analysis, on the <em>form</em> of s-expressions <em>statically</em> is useful for a number of reasons:</p>
+
+<p>First, as implied in the above, an interpreter which statically analyses its s-expression only once, before evaluation, can avoid repeating the same case analysis over an over at evaluation-time. This is beneficial for the interpreter’s performance.</p>
+
+<p>Second, not every form is a legal form. For example, an s-expression denoting an <em>if-form</em> must have precisely 4 elements: [1] the symbol <code class="highlighter-rouge">if</code>, [2] a <em>predicate</em>, [3] a <em>consequent</em> and [4] an <em>alternative</em>. A static analysis of forms will bring any clearly malformed forms to light before evaluation-time.</p>
+
+<p>Third, doing form-analysis statically is trivial enough to be a good introduction into the subject of static analysis, but still non-trivial enough to provide some insights that can be useful when considering later analyses.</p>
+
+<p>Finally, a static model of the program’s forms is a prerequisite for nearly all other forms of static analysis. We better do it before proceeding.</p>
+
+<h3 id="static-analysis-a-sketch">Static analysis: a sketch</h3>
+
+<p>In the below, we provide a rough sketch of a static form analysis.</p>
+
+<p>Form analysis is defined recursively on s-expressions. For each s-expression under consideration we do a case-analysis on the structure of the s-expression, using the same patterns as described in the operational semantics.</p>
+
+<p>After the initial case-analysis, we recurse. The paths of recursion are dependent on the form currently under consideration. For most cases, these paths are analogous to those for evaluation. Some examples:</p>
+
+<ul>
+  <li>for an <em>if-form</em> we recursively analyze the <em>predicate</em>, <em>consequent</em> and <em>alternative</em>.</li>
+  <li>for a <em>sequence</em> we recursively analyze all s-expressions that make up the sequence.</li>
+</ul>
+
+<p>For two cases, however, the recursion follows a different path than in the case of evaluation.</p>
+
+<ul>
+  <li>For <em>lambda-form</em> we recursively analyze the body of the form – contrast this with the case of evaluation, in which the body of a lambda is not evaluated when the lambda is evaluated but instead stored in a procedure object.</li>
+  <li>Analysis of function-application only recursively analyses the application’s sub-expressions – contrast this with the case of evaluation, which proceeds to evaluate the body of the procedure object.</li>
+</ul>
+
+<p>These two differences from the recursive definition of evaluation have the important consequence that the analysis is linear in time with the size of the s-expression under consideration including all its descendants – contrast this with evaluation, which may take infinite time.</p>
+
+<p>The result of each case-analysis is stored in an object of some sort, with attributes specific to the form at hand. For example, for an <em>if-form</em> we create an <em>if-form</em> object, which has the 3 attributes <em>predicte</em>, <em>consequent</em> and <em>alternative</em>, each themselves being a form object. (How an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc.)</p>
+
+<p>Forms which are not well formed, such as a list-expression representing an <em>if-form</em> with any other number than 4 elements, may be stored in a special <em>malformed-form</em>. For malformed forms we do not recurse.</p>
+
+<h3 id="context-dependent-analysis">Context-dependent analysis</h3>
+
+<p>The fact that this analysis is recursively defined might seem to imply that an analysis of a list-expression always recurses into all elements of that list. However, this is not the case: not each sub-expression of an analyzed s-expression is subjected to further form-analysis.</p>
+
+<p>Examples of sub-expressions that are not subjected to further form-analysis are:</p>
+
+<ul>
+  <li>the quoted s-expressions of <em>quote</em> forms</li>
+  <li>the form-identifying atoms (<code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">lambda</code>, <code class="highlighter-rouge">begin</code> etc.)</li>
+  <li>the single variable name in <code class="highlighter-rouge">define</code></li>
+  <li>the list of parameter-names in <code class="highlighter-rouge">lambda</code></li>
+</ul>
+
+<p>This observation implies that we <em>must</em> approach the analysis in a top-down manner, because even the question as to whether we must analyze an s-expression to begin with is entirely dependent on its location in the tree.</p>
+
+<p>Once we turn our attention to incremental analysis of forms, we will see that this is an important observation: it implies that we cannot take the history of a single s-expression in isolation and take it as the basis for an analysis of the history of the associated form, but must instead view it in relation with its parent.</p>
+
+<p>Contrast this with the history of the s-expression itself, which can be fully understood without referring to its parent.</p>
+
+<h3 id="as-a-picture">As a picture</h3>
+
+<p>Readers who prefer pictures over words may find the following section useful. In it, we show two diagrams.</p>
+
+<p>In the first diagram an s-expression is presented, representing the expression <code class="highlighter-rouge">(if (= 1 2) 3 4)</code>.</p>
+
+<p>In this diagram list-expressions simply show up as pairs of brackets, i.e. <code class="highlighter-rouge">()</code>, with the elements of those expressions below them.</p>
+
+<p><img src="/images/if-s-expr.jpg" alt="An s-expression representing an if" /></p>
+
+<p>The second diagram represents the output of the form-analysis. In it, each special form has been recognized and labeled as such. The outgoing branches of the tree also have labels, which denote the specific role of each child-node in the tree.</p>
+
+<p>Note that the structure of the two trees is not identical. For example: the top-level list-expression <code class="highlighter-rouge">()</code> and its first element, the atom <code class="highlighter-rouge">if</code>, are combined into a single node in the form-analysis. Similarly: both the atoms <code class="highlighter-rouge">1</code> and <code class="highlighter-rouge">2</code> are folded into a single attribute of the function application representing all the function’s arguments.</p>
+
+<p><img src="/images/if-form.jpg" alt="The associated form" /></p>
+
+<h3 id="terminology">Terminology</h3>
+
+<p>Finally, a few words on the chosen terminology.</p>
+
+<p><a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Sussman &amp; Abelson</a> call the phase described here <em>syntactic analysis</em>. We have not followed that tradition, because it leaves us without a noun to denoted the analyzed objects.</p>
+
+<p>Although the present phase has some properties that a reminiscent of “parsing”, I have refrained from using that word here, because it is generally associated with the parsing of strings – a phase which is entirely absent, given the fact that our point of departure is already a structured editor of s-expressions.</p>
+
+<p>“Abstract Syntax Tree” was also ruled out as a term, because it does not tell us whether it’s the abstract syntax of s-expressions (the previous step of analysis) or the abstract syntax of forms (the current step).</p>
+
+<p>Regarding the term “<em>forms</em>” the following: In Lisp Forms are <a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Intro-Eval.html">“any Lisp object that is intended to be evaluated”</a>. Here we additionally mean “containing the relevant information on how this evaluation may take place given the object’s position in the full program tree”. Some people mean “Lisp Form” to be an implication of static correctness of the form. We don’t do that, and instead say that incorrect forms are a subset of forms. They are simply those lisp objects that are intended to be evaluated, but malformed.</p>
+
+<h3 id="concluding-remarks">Concluding remarks</h3>
+
+<p>In this article, we have seen why static form analysis could be useful and how it could be implemented.</p>
+
+<p>So far, we have only talked about the form-analysis of any given s-expression.</p>
+
+<p>What we can want next is to implement an analysis that does a minimal amount of re-analyzing, given a previous version of the program, a completed analysis and a small change to the program.</p>
+
+<p>Such an incremental form analysis is the subject of the next (as of yet to be written) article.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:sicp-form-analysis">
+      <p>This is not a unique idea; it is, for example, explored in quite some detail in the <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Structure and Interpretation of Computer Programs</a> in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328. <a href="#fnref:sicp-form-analysis" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/form-analysis/" title="Static Form Analysis">Static Form Analysis </a></span>
+              <span class="date">Nov 17, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/l-a-toy-language/" title="L - A toy language">L - A toy language </a></span>
+              <span class="date">Nov 16, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/static-analysis-intro/" title="Static Analysis - Introduction">Static Analysis - Introduction </a></span>
+              <span class="date">Nov 15, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
+              <span class="date">Nov 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
+              <span class="date">Nov 09, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/september-status-update/" title="September status update">September status update </a></span>
+              <span class="date">Sep 12, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
