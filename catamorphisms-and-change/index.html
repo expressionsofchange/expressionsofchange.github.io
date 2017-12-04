@@ -1,0 +1,298 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Catamorphisms and change &#8211; Expressions of Change</title>
+<meta name="description" content="Some recursive functions can be described as catamorphisms; in the context of controlled modification of the input data structure, efficient mechanisms for r...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Catamorphisms and change &#8211; Expressions of Change">
+<meta property="og:description" content="Some recursive functions can be described as catamorphisms; in the context of controlled modification of the input data structure, efficient mechanisms for r...">
+<meta property="og:url" content="/catamorphisms-and-change/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/static-analysis/" >Static Analysis</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Catamorphisms and change</h1>
+            <p class="date">Dec 04, 2017
+
+              
+            </p>
+
+            <p class="intro">Some recursive functions can be described as catamorphisms; in the context of controlled modification of the input data structure, efficient mechanisms for recalculation are available. This article describes those.
+</p>
+          </hgroup>
+        </header>
+
+        <p>Let us first establish an informal notion of a catamorphism.</p>
+
+<p>Some recursive algorithms on hierarchical data structures (i.e. trees) have the property that they are expressed as a function which [1] does a single recursive function call on each of its children, and [2] that this call takes no parameters other than the child node.</p>
+
+<p>The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute <code class="highlighter-rouge">value</code> at each node. The algorithm calculates the sum of these numbers:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span> 
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">sum_of_values</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre>
+</div>
+
+<p>Other algorithms do not have this property, and fundamentally cannot have this property.</p>
+
+<p>As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.</p>
+
+<p>This function is also provided in sketched form in Python (we leave out some details):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">single_line_mode</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">single_line_mode</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"("</span> <span class="o">+</span> <span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">])</span> <span class="o">+</span> <span class="s">")"</span> 
+
+    <span class="n">result</span> <span class="o">=</span> <span class="s">"("</span> 
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">+=</span> <span class="s">")"</span> 
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre>
+</div>
+
+<p>The key point of the example above is: The recursive call contains more information than simply the fact that some calculation must be done recursively. This information is not knowable from the child node, it is a property of its context. In this case: whether the present node must be printed on a single line as a result of being part of another node’s first element or not.</p>
+
+<p>Note that this is not just a problem with the chosen implementation, but a fundamental property of the desired output. In other words: we cannot rewrite the second example to be in the shape of the first example. In particular: rewriting the above by replacing the boolean parameter with 2 separate function calls is not a valid solution, because then the algorithm is no longer expressed in terms of a single recursive function call on each of the children.</p>
+
+<p>So we can see a distinction: algorithms in which we can do calculations for constituent parts of a composite data structure independently from the data structure of which they are a part, and those for which this is not possible.</p>
+
+<p>Recursive algorithms of the first kind are called <a href="https://en.wikipedia.org/wiki/Catamorphism">catamorphisms</a>. <sup id="fnref:more-about-catamorphisms"><a href="#fn:more-about-catamorphisms" class="footnote">1</a></sup></p>
+
+<h3 id="working-examples">Working examples</h3>
+
+<p>The <a href="/introducing-the-editor/">editor that is part of this project</a>, is a structured editor of s-expressions. We will briefly mention a number of catamorphisms that can be defined for an s-expression. Determining that these are indeed catamorphisms is left as an excercise to the reader.</p>
+
+<ul>
+  <li>Calculating the size of an s-expression; either defined as the number of nodes it contains or the total in-memory size needed for storage.</li>
+  <li>Serialization of an s-expression for storage on-disk or in-memory.</li>
+  <li>Counting occurrences of specific terms, e.g. “total number of occurrences of the symbol <code class="highlighter-rouge">lambda</code> in this s-expression”.</li>
+</ul>
+
+<p>As should be obvious from the introduction, not every algorithm on an s-expression can be defined as a catamorphism. Here are some counter-examples:</p>
+
+<ul>
+  <li>Pretty-printing; at least not in the general case, in which the way a node is printed might depend on its ancestors.</li>
+  <li><a href="/form-analysis/">Form-analysis</a>; whether any given s-expression must be analyzed as a Lisp-form <em>at all</em> depends on ancestors. Quoted s-expressions and parameters to procedures are counter-examples.</li>
+</ul>
+
+<h3 id="context-controlled-modification">Context: controlled modification</h3>
+
+<p>In the project that this website is about, modifications to programs are believed to be such a central aspect of the programming experience that they are given center stage in the tooling. This is most clearly the case for <a href="/introducing-the-editor/">the editor</a>, which has as its primary output not a document (in our case: an s-expression), but rather a well-structured history describing how to create such a document in by steps, each step representing a single modification.</p>
+
+<p>The possible kinds of different modifications are described in a <a href="/introducing-the-editor/#a-clef-for-construction">Clef</a>, a “vocabulary of change”. We now make an important observation about this Clef:</p>
+
+<p><em>Each single modification to a list-expression only affects a very limited number of that list’s elements</em>;</p>
+
+<p>In fact, in the Clef as presented so far each modification only affects at most a single child, in one of three ways:</p>
+
+<ul>
+  <li>A single existing child is deleted.</li>
+  <li>A single existing child is replaced.</li>
+  <li>A single new child is inserted.</li>
+</ul>
+
+<p>It is certainly possible that the Clef will be extended at some point in the future, for example to include a <code class="highlighter-rouge">Swap</code> operation. However, the general property, that notes from the <em>clef</em> act on a specific subset of children of the s-expression under consideration, while not changing any of the other children, will always be preserved: it is a key part of the design.</p>
+
+<h3 id="catamorphisms--controlled-modification">Catamorphisms &amp; controlled modification</h3>
+
+<p>In the context of controlled modification new outcomes for catamorphisms on a structure can be calculated quite efficiently. To see how this is so, consider the following.</p>
+
+<p>If the algorithm can be expressed as a catamorphism, the calculation that needs to be done for a particular child node depends on no other information than the information contained in the child node – this is so by the definition of catamorphisms.</p>
+
+<p>Each modification affects only a very limited number of children – as a consequence of a carefully chosen <em>Clef</em>.</p>
+
+<p>The other children are unaffected, which means that the outcome of the catamorphism will also be unaffected for them.</p>
+
+<p>This means that, for any modification, we only need to recalculate [1] the outcome of the catamorphism for the small number of affected children and [2] the combination of previously calculated outcomes and new results at the modified node itself.</p>
+
+<p>To see this in action, consider the catamorphism of “total size” which is depicted graphically below. In this picture each node is annotated a size showing the total size of that subtree:</p>
+
+<p><img src="/images/node-size.jpg" alt="Tree with &quot;total size&quot;" /></p>
+
+<p>Replacing the right-most child of the root node is depicted below. A red arrow with an “R” depicts the replacing of one node by another; Green arrows depict the fact that recalculation at the root node considers the values at that node’s direct children; a <em>9</em> at the root represents the updated outcome of the calculation.</p>
+
+<p><img src="/images/node-size-update.jpg" alt="Tree with &quot;total size&quot; - update" /></p>
+
+<p>The fact that no green arrows point at the nodes on the bottom left represents the efficiency-gain with respect to a full recalculation of the catamorphism on the new input structure.</p>
+
+<p>In this example, the effect is not dramatic, because the tree is relatively small; in the general case, dramatic efficiency gains will be made precisely when they are required, namely when the trees are very large.</p>
+
+<p>In conclusion: it is worthwhile to examine whether an algorithm can be expressed as a catamorphism; in the context of controlled change this will lead to important efficiency gains.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:more-about-catamorphisms">
+      <p>A good introduction may be found in <a href="https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w">Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire</a>. The article by <a href="https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/">Bartosz Milewski</a> is also excellent. <a href="#fnref:more-about-catamorphisms" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/catamorphisms-and-change/" title="Catamorphisms and change">Catamorphisms and change </a></span>
+              <span class="date">Dec 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/form-analysis/" title="Static Form Analysis">Static Form Analysis </a></span>
+              <span class="date">Nov 17, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/l-a-toy-language/" title="L - A toy language">L - A toy language </a></span>
+              <span class="date">Nov 16, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/static-analysis-intro/" title="Static Analysis - Introduction">Static Analysis - Introduction </a></span>
+              <span class="date">Nov 15, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
+              <span class="date">Nov 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
+              <span class="date">Nov 09, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/git-is-ignorant-by-design/" title="Git is ignorant by design">Git is ignorant by design </a></span>
+              <span class="date">Nov 08, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

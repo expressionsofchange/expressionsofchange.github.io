@@ -4,13 +4,141 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-11-17T17:48:16+01:00</updated>
+<updated>2017-12-04T17:28:51+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Catamorphisms and change]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/catamorphisms-and-change/" />
+  <id>http://expressionsofchange.com/catamorphisms-and-change</id>
+  <published>2017-12-04T00:00:00+01:00</published>
+  <updated>2017-12-04T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Let us first establish an informal notion of a catamorphism.&lt;/p&gt;
+
+&lt;p&gt;Some recursive algorithms on hierarchical data structures (i.e. trees) have the property that they are expressed as a function which [1] does a single recursive function call on each of its children, and [2] that this call takes no parameters other than the child node.&lt;/p&gt;
+
+&lt;p&gt;The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt; at each node. The algorithm calculates the sum of these numbers:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Other algorithms do not have this property, and fundamentally cannot have this property.&lt;/p&gt;
+
+&lt;p&gt;As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.&lt;/p&gt;
+
+&lt;p&gt;This function is also provided in sketched form in Python (we leave out some details):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;(&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;)&quot;&lt;/span&gt; 
+
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;(&quot;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;)&quot;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The key point of the example above is: The recursive call contains more information than simply the fact that some calculation must be done recursively. This information is not knowable from the child node, it is a property of its context. In this case: whether the present node must be printed on a single line as a result of being part of another node’s first element or not.&lt;/p&gt;
+
+&lt;p&gt;Note that this is not just a problem with the chosen implementation, but a fundamental property of the desired output. In other words: we cannot rewrite the second example to be in the shape of the first example. In particular: rewriting the above by replacing the boolean parameter with 2 separate function calls is not a valid solution, because then the algorithm is no longer expressed in terms of a single recursive function call on each of the children.&lt;/p&gt;
+
+&lt;p&gt;So we can see a distinction: algorithms in which we can do calculations for constituent parts of a composite data structure independently from the data structure of which they are a part, and those for which this is not possible.&lt;/p&gt;
+
+&lt;p&gt;Recursive algorithms of the first kind are called &lt;a href=&quot;https://en.wikipedia.org/wiki/Catamorphism&quot;&gt;catamorphisms&lt;/a&gt;. &lt;sup id=&quot;fnref:more-about-catamorphisms&quot;&gt;&lt;a href=&quot;#fn:more-about-catamorphisms&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;working-examples&quot;&gt;Working examples&lt;/h3&gt;
+
+&lt;p&gt;The &lt;a href=&quot;/introducing-the-editor/&quot;&gt;editor that is part of this project&lt;/a&gt;, is a structured editor of s-expressions. We will briefly mention a number of catamorphisms that can be defined for an s-expression. Determining that these are indeed catamorphisms is left as an excercise to the reader.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Calculating the size of an s-expression; either defined as the number of nodes it contains or the total in-memory size needed for storage.&lt;/li&gt;
+  &lt;li&gt;Serialization of an s-expression for storage on-disk or in-memory.&lt;/li&gt;
+  &lt;li&gt;Counting occurrences of specific terms, e.g. “total number of occurrences of the symbol &lt;code class=&quot;highlighter-rouge&quot;&gt;lambda&lt;/code&gt; in this s-expression”.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As should be obvious from the introduction, not every algorithm on an s-expression can be defined as a catamorphism. Here are some counter-examples:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pretty-printing; at least not in the general case, in which the way a node is printed might depend on its ancestors.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/form-analysis/&quot;&gt;Form-analysis&lt;/a&gt;; whether any given s-expression must be analyzed as a Lisp-form &lt;em&gt;at all&lt;/em&gt; depends on ancestors. Quoted s-expressions and parameters to procedures are counter-examples.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;context-controlled-modification&quot;&gt;Context: controlled modification&lt;/h3&gt;
+
+&lt;p&gt;In the project that this website is about, modifications to programs are believed to be such a central aspect of the programming experience that they are given center stage in the tooling. This is most clearly the case for &lt;a href=&quot;/introducing-the-editor/&quot;&gt;the editor&lt;/a&gt;, which has as its primary output not a document (in our case: an s-expression), but rather a well-structured history describing how to create such a document in by steps, each step representing a single modification.&lt;/p&gt;
+
+&lt;p&gt;The possible kinds of different modifications are described in a &lt;a href=&quot;/introducing-the-editor/#a-clef-for-construction&quot;&gt;Clef&lt;/a&gt;, a “vocabulary of change”. We now make an important observation about this Clef:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Each single modification to a list-expression only affects a very limited number of that list’s elements&lt;/em&gt;;&lt;/p&gt;
+
+&lt;p&gt;In fact, in the Clef as presented so far each modification only affects at most a single child, in one of three ways:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A single existing child is deleted.&lt;/li&gt;
+  &lt;li&gt;A single existing child is replaced.&lt;/li&gt;
+  &lt;li&gt;A single new child is inserted.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It is certainly possible that the Clef will be extended at some point in the future, for example to include a &lt;code class=&quot;highlighter-rouge&quot;&gt;Swap&lt;/code&gt; operation. However, the general property, that notes from the &lt;em&gt;clef&lt;/em&gt; act on a specific subset of children of the s-expression under consideration, while not changing any of the other children, will always be preserved: it is a key part of the design.&lt;/p&gt;
+
+&lt;h3 id=&quot;catamorphisms--controlled-modification&quot;&gt;Catamorphisms &amp;amp; controlled modification&lt;/h3&gt;
+
+&lt;p&gt;In the context of controlled modification new outcomes for catamorphisms on a structure can be calculated quite efficiently. To see how this is so, consider the following.&lt;/p&gt;
+
+&lt;p&gt;If the algorithm can be expressed as a catamorphism, the calculation that needs to be done for a particular child node depends on no other information than the information contained in the child node – this is so by the definition of catamorphisms.&lt;/p&gt;
+
+&lt;p&gt;Each modification affects only a very limited number of children – as a consequence of a carefully chosen &lt;em&gt;Clef&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The other children are unaffected, which means that the outcome of the catamorphism will also be unaffected for them.&lt;/p&gt;
+
+&lt;p&gt;This means that, for any modification, we only need to recalculate [1] the outcome of the catamorphism for the small number of affected children and [2] the combination of previously calculated outcomes and new results at the modified node itself.&lt;/p&gt;
+
+&lt;p&gt;To see this in action, consider the catamorphism of “total size” which is depicted graphically below. In this picture each node is annotated a size showing the total size of that subtree:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/node-size.jpg&quot; alt=&quot;Tree with &amp;quot;total size&amp;quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Replacing the right-most child of the root node is depicted below. A red arrow with an “R” depicts the replacing of one node by another; Green arrows depict the fact that recalculation at the root node considers the values at that node’s direct children; a &lt;em&gt;9&lt;/em&gt; at the root represents the updated outcome of the calculation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/node-size-update.jpg&quot; alt=&quot;Tree with &amp;quot;total size&amp;quot; - update&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The fact that no green arrows point at the nodes on the bottom left represents the efficiency-gain with respect to a full recalculation of the catamorphism on the new input structure.&lt;/p&gt;
+
+&lt;p&gt;In this example, the effect is not dramatic, because the tree is relatively small; in the general case, dramatic efficiency gains will be made precisely when they are required, namely when the trees are very large.&lt;/p&gt;
+
+&lt;p&gt;In conclusion: it is worthwhile to examine whether an algorithm can be expressed as a catamorphism; in the context of controlled change this will lead to important efficiency gains.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:more-about-catamorphisms&quot;&gt;
+      &lt;p&gt;A good introduction may be found in &lt;a href=&quot;https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w&quot;&gt;Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire&lt;/a&gt;. The article by &lt;a href=&quot;https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/&quot;&gt;Bartosz Milewski&lt;/a&gt; is also excellent. &lt;a href=&quot;#fnref:more-about-catamorphisms&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/catamorphisms-and-change/&quot;&gt;Catamorphisms and change&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on December 04, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
