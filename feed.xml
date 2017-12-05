@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-12-04T17:28:51+01:00</updated>
+<updated>2017-12-05T15:17:30+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -38,9 +38,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Other algorithms do not have this property, and fundamentally cannot have this property.&lt;/p&gt;
-
-&lt;p&gt;As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.&lt;/p&gt;
+&lt;p&gt;Not every recursive algorithm on a data-structure can be so written. As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.&lt;/p&gt;
 
 &lt;p&gt;This function is also provided in sketched form in Python (we leave out some details):&lt;/p&gt;
 
@@ -68,14 +66,39 @@
 
 &lt;p&gt;Recursive algorithms of the first kind are called &lt;a href=&quot;https://en.wikipedia.org/wiki/Catamorphism&quot;&gt;catamorphisms&lt;/a&gt;. &lt;sup id=&quot;fnref:more-about-catamorphisms&quot;&gt;&lt;a href=&quot;#fn:more-about-catamorphisms&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
+&lt;p&gt;Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the &lt;em&gt;algebra&lt;/em&gt; in the literature.&lt;/p&gt;
+
+&lt;p&gt;The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but instead of containing any recursive function call the recursive results are passed to it as a parameter. Our original example could be rewritten as such:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cild_results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;sum_of_values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This separates the concerns of recursively calling (which is in the generally utility function &lt;code class=&quot;highlighter-rouge&quot;&gt;catamorphism&lt;/code&gt;) and composing the results (which is in &lt;code class=&quot;highlighter-rouge&quot;&gt;sum_of_values_algebra&lt;/code&gt;).&lt;/p&gt;
+
 &lt;h3 id=&quot;working-examples&quot;&gt;Working examples&lt;/h3&gt;
 
-&lt;p&gt;The &lt;a href=&quot;/introducing-the-editor/&quot;&gt;editor that is part of this project&lt;/a&gt;, is a structured editor of s-expressions. We will briefly mention a number of catamorphisms that can be defined for an s-expression. Determining that these are indeed catamorphisms is left as an excercise to the reader.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&quot;/introducing-the-editor/&quot;&gt;editor that is part of this project&lt;/a&gt;, is a structured editor of s-expressions. We will briefly mention a number of catamorphisms that can be defined for an s-expression. Determining that these are indeed catamorphisms is left as an exercise to the reader.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Calculating the size of an s-expression; either defined as the number of nodes it contains or the total in-memory size needed for storage.&lt;/li&gt;
   &lt;li&gt;Serialization of an s-expression for storage on-disk or in-memory.&lt;/li&gt;
   &lt;li&gt;Counting occurrences of specific terms, e.g. “total number of occurrences of the symbol &lt;code class=&quot;highlighter-rouge&quot;&gt;lambda&lt;/code&gt; in this s-expression”.&lt;/li&gt;
+  &lt;li&gt;Calculating the set of symbols occurring in the s-expression.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;As should be obvious from the introduction, not every algorithm on an s-expression can be defined as a catamorphism. Here are some counter-examples:&lt;/p&gt;
@@ -113,7 +136,7 @@
 
 &lt;p&gt;The other children are unaffected, which means that the outcome of the catamorphism will also be unaffected for them.&lt;/p&gt;
 
-&lt;p&gt;This means that, for any modification, we only need to recalculate [1] the outcome of the catamorphism for the small number of affected children and [2] the combination of previously calculated outcomes and new results at the modified node itself.&lt;/p&gt;
+&lt;p&gt;This means that, for any modification, we only need to recalculate [1] the outcome of the catamorphism for the small number of affected children and [2] the combination of previously calculated outcomes and new results at the modified node itself, i.e. the application of the algebra.&lt;/p&gt;
 
 &lt;p&gt;To see this in action, consider the catamorphism of “total size” which is depicted graphically below. In this picture each node is annotated a size showing the total size of that subtree:&lt;/p&gt;
 
@@ -123,11 +146,74 @@
 
 &lt;p&gt;&lt;img src=&quot;/images/node-size-update.jpg&quot; alt=&quot;Tree with &amp;quot;total size&amp;quot; - update&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;The fact that no green arrows point at the nodes on the bottom left represents the efficiency-gain with respect to a full recalculation of the catamorphism on the new input structure.&lt;/p&gt;
+&lt;p&gt;The fact that no green arrows point at the leaf-nodes on the bottom left represents the efficiency-gain with respect to a full recalculation of the catamorphism on the new input structure.&lt;/p&gt;
 
-&lt;p&gt;In this example, the effect is not dramatic, because the tree is relatively small; in the general case, dramatic efficiency gains will be made precisely when they are required, namely when the trees are very large.&lt;/p&gt;
+&lt;p&gt;In this example, the effect is not all too dramatic, because the tree is relatively small; in the general case, dramatic efficiency gains will be made precisely when they are required, namely when the trees are very large.&lt;/p&gt;
 
-&lt;p&gt;In conclusion: it is worthwhile to examine whether an algorithm can be expressed as a catamorphism; in the context of controlled change this will lead to important efficiency gains.&lt;/p&gt;
+&lt;h2 id=&quot;performance-characteristics&quot;&gt;Performance characteristics&lt;/h2&gt;
+
+&lt;p&gt;Let us explore the computational cost of a single modification. This cost is built up from two separate parts:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Recursively constructing a new child.&lt;/li&gt;
+  &lt;li&gt;Combining the results of the children.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;recursive-construction&quot;&gt;Recursive construction&lt;/h3&gt;
+
+&lt;p&gt;We start by considering the cost of recursively computing the result for a new child.&lt;/p&gt;
+
+&lt;p&gt;Note that for &lt;code class=&quot;highlighter-rouge&quot;&gt;Delete&lt;/code&gt; there is no new child, and hence there is no cost. &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; both take as one of their parameters a history: a sequence of modifications.&lt;/p&gt;
+
+&lt;p&gt;The cost of recursive construction of a child is then: the sum of the costs for each modification in this history. That is to say: the cost of the step-wise recursive application of the algorithm. The cost of a each modification in the history is thus described by the section “Performance characteristics” of this article.&lt;/p&gt;
+
+&lt;p&gt;The other factor is the length of the history for which recalculations must be done. In the case of &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; this is simply the length of the provided history.  In the case of a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; it is the number of &lt;em&gt;new&lt;/em&gt; items in the provided history  – at least if we apply the constraint that replace can only replace with &lt;a href=&quot;/constraints-on-replace/&quot;&gt;a continuation of the existing history&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;combining-results-the-algebra&quot;&gt;Combining results: the algebra&lt;/h3&gt;
+
+&lt;p&gt;The computational cost of each call to the &lt;em&gt;algebra&lt;/em&gt; depends on the algebra at hand.&lt;/p&gt;
+
+&lt;p&gt;Consider a few examples to see how this is the case:&lt;/p&gt;
+
+&lt;p&gt;A first example is the summation of values shown at the beginning of this article. It scales linearly with the number of children (branching factor). This is because while taking the sum over all children we must consider each child at least once.&lt;/p&gt;
+
+&lt;p&gt;Another example is serialization of a data structure into a single contiguous memory. It scales linearly with the size of the output. Note that this is the same as to say: it scales linearly with the sum of the child result lengths. This is because each serialized child needs to be fully included in the result. Copying each child takes a time linear with the child’s size.&lt;/p&gt;
+
+&lt;p&gt;For the algorithm of selective recalculation of a catamorphic function outlined above, the computational cost of the algebra is recursively incurred at each level of the tree. For algebras that have a computational cost that is linear with the branching factor, such as the sum-of-values, this means that the total cost is in the order of the product of the following 3 things:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The average branching factor of the tree&lt;/li&gt;
+  &lt;li&gt;The depth of the tree (more precisely: the deepest level where modification takes place)&lt;/li&gt;
+  &lt;li&gt;The number of modifications at the deepest level.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is often a much smaller number than the total size of the tree.&lt;/p&gt;
+
+&lt;p&gt;However, the method of selective recalculation only yields better performance in cases where the results can be combined at a lower cost than the sizes of the subtrees that form the basis of their inputs.&lt;br /&gt;
+Serialization into contiguous memory, as detailed above, is an important example of this condition not holding. As a result, it is better not to implement it using selective recalculation.&lt;/p&gt;
+
+&lt;h3 id=&quot;ignoring-the-present&quot;&gt;Ignoring the present&lt;/h3&gt;
+
+&lt;p&gt;In the above approach we do a full recomputation of the algebraic function with all its inputs at each modification. Such an approach has as the branching factor as its lower bound: the inputs must at least be collected and passed to the algebra, and each child forms an input.&lt;/p&gt;
+
+&lt;p&gt;If we reconsider the case of total tree-size mentioned as an example in the above, it should be clear that this is not a general lower bound, because we don’t actually need to reconsider all children for each modification. All that is needed is to keep track of what is inserted and what is deleted, treating a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation as a combination of both.&lt;/p&gt;
+
+&lt;p&gt;In the graphical example in the above, we can also arrive at the resulting &lt;em&gt;9&lt;/em&gt; by simply starting at &lt;em&gt;8&lt;/em&gt; and observing that a node with value &lt;em&gt;1&lt;/em&gt; was replaced with a node with value &lt;em&gt;2&lt;/em&gt;, resulting in &lt;em&gt;8 - 1 + 2 = 9&lt;/em&gt;. This little calculation can be done without referring to the two existing nodes with value &lt;em&gt;3&lt;/em&gt;. In other words: the branching factor does not come into play.&lt;/p&gt;
+
+&lt;p&gt;In general, such a mechanism will always be available for a given catamorphism given two conditions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The outcome of combining results is unaffected the order of the children. (An example of this condition not holding: propagation of the left-most symbol occurring in a tree to its root)&lt;/li&gt;
+  &lt;li&gt;The effect of removing a single child can be expressed without taking into account the other children. (An example of this condition not holding: calculating the &lt;em&gt;set&lt;/em&gt; of unique symbols)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In this article we have taken a look at catamorphisms in the context of controlled modification.&lt;/p&gt;
+
+&lt;p&gt;Some recursive functions can be expressed as a catamorphism. If the computational complexity of the associated algebra scales sub-linearly with the size of the underlying tree, an algorithm for efficient stepwise recalculation is available.&lt;/p&gt;
+
+&lt;p&gt;For some algebras we can do even better: we can ignore the values of the presently existing children entirely, and calculate a new value based purely by applying the results of deletion and insertion.&lt;/p&gt;
 
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;

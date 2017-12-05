@@ -104,9 +104,7 @@
 </code></pre>
 </div>
 
-<p>Other algorithms do not have this property, and fundamentally cannot have this property.</p>
-
-<p>As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.</p>
+<p>Not every recursive algorithm on a data-structure can be so written. As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.</p>
 
 <p>This function is also provided in sketched form in Python (we leave out some details):</p>
 
@@ -134,14 +132,39 @@
 
 <p>Recursive algorithms of the first kind are called <a href="https://en.wikipedia.org/wiki/Catamorphism">catamorphisms</a>. <sup id="fnref:more-about-catamorphisms"><a href="#fn:more-about-catamorphisms" class="footnote">1</a></sup></p>
 
+<p>Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the <em>algebra</em> in the literature.</p>
+
+<p>The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but instead of containing any recursive function call the recursive results are passed to it as a parameter. Our original example could be rewritten as such:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">child_results</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span> 
+    <span class="k">for</span> <span class="n">child_result</span> <span class="ow">in</span> <span class="n">child_results</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">child_result</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="n">child_results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">cild_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">child</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">algebra</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">child_results</span><span class="p">)</span>
+
+
+<span class="n">sum_of_values</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">catamorphism</span><span class="p">(</span><span class="n">sum_of_values_algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>This separates the concerns of recursively calling (which is in the generally utility function <code class="highlighter-rouge">catamorphism</code>) and composing the results (which is in <code class="highlighter-rouge">sum_of_values_algebra</code>).</p>
+
 <h3 id="working-examples">Working examples</h3>
 
-<p>The <a href="/introducing-the-editor/">editor that is part of this project</a>, is a structured editor of s-expressions. We will briefly mention a number of catamorphisms that can be defined for an s-expression. Determining that these are indeed catamorphisms is left as an excercise to the reader.</p>
+<p>The <a href="/introducing-the-editor/">editor that is part of this project</a>, is a structured editor of s-expressions. We will briefly mention a number of catamorphisms that can be defined for an s-expression. Determining that these are indeed catamorphisms is left as an exercise to the reader.</p>
 
 <ul>
   <li>Calculating the size of an s-expression; either defined as the number of nodes it contains or the total in-memory size needed for storage.</li>
   <li>Serialization of an s-expression for storage on-disk or in-memory.</li>
   <li>Counting occurrences of specific terms, e.g. “total number of occurrences of the symbol <code class="highlighter-rouge">lambda</code> in this s-expression”.</li>
+  <li>Calculating the set of symbols occurring in the s-expression.</li>
 </ul>
 
 <p>As should be obvious from the introduction, not every algorithm on an s-expression can be defined as a catamorphism. Here are some counter-examples:</p>
@@ -179,7 +202,7 @@
 
 <p>The other children are unaffected, which means that the outcome of the catamorphism will also be unaffected for them.</p>
 
-<p>This means that, for any modification, we only need to recalculate [1] the outcome of the catamorphism for the small number of affected children and [2] the combination of previously calculated outcomes and new results at the modified node itself.</p>
+<p>This means that, for any modification, we only need to recalculate [1] the outcome of the catamorphism for the small number of affected children and [2] the combination of previously calculated outcomes and new results at the modified node itself, i.e. the application of the algebra.</p>
 
 <p>To see this in action, consider the catamorphism of “total size” which is depicted graphically below. In this picture each node is annotated a size showing the total size of that subtree:</p>
 
@@ -189,11 +212,74 @@
 
 <p><img src="/images/node-size-update.jpg" alt="Tree with &quot;total size&quot; - update" /></p>
 
-<p>The fact that no green arrows point at the nodes on the bottom left represents the efficiency-gain with respect to a full recalculation of the catamorphism on the new input structure.</p>
+<p>The fact that no green arrows point at the leaf-nodes on the bottom left represents the efficiency-gain with respect to a full recalculation of the catamorphism on the new input structure.</p>
 
-<p>In this example, the effect is not dramatic, because the tree is relatively small; in the general case, dramatic efficiency gains will be made precisely when they are required, namely when the trees are very large.</p>
+<p>In this example, the effect is not all too dramatic, because the tree is relatively small; in the general case, dramatic efficiency gains will be made precisely when they are required, namely when the trees are very large.</p>
 
-<p>In conclusion: it is worthwhile to examine whether an algorithm can be expressed as a catamorphism; in the context of controlled change this will lead to important efficiency gains.</p>
+<h2 id="performance-characteristics">Performance characteristics</h2>
+
+<p>Let us explore the computational cost of a single modification. This cost is built up from two separate parts:</p>
+
+<ol>
+  <li>Recursively constructing a new child.</li>
+  <li>Combining the results of the children.</li>
+</ol>
+
+<h3 id="recursive-construction">Recursive construction</h3>
+
+<p>We start by considering the cost of recursively computing the result for a new child.</p>
+
+<p>Note that for <code class="highlighter-rouge">Delete</code> there is no new child, and hence there is no cost. <code class="highlighter-rouge">Insert</code> and <code class="highlighter-rouge">Replace</code> both take as one of their parameters a history: a sequence of modifications.</p>
+
+<p>The cost of recursive construction of a child is then: the sum of the costs for each modification in this history. That is to say: the cost of the step-wise recursive application of the algorithm. The cost of a each modification in the history is thus described by the section “Performance characteristics” of this article.</p>
+
+<p>The other factor is the length of the history for which recalculations must be done. In the case of <code class="highlighter-rouge">Insert</code> this is simply the length of the provided history.  In the case of a <code class="highlighter-rouge">Replace</code> it is the number of <em>new</em> items in the provided history  – at least if we apply the constraint that replace can only replace with <a href="/constraints-on-replace/">a continuation of the existing history</a>.</p>
+
+<h3 id="combining-results-the-algebra">Combining results: the algebra</h3>
+
+<p>The computational cost of each call to the <em>algebra</em> depends on the algebra at hand.</p>
+
+<p>Consider a few examples to see how this is the case:</p>
+
+<p>A first example is the summation of values shown at the beginning of this article. It scales linearly with the number of children (branching factor). This is because while taking the sum over all children we must consider each child at least once.</p>
+
+<p>Another example is serialization of a data structure into a single contiguous memory. It scales linearly with the size of the output. Note that this is the same as to say: it scales linearly with the sum of the child result lengths. This is because each serialized child needs to be fully included in the result. Copying each child takes a time linear with the child’s size.</p>
+
+<p>For the algorithm of selective recalculation of a catamorphic function outlined above, the computational cost of the algebra is recursively incurred at each level of the tree. For algebras that have a computational cost that is linear with the branching factor, such as the sum-of-values, this means that the total cost is in the order of the product of the following 3 things:</p>
+
+<ul>
+  <li>The average branching factor of the tree</li>
+  <li>The depth of the tree (more precisely: the deepest level where modification takes place)</li>
+  <li>The number of modifications at the deepest level.</li>
+</ul>
+
+<p>This is often a much smaller number than the total size of the tree.</p>
+
+<p>However, the method of selective recalculation only yields better performance in cases where the results can be combined at a lower cost than the sizes of the subtrees that form the basis of their inputs.<br />
+Serialization into contiguous memory, as detailed above, is an important example of this condition not holding. As a result, it is better not to implement it using selective recalculation.</p>
+
+<h3 id="ignoring-the-present">Ignoring the present</h3>
+
+<p>In the above approach we do a full recomputation of the algebraic function with all its inputs at each modification. Such an approach has as the branching factor as its lower bound: the inputs must at least be collected and passed to the algebra, and each child forms an input.</p>
+
+<p>If we reconsider the case of total tree-size mentioned as an example in the above, it should be clear that this is not a general lower bound, because we don’t actually need to reconsider all children for each modification. All that is needed is to keep track of what is inserted and what is deleted, treating a <code class="highlighter-rouge">Replace</code> operation as a combination of both.</p>
+
+<p>In the graphical example in the above, we can also arrive at the resulting <em>9</em> by simply starting at <em>8</em> and observing that a node with value <em>1</em> was replaced with a node with value <em>2</em>, resulting in <em>8 - 1 + 2 = 9</em>. This little calculation can be done without referring to the two existing nodes with value <em>3</em>. In other words: the branching factor does not come into play.</p>
+
+<p>In general, such a mechanism will always be available for a given catamorphism given two conditions:</p>
+
+<ul>
+  <li>The outcome of combining results is unaffected the order of the children. (An example of this condition not holding: propagation of the left-most symbol occurring in a tree to its root)</li>
+  <li>The effect of removing a single child can be expressed without taking into account the other children. (An example of this condition not holding: calculating the <em>set</em> of unique symbols)</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In this article we have taken a look at catamorphisms in the context of controlled modification.</p>
+
+<p>Some recursive functions can be expressed as a catamorphism. If the computational complexity of the associated algebra scales sub-linearly with the size of the underlying tree, an algorithm for efficient stepwise recalculation is available.</p>
+
+<p>For some algebras we can do even better: we can ignore the values of the presently existing children entirely, and calculate a new value based purely by applying the results of deletion and insertion.</p>
 
 <div class="footnotes">
   <ol>
