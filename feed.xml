@@ -4,13 +4,78 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-12-05T15:17:30+01:00</updated>
+<updated>2017-12-11T16:17:27+01:00</updated>
 <id>http://expressionsofchange.com/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://expressionsofchange.com/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Constructing S-Expressions]]></title>
+  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/constructing-s-expressions/" />
+  <id>http://expressionsofchange.com/constructing-s-expressions</id>
+  <published>2017-12-11T00:00:00+01:00</published>
+  <updated>2017-12-11T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://expressionsofchange.com</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;Putting the methods of construction more central does not mean we can ignore the programs that are constructed by them. For example: when we edit a program, the programmer is still presented with an actual program on the screen, when we evaluate a program, it is a single particular program that’s being evaluated rather than a history of programs etc.&lt;/p&gt;
+
+&lt;p&gt;In short: an essential piece of any set of tools that takes changes to programs as its point of departure is to actually construct programs from those changes. When compared to toolchains which simply store already-constructed programs this is quite obviously an additional task. If only for that reason, it is worthwhile to consider its implementation and performance characteristics.&lt;/p&gt;
+
+&lt;p&gt;In the below we present an algorithm to efficiently construct an s-expression out of a previous s-expression and a single modification. Before we turn our attention to that algorithm, we shall be a bit more precise about the properties of the data structure to be created.&lt;/p&gt;
+
+&lt;h3 id=&quot;immutability-of-input&quot;&gt;Immutability of input&lt;/h3&gt;
+
+&lt;p&gt;The presented algorithm is a pure function of an s-expression and a mutation to a new s-expression. In other words: the s-expression that serves as our input is not modified in-place. Any of its parts that are required in the output are copied as necessary. The usual advantages of functional programming thus apply, i.e the function is easier to test and reason about, thread-safe by default, and trivial to memoize.&lt;/p&gt;
+
+&lt;p&gt;In the present project there is one more advantage to this approach: it provides for a trivial mechanism to construct a history of structures, one for each modification. Given the core assumptions of the present project, such a structure is extremely useful. To create it we simply keep a reference to each produced structure in a list. An algorithm that is formulated in terms of an in-place modification of a given input does not allow for this approach for the obvious reason that the referenced “historic” objects are not guaranteed to remain unchanged.&lt;/p&gt;
+
+&lt;h3 id=&quot;data-structure&quot;&gt;Data structure&lt;/h3&gt;
+
+&lt;p&gt;The list-expressions to be constructed shall be represented in-memory as an array of references to child nodes. This allows for lookup of a child by index in constant time.&lt;/p&gt;
+
+&lt;p&gt;A number of alternatives to this design are easily rejected, as detailed below.&lt;/p&gt;
+
+&lt;p&gt;An alternative to an array is formed by a linked list. However, representation of the list of children using a linked list has no advantages, only disadvantages. First, because of the choice for an immutable data structure, the potential advantages in performance for updates to the list do not apply. Second, lookup by index, the main method of access, is not in constant time for linked lists.&lt;/p&gt;
+
+&lt;p&gt;An alternative to storing references to child nodes is formed by storing the child nodes inline in some serialized format. Such an approach may be useful for serialization on disk or over the wire, but is not sufficiently flexible in the face of modifications: each change to a child tree requires a full reserialization of the whole tree, with performance characteristics in the order of the size of the full tree.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-algorithm&quot;&gt;The algorithm&lt;/h2&gt;
+
+&lt;p&gt;Before turning our attention to constructing s-expressions in terms of modifications to previous s-expressions, let us consider the properties of constructing s-expressions &lt;em&gt;per se&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Given an s-expression, construction of an s-expression in the data format outlined above can be formulated recursively: First, construct all child expressions with a recursive call; combine these results by constructing an array of references to them.&lt;/p&gt;
+
+&lt;p&gt;This recursive definition can be expressed as a &lt;a href=&quot;/catamorphisms-and-change/&quot;&gt;catamorphism&lt;/a&gt;: the construction of children is independent of their parents. This catamorphism is in fact the most trivial catamorphism that exists: as a whole it is simply the identity function; its algebra is formed by what is basically a trivial data constructor.&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&quot;/catamorphisms-and-change/&quot;&gt;an earlier article&lt;/a&gt; we observed that in the context of controlled modification (i.e. a well-chosen &lt;em&gt;Clef&lt;/em&gt;) for recursive functions which can be described as catamorphisms efficient mechanisms for recalculation of modified versions are automatically available.&lt;/p&gt;
+
+&lt;p&gt;Given that construction of s-expressions can be expressed as a catamorphism, construction of s-expressions in terms of modifications to previous s-expressions can be implemented using such automatically available efficient mechanisms with well-understood performance characteristics.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/catamorphisms-and-change/#catamorphisms--controlled-modification&quot;&gt;The general mechanism&lt;/a&gt;, briefly summarized, is the following: for each modification, the calculation proceeds in two steps: first we calculate the outcome of the catamorphism for the small number of modified children and second we apply the algebra, i.e. we combine the previously calculated outcomes and newly calculated results.&lt;/p&gt;
+
+&lt;p&gt;In this case, as noted, the algebra is simply the construction of an array of references to the children.&lt;/p&gt;
+
+&lt;p&gt;The performance characteristics can be deduced from the performance characteristics of the algebra. In this case it is easy to see that the algebra is linear in the branching factor of the nodes: constructing an array of references to the children requires one action per child.&lt;/p&gt;
+
+&lt;p&gt;As detailed in the article on catamorphisms and change, the total cost of applying a root-level modification is then the product of [a] the branching factor, [b] the depth of the tree and [c] the number of modifications at the deepest level.&lt;/p&gt;
+
+&lt;p&gt;The run-time performance is bound by the time spent constructing the result; as a consequence, it is easy to see that the required storage space for a full history of all s-expressions is given by the same formula.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In &lt;em&gt;Expressions of Change&lt;/em&gt; mechanisms of construction are put center stage. The first and most practical application of such methods is the actual construction of s-expressions.&lt;/p&gt;
+
+&lt;p&gt;In the above we presented an algorithm to do so; based on the observation that construction of s-expressions can be formulated as a trivial catamorphism.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/constructing-s-expressions/&quot;&gt;Constructing S-Expressions&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on December 11, 2017.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>

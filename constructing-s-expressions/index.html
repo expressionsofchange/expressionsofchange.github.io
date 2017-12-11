@@ -1,0 +1,243 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Constructing S-Expressions &#8211; Expressions of Change</title>
+<meta name="description" content="In Expressions of Change mechanisms of construction are put center stage. The first and most practical application of such methods is the actual construction...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Constructing S-Expressions &#8211; Expressions of Change">
+<meta property="og:description" content="In Expressions of Change mechanisms of construction are put center stage. The first and most practical application of such methods is the actual construction...">
+<meta property="og:url" content="/constructing-s-expressions/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/static-analysis/" >Static Analysis</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Constructing S-Expressions</h1>
+            <p class="date">Dec 11, 2017
+
+              
+                  
+                      — Tags:
+                      
+                      <a href="/the-editor/">The editor</a>
+                      
+                      
+                  
+              
+            </p>
+
+            <p class="intro">One of the core ideas of <em>Expressions of Change</em> is to put the changes to program more central in the programming experience. The method of construction of a program, in the form of a history of changes, is the primary output of our editor and primary input of our compilers and analytical tools.
+</p>
+          </hgroup>
+        </header>
+
+        <p>Putting the methods of construction more central does not mean we can ignore the programs that are constructed by them. For example: when we edit a program, the programmer is still presented with an actual program on the screen, when we evaluate a program, it is a single particular program that’s being evaluated rather than a history of programs etc.</p>
+
+<p>In short: an essential piece of any set of tools that takes changes to programs as its point of departure is to actually construct programs from those changes. When compared to toolchains which simply store already-constructed programs this is quite obviously an additional task. If only for that reason, it is worthwhile to consider its implementation and performance characteristics.</p>
+
+<p>In the below we present an algorithm to efficiently construct an s-expression out of a previous s-expression and a single modification. Before we turn our attention to that algorithm, we shall be a bit more precise about the properties of the data structure to be created.</p>
+
+<h3 id="immutability-of-input">Immutability of input</h3>
+
+<p>The presented algorithm is a pure function of an s-expression and a mutation to a new s-expression. In other words: the s-expression that serves as our input is not modified in-place. Any of its parts that are required in the output are copied as necessary. The usual advantages of functional programming thus apply, i.e the function is easier to test and reason about, thread-safe by default, and trivial to memoize.</p>
+
+<p>In the present project there is one more advantage to this approach: it provides for a trivial mechanism to construct a history of structures, one for each modification. Given the core assumptions of the present project, such a structure is extremely useful. To create it we simply keep a reference to each produced structure in a list. An algorithm that is formulated in terms of an in-place modification of a given input does not allow for this approach for the obvious reason that the referenced “historic” objects are not guaranteed to remain unchanged.</p>
+
+<h3 id="data-structure">Data structure</h3>
+
+<p>The list-expressions to be constructed shall be represented in-memory as an array of references to child nodes. This allows for lookup of a child by index in constant time.</p>
+
+<p>A number of alternatives to this design are easily rejected, as detailed below.</p>
+
+<p>An alternative to an array is formed by a linked list. However, representation of the list of children using a linked list has no advantages, only disadvantages. First, because of the choice for an immutable data structure, the potential advantages in performance for updates to the list do not apply. Second, lookup by index, the main method of access, is not in constant time for linked lists.</p>
+
+<p>An alternative to storing references to child nodes is formed by storing the child nodes inline in some serialized format. Such an approach may be useful for serialization on disk or over the wire, but is not sufficiently flexible in the face of modifications: each change to a child tree requires a full reserialization of the whole tree, with performance characteristics in the order of the size of the full tree.</p>
+
+<h2 id="the-algorithm">The algorithm</h2>
+
+<p>Before turning our attention to constructing s-expressions in terms of modifications to previous s-expressions, let us consider the properties of constructing s-expressions <em>per se</em>.</p>
+
+<p>Given an s-expression, construction of an s-expression in the data format outlined above can be formulated recursively: First, construct all child expressions with a recursive call; combine these results by constructing an array of references to them.</p>
+
+<p>This recursive definition can be expressed as a <a href="/catamorphisms-and-change/">catamorphism</a>: the construction of children is independent of their parents. This catamorphism is in fact the most trivial catamorphism that exists: as a whole it is simply the identity function; its algebra is formed by what is basically a trivial data constructor.</p>
+
+<p>In <a href="/catamorphisms-and-change/">an earlier article</a> we observed that in the context of controlled modification (i.e. a well-chosen <em>Clef</em>) for recursive functions which can be described as catamorphisms efficient mechanisms for recalculation of modified versions are automatically available.</p>
+
+<p>Given that construction of s-expressions can be expressed as a catamorphism, construction of s-expressions in terms of modifications to previous s-expressions can be implemented using such automatically available efficient mechanisms with well-understood performance characteristics.</p>
+
+<p><a href="/catamorphisms-and-change/#catamorphisms--controlled-modification">The general mechanism</a>, briefly summarized, is the following: for each modification, the calculation proceeds in two steps: first we calculate the outcome of the catamorphism for the small number of modified children and second we apply the algebra, i.e. we combine the previously calculated outcomes and newly calculated results.</p>
+
+<p>In this case, as noted, the algebra is simply the construction of an array of references to the children.</p>
+
+<p>The performance characteristics can be deduced from the performance characteristics of the algebra. In this case it is easy to see that the algebra is linear in the branching factor of the nodes: constructing an array of references to the children requires one action per child.</p>
+
+<p>As detailed in the article on catamorphisms and change, the total cost of applying a root-level modification is then the product of [a] the branching factor, [b] the depth of the tree and [c] the number of modifications at the deepest level.</p>
+
+<p>The run-time performance is bound by the time spent constructing the result; as a consequence, it is easy to see that the required storage space for a full history of all s-expressions is given by the same formula.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In <em>Expressions of Change</em> mechanisms of construction are put center stage. The first and most practical application of such methods is the actual construction of s-expressions.</p>
+
+<p>In the above we presented an algorithm to do so; based on the observation that construction of s-expressions can be formulated as a trivial catamorphism.</p>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/constructing-s-expressions/" title="Constructing S-Expressions">Constructing S-Expressions </a></span>
+              <span class="date">Dec 11, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/catamorphisms-and-change/" title="Catamorphisms and change">Catamorphisms and change </a></span>
+              <span class="date">Dec 04, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/form-analysis/" title="Static Form Analysis">Static Form Analysis </a></span>
+              <span class="date">Nov 17, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/l-a-toy-language/" title="L - A toy language">L - A toy language </a></span>
+              <span class="date">Nov 16, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/static-analysis-intro/" title="Static Analysis - Introduction">Static Analysis - Introduction </a></span>
+              <span class="date">Nov 15, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
+              <span class="date">Nov 14, 2017</span>
+            </li>
+         <!-- for1 -->
+            <li>
+              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
+              <span class="date">Nov 09, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2017 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
