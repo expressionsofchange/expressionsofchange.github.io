@@ -2,26 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Expressions of Change</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="http://expressionsofchange.com/feed.xml" />
-<link rel="alternate" type="text/html" href="http://expressionsofchange.com" />
-<updated>2017-12-11T16:27:36+01:00</updated>
-<id>http://expressionsofchange.com/</id>
+<link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org//feed.xml" />
+<link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/" />
+<updated>2017-12-13T11:58:15+01:00</updated>
+<id>http://www.expressionsofchange.org//</id>
 <author>
   <name>Klaas van Schelven</name>
-  <uri>http://expressionsofchange.com/</uri>
+  <uri>http://www.expressionsofchange.org//</uri>
   <email>klaas@vanschelven.com</email>
 </author>
 
 
 <entry>
   <title type="html"><![CDATA[Constructing S-Expressions]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/constructing-s-expressions/" />
-  <id>http://expressionsofchange.com/constructing-s-expressions</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//constructing-s-expressions/" />
+  <id>http://www.expressionsofchange.org//constructing-s-expressions</id>
   <published>2017-12-11T00:00:00+01:00</published>
   <updated>2017-12-11T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Putting the methods of construction more central does not mean we can ignore the programs that are constructed by them. For example: when we edit a program, the programmer is still presented with an actual program on the screen, when we evaluate a program, it is a single particular program that’s being evaluated rather than a history of programs etc.&lt;/p&gt;
@@ -74,19 +74,19 @@
 
 &lt;p&gt;In the above we presented an algorithm to do so; based on the observation that construction of s-expressions can be formulated as a trivial catamorphism.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/constructing-s-expressions/&quot;&gt;Constructing S-Expressions&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on December 11, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//constructing-s-expressions/&quot;&gt;Constructing S-Expressions&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on December 11, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Catamorphisms and change]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/catamorphisms-and-change/" />
-  <id>http://expressionsofchange.com/catamorphisms-and-change</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//catamorphisms-and-change/" />
+  <id>http://www.expressionsofchange.org//catamorphisms-and-change</id>
   <published>2017-12-04T00:00:00+01:00</published>
   <updated>2017-12-04T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Let us first establish an informal notion of a catamorphism.&lt;/p&gt;
@@ -288,19 +288,19 @@ Serialization into contiguous memory, as detailed above, is an important example
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/catamorphisms-and-change/&quot;&gt;Catamorphisms and change&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on December 04, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//catamorphisms-and-change/&quot;&gt;Catamorphisms and change&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on December 04, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Static Form Analysis]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/form-analysis/" />
-  <id>http://expressionsofchange.com/form-analysis</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//form-analysis/" />
+  <id>http://www.expressionsofchange.org//form-analysis</id>
   <published>2017-11-17T00:00:00+01:00</published>
   <updated>2017-11-17T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Before we dive into a definition of &lt;em&gt;form analysis&lt;/em&gt;, let’s consider the context of what we’re talking about. The &lt;a href=&quot;/l-a-toy-language/#case-analysis&quot;&gt;model for evaluation presented in the previous article&lt;/a&gt; defines evaluation for s-expressions in environments.&lt;/p&gt;
@@ -431,19 +431,19 @@ Serialization into contiguous memory, as detailed above, is an important example
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/form-analysis/&quot;&gt;Static Form Analysis&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 17, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//form-analysis/&quot;&gt;Static Form Analysis&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on November 17, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[L - A toy language]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/l-a-toy-language/" />
-  <id>http://expressionsofchange.com/l-a-toy-language</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//l-a-toy-language/" />
+  <id>http://www.expressionsofchange.org//l-a-toy-language</id>
   <published>2017-11-16T00:00:00+01:00</published>
   <updated>2017-11-16T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;The &lt;a href=&quot;/the-editor/&quot;&gt;editor that is part of this project&lt;/a&gt; puts changes to documents more centrally in the editing experience than traditional editors. In defining a language for static analysis, however, we shall start by focusing on the structure that can be constructed from these changes: an s-expression.&lt;/p&gt;
@@ -501,19 +501,19 @@ Serialization into contiguous memory, as detailed above, is an important example
 
 &lt;p&gt;This concludes the definition of the language &lt;em&gt;L&lt;/em&gt;. In the next &lt;a href=&quot;/form-analysis/&quot;&gt;article in this series&lt;/a&gt; we will see a very first example of a static analysis on programs in &lt;em&gt;L&lt;/em&gt;, namely the analysis on the forms in such programs.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/l-a-toy-language/&quot;&gt;L - A toy language&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 16, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//l-a-toy-language/&quot;&gt;L - A toy language&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on November 16, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Static Analysis - Introduction]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/static-analysis-intro/" />
-  <id>http://expressionsofchange.com/static-analysis-intro</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//static-analysis-intro/" />
+  <id>http://www.expressionsofchange.org//static-analysis-intro</id>
   <published>2017-11-15T00:00:00+01:00</published>
   <updated>2017-11-15T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Static program analysis is the analysis of computer programs that is performed without actually executing programs. Some examples are:&lt;/p&gt;
@@ -559,19 +559,19 @@ Serialization into contiguous memory, as detailed above, is an important example
 
 &lt;p&gt;In the past month I have written a number of such incremental static analyses; I will present the results here as a &lt;a href=&quot;/static-analysis/&quot;&gt;series of articles&lt;/a&gt;. In the &lt;a href=&quot;/l-a-toy-language/&quot;&gt;next article&lt;/a&gt; in the series we will define a small language, called &lt;em&gt;L&lt;/em&gt;, as a basis for various analyses.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/static-analysis-intro/&quot;&gt;Static Analysis - Introduction&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 15, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//static-analysis-intro/&quot;&gt;Static Analysis - Introduction&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on November 15, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Constraints on Replace]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/constraints-on-replace/" />
-  <id>http://expressionsofchange.com/constraints-on-replace</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//constraints-on-replace/" />
+  <id>http://www.expressionsofchange.org//constraints-on-replace</id>
   <published>2017-11-14T00:00:00+01:00</published>
   <updated>2017-11-14T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Before we do so, some quick pointers to important background information.&lt;/p&gt;
@@ -793,19 +793,19 @@ Serialization into contiguous memory, as detailed above, is an important example
 &lt;p&gt;These are, as it stands, open questions. The present version of the edtior is &lt;em&gt;any-history&lt;/em&gt;. The rationale is: this forces me to think about the annoying corner-cases which exist only if the constraint does not apply. However, this is certainly subject to change.&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/constraints-on-replace/&quot;&gt;Constraints on Replace&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 14, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//constraints-on-replace/&quot;&gt;Constraints on Replace&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on November 14, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[T-Indices]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/t-indices/" />
-  <id>http://expressionsofchange.com/t-indices</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//t-indices/" />
+  <id>http://www.expressionsofchange.org//t-indices</id>
   <published>2017-11-09T00:00:00+01:00</published>
   <updated>2017-11-09T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Let’s start with some terminology.&lt;/p&gt;
@@ -925,19 +925,19 @@ Serialization into contiguous memory, as detailed above, is an important example
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/t-indices/&quot;&gt;T-Indices&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 09, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//t-indices/&quot;&gt;T-Indices&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on November 09, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Git is ignorant by design]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/git-is-ignorant-by-design/" />
-  <id>http://expressionsofchange.com/git-is-ignorant-by-design</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//git-is-ignorant-by-design/" />
+  <id>http://www.expressionsofchange.org//git-is-ignorant-by-design</id>
   <published>2017-11-08T00:00:00+01:00</published>
   <updated>2017-11-08T00:00:00+01:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;h3 id=&quot;an-example&quot;&gt;An example&lt;/h3&gt;
@@ -1126,19 +1126,19 @@ index 1cde8fb..f487c7e 100644
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/git-is-ignorant-by-design/&quot;&gt;Git is ignorant by design&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on November 08, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//git-is-ignorant-by-design/&quot;&gt;Git is ignorant by design&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on November 08, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[September status update]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/september-status-update/" />
-  <id>http://expressionsofchange.com/september-status-update</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//september-status-update/" />
+  <id>http://www.expressionsofchange.org//september-status-update</id>
   <published>2017-09-12T00:00:00+02:00</published>
   <updated>2017-09-12T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Given the fact that it’s been a bit quiet on this website for the past few months, I figured it was time for a short status update.&lt;/p&gt;
@@ -1176,19 +1176,19 @@ index 1cde8fb..f487c7e 100644
 
 &lt;p&gt;Stay tuned for further updates.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/september-status-update/&quot;&gt;September status update&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on September 12, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//september-status-update/&quot;&gt;September status update&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on September 12, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Ship of Theseus]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/ship-of-theseus/" />
-  <id>http://expressionsofchange.com/ship-of-theseus</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//ship-of-theseus/" />
+  <id>http://www.expressionsofchange.org//ship-of-theseus</id>
   <published>2017-07-12T00:00:00+02:00</published>
   <updated>2017-07-12T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;In the original form of the riddle the mythological hero &lt;a href=&quot;https://en.wikipedia.org/wiki/Theseus&quot;&gt;Theseus&lt;/a&gt; returns to Athens on a ship after defeating a monster, the Minotaur.  After his return, the Athenians preserve his ship for many centuries so that it may serve a role in religious ceremonies. Over the years they replace the planks one by one as they are affected by rot.&lt;/p&gt;
@@ -1300,19 +1300,19 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;As in Hobbes’ riddle, multiple answers may be given to these questions, and which answer is the best is highly contextual. We therefore take the view that it is not up to the tooling (editors, programming languages) to decide on the answer, but rather that the tooling should be flexible enough so that the user may pick the most appropriate definition of historical identity.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/ship-of-theseus/&quot;&gt;Ship of Theseus&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 12, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//ship-of-theseus/&quot;&gt;Ship of Theseus&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on July 12, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Lehman's SPE-classfication]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/lehman-spe-classification/" />
-  <id>http://expressionsofchange.com/lehman-spe-classification</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//lehman-spe-classification/" />
+  <id>http://www.expressionsofchange.org//lehman-spe-classification</id>
   <published>2017-07-04T00:00:00+02:00</published>
   <updated>2017-07-04T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;ul&gt;
@@ -1377,19 +1377,19 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;Examples of such programs are plentiful: Operating Systems, business administration software, inventory management, stock trading etc.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/lehman-spe-classification/&quot;&gt;Lehman's SPE-classfication&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//lehman-spe-classification/&quot;&gt;Lehman's SPE-classfication&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Hash Consing]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/hash-consing/" />
-  <id>http://expressionsofchange.com/hash-consing</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//hash-consing/" />
+  <id>http://www.expressionsofchange.org//hash-consing</id>
   <published>2017-07-04T00:00:00+02:00</published>
   <updated>2017-07-04T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;When introducing the editor we introduced &lt;a href=&quot;/introducing-the-editor/#a-clef-for-construction&quot;&gt;a set of operations that represent changes&lt;/a&gt; (we called this a &lt;em&gt;clef&lt;/em&gt;). Two of the operations presented so far take a full history as one of their parameters:&lt;/p&gt;
@@ -1471,19 +1471,19 @@ This also applies to the way we model the evolution of computer programs, such a
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/hash-consing/&quot;&gt;Hash Consing&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//hash-consing/&quot;&gt;Hash Consing&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[CLIs are reified UIs]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/reification-of-interaction/" />
-  <id>http://expressionsofchange.com/reification-of-interaction</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//reification-of-interaction/" />
+  <id>http://www.expressionsofchange.org//reification-of-interaction</id>
   <published>2017-07-02T00:00:00+02:00</published>
   <updated>2017-07-02T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;First, some definitions: Two main paradigms of interaction between humans and computers are Command Line Interfaces (CLIs) and Graphical User Interfaces (GUIs). In CLIs the user interacts with the computer by sequentially typing various textual commands, to which the computer replies, also in text. Graphical interfaces base the interaction with the computer on graphical icons and widgets and navigation typically depends on a pointing device such as the mouse. The debate on the respective advantages and disadvantages of these paradigms stretches back decades.&lt;/p&gt;
@@ -1582,19 +1582,19 @@ This also applies to the way we model the evolution of computer programs, such a
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/reification-of-interaction/&quot;&gt;CLIs are reified UIs&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 02, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//reification-of-interaction/&quot;&gt;CLIs are reified UIs&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on July 02, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Dijkstra's Mozart]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/dijkstras-mozart/" />
-  <id>http://expressionsofchange.com/dijkstras-mozart</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//dijkstras-mozart/" />
+  <id>http://www.expressionsofchange.org//dijkstras-mozart</id>
   <published>2017-07-02T00:00:00+02:00</published>
   <updated>2017-07-02T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;The full quote, transcribed here from the subtitles, is as such:&lt;/p&gt;
@@ -1695,36 +1695,36 @@ This also applies to the way we model the evolution of computer programs, such a
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/dijkstras-mozart/&quot;&gt;Dijkstra's Mozart&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 02, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//dijkstras-mozart/&quot;&gt;Dijkstra's Mozart&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on July 02, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[The Editor - First Video]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/the-editor-a-video/" />
-  <id>http://expressionsofchange.com/the-editor-a-video</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//the-editor-a-video/" />
+  <id>http://www.expressionsofchange.org//the-editor-a-video</id>
   <published>2017-07-01T00:00:00+02:00</published>
   <updated>2017-07-01T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/c9DmkBHLs3M&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/the-editor-a-video/&quot;&gt;The Editor - First Video&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on July 01, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//the-editor-a-video/&quot;&gt;The Editor - First Video&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on July 01, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Introducing the Editor]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/introducing-the-editor/" />
-  <id>http://expressionsofchange.com/introducing-the-editor</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//introducing-the-editor/" />
+  <id>http://www.expressionsofchange.org//introducing-the-editor</id>
   <published>2017-06-29T00:00:00+02:00</published>
   <updated>2017-06-29T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;The proposed alternative is to make &lt;em&gt;changes to programs&lt;/em&gt; the primitive building blocks, instead of the &lt;em&gt;programs that result from such changes&lt;/em&gt;. In this view, the means of construction are seen as equally important as the constructed artifacts. The idea is simply that, to be able meaningfully to reason about change, it is easier to keep the actual change at hand than to guess what it might have been.&lt;/p&gt;
@@ -1917,19 +1917,19 @@ This also applies to the way we model the evolution of computer programs, such a
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/introducing-the-editor/&quot;&gt;Introducing the Editor&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 29, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//introducing-the-editor/&quot;&gt;Introducing the Editor&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on June 29, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Existing tools]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/existing-tools/" />
-  <id>http://expressionsofchange.com/existing-tools</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//existing-tools/" />
+  <id>http://www.expressionsofchange.org//existing-tools</id>
   <published>2017-06-27T00:00:00+02:00</published>
   <updated>2017-06-27T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Arguably, the existence of so many tools is a strong indication that the underlying problem, that of dealing with change in software development, is one which requires tooling to be properly handled.&lt;/p&gt;
@@ -2091,19 +2091,19 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;Personally, I’m taking as an indication of the opposite; I’m especially emboldened by the fact that the various tools cannot even properly talk to each other, despite them being (largely) dealing with problems in the same sphere.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/existing-tools/&quot;&gt;Existing tools&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 27, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//existing-tools/&quot;&gt;Existing tools&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on June 27, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[The power of Undo]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/the-power-of-undo/" />
-  <id>http://expressionsofchange.com/the-power-of-undo</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//the-power-of-undo/" />
+  <id>http://www.expressionsofchange.org//the-power-of-undo</id>
   <published>2017-06-14T00:00:00+02:00</published>
   <updated>2017-06-14T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Let’s why this could be so, by considering the following workflow:&lt;/p&gt;
@@ -2175,19 +2175,19 @@ This also applies to the way we model the evolution of computer programs, such a
 
 &lt;p&gt;This site documents work in progress; stay tuned for updates.&lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/the-power-of-undo/&quot;&gt;The power of Undo&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 14, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//the-power-of-undo/&quot;&gt;The power of Undo&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on June 14, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Self applicability]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/self-applicability/" />
-  <id>http://expressionsofchange.com/self-applicability</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//self-applicability/" />
+  <id>http://www.expressionsofchange.org//self-applicability</id>
   <published>2017-06-10T00:00:00+02:00</published>
   <updated>2017-06-10T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;We’ll take a look at the practice of &lt;em&gt;rewriting history&lt;/em&gt;, why we would want to do that and how it creates two seemingly irreconcilable goals: staying true to what actually happened on the one hand and the ability to tell the most clear story about history on the other. Then we’ll see how we can reconcile these goals by applying the idea of version control to version control itself.&lt;/p&gt;
@@ -2343,19 +2343,19 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;p&gt;I expect to be adding some example programs to this site at some point in the future. Inasmuch as those programs will be like Version Control systems, the ability to self-apply is an important design goal.&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/self-applicability/&quot;&gt;Self applicability&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 10, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//self-applicability/&quot;&gt;Self applicability&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on June 10, 2017.&lt;/p&gt;</content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Build once, maintain forever]]></title>
-  <link rel="alternate" type="text/html" href="http://expressionsofchange.com/build-once-maintain-forever/" />
-  <id>http://expressionsofchange.com/build-once-maintain-forever</id>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org//build-once-maintain-forever/" />
+  <id>http://www.expressionsofchange.org//build-once-maintain-forever</id>
   <published>2017-06-07T00:00:00+02:00</published>
   <updated>2017-06-07T00:00:00+02:00</updated>
   <author>
     <name>Klaas van Schelven</name>
-    <uri>http://expressionsofchange.com</uri>
+    <uri>http://www.expressionsofchange.org/</uri>
     <email>klaas@vanschelven.com</email>
   </author>
   <content type="html">&lt;p&gt;Now, you would like to just be able to build this site once, and once you’re satisfied with it, put it somewhere and be done with the technical side of things forever. Any maintenance to the site should then be restricted to updating the actual contents of the site.&lt;/p&gt;
@@ -2388,7 +2388,7 @@ This also applies to the way we model the evolution of computer programs, such a
   &lt;/ol&gt;
 &lt;/div&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://expressionsofchange.com/build-once-maintain-forever/&quot;&gt;Build once, maintain forever&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://expressionsofchange.com&quot;&gt;Expressions of Change&lt;/a&gt; on June 07, 2017.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org//build-once-maintain-forever/&quot;&gt;Build once, maintain forever&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org/&quot;&gt;Expressions of Change&lt;/a&gt; on June 07, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>
