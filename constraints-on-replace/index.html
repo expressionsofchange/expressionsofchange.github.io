@@ -238,7 +238,7 @@
 
 <p>Further consequences <em>continuation-only</em> may be found in the algorithms that make use of histories of operations.</p>
 
-<p>What could such algorithms be? First, there is the algorithm that constructs an actual s-expression out of a history of changes – something we will inevitably be interested in at some point. When compared to an editor that stores s-expressions directly, such an algorithm forms a computational overhead by default. If only for that reason, it is worthwhile to consider its performance characteristics.</p>
+<p>What could such algorithms be? First, <a href="/constructing-s-expressions/">there is the algorithm that constructs an actual s-expression out of a history of changes</a> – something we will inevitably be interested in at some point. When compared to an editor that stores s-expressions directly, such an algorithm forms a computational overhead by default. If only for that reason, it is worthwhile to consider its performance characteristics.</p>
 
 <p>First, let’s consider a naive implementation: For each <code class="highlighter-rouge">Replace</code> operation, construct the resulting structure from scratch by considering each element of the history in turn. Such an approach is not scalable: Each <code class="highlighter-rouge">Replace</code> operation takes a full history as one of its parameters and such histories grow linearly in time. Moreover, the histories are recursively composed of further <code class="highlighter-rouge">Replace</code> operations. The result is an exponential growth of the required runtime.</p>
 
