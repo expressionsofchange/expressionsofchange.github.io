@@ -128,7 +128,7 @@
   <li><code class="highlighter-rouge">(define «variable-name» «definition»)</code> is a <strong>definition</strong>; its evaluation does not result in a (meaningful) value; however, as an effect of evaluating the result of evaluating the definition is bound to the variable-name in the present environment.</li>
   <li><code class="highlighter-rouge">(lambda «parameter names» «body ...»)</code> is a <strong>lambda</strong>; it evaluates to a procedure object which contains the parameter names and body. (Note: unlike in Scheme, in which a special form of <code class="highlighter-rouge">define</code> is interpreted as a procedure, in <em>L</em> lambda’s can only be defined directly using the associated special form)</li>
   <li><code class="highlighter-rouge">(begin «... ...»)</code> is a <strong>sequence</strong>; it evaluates each s-expression in turn, the evaluation of the sequence results in the last element’s evaluation.</li>
-  <li><code class="highlighter-rouge">(«procedure» «arguments ...»)</code> is an <strong>procedure application</strong>; evaluation results in the value that is arrived at as follows: first, evaluate the procedure and all arguments in the present environment. Create a new (sub-)environment in which each of the procedure’s parameter names is bound to the value of the associated argument. Evaluate the procedure’s body in this environment. This is the result of evaluating the procedure application.</li>
+  <li><code class="highlighter-rouge">(«procedure» «arguments ...»)</code> is a <strong>procedure application</strong>; evaluation results in the value that is arrived at as follows: first, evaluate the procedure and all arguments in the present environment. Create a new (sub-)environment in which each of the procedure’s parameter names is bound to the value of the associated argument. Evaluate the procedure’s body in this environment. This is the result of evaluating the procedure application.</li>
 </ul>
 
 <p>For the sake of simplicity, <em>L</em> has no primitive procedures; this is no problem, since we can always evaluate programs in some “global” environment in which all required primitive procedures are bound to some name.</p>
@@ -181,6 +181,11 @@ s.setAttribute('data-timestamp', +new Date());
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="/expressions-of-change-in-under-15-minutes/" title="Expressions of Change in under 15 minutes">Expressions of Change in un... </a></span>
+              <span class="date">Feb 20, 2018</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="/constructing-s-expressions/" title="Constructing S-Expressions">Constructing S-Expressions </a></span>
               <span class="date">Dec 11, 2017</span>
             </li>
@@ -209,11 +214,6 @@ s.setAttribute('data-timestamp', +new Date());
               <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
               <span class="date">Nov 14, 2017</span>
             </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
-              <span class="date">Nov 09, 2017</span>
-            </li>
         
             <li>
               <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
@@ -233,7 +233,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2017 Klaas van Schelven.</small>
+    <small>&copy; 2018 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

@@ -1,14 +1,14 @@
 <html lang="en">
 <meta charset="utf-8">
-<title>Expressions of Change</title>
-<meta name="description" content="Expressions of Change is a research project that aims to radically improve the tools for constructing ever-changing computer programs by putting the changes ...">
+<title>Expressions of Change in under 15 minutes &#8211; Expressions of Change</title>
+<meta name="description" content="A short video-presentation on Expressions of Change">
 <meta name="keywords" content="">
 
 
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="Expressions of Change">
-<meta property="og:description" content="Expressions of Change is a research project that aims to radically improve the tools for constructing ever-changing computer programs by putting the changes ...">
-<meta property="og:url" content="/">
+<meta property="og:title" content="Expressions of Change in under 15 minutes &#8211; Expressions of Change">
+<meta property="og:description" content="A short video-presentation on Expressions of Change">
+<meta property="og:url" content="/expressions-of-change-in-under-15-minutes/">
 <meta property="og:site_name" content="Expressions of Change">
 
 
@@ -79,78 +79,40 @@
       <article class="wrap post">
         <header class="post-header">
           <hgroup>
-            
-            <p class="intro"><em>Expressions of Change</em> is a research project that aims to radically improve the tools for constructing ever-changing computer programs by putting the changes themselves central in the programming experience.
+            <h1>Expressions of Change in under 15 minutes</h1>
+            <p class="date">Feb 20, 2018
+
+              
+            </p>
+
+            <p class="intro">A short video-presentation on Expressions of Change
 </p>
           </hgroup>
         </header>
 
-        <p>A video demonstrating the current state of the project is available below.</p>
+        <p>This video started out as a practice run for a 3 minute lightning talk.</p>
+
+<p>I didn’t make it in 3 minutes.</p>
+
+<p>On the upside, there’s about 5 times more information in this talk than in the lightning talk it was a practice run for.</p>
 
 <div class="videoWrapper">
-<iframe width="680" height="382" src="https://www.youtube.com/embed/c9DmkBHLs3M?cc_load_policy=1&amp;cc_lang_pref=en" frameborder="0" allowfullscreen=""></iframe>
+<iframe width="680" height="382" src="https://www.youtube.com/embed/oJAZ7gBFf0U?cc_load_policy=1&amp;cc_lang_pref=en" frameborder="0" allowfullscreen=""></iframe>
 </div>
-
-<h3 id="project-motivation">Project motivation</h3>
-
-<p>The motivation for this project can be found in two observations:</p>
-
-<ol>
-  <li><strong>Computer programs <em>will</em> be changed</strong> — and managing those changes themselves forms a large part of a computer programmer’s work.</li>
-  <li><strong>Existing tools are afterthoughts</strong> — the creation of Version Management Systems postdates the programming languages whose programs’ versions they manage.</li>
-</ol>
-
-<p>The fact that most computer programs are destined to evolve <a href="/lehman-spe-classification/">has been well known since at least 1974</a>. This has only become more obvious since then, so much that currently popular paradigms such as <a href="https://en.wikipedia.org/wiki/Agile_software_development">Agile Development</a> even put it at the core of their philosophy.</p>
-
-<p>The basic building block of programming, however, does not acknowledge this ever-changing nature: to the compiler a program appears as one or more historyless text files.</p>
-
-<p>Because of the central importance of software evolution, <a href="/existing-tools/">a myriad of tools has sprung up to manage it</a>. However, these tools invariably take historyless files as a given and proceed to add history on top of it. In short: dealing with change is an afterthought.</p>
-
-<h3 id="design-goals">Design goals</h3>
-
-<p>The design goals of this project follow directly from the problem definition above. By not accepting history-less files as a basic building block we get:</p>
-
-<ul>
-  <li><strong>Change</strong> to the program itself should be a <strong>primitive</strong>.</li>
-  <li><strong>Combining</strong> arbitrarily sized parts of programs <strong>across time</strong> should be possible.</li>
-</ul>
-
-<p>Arbitrarily combining parts of programs across time is a radical new idea. Here are just a few examples of what becomes possible in that paradigm:</p>
-
-<ul>
-  <li>Refactoring a function definition while postponing to update some of the calling locations.</li>
-  <li>Real-time large team cooperation on a single codebase — modules that are currently being edited by others can be referenced or ignored at will.</li>
-  <li>Reproducing bugs by simply replaying them — any version of the program is referencable and executable; combined with a reference to the data reproducing bugs becomes trivial.</li>
-  <li>Using multiple different versions of the same external or internal library across a single program.</li>
-  <li>Running 2 or more versions of the program simultaneously, switching out one of them gradually.</li>
-</ul>
-
-<p>And much more…</p>
-
-<h3 id="implementation-direction">Implementation direction</h3>
-
-<p>The main goal of the project is to demonstrate a prototype that is an implementation of the design goals mentioned above — i.e. some sort of <em>Programming Language</em>.</p>
-
-<p>Because the project rejects the history-less file as a basic building block, the first step towards this is to build an <em>editor</em> that constructs the primitives of change instead.</p>
-
-<p>For practical reasons (the scope of the project is large enough as it stands), the first editor will only supports constructions a minimal syntax: S-Expressions.</p>
-
-<p>Whether a more advanced syntax is required, e.g. to be able to express type information properly, is an open question.</p>
-
-<h3 id="status">Status</h3>
-
-<p>This is an ongoing project. Progress will be documented on this site in two forms:</p>
-
-<ol>
-  <li><a href="/recent/">Articles</a> describing the progress of the project and its philosophical underpinnings.</li>
-  <li>Demo (research) implementations.  The first such demo is of <a href="/the-editor/">an editor</a>.</li>
-</ol>
-
-<p>In the fall of 2017 I have switched my attention to <a href="/static-analysis/">incremental static analysis of changing computer programs</a>.</p>
 
 
 
       
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 
       

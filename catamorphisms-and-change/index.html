@@ -97,7 +97,7 @@
 <p>The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute <code class="highlighter-rouge">value</code> at each node. The algorithm calculates the sum of these numbers:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span> 
+    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">sum_of_values</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
@@ -106,20 +106,20 @@
 
 <p>Not every recursive algorithm on a data-structure can be so written. As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.</p>
 
-<p>This function is also provided in sketched form in Python (we leave out some details):</p>
+<p><a name="pretty_print"></a>This function is also provided in sketched form in Python (we leave out some details):</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">single_line_mode</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">single_line_mode</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">"("</span> <span class="o">+</span> <span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">])</span> <span class="o">+</span> <span class="s">")"</span> 
+        <span class="k">return</span> <span class="s">"("</span> <span class="o">+</span> <span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">])</span> <span class="o">+</span> <span class="s">")"</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="s">"("</span> 
+    <span class="n">result</span> <span class="o">=</span> <span class="s">"("</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
 
-    <span class="n">result</span> <span class="o">+=</span> <span class="s">")"</span> 
+    <span class="n">result</span> <span class="o">+=</span> <span class="s">")"</span>
     <span class="k">return</span> <span class="n">result</span>
 </code></pre>
 </div>
@@ -130,14 +130,14 @@
 
 <p>So we can see a distinction: algorithms in which we can do calculations for constituent parts of a composite data structure independently from the data structure of which they are a part, and those for which this is not possible.</p>
 
-<p>Recursive algorithms of the first kind are called <a href="https://en.wikipedia.org/wiki/Catamorphism">catamorphisms</a>. <sup id="fnref:more-about-catamorphisms"><a href="#fn:more-about-catamorphisms" class="footnote">1</a></sup></p>
+<p>Recursive algorithms of the first kind are called <a href="https://en.wikipedia.org/wiki/Catamorphism">catamorphisms</a>.<sup id="fnref:more-about-catamorphisms"><a href="#fn:more-about-catamorphisms" class="footnote">1</a></sup></p>
 
 <p>Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the <em>algebra</em> in the literature.</p>
 
 <p>The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but instead of containing any recursive function call the recursive results are passed to it as a parameter. Our original example could be rewritten as such:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">child_results</span><span class="p">):</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span> 
+    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
     <span class="k">for</span> <span class="n">child_result</span> <span class="ow">in</span> <span class="n">child_results</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">child_result</span>
     <span class="k">return</span> <span class="n">result</span>
@@ -158,7 +158,7 @@
 
 <h3 id="working-examples">Working examples</h3>
 
-<p>The <a href="/introducing-the-editor/">editor that is part of this project</a>, is a structured editor of s-expressions. We will briefly mention a number of catamorphisms that can be defined for an s-expression. Determining that these are indeed catamorphisms is left as an exercise to the reader.</p>
+<p>The <a href="/introducing-the-editor/">editor that is part of this project</a> is a structured editor of s-expressions. In the below some catamorphisms that can be defined for an s-expression are given as working examples. Determining that these are indeed catamorphisms is left as an exercise to the reader.</p>
 
 <ul>
   <li>Calculating the size of an s-expression; either defined as the number of nodes it contains or the total in-memory size needed for storage.</li>
@@ -167,11 +167,11 @@
   <li>Calculating the set of symbols occurring in the s-expression.</li>
 </ul>
 
-<p>As should be obvious from the introduction, not every algorithm on an s-expression can be defined as a catamorphism. Here are some counter-examples:</p>
+<p>As should be obvious from the introduction, not every algorithm on an s-expression can be rewritten to a catamorphism. Here are some examples:</p>
 
 <ul>
   <li>Pretty-printing; at least not in the general case, in which the way a node is printed might depend on its ancestors.</li>
-  <li><a href="/form-analysis/">Form-analysis</a>; whether any given s-expression must be analyzed as a Lisp-form <em>at all</em> depends on ancestors. Quoted s-expressions and parameters to procedures are counter-examples.</li>
+  <li><a href="/form-analysis/">Form-analysis</a>; whether any given s-expression must be analyzed as a Lisp-form <em>at all</em> depends on ancestors.</li>
 </ul>
 
 <h3 id="context-controlled-modification">Context: controlled modification</h3>
@@ -231,21 +231,25 @@
 
 <p>Note that for <code class="highlighter-rouge">Delete</code> there is no new child, and hence there is no cost. <code class="highlighter-rouge">Insert</code> and <code class="highlighter-rouge">Replace</code> both take as one of their parameters a history: a sequence of modifications.</p>
 
-<p>The cost of recursive construction of a child is then: the sum of the costs for each modification in this history. That is to say: the cost of the step-wise recursive application of the algorithm. The cost of a each modification in the history is thus described by the section “Performance characteristics” of this article.</p>
+<p>The cost of recursive construction of a child is then: the sum of the costs for each modification in this history. That is to say: the cost of the step-wise recursive application of the algorithm. The cost of a each modification in the history is thus recursively described by the section “Performance characteristics” of this article.</p>
 
-<p>The other factor is the length of the history for which recalculations must be done. In the case of <code class="highlighter-rouge">Insert</code> this is simply the length of the provided history.  In the case of a <code class="highlighter-rouge">Replace</code> it is the number of <em>new</em> items in the provided history  – at least if we apply the constraint that replace can only replace with <a href="/constraints-on-replace/">a continuation of the existing history</a>.</p>
+<p>The other factor is the length of the history for which recalculations must be done.</p>
+
+<p>In the case of a <code class="highlighter-rouge">Replace</code> it is the number of <em>new</em> items in the provided history at least if we apply the constraint that replace can only replace with <a href="/constraints-on-replace/">a continuation of the existing history</a>. That is because only for new items in the provided history recalculations need to be done.</p>
+
+<p>In the case of <code class="highlighter-rouge">Insert</code> this is the full length of the provided history: no earlier result is available, so we must calculate from scratch.</p>
 
 <h3 id="combining-results-the-algebra">Combining results: the algebra</h3>
 
 <p>The computational cost of each call to the <em>algebra</em> depends on the algebra at hand.</p>
 
-<p>Consider a few examples to see how this is the case:</p>
+<p>Let’s consider two examples with rather different computational complexity to see how this is the case:</p>
 
 <p>A first example is the summation of values shown at the beginning of this article. It scales linearly with the number of children (branching factor). This is because while taking the sum over all children we must consider each child at least once.</p>
 
-<p>Another example is serialization of a data structure into a single contiguous memory. It scales linearly with the size of the output. Note that this is the same as to say: it scales linearly with the sum of the child result lengths. This is because each serialized child needs to be fully included in the result. Copying each child takes a time linear with the child’s size.</p>
+<p>Contrast this with the serialization of a data structure into a single piece of contiguous memory. That scales linearly with the sum of the child result lengths (which is the same as to say: scales linearly with the output’s length). This is because each serialized child needs to be fully included in the result. Copying each child takes a time linear with the child’s size.</p>
 
-<p>For the algorithm of selective recalculation of a catamorphic function outlined above, the computational cost of the algebra is recursively incurred at each level of the tree. For algebras that have a computational cost that is linear with the branching factor, such as the sum-of-values, this means that the total cost is in the order of the product of the following 3 things:</p>
+<p>Now let’s consider how the computational cost of the algebra affects the computational cost of the algorithm as a whole. For the algorithm of selective recalculation of a catamorphic function outlined above, the computational cost of the algebra is recursively incurred at each level of the tree. For algebras that have a computational cost that is linear with the branching factor, such as the sum-of-values, this means that the total cost is in the order of the product of the following 3 things:</p>
 
 <ul>
   <li>The average branching factor of the tree</li>
@@ -253,18 +257,27 @@
   <li>The number of modifications at the deepest level.</li>
 </ul>
 
-<p>This is often a much smaller number than the total size of the tree.</p>
+<p>For large trees with small modifications this implies a great efficiency gain in comparison to a full recalculation.</p>
 
-<p>However, the method of selective recalculation only yields better performance in cases where the results can be combined at a lower cost than the sizes of the subtrees that form the basis of their inputs.<br />
-Serialization into contiguous memory, as detailed above, is an important example of this condition not holding. As a result, it is better not to implement it using selective recalculation.</p>
+<p>Note that the above total cost of the algorithm is only applicable when the cost of the algebra is linear with the branching factor.</p>
 
-<h3 id="ignoring-the-present">Ignoring the present</h3>
+<p>Serialization into contiguous memory, as detailed above, is an important example of this condition not holding. As a result, it is better not to implement it using selective recalculation. Recalculation from scratch at each step is significantly cheaper.</p>
 
-<p>In the above approach we do a full recomputation of the algebraic function with all its inputs at each modification. Such an approach has as the branching factor as its lower bound: the inputs must at least be collected and passed to the algebra, and each child forms an input.</p>
+<h3 id="incremental-calculation-of-algebras">Incremental calculation of algebras</h3>
 
-<p>If we reconsider the case of total tree-size mentioned as an example in the above, it should be clear that this is not a general lower bound, because we don’t actually need to reconsider all children for each modification. All that is needed is to keep track of what is inserted and what is deleted, treating a <code class="highlighter-rouge">Replace</code> operation as a combination of both.</p>
+<p>In the above approach, the performance gains with respect to a full recalculation are made by selectively recursing: results that are already known are not recalculated.</p>
 
-<p>In the graphical example in the above, we can also arrive at the resulting <em>9</em> by simply starting at <em>8</em> and observing that a node with value <em>1</em> was replaced with a node with value <em>2</em>, resulting in <em>8 - 1 + 2 = 9</em>. This little calculation can be done without referring to the two existing nodes with value <em>3</em>. In other words: the branching factor does not come into play.</p>
+<p>However, the result of the algebraic function is calculated precisely as in the non-incremental case: at each node at which recalculation takes place we do a full recomputation of the algebraic function with all its inputs.</p>
+
+<p>For each such recomputation, the branching factor forms a lower bound on the performance: the inputs must at least be collected and passed to the algebra, and each child forms an input. For the algorithm as a whole, this lower bound is reflected as one of the 3 factors mentioned in the bulleted list above.</p>
+
+<p>This raises the question: is it possible to arrive at the result of the algebraic function without considering all its inputs?</p>
+
+<p>Let us revisit the example of total tree-size, as mentioned above, to see how the answer to that question may be “yes”.</p>
+
+<p>Consider again the graphical example in the above. In it, a node with a total size of <em>1</em> is replaced with a node with a value of <em>2</em>. From this fact alone, we can conclude that the total tree size is increased by <em>1</em> (namely: <em>2 - 1</em>). Using the knowledge that the previous tree size was <em>8</em>, we can conclude that the new tree size will be <em>9</em>. This conclusion can be reached without referring to the two existing nodes with value <em>3</em>. In other words: the branching factor does not come into play.</p>
+
+<p>In general, we may sometimes have access to a mechanism of recalculation of the algebraic function that is not bound by the branching factor. This is made possible by taking a previous result of the algebraic function, as well as structred updates (deletions, insertions, replacements), into account. In other words: such mechanisms take an incremnental approach to the algebraic function.</p>
 
 <p>In general, such a mechanism will always be available for a given catamorphism given two conditions:</p>
 
@@ -316,6 +329,11 @@ s.setAttribute('data-timestamp', +new Date());
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="/expressions-of-change-in-under-15-minutes/" title="Expressions of Change in under 15 minutes">Expressions of Change in un... </a></span>
+              <span class="date">Feb 20, 2018</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="/constructing-s-expressions/" title="Constructing S-Expressions">Constructing S-Expressions </a></span>
               <span class="date">Dec 11, 2017</span>
             </li>
@@ -344,11 +362,6 @@ s.setAttribute('data-timestamp', +new Date());
               <span class="recent-title"><a href="/constraints-on-replace/" title="Constraints on Replace">Constraints on Replace </a></span>
               <span class="date">Nov 14, 2017</span>
             </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="/t-indices/" title="T-Indices">T-Indices </a></span>
-              <span class="date">Nov 09, 2017</span>
-            </li>
         
             <li>
               <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
@@ -368,7 +381,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2017 Klaas van Schelven.</small>
+    <small>&copy; 2018 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->
