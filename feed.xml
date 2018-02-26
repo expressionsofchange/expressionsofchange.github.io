@@ -4,13 +4,37 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-02-21T22:20:31+01:00</updated>
+<updated>2018-02-26T16:01:29+01:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Lambda Days 2018]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/lambda-days-2018-lightning-talk/" />
+  <id>http://www.expressionsofchange.org/lambda-days-2018-lightning-talk</id>
+  <published>2018-02-26T00:00:00+01:00</published>
+  <updated>2018-02-26T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.lambdadays.org/lambdadays2018&quot;&gt;Lambda Days&lt;/a&gt; is a “one of a kind experience in the functional world.”&lt;/p&gt;
+
+&lt;p&gt;It was held on 22 &amp;amp; 24 February 2018 in Kraków, Poland.&lt;/p&gt;
+
+&lt;div class=&quot;videoWrapper&quot;&gt;
+&lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/KA2TjX595tA?cc_load_policy=1&amp;amp;cc_lang_pref=en&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/lambda-days-2018-lightning-talk/&quot;&gt;Lambda Days 2018&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on February 26, 2018.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -2210,174 +2234,6 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;p&gt;This site documents work in progress; stay tuned for updates.&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/the-power-of-undo/&quot;&gt;The power of Undo&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 14, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Self applicability]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/self-applicability/" />
-  <id>http://www.expressionsofchange.org/self-applicability</id>
-  <published>2017-06-10T00:00:00+02:00</published>
-  <updated>2017-06-10T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;We’ll take a look at the practice of &lt;em&gt;rewriting history&lt;/em&gt;, why we would want to do that and how it creates two seemingly irreconcilable goals: staying true to what actually happened on the one hand and the ability to tell the most clear story about history on the other. Then we’ll see how we can reconcile these goals by applying the idea of version control to version control itself.&lt;/p&gt;
-
-&lt;h2 id=&quot;editing-programs&quot;&gt;Editing Programs&lt;/h2&gt;
-
-&lt;p&gt;To be able to properly discuss all this, we’ll start at the very beginning: by examining some very minimal examples of the construction of a computer program.&lt;/p&gt;
-
-&lt;p&gt;To describe these, we’ll use pen, paper, an eraser and a pair of scissors - this way everything stays simple and visual. Note that this description is no less general than the usual process of constructing programs on an actual computer: wherever we talk about “pieces of paper”, we can simply substitute “one or more files”.&lt;/p&gt;
-
-&lt;p&gt;Say that on a given Monday we’re given the task to write a simple program. We do so by writing this on our piece of paper and call it a day.&lt;/p&gt;
-
-&lt;p&gt;At some point soon after, let’s say on Tuesday, the need arises for a more advanced program. We erase part of our program and add some new parts to reflect this, like so:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/movies/editing-programs.gif&quot; alt=&quot;Editing a program.&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, if we discover a bug in our program on Wednesday, we’re faced with a problem: we cannot simply go back to Monday’s version of the program, because it no longer exists. Nor can we compare Monday and Tuesday’s versions to reason about them.&lt;/p&gt;
-
-&lt;p&gt;This is caused by the fact that changing the program brings with it the loss of information. This is particularly obvious in our example because we’re literally erasing part of the first program to write the second. Note however that even if we only ever add to the program, we destroy the knowledge of what the program looked like before the additions.&lt;/p&gt;
-
-&lt;h2 id=&quot;version-control&quot;&gt;Version Control&lt;/h2&gt;
-
-&lt;p&gt;To be able to keep the old versions around we could use a modern Version Control System such as Git. In addition to the ability to go back or forward to an arbitrary version of the program, this will allow us to compare versions, work together with other people and merge diverging lines of development.&lt;/p&gt;
-
-&lt;p&gt;In our pen &amp;amp; paper world we will model Version Control by using an extra piece of paper. On this we draw the versions of the program as nodes, annotate these with some meta-data (date, author, description), and connect them by arrows into a directed acyclic graph that describes the history of the program.&lt;/p&gt;
-
-&lt;p&gt;The graph may be constructed by copying a given current state of the program over to this second piece of paper and adding the relevant metadata. This corresponds to a &lt;code class=&quot;highlighter-rouge&quot;&gt;git commit&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;We can then navigate through this graph by pointing at a given node with our finger (below: a big red arrow), and copying the node’s content over into the current program state. This corresponds to a &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout&lt;/code&gt;. Because we always have the full history available, we’ve solved our initial problem!&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/movies/version-control.gif&quot; alt=&quot;Version Control&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;rewriting-history&quot;&gt;Rewriting History&lt;/h2&gt;
-
-&lt;p&gt;An important value for a historic record is its historic accuracy: the fact that it precisely reflects what actually happened. In Version Control as discussed so far, historic accuracy is guaranteed by the means of construction of the historic record. There are various versions of the program, and they each get added to the graph as they are created.&lt;/p&gt;
-
-&lt;p&gt;In the toy example above we established the need for Version Control by talking about a simple means of going back in time. In larger projects, the historic information becomes more than a simple time machine: it becomes a repository of knowledge about the history of the project, offering insight in questions of intent. This value is further enhanced by best practices such as writing meaningful descriptions for each version and ensuring a single version contains only a single set of related changes. In the light of this role, another value for a historic record emerges: the clarity of the record - records that are more clearly understandable by users being better than ones that are hard to understand.&lt;/p&gt;
-
-&lt;p&gt;Sometimes the values of accuracy and clarity are at odds with each other: most clear story about history is not told by the description of history as it actually happened, but rather by some simplification or cleanup. In such cases a may be useful to &lt;em&gt;rewrite history&lt;/em&gt;. Here are some examples of such rewrites with their equivalent &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; commands:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;If you make a mistake while adding a version to the historic record, you may want to fix the mistake in the record rather than adding yet another version to fix the mistake (such a version would only clutter the record). (&lt;code class=&quot;highlighter-rouge&quot;&gt;git commit --ammend&lt;/code&gt;)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;History is not always linear; multiple new version may arise based on a single version of the program. Such diverging histories can later be merged together in a separate “merge” version. However, many such separate version will clutter up the historic record, and are therefore sometimes deemed undesirable. The solution is to rewrite history as if the divergence never took place: one of the diverging branches of history is cut from its actual base, rewritten, and pasted at the tail of the other branch in a single linear fashion. (&lt;code class=&quot;highlighter-rouge&quot;&gt;git --rebase -i&lt;/code&gt;)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;An animation of a &lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase&lt;/code&gt; in our pen &amp;amp; paper world is shown below: the commit “C” is rewritten as if it happened after “B”, rather than independently of it; this simplifies the graph because we no longer need a merging commit.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/movies/rewriting-history.gif&quot; alt=&quot;Rewriting History&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;As should be obvious from these two examples, rewriting of history can be quite helpful in increasing the clarity of the historic record by removing clutter in the form of irrelevant details. It does, however, come at a price; one which is hinted at by the use of scissors in the animation.&lt;/p&gt;
-
-&lt;p&gt;Firstly, it violates precisely the goals as stated in the initial example: a true historic record without loss of information. This is not merely a theoretical problem: consider the case of a rebased version which has some kind of bug. For such a bug it is impossible to say whether it was introduced as a direct consequence of the rebasing or was also present in the unrebased version. Given that such understanding is precisely what version control is about, this is really unfortunate.&lt;/p&gt;
-
-&lt;p&gt;Secondly, consider the fact that version control forms an important safety net in our software development process: when we make mistakes we can undo them by going back to an older version. However, while rewriting history we don’t have the capability of reverting mistakes made in the rewriting process itself. This is precisely why most blog articles about rewriting of history in Git are annotated with big red warning boxes.&lt;/p&gt;
-
-&lt;p&gt;So far we’ve seen two seemingly irreconcilable goals: “true history” and a “clear history”. Because the goals are presented as an either/or choice, striking some balance is left as a matter of culture or taste to individual users and teams. It has been my personal observation that users of Mercurial often err on the side of accuracy, whereas users of Git prefer clean histories, but your mileage may vary.&lt;/p&gt;
-
-&lt;h2 id=&quot;self-applicable-version-control&quot;&gt;Self Applicable Version Control&lt;/h2&gt;
-
-&lt;p&gt;The question that seems to remain unasked is: is it be possible to have a historic record that’s both truthful to what actually happened and a clear description that leaves out irrelevant details?&lt;/p&gt;
-
-&lt;p&gt;To answer this, let’s go back to the running example of keeping track of our program and the history of our program on a piece of paper. So far we’ve seen the following:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;The Program
-    &lt;ol&gt;
-      &lt;li&gt;A piece of paper may be used to write a program.&lt;/li&gt;
-      &lt;li&gt;At some point new features are requested, and we must edit the program.&lt;/li&gt;
-      &lt;li&gt;Once we do this lose information about previous versions of the program.&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Version Control
-    &lt;ol&gt;
-      &lt;li&gt;A piece of paper may be used to keep track of a historic graph of all programs from step 1.&lt;/li&gt;
-      &lt;li&gt;It may be useful to clean up this graph by rewriting history for reasons of clarity.&lt;/li&gt;
-      &lt;li&gt;Once we edit the historic graph we lose information about previous versions of the history.&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;We’ve seen that the problem mentioned in step 1c was solved by step 2a; and that we have an as of yet unsolved problem in step 2c. The question then is: can we think of a step 3a to solve this?&lt;/p&gt;
-
-&lt;p&gt;Sure: we can simply add yet another piece of paper containing a historic graph, just like we did in step 2a. The only difference being the content of the nodes of the graph: rather than keeping track of individual programs, we can track the history of historic graphs. Let’s call this graph a 2nd level history.&lt;/p&gt;
-
-&lt;p&gt;Construction of this graph is analogous to the construction of the regular historic graph: whenever we change the historic record, we add a full copy of the historic graph to the second-level history as a node. We do this both for any history writing operations (such as a &lt;code class=&quot;highlighter-rouge&quot;&gt;git commit&lt;/code&gt;) as for rewriting operations (such as &lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;Just like in the case of regular Version Management we can navigate through the newly constructed graph. Navigation through a second level history corresponds to changes in the historic graph (rather than changes to the program). In other words: it corresponds to rewrites of history. Here it is in action:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/movies/vcs-squared.gif&quot; alt=&quot;History of History&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Note that we’ve achieved our goal now! We can rewrite our first level history to be as clear as possible, while keeping a record of precisely what actually happened available in our second level history. This gives us the ability to un-rewrite history just as easily as reverting back to a previous version of our program.&lt;/p&gt;
-
-&lt;p&gt;We did this simply by applying the idea of Version Control on itself: we use Version Control on graphs representing Version Control. This is hardly a unique idea in the field: other examples are using compilers to compile compilers and applying functions to functions to yield further functions.&lt;/p&gt;
-
-&lt;h2 id=&quot;down-the-rabbit-hole&quot;&gt;Down the rabbit hole&lt;/h2&gt;
-
-&lt;p&gt;Now that we’ve seen that the concept of tracking change is self-applicable, we may ask how often we may want to self-apply. Is it possible to talk about third or nth level histories, i.e. histories of histories of histories or even deeper levels? Secondly: is there any use for such expressions?&lt;/p&gt;
-
-&lt;p&gt;The first question is easily answered: yes, we can always keep adding more layers. Any Version Control which doesn’t care what’s under control can always be used to wrap an &lt;em&gt;n - 1&lt;/em&gt; level history to yield an &lt;em&gt;n&lt;/em&gt; level history.&lt;/p&gt;
-
-&lt;p&gt;Now for the second question: are such deep self-applications of any use? To this, I do not yet know the answer.&lt;/p&gt;
-
-&lt;p&gt;In general, to get the advantages of Version Control in all parts of your system, you need precisely one more level of history than the amount of levels on which you want to make potentially destructive changes.&lt;/p&gt;
-
-&lt;p&gt;So far, we’ve seen that making of destructive changes on the first level of history (“rewriting history”) is occasionally quite useful, and that we may therefore want to introduce a second level of history.&lt;/p&gt;
-
-&lt;p&gt;Because we lack actual experience with such a second level history, use cases for destructively editing that have not yet shown themselves. It may be that they don’t actually exist; in which case we’re done. If they do, a third level might be useful. In any case, it would seem that for each level the amount of usage decreases, an that we at some point run out of the need for further levels.&lt;/p&gt;
-
-&lt;h2 id=&quot;self-applicable-git&quot;&gt;Self-applicable Git&lt;/h2&gt;
-
-&lt;p&gt;Implementing the above insights using a typical modern Version Control System such as Git does, unfortunately, not lead to very useful results.&lt;/p&gt;
-
-&lt;p&gt;This is caused by the following: In the above we made no assumptions about the nature of the pieces of paper - other than that they could be stored as a file on a computer.&lt;/p&gt;
-
-&lt;p&gt;Git and comparable systems, on the contrary, do make specific assumptions: most modern Version Control systems are built on the assumption that the files they are tracking are almost exclusively text files.  Even though storing the occasional small binary file is certainly technically possible, storing large numbers of large binary files in Git is certainly not recommended, and will not lead to a workable system.&lt;/p&gt;
-
-&lt;p&gt;The Git repository itself is implemented precisely as a collection of binary files. This means that tracking the history of a Git repository cannot be done efficiently using Git.&lt;/p&gt;
-
-&lt;p&gt;In fact: trying this one runs into the fact that adding Git repositories to be tracked inside other repositories has been explicitly forbidden: git repositories are managed using a directory called &lt;code class=&quot;highlighter-rouge&quot;&gt;.git&lt;/code&gt;, and Git raises an error when presented with a directory named &lt;code class=&quot;highlighter-rouge&quot;&gt;.git&lt;/code&gt; to track.&lt;/p&gt;
-
-&lt;h2 id=&quot;implementation-hint&quot;&gt;Implementation hint&lt;/h2&gt;
-
-&lt;p&gt;In the pen-and-paper examples of this article, the trackable items of interest (whether computer programs or complete n-histories) were always presented as files. Tracking such files was presented as adding the full state at any given point in time as a historic node to the graph.&lt;/p&gt;
-
-&lt;p&gt;This approach does not generally scale to n-level histories: the storage requirements at each level grow like so:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;the 1-history stores all programs, i.e. growth linearly with program size and version count.&lt;/li&gt;
-  &lt;li&gt;the 2-history stores all 1-histories, i.e. growth linearly with [1] and version count.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;In this approach, the storage requirements for a given n-history’s are &lt;em&gt;O(p * v&lt;sup&gt;n&lt;/sup&gt;)&lt;/em&gt;. (&lt;em&gt;p&lt;/em&gt; for program size, &lt;em&gt;v&lt;/em&gt; for number of stored versions and &lt;em&gt;n&lt;/em&gt; for n-level-history)&lt;/p&gt;
-
-&lt;p&gt;An important observation is that the actual (human) user actions that give rise to this growth is much more limited. The actual things the user can do are limited to:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Make direct changes to the program.&lt;/li&gt;
-  &lt;li&gt;Calling various commands of (a n-level) Version Control system&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;If we only store such user-actions into the various levels of Version Control, we’ll get a system that scales linearly with user input.&lt;/p&gt;
-
-&lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;/h2&gt;
-
-&lt;p&gt;In this article I’ve shown (hopefully) how applying the ideas of Version Control on their own data-structures can be quite useful.&lt;/p&gt;
-
-&lt;p&gt;We’ve also seen that having the property of self-applicability is not a given - e.g. Git cannot meaningfully be applied on Git repositories.&lt;/p&gt;
-
-&lt;p&gt;I expect to be adding some example programs to this site at some point in the future. Inasmuch as those programs will be like Version Control systems, the ability to self-apply is an important design goal.&lt;/p&gt;
-
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/self-applicability/&quot;&gt;Self applicability&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 10, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>
