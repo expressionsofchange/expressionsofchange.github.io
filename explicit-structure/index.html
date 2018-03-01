@@ -1,0 +1,363 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Explicit structure &#8211; Expressions of Change</title>
+<meta name="description" content="In December 2017, I formulated a number of ideas on the value of explicit and simple structure. I think the ideas are valuable enough to preserve, which is w...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Explicit structure &#8211; Expressions of Change">
+<meta property="og:description" content="In December 2017, I formulated a number of ideas on the value of explicit and simple structure. I think the ideas are valuable enough to preserve, which is w...">
+<meta property="og:url" content="/explicit-structure/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/static-analysis/" >Static Analysis</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Explicit structure</h1>
+            <p class="date">Feb 28, 2018
+
+              
+                  
+                      — Tags:
+                      
+                      <a href="/articles/">articles</a>
+                      
+                      
+                  
+              
+            </p>
+
+            <p class="intro">In December 2017, I formulated a number of ideas on the value of explicit and simple structure. I think the ideas are valuable enough to preserve, which is why I spent some time on brushing them up, ensuring I can still read them myself in the future.
+</p>
+          </hgroup>
+        </header>
+
+        <p>As it stands, they are not interesting enough to be posted as a blog post or academic paper. If I ever do share it, it is probably as some kind of “design document”.</p>
+
+<h2 id="s-expressions-and-explicit-structure">S-expressions and explicit structure</h2>
+
+<p>Parsing s-expressions is almost trivial. This is true for both automated processes (and thus implies ease of implementation of such processes) and for a human readers of printed s-expressions.</p>
+
+<p>The main cause for this is the one to one correspondance between certain tokens, and (types of) nodes in the AST. That is:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">(</code> denotes the start of a list-expression,</li>
+  <li><code class="highlighter-rouge">)</code> the end of one,</li>
+  <li>whitespace separates atoms</li>
+</ul>
+
+<p><em>And that’s it</em>. We will call this property “explicit structure”.</p>
+
+<p>Because of this property the mapping between a graphical representation as a tree with boxes and a textual representation using parentheses is really so direct and trivial that your mind might not even distinguish between these two things.</p>
+
+<p>One very important property that follow from such an explicitly layed out structure is the ability to manipulate a structure directly <em>at all</em>, i.e. to be able to see what you’re doing. This is one of the reasons we chose s-expressions in Expressions of Change.</p>
+
+<p>In the present article, however, we’ll zoom in on a different property of explict structures: the fact that we understand programs in terms of the structure of the program.</p>
+
+<h2 id="the-alternative">The alternative</h2>
+
+<p>Before that, to get a better feeling of what is meant by “explicit structure”, let’s consider the alternative, which is to have a more sophisticated grammar and associated parser.</p>
+
+<p>As a minimal example we’ll use a grammar that is only slightly more sophisticated: a parser of typical (elementary school) mathematical expressions using only addition and multiplication. A typical expression in the associated language would be:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1 + 2 + 3 + 4 + 5
+</code></pre>
+</div>
+
+<p>And we know from elementary school that there are precedence rules, i.e. <code class="highlighter-rouge">*</code> binds more strongly than <code class="highlighter-rouge">+</code>. From our “implementation of programming languages” course at uni we remember how to write the grammar for this, which codifies these precendence rules. In BNF:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;expr&gt; -&gt; &lt;expr&gt; + &lt;term&gt;
+      | &lt;term&gt;
+&lt;term&gt; -&gt; &lt;term&gt; * &lt;number&gt;
+      | &lt;number&gt;
+</code></pre>
+</div>
+
+<p>Note that this definition does not have the property of explicit structure that we talked about in the beginning: to know whether something is an <code class="highlighter-rouge">expr</code>, or a <code class="highlighter-rouge">term</code>, further recursive parsing must occur. That is: we don’t start each node in the parse-tree with a special token denoting which one it is.</p>
+
+<h3 id="human-understanding-of-sophisticated-grammars">Human understanding of sophisticated grammars</h3>
+
+<p>Parsing such an expression given those rules basically creates a binary tree. In the case of the above example: one which is maximally unbalanced.</p>
+
+<p>But my contention is that the human that looks at this doesn’t do see this whole binary tree in their head, but just kind of makes groupings and that are like “if you see five plus symbols and you just kinda go ‘plus is associative’ add all that stuff up”</p>
+
+<p>As such there’s a huge assymmetry there between the model that the computer has, and the model that the human has, and now if you want to show what’s going on under the hood then then it will be confusing.</p>
+
+<p>In fact, I would argue that, most people don’t know precisely for most languages how the parser works, they just kind of have this feel for it; certainly if you look at the program you don’t think of it in terms of the Abstract Syntax Tree.</p>
+
+<p>And in fact the whole point of some sophisticated syntax definition is that you can show people stuff that looks easy to understand and then you will translate it into a tree that the computer can understand. That is, the underlying assertion for such syntax definitions is that it’s a fact of life that humans and computers don’t think in the same way, and that we must therefore translate.</p>
+
+<h3 id="the-consequence">The consequence</h3>
+
+<p>This decision takes place right at the beginning of the compilation pipeline; right at the beginning of the path of translation from something humans understand to machine instructions.</p>
+
+<p>You say, “okay, the first step is that we’re going to take this stuff that this human is looking at, and we’re going to turn it into something entirely different, because that was just for the for humans, that’s just to make it understandable for them; the computer needs something entirely different.</p>
+
+<p>And the more sophisticated your grammar is, the more of this is going on. And that’s the very first step in your pipeline… my contention is that any kind of explaining of what’s going on from that step onwards, is going to be hampered by the fact that you made the translation step as your very first step.</p>
+
+<p>And the contention is further that well, you usually do want to try to make insightful what <em>is</em> going on. So then you have to translate back basically.</p>
+
+<h2 id="analysis">Analysis</h2>
+
+<p>Let’s explore what all this means for the various analyses that we might want to do for the program.</p>
+
+<h3 id="analyses-follow-hierarchy">Analyses follow hierarchy</h3>
+
+<p>Various forms of analysis are expressed along the lines of the program’s hierarchical structure.</p>
+
+<p>When we say “the program’s hierarchical structure”, we should note that the most readily available such structure is the AST. (Though it could be said that in some cases it’s cleaner to derive another hierarchical structure from the AST, and do the further analyses on that; however, even in those cases the derived structure is likely a “close cousing”)</p>
+
+<p>The most direct way of an analysis proceeding along the hierarchy of the program structure is when it can be expressed as a catamorphism. That is, when the data flows bottom-up. An example of that is free variable analysis on a tree of forms. Each node just propagates any free variables of its children which it does not capture itself. That is, just look down the tree, to your children and look at what free variables there are there, if you’re a lambda node yourself can remove the ones you bind, and you add that all up, and then that’s the answer. You never have to look up in the tree, or sideways.</p>
+
+<p>However, even for non-catamorphic analyses, we should note that they still proceed along the structure in some way. The canonical example is any kind of analysis that attempts to resolve names, and take into account some aspect of the defining location at a usage location. Since a name may generally be defined at any higher level in the tree, the dataflow is strictly not bottom up in that case. Even though this description does not have the data flowing up in the hierarchy, it’s still going to be described somehow along the lines of the structure of your program, i.e. “up”, “down” and “sideways”.</p>
+
+<p>There’s also the consideration of <em>what</em> to analyse, which may again be along the program’s hierarchical lines. You still take a chunk of the program, e.g. a function. You say ‘that’s a chunk I want to analyze’. That chunk-taking is still taking place along the hierarchical lines</p>
+
+<p>In short: there <em>is</em> a main hierarchical structure in your program; the most directly available such structure is the AST.  Most analyses that you can dream up will be following along those lines.</p>
+
+<h3 id="automated-vs-human-analysis">Automated v.s. human analysis</h3>
+
+<p>There is a certain relationship between “these are the kind of analyses that computers or automated processes can do about your program” and “this is the way that you already think about your program as a human”.</p>
+
+<p>In short: the static analysis and the process that the programmer does in his head to assign meaning to the program, those two processes are generally the same.</p>
+
+<p>This is to a large degree why we do automated analyses in the first place: we do them to show results to people, which they use to further understand the program.</p>
+
+<p>An example of this is the way we think about where variables are bound: both computers and humans will try to look up such locations in a very similar way.</p>
+
+<p>Now what if you have “explicit structure”, i.e. you have a very simple grammar and close relationship between the way the program is layed out on screen?</p>
+
+<p>In that case you can expose the results of the analyses and their inner workings very directly in terms of the AST to the human, who will generally understand what’s going on. And the reason is that the programmer was thinking directly in terms of the AST anyway.</p>
+
+<h3 id="analyses-for-sophisticated-asts">Analyses for sophisticated ASTs</h3>
+
+<p>In more sophisticated grammars, this is not the case. The basic reason is: you have all this cruft in your abstract syntax tree. For example, in the case of the expression <code class="highlighter-rouge">1 + 2 + 3 + 4 + 5</code>, there was this deeply nested imbalanced tree.</p>
+
+<p>Of course, from the perspective of the computer that does the static analysis, or even the person creating the static analysis, such deeply nested ASTs are not a problem. This is because each part of the analysis is generally expressed in terms of a single node and its environment. So we can just go “okay, well how does the <code class="highlighter-rouge">+</code> operator work? Well just add up the left hand side and the right hand side.” They don’t care that if you add up ten things and it’s A + B + C + D etc., that this creates this huge binary tree; that’s just more applications of the same thing.</p>
+
+<p>However, If we want to visualize all this stuff then it becomes really problematic, because then we do have to show the whole tree.</p>
+
+<h2 id="consequences-for-our-project">Consequences for our project</h2>
+
+<p>In <em>Expressions of Change</em> we add a full dimension to our model of programs, namely the dimension of time over which the program is modified.</p>
+
+<p>And thus, were we to pick a sophisticated grammar, any understanding over this dimension is equally hampered by this constant translating between the human and the computer model of the program.</p>
+
+<p>This is one of the main reasons we have not done so.</p>
+
+<p>Further, in the algorithm for static analysis, we’ve basically made the assumption that we can just make the algorithm the UI.</p>
+
+<p>So we can just say “okay, these are the nodes of your program”, “there are your s-expressions in your program”, and now we do this analysis here, and it has a new output, and that propagates through this other thing.</p>
+
+<p>And because you understand each of these analyses, you just label it, like so:</p>
+
+<ul>
+  <li>“this is free variable analysis”</li>
+  <li>“look it bubbles up”</li>
+  <li>“okay, now it hides this other thing, it’s undefined”</li>
+</ul>
+
+<p>Kind of like the introduction of a new variable definition shadows another one. And you can make all that stuff visual. You can make the propagation of all that stuff visual as well, <em>if and only if</em> people are comfortable with directly interacting with the structure of the program.</p>
+
+<p>In terms of dimension of the modifications the point is that, I came up with an algorithm that just makes the propagation through the structure of the program the UI. So here’s the data, here’s what changed, here are the nodes and that’s how we’re going to make it insightful to people. That won’t work if you have a sophisticated syntax.</p>
+
+<h2 id="appendix-currying">Appendix: currying</h2>
+
+<p>Finally, we’ll present currying as an example of how a sophisticated feature of the grammar breaks down in <em>Expressions of Change</em>.</p>
+
+<p>Disclaimer: I love currying, it’s super elegant. But what are, realistically, the drawbacks, and why doesn’t it work when you’re modifying your code?</p>
+
+<p>So the scenario we’re talking about is the one where everything’s curried by default, i.e. the Haskell example.</p>
+
+<p>And further, your grammar is designed with that scenario in mind. That is: function application is left-associative, type definitions are right-associative.</p>
+
+<p>And then you just say a this isn’t a function with five arguments, it’s a function which produces function to a function to function etc.  So you’re saying on the one hand, we don’t have functions with 5 arguments, we just have functions that produce first order functions.</p>
+
+<p>Of course, right in the first page of the “Haskell for beginners” or some similar book, you then tell them “okay just read this as a function of five arguments; later you will understand why it is actually the same as a function that produces a function. But you can just look at it and read it as a function with five arguments and we will facilitate this by having it so that we have left associativity on the function application and we have right associativity on the function types, which make this all work.”</p>
+
+<p>Which is great, but it’s a rather extreme example of your abstract syntax tree differing from what’s going on in the head of this programmer.</p>
+
+<p>So while the programmer might know, “okay it’s really function returning a function returning a function etcetera, they really don’t know it, that is, they don’t want to know it.</p>
+
+<p>In fact as a language designer you say “they don’t want to know this”, because that’s why you chose that associativity in the first place.</p>
+
+<p>You said, “okay, it’s better if we hide this from view most of the time; it’s easier to think about it that way”.</p>
+
+<p>And the exact same things apply here as in the elementary school expression parser from above.</p>
+
+<h3 id="final-thoughts">Final thoughts</h3>
+
+<p>We also make a few more unorganised observations, both specific to currying and more generally:</p>
+
+<ul>
+  <li>
+    <p>A good general principle is: if it’s a flat list to us mortals, then treat it as such in your grammar.</p>
+  </li>
+  <li>
+    <p>Humans are generally better at understanding flat structures than deeply nested ones. See e.g.: nested if statements.</p>
+  </li>
+  <li>
+    <p>Finally, an open question: is it truely (generally) impossible to identify such listy things in imbalanced trees, and show them as lists? Because if it isn’t, then both currying and other grammars which are not expressed in terms lists, but nonetheless map to lists, can perhaps be made to work well after all.</p>
+  </li>
+  <li>
+    <p>A specific consequence of the fact that type-arrows and function application associate right and left respectively, is that updating a function-definition has the reversed effect on the definition and its usage locations! Quite confusing.</p>
+  </li>
+  <li>
+    <p>If you were to if you write curried things without the specific associativity rules, it becomes quite unreadable. Perhaps this should tell us something about whether the underlying representation was understandable to begin with.</p>
+  </li>
+</ul>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+        
+            <li>
+              <span class="recent-title"><a href="/dont-say-homoiconic/" title="Don't say “Homoiconic”">Don't say “Homoiconic” </a></span>
+              <span class="date">Mar 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/lambda-days-2018-lightning-talk/" title="Lambda Days 2018">Lambda Days 2018 </a></span>
+              <span class="date">Feb 26, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/expressions-of-change-in-under-15-minutes/" title="Expressions of Change in under 15 minutes">Expressions of Change in un... </a></span>
+              <span class="date">Feb 20, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/constructing-s-expressions/" title="Constructing S-Expressions">Constructing S-Expressions </a></span>
+              <span class="date">Dec 11, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/catamorphisms-and-change/" title="Catamorphisms and change">Catamorphisms and change </a></span>
+              <span class="date">Dec 04, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/form-analysis/" title="Static Form Analysis">Static Form Analysis </a></span>
+              <span class="date">Nov 17, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2018 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

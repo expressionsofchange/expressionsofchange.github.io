@@ -1,0 +1,348 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Don't say “Homoiconic” &#8211; Expressions of Change</title>
+<meta name="description" content="When asked what’s so great about Lisp, many aficionados will say that the language is Homoiconic, and that this property gives it certain magical advantages ...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Don't say “Homoiconic” &#8211; Expressions of Change">
+<meta property="og:description" content="When asked what’s so great about Lisp, many aficionados will say that the language is Homoiconic, and that this property gives it certain magical advantages ...">
+<meta property="og:url" content="/dont-say-homoiconic/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/recent/" >Recent</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/static-analysis/" >Static Analysis</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Don't say “Homoiconic”</h1>
+            <p class="date">Mar 01, 2018
+
+              
+                  
+                      — Tags:
+                      
+                      <a href="/musings/">Musings</a>
+                      
+                      
+                  
+              
+            </p>
+
+            <p class="intro">When asked what’s so great about Lisp, many aficionados will say that the language is <em>Homoiconic</em>, and that this property gives it certain magical advantages over other languages. When asked what homoiconic means, however, the answer is often much less clear.
+</p>
+          </hgroup>
+        </header>
+
+        <p>What is homoiconicity then? Typical definitions state that it is simply “code as data”, will point to a relationship between a program’s structure and syntax or note that the program source is expressed in a primitive data-type of the language. In the below, we will show that none of these definitions make much sense.</p>
+
+<p>Before that, however, we’ll return to the original definition, to ensure we have at least some sensible frame of reference for the rest of the article. This is also the definition we’ll return to in the final section, when we put it to the test by examining the canonical example of homoiconicity.</p>
+
+<h2 id="historic-definition">Historic definition</h2>
+
+<p>The term homoiconic was first coined in the article <a href="https://dl.acm.org/citation.cfm?doid=800197.806048">TRAC, A Text-Handling Language</a> by Calvin Mooers and L. Peter Deutsch.<sup id="fnref:trac-footnote"><a href="#fn:trac-footnote" class="footnote">1</a></sup> In the original article, the meaning of homoiconicity seems to be spelled out quite clearly. The article opens by stating that the TRAC language is homoiconic, although without yet using that term explicitly:</p>
+
+<blockquote>
+  <p>The external and internal forms of the TRAC language are the same.</p>
+</blockquote>
+
+<p>Before introducing the term itself, the importance of a single representation for viewing and manipulation by the user and interpretation by the computer is repeated no less than 5 times; numbered here in square brackets for clarity:</p>
+
+<blockquote>
+  <p>One of the main design goals was [1] that the input script of TRAC (what is typed in by the user) should be identical to the text which guides the internal action of the TRAC processor. In other words, [2] TRAC procedures should be stored in memory as a string of characters exactly as the user typed them at the keyboard. [3] If the TRAC procedures themselves evolve new procedures, these new procedures should also be stated in the same script. [..] [4] At any time, it should be possible to display program or procedural information in the same form as the TRAC processor will act upon it during its execution. [5] It is desirable that the internal character code representation be identical to, or very similar to, the external code representation.</p>
+</blockquote>
+
+<p>This paragraph finally concludes with the definition itself – seemingly leaving no room for doubt:</p>
+
+<blockquote>
+  <p>Because TRAC procedures and text have the same representation inside and outside the processor, the term <em>homo-iconic is</em> applicable, from <em>homo</em> meaning the same, and <em>icon</em> meaning representation.</p>
+</blockquote>
+
+<h2 id="alternate-definitions">Alternate definitions</h2>
+
+<p>Unfortunately, this rather straightforward definition is not the only one in active use. There is in fact a proliferation of alternative, and entirely misguided, definitions, some of which are quite persistent. It is worth pointing out explicitly why each of them is misguided: if homoiconicity is to have any meaning at all, it’s certainly a good idea to point out what it doesn’t mean.</p>
+
+<h3 id="code-as-data">“Code as data”</h3>
+
+<p>First, any attempt to explain homoiconicity by using the phrase “Code as data” is quite meaningless. The reason is simply that “Code as data” can be used to indicate any of a large number of quite distinct ideas, some of which are listed below:</p>
+
+<ul>
+  <li>Functions as a first-class citizen.</li>
+  <li>The fact that a computer in a Von Neumann architecture stores programs and data in the same memory device.</li>
+  <li>Reflection and metaprogramming.</li>
+  <li>Homoiconicity.</li>
+</ul>
+
+<p>The punchline is in the last bullet in the list: if homoiconicity is “code as data”, and “code as data” is homoiconicity, we’ve simply created a circular definition and explained nothing at all – but with extra potential for confusion because “code as data” may also refer to other ideas.</p>
+
+<h3 id="program-structure--syntax">Program structure &amp; syntax</h3>
+
+<p>The second definition attempts to draw a connection between the program’s structure and its syntax. For example, there’s this formulation which is currently featuring on <a href="https://en.wikipedia.org/wiki/Homoiconicity">Wikipedia</a>:</p>
+
+<blockquote>
+  <p>Homoiconicity [..] is a property [..] in which the program structure is similar to its syntax</p>
+</blockquote>
+
+<p>This is a category error, that is, a similarity is drawn between ideas that exist at two separate levels of abstraction.</p>
+
+<p>Syntax makes a statement <em>about</em> program structure, that is the syntax of a language is the set of rules that defines the combinations of symbols that are considered to be a correctly structured program.</p>
+
+<p>To say that the rules defining the program’s structure are similar to the program’s structure makes no sense. First, since a single syntax defines a potentially infinite set of correctly structured programs, which program are we talking about as a reference for comparison? Second, what would the measure of similarity across these 2 levels of abstraction be?</p>
+
+<p>Similar confusion surrounding the terminology of syntax and structure can be found further down in the same article:</p>
+
+<blockquote>
+  <p>If a language is homoiconic, it means that the language text has the same structure as its abstract syntax tree (AST)</p>
+</blockquote>
+
+<p>This is also wrong, but for the opposite reason: the abstract syntax tree is by definition a representation of the structure of the language text. This is the case for any AST, in any language. Thus, to say that this has anything to do with homoiconicity is quite meaningless.</p>
+
+<h3 id="meta-circular-evaluator">Meta-circular evaluator</h3>
+
+<p>Third, the property of homoiconicity is often conflated with the existence of a meta-circular evaluator, but the two concepts are entirely separate. An example of such confusion is the following quote from the Wikipedia article:</p>
+
+<blockquote>
+  <p>A typical demonstration of homoiconicity is the meta-circular evaluator.</p>
+</blockquote>
+
+<p>To understand this claim, let’s first examine what a meta-circular evaluator is. The term was coined originally in 1972 by John C. Reynolds in his paper <a href="http://people.cs.uchicago.edu/~blume/classes/aut2008/proglang/papers/definterp.pdf">Definitional Interpreters for Higher-Order Programming Languages</a>.<sup id="fnref:sicp-meta-circular"><a href="#fn:sicp-meta-circular" class="footnote">2</a></sup></p>
+
+<blockquote>
+  <p>We have coined the word “meta-circular” to indicate the basic character of this interpreter: It defines each feature of the defined language by using the corresponding feature of the defining language. For example, when eval is applied to an application expression [..] of the defined language, it evaluates an application expression [..] in the defining language.</p>
+</blockquote>
+
+<p>The relationship with homoiconicity, if it exists, is accidental at most.</p>
+
+<p>It is quite possible to construct a meta-circular interpreter in languages which are clearly not homoiconic. Consider for example a Python-interpreter, written in Python, which implements each language-construct from Python in Python: this satisfies the definition of a meta-circular evaluator. However, Python is not homoiconic, because the internal and external forms of the language are quite different: the external representation of Python programs is the text file, and the internal form, on which the interpreter operates, is bytecode.</p>
+
+<h3 id="primitive-data-types">Primitive data types</h3>
+
+<p>Another often seen definition of homoiconicity focuses on the relationship between the <em>primitive data types</em> in the language and the representation of the language. Again, we quote from Wikipedia:</p>
+
+<blockquote>
+  <p>In a homoiconic language, the primary representation of programs is also a data structure in a primitive type of the language itself.</p>
+</blockquote>
+
+<p>Again, this is a definition which doesn’t hold up to any scrutiny.</p>
+
+<p>First, consider that most languages have a primitive datatype for strings of text, and the programs in most languages are presented to the user as a string of text. Should we conclude from this that most languages are homoiconic?</p>
+
+<p>Second, for most languages, it is possible to write a parser in that language itself, that stores the resulting abstract syntax tree in a primitive type in the language. For example: we can write a parser in <em>Java</em> that parses Java source code into Java objects, which are primitive data types in the language. Should we conclude from this that Java is homoiconic?</p>
+
+<p>In both cases, the answer is clearly “no” – if all languages are homoiconic, the terms loses all meaning.</p>
+
+<h2 id="an-example">An example</h2>
+
+<p>Now we know what homoiconicity is not, the way is cleared for a discussion on what it is. Let’s return to the original definition, and try to fit this to an example. Remember, the original definition of homoiconicity centers on <em>a similarity between the internal and external representations of a language</em>. In the literature, Lisps are the favorite example of homoiconicity; we will stick with that tradition here, and examine the case of an arbitrary Lisp program in an arbitray language in the Lisp family.<sup id="fnref:lisp-not-homoiconic"><a href="#fn:lisp-not-homoiconic" class="footnote">3</a></sup></p>
+
+<p>First, the external representation: the basic syntactical element of Lisps is the s-expression. Thus, a typical program in Lisp is represented to the programmer as nothing more than an s-expression.</p>
+
+<p>Second, the internal representation. The evaluation of a Lisp program is typically defined in terms of those s-expressions directly. One example is the definition of Scheme given by <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Abelson &amp; Sussman</a>, another is the definition <a href="/l-a-toy-language/#case-analysis">given on this site</a>. In both cases, the semantics of the language are given in terms of a case-analysis on an s-expression. Thus, the (virtual) machine operates on s-expressions directly, and we can say the internal representation of the program is an s-expression.</p>
+
+<p>Because the internal and external representations are the same, we might say that this combination of language and interpreter is homoiconic.</p>
+
+<h3 id="objections">Objections</h3>
+
+<p>The observant reader may raise at least two objections against the above.</p>
+
+<p>The first objection concerns the external representation. In the above we simply stated that the external representation is an s-expression.  In most practical programming environments, however, the actual representation of program sources is as text files which contain strings of characters. It is only after parsing this text that the representation is really an s-expression. In other words: in practical environments the external representation is not an s-expression, but text.</p>
+
+<p>The second objection concerns the internal representation. Practical implementations of Lisp interpreters do generally not operate actually directly on s-expressions internally for performance reasons. Even though a Lisp might be defined in terms of a case-analysis on s-expressions, it is not usually implemented as such. Thus, the internal representation is not actually an s-expression in practice.</p>
+
+<h3 id="para-iconic">Para-iconic</h3>
+
+<p>In an attempt to counter these arguments, we might slightly alter our definition, to state that homoiconicity is not a boolean property, but a scalar one: a language in a given environment can be homoiconic to some degree.</p>
+
+<p>In fact, the original definition by Mooers and Deutsch leaves some space for such an interpretation when it states that “the internal [..] representation be identical to, <em>or very similar to</em>, the external [..] representation.” (emphasis mine).</p>
+
+<p>A more precise term for such “partial homoiconicity”, could perhaps be para-iconicity or simula-iconicity. However, that would be introducing yet another term into an already confused vocabulary. In any case, given this scalar interpretation, we can see that the example above is indeed homoiconic to a very large degree:</p>
+
+<p>Regarding the external representation: parsing of s-expressions is trivial, as is the reverse operation of converting s-expressions to some printable form. The use of explicit brackets for all list-expressions ensures that the structure of s-expressions is always explicitly visible. Thus, to say that the external representation of a Lisp program is an s-expression holds at least some truth.</p>
+
+<p>Regarding the internal representation: even though an actual Lisp interpreter might be optimized, its operational semantics are defined in terms of a virtual machine that operates on s-expressions. Any properly implemented optimization will have the same behavior (barring performance) as its non-optimized counterpart. Thus, from the perspective of the programmer the internal representation is still the s-expression.<sup id="fnref:what-is-internal"><a href="#fn:what-is-internal" class="footnote">4</a></sup> Thus, to say that the internal representation is an s-expression holds some truth as well.</p>
+
+<p>For comparison with a “less homoiconic” language, we could consider the example of compiled <em>C</em>: the external representation of a <em>C</em> program is as a piece of program text; the internal representation is in the form of machine code. Strings of text and machine code are quite dissimilar, and to map between them takes considerable effort.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Homoiconicity is a term surrounded by much confusion.</p>
+
+<p>Some of this confusion can be cleared up, by putting aside misguided definitions and returning to the original definition: languages which have the same external and internal representations are homoiconic.</p>
+
+<p>Unfortunately, that doesn’t resolve the issue entirely, because even when sticking to a seemingly sensible definition, we can see a lot of problems with the term: it is almost never the case that the external representation and the internal representation are exactly the same.</p>
+
+<p>We are forced to withdraw to a position of “para-iconicity”: the idea that homoiconicity is a scalar property rather than a boolean one. In that view, a language which has at least some similarity between <em>some</em> external representation and <em>some model</em> for the internal representation could be said to be homoiconic.</p>
+
+<p>However, that’s not a very good position to be in. I’d say it’s much easier to just talk about certain properties of your favorite language directly. For example, “the syntax is easy to parse”, or “the semantics of the language are completely defined on the single page of a book”. That is, there is much to be said in favor of Lisp’s s-expressions without resorting to use such a poorly defined term.</p>
+
+<p>Maybe it’s time to stop saying “homoiconic”.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:trac-footnote">
+      <p>A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on <em>semiotics</em>, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time. <a href="#fnref:trac-footnote" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:sicp-meta-circular">
+      <p>The definition in the influential <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Structure and Interpretation of Computer Programs</a>, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice. <a href="#fnref:sicp-meta-circular" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:lisp-not-homoiconic">
+      <p>In fact, the original article <em>excludes</em> Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).” <a href="#fnref:lisp-not-homoiconic" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:what-is-internal">
+      <p>Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings <em>by definition</em>; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU. <a href="#fnref:what-is-internal" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+        
+            <li>
+              <span class="recent-title"><a href="/dont-say-homoiconic/" title="Don't say “Homoiconic”">Don't say “Homoiconic” </a></span>
+              <span class="date">Mar 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/lambda-days-2018-lightning-talk/" title="Lambda Days 2018">Lambda Days 2018 </a></span>
+              <span class="date">Feb 26, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/expressions-of-change-in-under-15-minutes/" title="Expressions of Change in under 15 minutes">Expressions of Change in un... </a></span>
+              <span class="date">Feb 20, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/constructing-s-expressions/" title="Constructing S-Expressions">Constructing S-Expressions </a></span>
+              <span class="date">Dec 11, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/catamorphisms-and-change/" title="Catamorphisms and change">Catamorphisms and change </a></span>
+              <span class="date">Dec 04, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/form-analysis/" title="Static Form Analysis">Static Form Analysis </a></span>
+              <span class="date">Nov 17, 2017</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            
+            <li><a id="mail" href="mailto:klaas@vanschelven.com"><span class="foot-link">Contact Me</span></a></li>
+            
+
+            
+
+
+            
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2018 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

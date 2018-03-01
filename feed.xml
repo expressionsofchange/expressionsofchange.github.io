@@ -4,13 +4,188 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-02-26T16:01:29+01:00</updated>
+<updated>2018-03-01T13:59:34+01:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Don't say “Homoiconic”]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/dont-say-homoiconic/" />
+  <id>http://www.expressionsofchange.org/dont-say-homoiconic</id>
+  <published>2018-03-01T00:00:00+01:00</published>
+  <updated>2018-03-01T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;What is homoiconicity then? Typical definitions state that it is simply “code as data”, will point to a relationship between a program’s structure and syntax or note that the program source is expressed in a primitive data-type of the language. In the below, we will show that none of these definitions make much sense.&lt;/p&gt;
+
+&lt;p&gt;Before that, however, we’ll return to the original definition, to ensure we have at least some sensible frame of reference for the rest of the article. This is also the definition we’ll return to in the final section, when we put it to the test by examining the canonical example of homoiconicity.&lt;/p&gt;
+
+&lt;h2 id=&quot;historic-definition&quot;&gt;Historic definition&lt;/h2&gt;
+
+&lt;p&gt;The term homoiconic was first coined in the article &lt;a href=&quot;https://dl.acm.org/citation.cfm?doid=800197.806048&quot;&gt;TRAC, A Text-Handling Language&lt;/a&gt; by Calvin Mooers and L. Peter Deutsch.&lt;sup id=&quot;fnref:trac-footnote&quot;&gt;&lt;a href=&quot;#fn:trac-footnote&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; In the original article, the meaning of homoiconicity seems to be spelled out quite clearly. The article opens by stating that the TRAC language is homoiconic, although without yet using that term explicitly:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The external and internal forms of the TRAC language are the same.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Before introducing the term itself, the importance of a single representation for viewing and manipulation by the user and interpretation by the computer is repeated no less than 5 times; numbered here in square brackets for clarity:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;One of the main design goals was [1] that the input script of TRAC (what is typed in by the user) should be identical to the text which guides the internal action of the TRAC processor. In other words, [2] TRAC procedures should be stored in memory as a string of characters exactly as the user typed them at the keyboard. [3] If the TRAC procedures themselves evolve new procedures, these new procedures should also be stated in the same script. [..] [4] At any time, it should be possible to display program or procedural information in the same form as the TRAC processor will act upon it during its execution. [5] It is desirable that the internal character code representation be identical to, or very similar to, the external code representation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This paragraph finally concludes with the definition itself – seemingly leaving no room for doubt:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Because TRAC procedures and text have the same representation inside and outside the processor, the term &lt;em&gt;homo-iconic is&lt;/em&gt; applicable, from &lt;em&gt;homo&lt;/em&gt; meaning the same, and &lt;em&gt;icon&lt;/em&gt; meaning representation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;alternate-definitions&quot;&gt;Alternate definitions&lt;/h2&gt;
+
+&lt;p&gt;Unfortunately, this rather straightforward definition is not the only one in active use. There is in fact a proliferation of alternative, and entirely misguided, definitions, some of which are quite persistent. It is worth pointing out explicitly why each of them is misguided: if homoiconicity is to have any meaning at all, it’s certainly a good idea to point out what it doesn’t mean.&lt;/p&gt;
+
+&lt;h3 id=&quot;code-as-data&quot;&gt;“Code as data”&lt;/h3&gt;
+
+&lt;p&gt;First, any attempt to explain homoiconicity by using the phrase “Code as data” is quite meaningless. The reason is simply that “Code as data” can be used to indicate any of a large number of quite distinct ideas, some of which are listed below:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Functions as a first-class citizen.&lt;/li&gt;
+  &lt;li&gt;The fact that a computer in a Von Neumann architecture stores programs and data in the same memory device.&lt;/li&gt;
+  &lt;li&gt;Reflection and metaprogramming.&lt;/li&gt;
+  &lt;li&gt;Homoiconicity.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The punchline is in the last bullet in the list: if homoiconicity is “code as data”, and “code as data” is homoiconicity, we’ve simply created a circular definition and explained nothing at all – but with extra potential for confusion because “code as data” may also refer to other ideas.&lt;/p&gt;
+
+&lt;h3 id=&quot;program-structure--syntax&quot;&gt;Program structure &amp;amp; syntax&lt;/h3&gt;
+
+&lt;p&gt;The second definition attempts to draw a connection between the program’s structure and its syntax. For example, there’s this formulation which is currently featuring on &lt;a href=&quot;https://en.wikipedia.org/wiki/Homoiconicity&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Homoiconicity [..] is a property [..] in which the program structure is similar to its syntax&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a category error, that is, a similarity is drawn between ideas that exist at two separate levels of abstraction.&lt;/p&gt;
+
+&lt;p&gt;Syntax makes a statement &lt;em&gt;about&lt;/em&gt; program structure, that is the syntax of a language is the set of rules that defines the combinations of symbols that are considered to be a correctly structured program.&lt;/p&gt;
+
+&lt;p&gt;To say that the rules defining the program’s structure are similar to the program’s structure makes no sense. First, since a single syntax defines a potentially infinite set of correctly structured programs, which program are we talking about as a reference for comparison? Second, what would the measure of similarity across these 2 levels of abstraction be?&lt;/p&gt;
+
+&lt;p&gt;Similar confusion surrounding the terminology of syntax and structure can be found further down in the same article:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If a language is homoiconic, it means that the language text has the same structure as its abstract syntax tree (AST)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is also wrong, but for the opposite reason: the abstract syntax tree is by definition a representation of the structure of the language text. This is the case for any AST, in any language. Thus, to say that this has anything to do with homoiconicity is quite meaningless.&lt;/p&gt;
+
+&lt;h3 id=&quot;meta-circular-evaluator&quot;&gt;Meta-circular evaluator&lt;/h3&gt;
+
+&lt;p&gt;Third, the property of homoiconicity is often conflated with the existence of a meta-circular evaluator, but the two concepts are entirely separate. An example of such confusion is the following quote from the Wikipedia article:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A typical demonstration of homoiconicity is the meta-circular evaluator.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To understand this claim, let’s first examine what a meta-circular evaluator is. The term was coined originally in 1972 by John C. Reynolds in his paper &lt;a href=&quot;http://people.cs.uchicago.edu/~blume/classes/aut2008/proglang/papers/definterp.pdf&quot;&gt;Definitional Interpreters for Higher-Order Programming Languages&lt;/a&gt;.&lt;sup id=&quot;fnref:sicp-meta-circular&quot;&gt;&lt;a href=&quot;#fn:sicp-meta-circular&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We have coined the word “meta-circular” to indicate the basic character of this interpreter: It defines each feature of the defined language by using the corresponding feature of the defining language. For example, when eval is applied to an application expression [..] of the defined language, it evaluates an application expression [..] in the defining language.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The relationship with homoiconicity, if it exists, is accidental at most.&lt;/p&gt;
+
+&lt;p&gt;It is quite possible to construct a meta-circular interpreter in languages which are clearly not homoiconic. Consider for example a Python-interpreter, written in Python, which implements each language-construct from Python in Python: this satisfies the definition of a meta-circular evaluator. However, Python is not homoiconic, because the internal and external forms of the language are quite different: the external representation of Python programs is the text file, and the internal form, on which the interpreter operates, is bytecode.&lt;/p&gt;
+
+&lt;h3 id=&quot;primitive-data-types&quot;&gt;Primitive data types&lt;/h3&gt;
+
+&lt;p&gt;Another often seen definition of homoiconicity focuses on the relationship between the &lt;em&gt;primitive data types&lt;/em&gt; in the language and the representation of the language. Again, we quote from Wikipedia:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In a homoiconic language, the primary representation of programs is also a data structure in a primitive type of the language itself.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Again, this is a definition which doesn’t hold up to any scrutiny.&lt;/p&gt;
+
+&lt;p&gt;First, consider that most languages have a primitive datatype for strings of text, and the programs in most languages are presented to the user as a string of text. Should we conclude from this that most languages are homoiconic?&lt;/p&gt;
+
+&lt;p&gt;Second, for most languages, it is possible to write a parser in that language itself, that stores the resulting abstract syntax tree in a primitive type in the language. For example: we can write a parser in &lt;em&gt;Java&lt;/em&gt; that parses Java source code into Java objects, which are primitive data types in the language. Should we conclude from this that Java is homoiconic?&lt;/p&gt;
+
+&lt;p&gt;In both cases, the answer is clearly “no” – if all languages are homoiconic, the terms loses all meaning.&lt;/p&gt;
+
+&lt;h2 id=&quot;an-example&quot;&gt;An example&lt;/h2&gt;
+
+&lt;p&gt;Now we know what homoiconicity is not, the way is cleared for a discussion on what it is. Let’s return to the original definition, and try to fit this to an example. Remember, the original definition of homoiconicity centers on &lt;em&gt;a similarity between the internal and external representations of a language&lt;/em&gt;. In the literature, Lisps are the favorite example of homoiconicity; we will stick with that tradition here, and examine the case of an arbitrary Lisp program in an arbitray language in the Lisp family.&lt;sup id=&quot;fnref:lisp-not-homoiconic&quot;&gt;&lt;a href=&quot;#fn:lisp-not-homoiconic&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;First, the external representation: the basic syntactical element of Lisps is the s-expression. Thus, a typical program in Lisp is represented to the programmer as nothing more than an s-expression.&lt;/p&gt;
+
+&lt;p&gt;Second, the internal representation. The evaluation of a Lisp program is typically defined in terms of those s-expressions directly. One example is the definition of Scheme given by &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Abelson &amp;amp; Sussman&lt;/a&gt;, another is the definition &lt;a href=&quot;/l-a-toy-language/#case-analysis&quot;&gt;given on this site&lt;/a&gt;. In both cases, the semantics of the language are given in terms of a case-analysis on an s-expression. Thus, the (virtual) machine operates on s-expressions directly, and we can say the internal representation of the program is an s-expression.&lt;/p&gt;
+
+&lt;p&gt;Because the internal and external representations are the same, we might say that this combination of language and interpreter is homoiconic.&lt;/p&gt;
+
+&lt;h3 id=&quot;objections&quot;&gt;Objections&lt;/h3&gt;
+
+&lt;p&gt;The observant reader may raise at least two objections against the above.&lt;/p&gt;
+
+&lt;p&gt;The first objection concerns the external representation. In the above we simply stated that the external representation is an s-expression.  In most practical programming environments, however, the actual representation of program sources is as text files which contain strings of characters. It is only after parsing this text that the representation is really an s-expression. In other words: in practical environments the external representation is not an s-expression, but text.&lt;/p&gt;
+
+&lt;p&gt;The second objection concerns the internal representation. Practical implementations of Lisp interpreters do generally not operate actually directly on s-expressions internally for performance reasons. Even though a Lisp might be defined in terms of a case-analysis on s-expressions, it is not usually implemented as such. Thus, the internal representation is not actually an s-expression in practice.&lt;/p&gt;
+
+&lt;h3 id=&quot;para-iconic&quot;&gt;Para-iconic&lt;/h3&gt;
+
+&lt;p&gt;In an attempt to counter these arguments, we might slightly alter our definition, to state that homoiconicity is not a boolean property, but a scalar one: a language in a given environment can be homoiconic to some degree.&lt;/p&gt;
+
+&lt;p&gt;In fact, the original definition by Mooers and Deutsch leaves some space for such an interpretation when it states that “the internal [..] representation be identical to, &lt;em&gt;or very similar to&lt;/em&gt;, the external [..] representation.” (emphasis mine).&lt;/p&gt;
+
+&lt;p&gt;A more precise term for such “partial homoiconicity”, could perhaps be para-iconicity or simula-iconicity. However, that would be introducing yet another term into an already confused vocabulary. In any case, given this scalar interpretation, we can see that the example above is indeed homoiconic to a very large degree:&lt;/p&gt;
+
+&lt;p&gt;Regarding the external representation: parsing of s-expressions is trivial, as is the reverse operation of converting s-expressions to some printable form. The use of explicit brackets for all list-expressions ensures that the structure of s-expressions is always explicitly visible. Thus, to say that the external representation of a Lisp program is an s-expression holds at least some truth.&lt;/p&gt;
+
+&lt;p&gt;Regarding the internal representation: even though an actual Lisp interpreter might be optimized, its operational semantics are defined in terms of a virtual machine that operates on s-expressions. Any properly implemented optimization will have the same behavior (barring performance) as its non-optimized counterpart. Thus, from the perspective of the programmer the internal representation is still the s-expression.&lt;sup id=&quot;fnref:what-is-internal&quot;&gt;&lt;a href=&quot;#fn:what-is-internal&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; Thus, to say that the internal representation is an s-expression holds some truth as well.&lt;/p&gt;
+
+&lt;p&gt;For comparison with a “less homoiconic” language, we could consider the example of compiled &lt;em&gt;C&lt;/em&gt;: the external representation of a &lt;em&gt;C&lt;/em&gt; program is as a piece of program text; the internal representation is in the form of machine code. Strings of text and machine code are quite dissimilar, and to map between them takes considerable effort.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;Homoiconicity is a term surrounded by much confusion.&lt;/p&gt;
+
+&lt;p&gt;Some of this confusion can be cleared up, by putting aside misguided definitions and returning to the original definition: languages which have the same external and internal representations are homoiconic.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, that doesn’t resolve the issue entirely, because even when sticking to a seemingly sensible definition, we can see a lot of problems with the term: it is almost never the case that the external representation and the internal representation are exactly the same.&lt;/p&gt;
+
+&lt;p&gt;We are forced to withdraw to a position of “para-iconicity”: the idea that homoiconicity is a scalar property rather than a boolean one. In that view, a language which has at least some similarity between &lt;em&gt;some&lt;/em&gt; external representation and &lt;em&gt;some model&lt;/em&gt; for the internal representation could be said to be homoiconic.&lt;/p&gt;
+
+&lt;p&gt;However, that’s not a very good position to be in. I’d say it’s much easier to just talk about certain properties of your favorite language directly. For example, “the syntax is easy to parse”, or “the semantics of the language are completely defined on the single page of a book”. That is, there is much to be said in favor of Lisp’s s-expressions without resorting to use such a poorly defined term.&lt;/p&gt;
+
+&lt;p&gt;Maybe it’s time to stop saying “homoiconic”.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:trac-footnote&quot;&gt;
+      &lt;p&gt;A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on &lt;em&gt;semiotics&lt;/em&gt;, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time. &lt;a href=&quot;#fnref:trac-footnote&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:sicp-meta-circular&quot;&gt;
+      &lt;p&gt;The definition in the influential &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt;, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice. &lt;a href=&quot;#fnref:sicp-meta-circular&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:lisp-not-homoiconic&quot;&gt;
+      &lt;p&gt;In fact, the original article &lt;em&gt;excludes&lt;/em&gt; Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).” &lt;a href=&quot;#fnref:lisp-not-homoiconic&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:what-is-internal&quot;&gt;
+      &lt;p&gt;Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings &lt;em&gt;by definition&lt;/em&gt;; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU. &lt;a href=&quot;#fnref:what-is-internal&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/dont-say-homoiconic/&quot;&gt;Don't say “Homoiconic”&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on March 01, 2018.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -1976,264 +2151,6 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;/div&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/introducing-the-editor/&quot;&gt;Introducing the Editor&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 29, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Existing tools]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/existing-tools/" />
-  <id>http://www.expressionsofchange.org/existing-tools</id>
-  <published>2017-06-27T00:00:00+02:00</published>
-  <updated>2017-06-27T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;Arguably, the existence of so many tools is a strong indication that the underlying problem, that of dealing with change in software development, is one which requires tooling to be properly handled.&lt;/p&gt;
-
-&lt;p&gt;The next questions is then: is it also an indication that this is a solved problem? Given that this site documents attempts to come up with better &lt;em&gt;Expressions of Change&lt;/em&gt;, it will not come as a surprise that my answer is an emphatic “NO”.&lt;/p&gt;
-
-&lt;p&gt;My main gripe with currently existing solutions is that they suffer from a lack of generality. Even though all of them deal with managing change in software development, each of them is applicable only to a small part of the process. This means that one must use very different tools to solve almost identical problems. The problem is further exacerbated by the fact that the various tools are very poor at communicating with each other.&lt;/p&gt;
-
-&lt;p&gt;The lack of generality might best be illustrated by examining a “day in the life” of the typical programmer and their interactions with the various tools.&lt;/p&gt;
-
-&lt;h2 id=&quot;editing-programs&quot;&gt;Editing programs&lt;/h2&gt;
-
-&lt;p&gt;Our day starts with some actual &lt;em&gt;programming&lt;/em&gt;. In other words: by editing one or more computer programs in a text editor or IDE. Though we may not explicitly realize it, this brings us into contact with the first tool to manage change: the capabilities of our editor to &lt;em&gt;undo &amp;amp; redo&lt;/em&gt;: In all but the most basic editors each change we make in our program is separately recorded in the working memory and we can always roll back the changes we made in anti-chronological order.&lt;/p&gt;
-
-&lt;p&gt;Note that the capability to undo implies that a historic record is kept. This record is what’s used to be able to revert to any given state of the document.&lt;/p&gt;
-
-&lt;p&gt;The ability to undo is so useful that it’s hard to imagine an editor without it — &lt;a href=&quot;/the-power-of-undo/&quot;&gt;something that I’ve written about in another article&lt;/a&gt;. This article is also where some of the typical limitations of undo are described, such as the fact that your undo-history is lost when you close the editor and the fact that the only way to roll back changes is in often anti-chronological order. Such limitations are not the focus here, instead we’ll zoom in on the discontinuity between undo and other tools. To do so, we’ll start with version control.&lt;/p&gt;
-
-&lt;h2 id=&quot;version-control&quot;&gt;Version control&lt;/h2&gt;
-
-&lt;p&gt;Let’s return to a day in the life of a typical programmer. After successfully making a number of changes in our program these changes are typically &lt;em&gt;committed&lt;/em&gt; to a &lt;em&gt;source repository&lt;/em&gt; using a &lt;em&gt;version control system&lt;/em&gt;, i.e. using some command like &lt;code class=&quot;highlighter-rouge&quot;&gt;git commit&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Version control systems are those systems that we use to track changes to the source code of computer programs. Git is currently the most popular choice (overwhelmingly so), Mercurial is a less popular modern system and Subversion and CVS are older but still-in-use systems. Because tracking changes the explicit goal of version control systems the relationship with the present article should be quite obvious.&lt;/p&gt;
-
-&lt;p&gt;Version control systems are extremely useful: they allow us to go back to older versions of our program, compare versions, record notes about the intent of particular changes and work together with multiple people on the same project, among other things.&lt;/p&gt;
-
-&lt;p&gt;In the above discussion of &lt;em&gt;undo&lt;/em&gt; we established that the capability to undo implies that a full historic record of all recent changes is kept in the editor. In the present discussion we’ve noted that the programmer’s primary tool for keeping long term historic records is a version control system. As such, both version control systems and our editor’s ability to undo deal with the same thing, namely change to the source code of our program, focusing on the short and long term records of changes respectively. This raises a number of questions:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Why do we need two tools for the single task of history-keeping? Is there really a fundamental difference between short term changes and long term changes?&lt;/li&gt;
-  &lt;li&gt;Can the two tools communicate with each other? Do they speak a single language?&lt;/li&gt;
-  &lt;li&gt;What would either tool look like if it gained the capabilities of the other?&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;I’ll try to answer these in the below.&lt;/p&gt;
-
-&lt;h3 id=&quot;one-task-two-tools&quot;&gt;One task, two tools&lt;/h3&gt;
-
-&lt;p&gt;First let’s examine why we have two tools for a single task. Why do we need a version control system at all, if we already had a historic log of changes in our editor?&lt;/p&gt;
-
-&lt;p&gt;The first potential reason is that the capabilities of the historic record associated with &lt;em&gt;undo&lt;/em&gt; are often quite limited. The record is lost when the editor is closed, the record cannot be cleaned up, annotated or shared. Those limitations are, however, not the fundamental reason; in principle they can be taken away by adding more capabilities to our editor.&lt;/p&gt;
-
-&lt;p&gt;One could also argue that the reason for the split lies in the different meaning attributed to the different tools by the programmer. In this line of reasoning, the undo capabilities of the editor represent private and temporary changes. Only once some stable, tested and cleaned up state is reached this is committed to version control. In other words: the split in tools is caused by a fundamental semantic difference between “private / short term” and “public / long term”.&lt;/p&gt;
-
-&lt;p&gt;Even if such a semantic split would exist, it would not amount to a fundamental reason for a split in tools: the ability to clean up the editor’s undo history could simply be improved. If the tooling for such cleanup would be powerful enough, a cleaned up version of the editor’s history could still be publicly shared.&lt;/p&gt;
-
-&lt;p&gt;Furthermore, the idea that you should commit to version control only once you’re “fully done” runs somewhat contrary to the prevailing wisdom. One of the core ideas that distributed version control systems bring to the table is precisely that there may be many different levels of “doneness”, and that the tooling should provide abilities to house those different levels within a single system. Two such abilities are the ability to work on your own separate branch of history or to commit often and only rewrite your history before sharing it with others.&lt;/p&gt;
-
-&lt;p&gt;In short: there is no fundamental divide between “short term history” and “long term history”, but rather a continuum, and a split in two sets of tools is not a fundamental property of nature.&lt;/p&gt;
-
-&lt;p&gt;Instead, the fundamental reason that we have two tools for a single task follows from the non-central position we have given editors in the dominant paradigm of program construction. This paradigm is roughly the following:&lt;/p&gt;
-
-&lt;p&gt;A computer program is compiled from a collection of source &lt;em&gt;files&lt;/em&gt;. How these files themselves are constructed is &lt;em&gt;not important&lt;/em&gt;, to the compiler they “just are”. In other words: we’re agnostic about our &lt;em&gt;means of construction&lt;/em&gt;, focusing only on &lt;em&gt;constructed&lt;/em&gt; artifacts.&lt;/p&gt;
-
-&lt;p&gt;There are certainly arguments in favor of this paradigm: because we’re agnostic about the editor, each developer can use their own set of tools, and even a single developer can switch between various editors and other tools in the construction of the program.&lt;/p&gt;
-
-&lt;p&gt;It’s worth noting, however, how dominant this implicit paradigm is, even in situations where it’s not necessarily the most fitting one. Consider for example that even an IDE that fully integrates the whole workflow of the programmer, including version management is bound by the same paradigm, even when the programmer never leaves the IDE and the capability to use different editors or tools is never actually used in practice.&lt;/p&gt;
-
-&lt;p&gt;The drawbacks of this paradigm become obvious when considering that version control systems are bound by it too. From the perspective of the version control system, editors do not exist, only files. Each time a commit is made, the current state of all relevant files is inspected, and the VCS makes educated guesses as to how this evolved from the previous state.&lt;/p&gt;
-
-&lt;h3 id=&quot;talking-tools&quot;&gt;Talking tools&lt;/h3&gt;
-
-&lt;p&gt;Now that we know what the prevailing paradigm is, we can also answer the second question: Is any meaningful communication between the editor’s short term historic records and the long term historic records of the VCS possible?&lt;/p&gt;
-
-&lt;p&gt;Obviously not! From the perspective of the VCS, we are agnostic about what an editor even &lt;em&gt;is&lt;/em&gt;, let alone that we could communicate with it. This means that the fine grained historic record stored by the editor will never be made available to the VCS, and will be lost forever.&lt;/p&gt;
-
-&lt;p&gt;Let’s take a look at two examples where such information could in fact be useful:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Intra-commit chronology&lt;/strong&gt; — often it’s semantically meaningful to present the changes within a single commit in a particular logical order. The goal would be: when examining the changes introduced by the commit, it’s easier to understand these if they’re presented in a meaningful order than any random order.&lt;/p&gt;
-
-&lt;p&gt;For example: when a function’s call signature is updated, all calling locations must also be updated. It makes sense to present such a change in exactly that order: first show the change in the definition; then show all calling locations being updated.&lt;/p&gt;
-
-&lt;p&gt;This happens to be the same order in which such a change would typically be made by the original programmer. This is not a coincidence: the actual order of construction is often a good starting point in coming up with a good order in explaining a change.&lt;/p&gt;
-
-&lt;p&gt;It would be great if our tools would:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;allow us to present the changes of a single diff in a logical order and&lt;/li&gt;
-  &lt;li&gt;allow us to use the actual order in which we made changes the diff as a basis for this logical order — possibly cleaning up the actual result before presenting it to others.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;However, version management systems don’t have ordering inside a single commit, and they cannot communicate with editors to find out what this basis chronology could be.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Post-hoc commit splitting&lt;/strong&gt; — when committing changes to the VCS, it’s best practice to make &lt;em&gt;atomic commits&lt;/em&gt;, i.e. to ensure that each commit deals with only one single conceptual change. However, when editing a computer program it’s not always possible to be concerned with only one thing at at a time. For example, the change you’re working on might necessitate some other changes, leading you to get “sucked into a rabbit hole” of refactorings.&lt;/p&gt;
-
-&lt;p&gt;If you happen to have made a large number of changes without intermediate commits, you’re left to your own devices to construct such atomic commits after the fact. This is typically done using “patch mode”, i.e. by manually marking various hunks of code as either part of either a given commit.&lt;/p&gt;
-
-&lt;p&gt;However, in actuality, the changes that are about to be committed have been made in a particular order. In many cases, this actual chronological order could be of great help in the construction of the atomic commits. (This assumes that changes that were made consecutively are more likely to be related than non-consecutive changes, which is indeed usually the case). This chronological information lives in the editor’s undo history, but is unfortunately not available while constructing the patch.&lt;/p&gt;
-
-&lt;h3 id=&quot;capabilities&quot;&gt;Capabilities&lt;/h3&gt;
-
-&lt;p&gt;Version control systems are in many ways more powerful than most editors’ capabilities to undo. The third question is: consider what kind of capabilities could be gained by transposing the full expressiveness of version control systems to the undo history of the editor. In this transposition the granularity that’s currently associated with the undo command, namely that of the single edit-action, should be preserved. Here are two examples:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;The ability to work together on a single project on two or more computers, currently only realistically possible on the granularity of a version control “commit”, would become available while editing the program with the granularity of a single keystroke. In other words: proper support for Pair Programming.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The ability to visually inspect, navigate through and manipulate the history of the edit-process would become available at a lower level than the commit. Note that the current standard capabilities of typical editors, namely the combination of undo &amp;amp; redo, makes for a rather incomplete navigational commands. Consider for example the case where you undo a large number of changes and then make a new change: in that scenario the undone changes can no longer be restored using the “redo” command. Having full navigation through history available, this problem disappears.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;package-management&quot;&gt;Package management&lt;/h2&gt;
-
-&lt;p&gt;Back to a day in the life of our programmer. Let’s say the program under consideration depends on a number of external libraries. Such libraries may depend on a number of other libraries themselves, which may depend on further libraries etc, forming a &lt;em&gt;dependency graph&lt;/em&gt;. Furthermore, each of these dependencies is to some specific version or range of versions; we cannot generally assume that each version of each library works well with each library it depends on, so we must specify which versions are known to work correctly. Such a situation is a natural consequence of two simple facts of life: The ever-changing nature of programs and the justified desire of programmers to decompose their programs into submodules.&lt;/p&gt;
-
-&lt;p&gt;The tools to resolve the various dependencies mentioned above are known as “package management systems”. They typically come in either one of two flavors. Firstly various Operating Systems bundle a package manager to do system-wide installations of software, Examples are &lt;code class=&quot;highlighter-rouge&quot;&gt;apt&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;yum&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;pacman&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;nix&lt;/code&gt;. Secondly there’s a great number of package management systems specific to a particular programming language — almost all programming languages seem to come with their own package manager (&lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;gem&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;cargo&lt;/code&gt;, to name just a few).&lt;/p&gt;
-
-&lt;p&gt;One of of the main arguments of this article is that there are too many incompatible tools to deal with changing software. Regarding package management in particular, we can drive this point home in two ways. First, the sheer amount of different package management solutions is almost comical. One can also not help but wonder why so many tools of the same kind are necessary, and whether this is not an indication of a fundamental flaw in their design. Second, the fact that package managers are not only poorly able to talk with other tools for managing change, but can hardly speak among themselves, is a further indication of a deep problem.&lt;/p&gt;
-
-&lt;p&gt;On the subject of inter-operation with other tools for managing change the following: Note that package management is yet another tool to deal with changing software, albeit with a slightly different focus than version control systems. The capabilities that each of the tools lack with respect to the other follow directly from this different focus:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Package management deals with the dependencies on and between a number of external “packages” which are taken more or less as a given. Package management systems have only very limited support for tracking history inside a single package. Some of the primary operations of version management systems, such as constructing histories, comparing versions and cooperating in teams are missing.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Version control systems, on the other hand, deals with a single repository of code under control of the user. This means that they lack the ability to naturally track versions across composed systems in a composed manner. Even though git offers some workarounds for this, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;gitmodules&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;git-subtree&lt;/code&gt;, such workarounds are fundamentally limited, for example because it’s not possible to arbitrarily nest them.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Version control systems’ assumption that there is a single repository of code forces the programmer to make a rather arbitrary decision: what is the single thing whose history they want to track? Possible choices are:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Putting the entire company’s software development efforts in a single repository. Drawback: This conflates various tools and programs that may be entirely unrelated.&lt;/li&gt;
-  &lt;li&gt;Identifying “projects” and giving each project (including its modules) its own repository. Drawback: The projects may in fact contain multiple modules that are reused across multiple projects; including their history as a part of one or more particular projects will make it harder to reuse improvements across projects.&lt;/li&gt;
-  &lt;li&gt;Breaking up the projects into modules and managing each module’s history independently. Drawback: the relationship between changes to programs and their modules is hard to express.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Each of the mentioned choices will have some drawbacks. This is only natural: the ability to recursively decompose programs into smaller sub parts is one of the core values of programming, so if we do away with it (as version control systems do) we will run into trouble immediately!&lt;/p&gt;
-
-&lt;p&gt;Taking inspiration from package management tools, we could imagine a form of composable version management: the ability to manage the history of an arbitrary sub part of a program, while preserving the ability to have an integrated view of the history of any component that combines a number of parts.&lt;/p&gt;
-
-&lt;p&gt;Taking such an approach to its radical extreme we can make the parts almost arbitrarily small or big: tracking the history of expressions, statements, methods, classes, modules, programs and systems, whereby each level of history is expressed as a composition of the histories at lower levels. The consequences of such an approach will be further explored in a later article.&lt;/p&gt;
-
-&lt;p&gt;As far as I can see, version management with decent capabilities for composition would render package management tools entirely obsolete. For that reason the consequences of applying the ideas of VCSes to package management are not explored here.&lt;/p&gt;
-
-&lt;h2 id=&quot;other-examples&quot;&gt;Other examples&lt;/h2&gt;
-
-&lt;p&gt;There are a great number of other tools that deal with changing programs; They are mentioned here mostly to give an indication as to the quantity of such tools. I might explore the possible inter-relationships between them in a follow-up article.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Data/schema-migrations&lt;/strong&gt; — When the program is changed, its expectations about the data it interacts with may also change. For the case that the data is stored in a database, the tools to migrate data are usually called “data migrations” or “schema migrations”. Similar cases are that of a newer version of the program that expects a different configuration file format, and the case of a program that simply changes its document-format.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Provisioning &amp;amp; Containers&lt;/strong&gt; — tools such as &lt;code class=&quot;highlighter-rouge&quot;&gt;chef&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;puppet&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ansible&lt;/code&gt; are often used when managing environments of similarly configured machines. They deal with many of the same challenges as package managers: getting the right versions of the right dependencies in the right place. Similar remarks can be made about &lt;em&gt;containers&lt;/em&gt; (Docker being a currently popular solution): one might say that their greatest value is in being able to precisely reproduce an entire environment of dependencies to a specific set of versions.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Build tools&lt;/strong&gt; — build tools such as &lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;maven&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ant&lt;/code&gt; take responsibility for the compilation of larger programs. They relate to change in software in the sense that [a] they’re responsible for detecting which parts of the system have changed, and must therefore be rebuilt and [b] they may specifically talk about particular versions of dependencies of the build.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;There is a large amount of tools to manage the ever-changing nature of software.&lt;/p&gt;
-
-&lt;p&gt;One could argue that this is an indication that we’re dealing with a solved problem and that further thinking about &lt;em&gt;Expressions of Change&lt;/em&gt; is not required.&lt;/p&gt;
-
-&lt;p&gt;Personally, I’m taking as an indication of the opposite; I’m especially emboldened by the fact that the various tools cannot even properly talk to each other, despite them being (largely) dealing with problems in the same sphere.&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/existing-tools/&quot;&gt;Existing tools&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 27, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[The power of Undo]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/the-power-of-undo/" />
-  <id>http://www.expressionsofchange.org/the-power-of-undo</id>
-  <published>2017-06-14T00:00:00+02:00</published>
-  <updated>2017-06-14T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;Let’s why this could be so, by considering the following workflow:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;A person is interacting with a computer system with certain goals in mind&lt;/li&gt;
-  &lt;li&gt;They try to express these goals in the language of the system, by issuing certain commands.&lt;/li&gt;
-  &lt;li&gt;If the command brings you closer to the goal issue another one.&lt;/li&gt;
-  &lt;li&gt;If the command brings you further from the goal:
-    &lt;ol&gt;
-      &lt;li&gt;If undo is available as a command, undo.&lt;/li&gt;
-      &lt;li&gt;If undo does not exist, it’s not clear how to back on track - and even whether getting back on track is possible at all!&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;In other words: the ability to undo amounts to an enormous increase of &lt;em&gt;control&lt;/em&gt; of the human actor over the system they are commanding, by allowing them to to roll back mistakes, even potentially very destructive ones.&lt;/p&gt;
-
-&lt;p&gt;This increase of control has a 1-to-1 mapping with a decrease in &lt;em&gt;fear&lt;/em&gt;: the more sure you are that you can always undo mistakes, the less afraid you will be to make them. Such fear is most obviously visible when observing at those with low computer literacy in their interactions with computers, but it applies to everyone. This very emotion then hinders further learning, because it stands in the way of experimenting and gaining feedback about the way the system works.&lt;/p&gt;
-
-&lt;p&gt;Note that the increase of control and decrease of fear that undo brings is available even when your further knowledge of the system is very limited - as long as you’re confident that you can undo any action, you’re free to explore. In other words: Undo brings control in face of the unknown - quite a capability indeed!&lt;/p&gt;
-
-&lt;p&gt;By the way: the capability to undo is a typical example of an &lt;em&gt;Expression of Change&lt;/em&gt; - the actions to be undone being the change about which we express ourselves.&lt;/p&gt;
-
-&lt;h2 id=&quot;common-limitations&quot;&gt;Common limitations&lt;/h2&gt;
-
-&lt;p&gt;Given how powerful the ability to undo is it’s worthwhile examining if it can be made even more powerful. To do so, let’s look at some limitations that typically apply in common desktop applications. The definition of “typically” is obviously up for debate, and thankfully there are many applications which do not suffer from one or more of the below limitations. In any case, “single undo only” and “no redo” are not mentioned below because most reasonably modern applications have virtually infinite undo as well as the ability to redo.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Discard on close&lt;/strong&gt; - the ability to undo is lost when closing and reopening your editor. You may be able to save documents, but saving documents including their full undo history is not possible.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Lack of discoverability&lt;/strong&gt; - the ability to undo is offered as a menu option and keyboard shortcut, but the historic record of changes cannot itself be inspected visually, saved or manipulated.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Linear undo only&lt;/strong&gt; - the ability to undo is only available in anti-chronological order, i.e. by undoing the last change first, the second last second etc. It’s not possible to undo (or even more powerfully: edit) arbitrary changes in the past without undoing all follow-ups first.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;No redo after do&lt;/strong&gt; - when undoing a number of changes, and then making an arbitrary new change, the undone changes can no longer be redone. In other words: the state your document was in before undoing is not always reachable after the undo. Equivalently: the action of undo itself cannot always be undone.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Monolithic context&lt;/strong&gt; - each document has a single undo history; when the document is composed of multiple parts or sections these do not have their own histories. Similarly, when multiple documents form a conceptual unit, such as the source tree of a computer program, undo is not available across documents but only at the level of a single document.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;Undo is great, let’s have more of it.&lt;/p&gt;
-
-&lt;p&gt;We seen what limitations commonly apply in currently existing applications.&lt;/p&gt;
-
-&lt;p&gt;The challenge of this site is then simply: to come up with undo-like capabilities that don’t suffer from these limitations, like so:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Undo after close&lt;/strong&gt; - the ability to undo is preserved even after the application has crashed or has been closed.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Change as a first level citizen&lt;/strong&gt; - the historic record can be inspected, saved and manipulated like any other object in our system.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Arbitrary graph traversal&lt;/strong&gt; - we have the ability to revert to any state of the document as it once existed.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Decompositon of context&lt;/strong&gt; - for structured documents undo is available on arbitrary parts of the document, parts consisting of other parts, and the document as a whole.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;This site documents work in progress; stay tuned for updates.&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/the-power-of-undo/&quot;&gt;The power of Undo&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 14, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>
