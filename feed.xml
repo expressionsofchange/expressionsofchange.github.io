@@ -4,13 +4,39 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-03-01T13:59:34+01:00</updated>
+<updated>2018-03-20T17:39:25+01:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Talk at Clojure Meetup]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/clojure-meetup/" />
+  <id>http://www.expressionsofchange.org/clojure-meetup</id>
+  <published>2018-03-14T00:00:00+01:00</published>
+  <updated>2018-03-14T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;The audience was very much involved, which led to some interesting discussions.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, no recording of the screen was made while giving the demo; the resulting resolution is probably not good enough to follow along; I’ve kept this section in anyway to preserve the discussion with the audience.&lt;/p&gt;
+
+&lt;p&gt;A video of this event is posted below.&lt;/p&gt;
+
+&lt;div class=&quot;videoWrapper&quot;&gt;
+&lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/pFJ4-fTmCgU&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/clojure-meetup/&quot;&gt;Talk at Clojure Meetup&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on March 14, 2018.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -356,13 +382,13 @@
 
 &lt;p&gt;Recursive algorithms of the first kind are called &lt;a href=&quot;https://en.wikipedia.org/wiki/Catamorphism&quot;&gt;catamorphisms&lt;/a&gt;.&lt;sup id=&quot;fnref:more-about-catamorphisms&quot;&gt;&lt;a href=&quot;#fn:more-about-catamorphisms&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the &lt;em&gt;algebra&lt;/em&gt; in the literature.&lt;/p&gt;
+&lt;p&gt;Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the &lt;em&gt;algebra&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but instead of containing any recursive function call the recursive results are passed to it as a parameter. Our original example could be rewritten as such:&lt;/p&gt;
+&lt;p&gt;The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but the node being passed to it has as its children not further nodes, but the results of recursive application.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
 
@@ -370,15 +396,15 @@
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;cild_results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 
 
 &lt;span class=&quot;n&quot;&gt;sum_of_values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;This separates the concerns of recursively calling (which is in the generally utility function &lt;code class=&quot;highlighter-rouge&quot;&gt;catamorphism&lt;/code&gt;) and composing the results (which is in &lt;code class=&quot;highlighter-rouge&quot;&gt;sum_of_values_algebra&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;This separates the concerns of recursively calling (which is in the utility function &lt;code class=&quot;highlighter-rouge&quot;&gt;node_catamorphism&lt;/code&gt;) and composing the results (which is in &lt;code class=&quot;highlighter-rouge&quot;&gt;sum_of_values_algebra&lt;/code&gt;).&lt;/p&gt;
 
 &lt;h3 id=&quot;working-examples&quot;&gt;Working examples&lt;/h3&gt;
 
@@ -521,7 +547,7 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:more-about-catamorphisms&quot;&gt;
-      &lt;p&gt;A good introduction may be found in &lt;a href=&quot;https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w&quot;&gt;Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire&lt;/a&gt;. The article by &lt;a href=&quot;https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/&quot;&gt;Bartosz Milewski&lt;/a&gt; is also excellent. &lt;a href=&quot;#fnref:more-about-catamorphisms&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;The canonical introduction is &lt;a href=&quot;https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w&quot;&gt;Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire&lt;/a&gt;, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by &lt;a href=&quot;https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/&quot;&gt;Bartosz Milewski&lt;/a&gt; is also excellent. &lt;a href=&quot;#fnref:more-about-catamorphisms&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -1946,211 +1972,6 @@ This also applies to the way we model the evolution of computer programs, such a
   <content type="html">&lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/c9DmkBHLs3M&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/the-editor-a-video/&quot;&gt;The Editor - First Video&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 01, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Introducing the Editor]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/introducing-the-editor/" />
-  <id>http://www.expressionsofchange.org/introducing-the-editor</id>
-  <published>2017-06-29T00:00:00+02:00</published>
-  <updated>2017-06-29T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;The proposed alternative is to make &lt;em&gt;changes to programs&lt;/em&gt; the primitive building blocks, instead of the &lt;em&gt;programs that result from such changes&lt;/em&gt;. In this view, the means of construction are seen as equally important as the constructed artifacts. The idea is simply that, to be able meaningfully to reason about change, it is easier to keep the actual change at hand than to guess what it might have been.&lt;/p&gt;
-
-&lt;p&gt;The decision to abandon text files as a possible input format has an important consequence for the roadmap of this project: editors that create text files are plentiful, but the type of editor that could be used to create changes as a primitive has yet to be designed. The first step in the project is therefore to design and implement such an editor.&lt;/p&gt;
-
-&lt;p&gt;This will allow us to get some feedback on what works and what doesn’t, and on what the major challenges for such an editor are.&lt;/p&gt;
-
-&lt;p&gt;Also, importantly, it will allow us to actually create the inputs for the yet to be designed programming language.&lt;/p&gt;
-
-&lt;p&gt;In the below, we will sketch some important properties of such an editor.&lt;/p&gt;
-
-&lt;h3 id=&quot;means-of-combination&quot;&gt;Means of combination&lt;/h3&gt;
-
-&lt;p&gt;The first goal for our editor was mentioned already: the changes to programs shall be primitive entities in our editor. The second goal is that it shall be possible to combine these primitives in meaningful ways.&lt;sup id=&quot;fnref:sicp&quot;&gt;&lt;a href=&quot;#fn:sicp&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;The most straightforward such combination is to take of a linear sequence of such changes; we’ll call this a “history”.&lt;/p&gt;
-
-&lt;p&gt;A more subtle means of combination arises when editing hierarchically structured documents, such as computer programs. Hierarchical documents, by definition, compose larger parts out of smaller parts. This leads to the question: how do the histories of the parts relate to their sub-parts?&lt;/p&gt;
-
-&lt;p&gt;For the editor presented below, the answer is: the histories between relate in a meaningful way. In particular, the history of some part of our program will be composed of the histories of its subparts.&lt;/p&gt;
-
-&lt;h3 id=&quot;structured-editing&quot;&gt;Structured editing&lt;/h3&gt;
-
-&lt;p&gt;In the above we’ve established three things: first that we need to create an editor for computer programs, second that changes shall be its primitives and third that histories of changes shall be meaningfully composable along the lines of the document’s structure.&lt;/p&gt;
-
-&lt;p&gt;These goals point strongly in the direction of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Structure_editor&quot;&gt;structured editor&lt;/a&gt;, meaning an editor that is aware of the document’s structure. There are two main reasons for this:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;To establish a good inventory of primitive operation of change: If we would treat the structure of the edited document as a black box, we could not say anything meaningful about changes to it. We must thus take the opposite approach and acknowledge the document’s structure.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;To be able to compose and decompose histories along structural lines — that we need to acknowledge the document’s structure to be able to do this should be obvious.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Incidentally, structured editing brings with it many other advantages: certain classes of incorrect programs cannot be constructed, there is no need to write a parser, meaningful reporting on errors is much easier etc. etc. We shall gladly make use of such advantages, but they are not the initial cause for the decision.&lt;/p&gt;
-
-&lt;p&gt;Finally, note that the decision to create a structured editor rather than an unstructured one incurs no extra cost on our implementation. Because a radical departure from the main paradigms of text editing is the starting point of our design, we are free to drop any defaults from that paradigm, such as the fact that everything is unstructured text.&lt;/p&gt;
-
-&lt;h3 id=&quot;structure-s-expressions&quot;&gt;Structure: S-Expressions&lt;/h3&gt;
-
-&lt;p&gt;So far we have established that the editor to be is to be a structured editor and that its primitives will be the changes to some structure. Now then, before we can turn our attention to those primitives, we must first decide what that structure looks like.&lt;/p&gt;
-
-&lt;p&gt;For the first prototype, I have decided on the simplest thing that could possibly work: &lt;a href=&quot;https://en.wikipedia.org/wiki/S-expression&quot;&gt;s-expressions&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;S-Expressions are&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;an atom (some symbol or value), or&lt;/li&gt;
-  &lt;li&gt;a list of 0 or more s-expressions&lt;sup id=&quot;fnref:lists-not-tuples&quot;&gt;&lt;a href=&quot;#fn:lists-not-tuples&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;With these two types of elements we can build tree like structures with at the leaves either empty lists or atoms.&lt;/p&gt;
-
-&lt;p&gt;The primary motivation for picking such a minimal syntax is a practical one: the scope of the project is rather large as it stands and a programming language family which is expressed in S-Expressions is readily available (&lt;a href=&quot;https://en.wikipedia.org/wiki/Lisp_(programming_language)&quot;&gt;Lisp&lt;/a&gt;).&lt;/p&gt;
-
-&lt;p&gt;From a usability perspective, S-Expressions are also desirable. There are only two kinds of S-Expression (atoms &amp;amp; lists) and the mapping between S-Expressions and their visual representation is very straightforward. Since the structure of the program is readily visible, the programmer needs not create a separate mental model of it in their head; this makes structured editing feasible.&lt;/p&gt;
-
-&lt;p&gt;Most advances in programming language research in the last few decades, most notably in type systems, have been made in &lt;a href=&quot;https://en.wikipedia.org/wiki/ML_(programming_language)&quot;&gt;ML&lt;/a&gt; and its derivatives. To be able to incorporate those while retaining elegance an upgrade to a less minimal syntax may be required at some point. However, for the first version of the editor a minimal syntax is sufficient — the focus on change as a primitive will yield sufficient insights to make the experiment worthwhile.&lt;/p&gt;
-
-&lt;h3 id=&quot;a-clef-for-construction&quot;&gt;A Clef for Construction&lt;/h3&gt;
-
-&lt;p&gt;Having established what the structure of our documents will be, we can turn our attention to the primitives of construction. In other words, we’ll have to decide on a set of operations to construct and modify S-Expressions. We’ll call such a set of primitives a &lt;em&gt;Clef&lt;/em&gt;&lt;sup id=&quot;fnref:why-clef&quot;&gt;&lt;a href=&quot;#fn:why-clef&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-
-&lt;p&gt;This is just as much a design decision as picking the syntax of the language in the first place. Here too, the space from which we can choose is infinite.&lt;sup id=&quot;fnref:infinite-space&quot;&gt;&lt;a href=&quot;#fn:infinite-space&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; The forces working on this decision are similar too; they are roughly:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Adding more elements to the &lt;em&gt;clef&lt;/em&gt; potentially allows for more precise descriptions of history and expressions of intent (good).&lt;/li&gt;
-  &lt;li&gt;Adding more elements imposes an implementation cost (bad).&lt;/li&gt;
-  &lt;li&gt;Adding more elements imposes a mental burden on the programmer (bad).&lt;/li&gt;
-  &lt;li&gt;Adding more elements increases the risk that multiple equivalent mechanisms exist to construct the same result, even in cases when there is no meaningful underlying reason for this (bad).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In the below I will present a particular clef as decided upon (for now); leaving the description of the thought-process of the decision itself to another (yet to be written) article.&lt;/p&gt;
-
-&lt;p&gt;The clef defines the following operations:&lt;sup id=&quot;fnref:imperative-functional-equivalence&quot;&gt;&lt;a href=&quot;#fn:imperative-functional-equivalence&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeAtom atom&lt;/code&gt; — Out of nothingness, spawn a given atom; or replace an existing atom with the given atom.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt; — Out of nothingness, spawn an empty list.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert index history&lt;/code&gt; — For a list, insert at the index the s-expr that can be constructed from the history; shifting items to the right as required.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Delete index&lt;/code&gt; — For a list, delete the element at the index; shifting items to the left as required.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace index history&lt;/code&gt; — For a list, replace the element at the index with the s-expr that can be constructed from the history.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Using this clef we can both construct any s-expressions from scratch and modify any given s-expression into any other (a formal proof is left as an exercise to the reader). As an example, consider a possible way to construct the s-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(+ (* 6 9) 12)&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt; — starting with an empty list expression&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt; — as the first item, insert the history which consists of the creation of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 ...&lt;/code&gt; — as the second item, insert the result of the following history:
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt; — starting with an empty list (sub)expression&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt; — introducing the atoms one…&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt; — by one…&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 9))&lt;/code&gt; — by one.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 12))&lt;/code&gt; — similar to the construction of &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The above example is quite trivial, because the order of construction is precisely identical to the ordering of the result. In practice the order might be quite different, and might also include deletions (and therefore: insertions whose effects are not visible in the final result).&lt;/p&gt;
-
-&lt;p&gt;Another history leading to the same result is shown below. Note that the indices are not the same as in the first example, but the result is the same.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom 12))&lt;/code&gt; — we start with a single element &lt;code class=&quot;highlighter-rouge&quot;&gt;12&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt; — to the left of it, we introduce the &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 ...&lt;/code&gt; — assuming the same history on the ellipses as in the first example&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Importantly, the clef also allows us to express the histories of larger parts of our document as being composed of the histories of their subparts.&lt;/p&gt;
-
-&lt;p&gt;To see how this is so, consider the following: The s-expressions form a tree. If the history of a given node is extended by some change, we can apply &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; on its parent node, providing the node’s index in the parent and the extended history. Because this &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; represents a change at the level of the parent, we can repeat this process until we reach the root of the tree. Using this mechanism, the same example might look like this:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom +))&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 ...&lt;/code&gt; — We start by adding an empty sub-expression…
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 1 ...&lt;/code&gt; — which is then extended with &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 1 ...&lt;/code&gt; — and extended with &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 12))&lt;/code&gt; — intermezzo on the top-level&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace 1 ...&lt;/code&gt; — and extended with &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BecomeList&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 0 (BecomeAtom *))&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 1 (BecomeAtom 6))&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert 2 (BecomeAtom 9))&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;This example makes a number of things clear: first that we can see the full ordering of events from the top level, and that work on sub-expressions may be arbitrarily interleaved. In the example above this is demonstrated by the insertion of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;12&lt;/code&gt; before the completion of the sub-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(* 6 9)&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Second, that from each sub-level we see the ordering of events relevant to that sub-level. In this case, the precise ordering of the creation of the atoms &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Third, it shines some light on some challenges. Namely, the example as given is horribly verbose, which makes it hard to read for humans and has implications on the performance characteristics of the implementation. For both these problems solutions have already been found, which will be presented in the next parts.&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;This concludes the most basic introduction to the editor.&lt;/p&gt;
-
-&lt;p&gt;We’ve seen the goal: having change available as a primitive, and being able to meaningfully express compositions over change. We’ve seen that it is a structured editor and why this should be so.&lt;/p&gt;
-
-&lt;p&gt;We’ve also encountered the first design decisions: the decision for s-expressions as a basic syntax, and a particular choice for a &lt;em&gt;clef&lt;/em&gt; and how this is sufficient for the stated goals.&lt;/p&gt;
-
-&lt;p&gt;In the upcoming &lt;a href=&quot;/the-editor-a-video/&quot;&gt;parts we’ll show the current prototype in action&lt;/a&gt;, and will discuss some of the open questions and implementation details.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:sicp&quot;&gt;
-      &lt;p&gt;Asking the three questions “What are your primitives, what are your means of combination and what are your means of abstraction?” is directly inspired by Abelson &amp;amp; Sussman’s excellent lectures and book on the &lt;a href=&quot;https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt;. &lt;a href=&quot;#fnref:sicp&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:lists-not-tuples&quot;&gt;
-      &lt;p&gt;The canonical definition of S-Expressions treats lists as mere syntactic sugar for nested pairs; i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;(x y z)&lt;/code&gt; is simply a shorthand for &lt;code class=&quot;highlighter-rouge&quot;&gt;(x . (y . (z . NIL)))&lt;/code&gt;. In this implementation the opposite approach is taken as to allow for primitives of change on such lists that are sufficiently expressive. &lt;a href=&quot;#fnref:lists-not-tuples&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:why-clef&quot;&gt;
-      &lt;p&gt;The name &lt;em&gt;Clef&lt;/em&gt; refers to a &lt;a href=&quot;https://en.wikipedia.org/wiki/Clef&quot;&gt;musical clef&lt;/a&gt;; musical notation serves as a metaphore for &lt;em&gt;expressions of change&lt;/em&gt; because it’s a nice real world example of a sequential list of instructions for “construction”. In this metaphore, the &lt;em&gt;Clef&lt;/em&gt; defines which notes are playable, i.e. what our vocabulary of change is. &lt;a href=&quot;#fnref:why-clef&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:infinite-space&quot;&gt;
-      &lt;p&gt;To see that there are literally infinitely many possible primitive operations of change, consider the following: there are infinitely many s-expressions, and we can always define a special operation of change for any given s-expression. &lt;a href=&quot;#fnref:infinite-space&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:imperative-functional-equivalence&quot;&gt;
-      &lt;p&gt;The definitions are formulated in the imperative style (e.g. “delete at i”); an equivalent functional definition can be trivially constructed (“given a list, return an list without element i”). &lt;a href=&quot;#fnref:imperative-functional-equivalence&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/introducing-the-editor/&quot;&gt;Introducing the Editor&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 29, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>

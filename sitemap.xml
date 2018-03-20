@@ -6,6 +6,10 @@
 
     
     <url>
+        <loc>/clojure-meetup/</loc>
+    </url>
+    
+    <url>
         <loc>/dont-say-homoiconic/</loc>
     </url>
     

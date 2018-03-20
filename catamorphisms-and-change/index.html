@@ -132,13 +132,13 @@
 
 <p>Recursive algorithms of the first kind are called <a href="https://en.wikipedia.org/wiki/Catamorphism">catamorphisms</a>.<sup id="fnref:more-about-catamorphisms"><a href="#fn:more-about-catamorphisms" class="footnote">1</a></sup></p>
 
-<p>Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the <em>algebra</em> in the literature.</p>
+<p>Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the <em>algebra</em>.</p>
 
-<p>The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but instead of containing any recursive function call the recursive results are passed to it as a parameter. Our original example could be rewritten as such:</p>
+<p>The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but the node being passed to it has as its children not further nodes, but the results of recursive application.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">child_results</span><span class="p">):</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
-    <span class="k">for</span> <span class="n">child_result</span> <span class="ow">in</span> <span class="n">child_results</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">child_result</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">child_result</span>
     <span class="k">return</span> <span class="n">result</span>
 
@@ -146,15 +146,15 @@
 <span class="k">def</span> <span class="nf">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
     <span class="n">child_results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-        <span class="n">cild_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">child</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">algebra</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">child_results</span><span class="p">)</span>
+        <span class="n">child_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">child</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">algebra</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">child_results</span><span class="p">))</span>
 
 
 <span class="n">sum_of_values</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">catamorphism</span><span class="p">(</span><span class="n">sum_of_values_algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
 </code></pre>
 </div>
 
-<p>This separates the concerns of recursively calling (which is in the generally utility function <code class="highlighter-rouge">catamorphism</code>) and composing the results (which is in <code class="highlighter-rouge">sum_of_values_algebra</code>).</p>
+<p>This separates the concerns of recursively calling (which is in the utility function <code class="highlighter-rouge">node_catamorphism</code>) and composing the results (which is in <code class="highlighter-rouge">sum_of_values_algebra</code>).</p>
 
 <h3 id="working-examples">Working examples</h3>
 
@@ -297,7 +297,7 @@
 <div class="footnotes">
   <ol>
     <li id="fn:more-about-catamorphisms">
-      <p>A good introduction may be found in <a href="https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w">Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire</a>. The article by <a href="https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/">Bartosz Milewski</a> is also excellent. <a href="#fnref:more-about-catamorphisms" class="reversefootnote">&#8617;</a></p>
+      <p>The canonical introduction is <a href="https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w">Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire</a>, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by <a href="https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/">Bartosz Milewski</a> is also excellent. <a href="#fnref:more-about-catamorphisms" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -329,6 +329,11 @@ s.setAttribute('data-timestamp', +new Date());
         <p class="list-title">Recent Posts</p>
         
             <li>
+              <span class="recent-title"><a href="/clojure-meetup/" title="Talk at Clojure Meetup">Talk at Clojure Meetup </a></span>
+              <span class="date">Mar 14, 2018</span>
+            </li>
+        
+            <li>
               <span class="recent-title"><a href="/dont-say-homoiconic/" title="Don't say “Homoiconic”">Don't say “Homoiconic” </a></span>
               <span class="date">Mar 01, 2018</span>
             </li>
@@ -351,11 +356,6 @@ s.setAttribute('data-timestamp', +new Date());
             <li>
               <span class="recent-title"><a href="/catamorphisms-and-change/" title="Catamorphisms and change">Catamorphisms and change </a></span>
               <span class="date">Dec 04, 2017</span>
-            </li>
-        
-            <li>
-              <span class="recent-title"><a href="/form-analysis/" title="Static Form Analysis">Static Form Analysis </a></span>
-              <span class="date">Nov 17, 2017</span>
             </li>
         
             <li>
