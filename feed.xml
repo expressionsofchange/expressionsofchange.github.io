@@ -4,13 +4,32 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-03-20T17:39:25+01:00</updated>
+<updated>2018-03-27T19:20:03+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[ELS 2018: Paper accepted]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/european-lisp-symposium-paper-accepted/" />
+  <id>http://www.expressionsofchange.org/european-lisp-symposium-paper-accepted</id>
+  <published>2018-03-20T00:00:00+01:00</published>
+  <updated>2018-03-20T00:00:00+01:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;The European Lisp Symposium takes place on April 16th - April 17th in Marbella, Spain.&lt;/p&gt;
+
+&lt;p&gt;The text of the paper will be published on this website after the conference.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/european-lisp-symposium-paper-accepted/&quot;&gt;ELS 2018: Paper accepted&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on March 20, 2018.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -1955,23 +1974,6 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;/div&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/dijkstras-mozart/&quot;&gt;Dijkstra's Mozart&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 02, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[The Editor - First Video]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/the-editor-a-video/" />
-  <id>http://www.expressionsofchange.org/the-editor-a-video</id>
-  <published>2017-07-01T00:00:00+02:00</published>
-  <updated>2017-07-01T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/c9DmkBHLs3M&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/the-editor-a-video/&quot;&gt;The Editor - First Video&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 01, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>
