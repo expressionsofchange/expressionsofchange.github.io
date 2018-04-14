@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-03-29T17:29:44+02:00</updated>
+<updated>2018-04-14T17:47:31+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -26,7 +26,9 @@
   </author>
   <content type="html">&lt;p&gt;The European Lisp Symposium takes place on April 16th - April 17th in Marbella, Spain.&lt;/p&gt;
 
-&lt;p&gt;The text of the paper will be published on this website after the conference.&lt;/p&gt;
+&lt;p&gt;The paper may be downloaded using the link below:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/papers/clef-design.pdf&quot;&gt;Clef design: Thoughts on the Formalization of Program Construction&lt;/a&gt;&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/european-lisp-symposium-paper-accepted/&quot;&gt;ELS 2018: Paper accepted&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on March 20, 2018.&lt;/p&gt;</content>
 </entry>
