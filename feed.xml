@@ -4,13 +4,60 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-05-02T08:39:41+02:00</updated>
+<updated>2018-05-05T09:22:39+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Source code published]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/source-code-published/" />
+  <id>http://www.expressionsofchange.org/source-code-published</id>
+  <published>2018-05-05T00:00:00+02:00</published>
+  <updated>2018-05-05T00:00:00+02:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;We can distinguish 2 projects, “&lt;a href=&quot;https://github.com/expressionsofchange/nerf0&quot;&gt;nerf0&lt;/a&gt;” and “&lt;a href=&quot;https://github.com/expressionsofchange/nerf1&quot;&gt;nerf1&lt;/a&gt;”&lt;sup id=&quot;fnref:nerf-explained&quot;&gt;&lt;a href=&quot;#fn:nerf-explained&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;The brief summary of which project to refer to is:&lt;/p&gt;
+
+&lt;h3 id=&quot;nerf-0&quot;&gt;Nerf 0:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Static Analysis (first steps)&lt;/li&gt;
+  &lt;li&gt;mini-interpreter&lt;/li&gt;
+  &lt;li&gt;Alternative Clef, in which a note &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; may replace a given node with one that can be constructed from an arbitrary history (not just a history that’s the result of extending the given history) – this approach also has consequences on how undo may be modelled.&lt;/li&gt;
+  &lt;li&gt;merging (“weaving”) of 2 histories (first steps only)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;nerf-1&quot;&gt;Nerf 1:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;the most up to date Clef.&lt;/li&gt;
+  &lt;li&gt;work on visualising modifications in a more human friendly way&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Nerf1 was created by “scavenging” code from nerf0; The primary goal: to adhere much more closely to the Clef that is presented in the paper “Clef Design”, as presented on ELS ‘18. (In fact, the Clef in this project differs from the presented Clef in one important way: &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; &amp;amp; &lt;code class=&quot;highlighter-rouge&quot;&gt;Delete&lt;/code&gt; take a single note, rather than a score, as an argument) This is the program that was used in the demo for the presentation at ELS.&lt;/p&gt;
+
+&lt;p&gt;Both projects should be seen as sketches, as bases for experiments, more so than as a finished product that is in any sense ready for production.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:nerf-explained&quot;&gt;
+      &lt;p&gt;“nerf”, the Dutch word for wood grain, is yet another metaphore of how the mechanism of growth has a direct effect on the grown product. &lt;a href=&quot;#fnref:nerf-explained&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/source-code-published/&quot;&gt;Source code published&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on May 05, 2018.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -1777,117 +1824,6 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;/div&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/hash-consing/&quot;&gt;Hash Consing&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[CLIs are reified UIs]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/reification-of-interaction/" />
-  <id>http://www.expressionsofchange.org/reification-of-interaction</id>
-  <published>2017-07-02T00:00:00+02:00</published>
-  <updated>2017-07-02T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;First, some definitions: Two main paradigms of interaction between humans and computers are Command Line Interfaces (CLIs) and Graphical User Interfaces (GUIs). In CLIs the user interacts with the computer by sequentially typing various textual commands, to which the computer replies, also in text. Graphical interfaces base the interaction with the computer on graphical icons and widgets and navigation typically depends on a pointing device such as the mouse. The debate on the respective advantages and disadvantages of these paradigms stretches back decades.&lt;/p&gt;
-
-&lt;p&gt;Proponents of GUIs typically stress their ease of use, especially for non-experts. A key contributer to GUIs ease of use is &lt;em&gt;discoverability&lt;/em&gt;: at any time the various available options are laid out on the screen and can be further explored with the mouse.&lt;/p&gt;
-
-&lt;p&gt;CLIs predate GUIs. Despite of the ease of use of the latter, usage of CLIs persists, especially in UNIX-like systems. This has come as a surprise to some. Typically offered explanations are:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Power of the keyboard&lt;/strong&gt; — the keyboard allows for faster input than the alternation of keyboard &amp;amp; mouse usage.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Reproducability&lt;/strong&gt; - because all commands are text, they may be more easily reproduced and shared.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Composable commands&lt;/strong&gt; — commands on the command line may be arbitrarily composed, using the output of one command as the input of another. This allows for powerful means of expression.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Scripting&lt;/strong&gt; — the interactive session may be used as the basis for a script (a computer program), allowing for the automation of certain tasks.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Rather than rehashing old debates, I’ll try to present a somewhat new perspective on the matter. I’ll do so by examining the CLI through the lens of the present project,  &lt;em&gt;Expressions of Change&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;reification-of-interaction&quot;&gt;Reification of Interaction&lt;/h2&gt;
-
-&lt;p&gt;Let’s start by stating the obvious: In a command-line interface the textual commands are displayed on screen as typed. The output of each command is displayed below it. Previously entered commands and outputs are scrolled up as required, i.e. when the screen is full.&lt;/p&gt;
-
-&lt;p&gt;This means that the human-computer interaction is being expressed in a tangible and visible way. This can be said for both individual parts of the interaction (individual commands) and for the interaction as a whole (the history of an entire session).&lt;/p&gt;
-
-&lt;p&gt;A more fancy way to say this is: the user-computer interaction is &lt;a href=&quot;https://en.wikipedia.org/wiki/Reification_(computer_science)&quot;&gt;reified&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Note how this contrasts with the typical interaction in a GUI: There, after clicking on some button or icon, the GUI will respond in some way, e.g. by opening a new screen or copying a file. However, the action of clicking the button itself can no longer be observed, manipulated or shared after it has happened.&lt;sup id=&quot;fnref:gui-reification&quot;&gt;&lt;a href=&quot;#fn:gui-reification&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;In CLIs, as mentioned above, the commands as given and their outputs are displayed on screen. In typical setups the support for reification is a bit more powerful than that:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Keyboard shortcuts&lt;/strong&gt; — several keyboard shortcuts allow for usage of past commands, e.g. arrow-up typically shows the previously issued command, and CTRL+R typically opens a search prompt which allows for searching previously issued commands. Previous commands are not just visible on screen, but can be selected with minimal effort.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Copy/paste&lt;/strong&gt; — support for copy/paste makes it so that arbitrary text from the screen may be copied, and that text from arbitrary sources (including the screen itself) may be pasted as a new command. Note the symmetry between the input and output formats: everything is text. This allows for the copying of an entire session’s output into the documentation, an internet forum or script. Conversely, solutions from internet forums may be copied into the session without friction.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Persistent history&lt;/strong&gt; — the full history of commands is written to a file, which can include the date and time they were issued.&lt;sup id=&quot;fnref:config-notes&quot;&gt;&lt;a href=&quot;#fn:config-notes&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; This allows for the answering of questions such as:&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;“How did I use this command last time I used it?”&lt;/li&gt;
-      &lt;li&gt;“Which packages have been installed on this system?”&lt;/li&gt;
-      &lt;li&gt;“I thought I already solved this yesterday, am I losing my mind?”&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The relationship with the project that this site is about, &lt;em&gt;Expressions of Change&lt;/em&gt;, is quite simple. The commands, or at least some of them, affect the system, and are thus the changes. The fact that they are reified is simply another way of saying that commands are available as a first level citizens. We can see them, copy them, and even generate them using other commands. In other words: reification of interaction as in CLIs is an actually existing and quite popular example of an expression of change!&lt;/p&gt;
-
-&lt;p&gt;As an aside: A number of the often cited advantages of CLIs might be interpreted simply as natural consequences of the reification: looking at the list of advantages from the introduction of the article, we see that both reproducability across sessions and the ability to take an interactive session as the basis for a script are simply direct consequences of the reification.&lt;/p&gt;
-
-&lt;h3 id=&quot;guis&quot;&gt;GUIs&lt;/h3&gt;
-
-&lt;p&gt;The above is not to be taken as an argument that CLIs are a fundamentally better paradigm of user-computer interaction than GUIs. The point is rather that reification of interaction is extremely valuable, and that it is worthwhile to consider how to include it in &lt;em&gt;any&lt;/em&gt; interface, even a GUI.&lt;/p&gt;
-
-&lt;p&gt;There is, after all, no &lt;em&gt;fundamental&lt;/em&gt; reason a GUI could not be designed with the goal of reification of interaction in mind; it’s just that it is rarely done in practice.&lt;/p&gt;
-
-&lt;p&gt;The main way in which reification of interaction shows up in GUIs is through the undo command. Unfortunately this is often implemented in ways that are &lt;a href=&quot;/the-power-of-undo/&quot;&gt;much less generally applicable&lt;/a&gt; than those we’ve seen of CLIs.&lt;/p&gt;
-
-&lt;h2 id=&quot;limits-to-the-reification&quot;&gt;Limits to the reification&lt;/h2&gt;
-
-&lt;p&gt;Having established that CLIs reify the user-computer interaction to some degree, it is interesting to consider some typically applying practical limitations.&lt;/p&gt;
-
-&lt;p&gt;As mentioned above, the commands as given by the user are stored in a sequential history. One standard for history-keeping is the following: If we start with a clean system, and replay all the commands from the history, will we end up with the same system? This is a way of measuring how much of the relationship between the past and the present is actually captured by the history.&lt;/p&gt;
-
-&lt;p&gt;For CLIs in the UNIX-like world, the answer to the question is “we will typically not end up with the same system”. There are a number of reasons for this:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;The history is not properly organized. The commands may interact with one another via their “environment”, but the relevant information to reproduce the interactions is not stored. For example, the &lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt; command may change the working directory; consecutive commands should then be interpreted as being executed from that directory. However, the history does not reflect the closing of sessions or the creation of new ones, so we cannot say about a command from which directory it was executed.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The history is incomplete. Your interaction with the system as a whole is not restricted to the interaction via the CLI but will typically include interaction with arbitray applicationsand the meaning of the commands themselves is not constricted in any way. We cannot make &lt;em&gt;any&lt;/em&gt; statement about how these arbitrary commands and applications affect the system with certainty.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Out of these limitations other follow. For example: the undo-command is not available in CLIs, because it would imply some constraint on the available commands (namely: commands should be limited to those that can be undone).&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;A unique advantage that Command Line Interfaces typically offer over Graphical User Interfaces is that the interaction between user and computer is reified: it is made visible, and the user can directly interact with it, for example by copy/pasting commands.&lt;/p&gt;
-
-&lt;p&gt;Many of the typically cited advantages of the command line are simply a consequence of this important fact.&lt;/p&gt;
-
-&lt;p&gt;The reification of interaction is, however, not fundamentally limited to CLIs, and the concept may just as well be applied to GUIs.&lt;/p&gt;
-
-&lt;p&gt;We have also seen a number of typical limitations to the reification of interaction as typically available in the CLIs of UNIX-like systems; such limitations are not fundamental to the reification, but are a consequence of the reification being accidental rather than being an explicit design goal in the design of the UNIX.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:gui-reification&quot;&gt;
-      &lt;p&gt;Tools to record interactions with GUIs do exist, but they are significantly less useful and robust than their (built-in) counterpart in CLIs. &lt;a href=&quot;#fnref:gui-reification&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:config-notes&quot;&gt;
-      &lt;p&gt;Making sure the saved history has (virtually — from the human perspective) unlimited length and saving the timestamps typically requires some configuration. &lt;a href=&quot;#fnref:config-notes&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/reification-of-interaction/&quot;&gt;CLIs are reified UIs&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 02, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>
