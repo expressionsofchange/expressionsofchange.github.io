@@ -4,13 +4,92 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-05-22T10:48:21+02:00</updated>
+<updated>2018-06-01T12:03:02+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Animating history transitions]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/animating-history-transitions/" />
+  <id>http://www.expressionsofchange.org/animating-history-transitions</id>
+  <published>2018-06-01T00:00:00+02:00</published>
+  <updated>2018-06-01T00:00:00+02:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;In this &lt;em&gt;Expressions of Change&lt;/em&gt; we take modifications to programs to be the primary building block of program construction. We do this in the expectation that that the availability of well-structured historic information across our toolchain will prove invaluable when facing the typical challenges of program modification.&lt;/p&gt;
+
+&lt;p&gt;One of the first such benefits is the ability to inspect history at any level of program granularity as it pertains to that level. That is: if a program consists of e.g. modules, classes, functions, statements and expressions, to be able to inspect the history of each of these, and to see how these histories relate.&lt;/p&gt;
+
+&lt;p&gt;Over the past few weeks I’ve been working on a way to visualize this central idea, under the working titles of “animations” or “transitions”. Here you can see it in action:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/movies/transitions-in-context.gif&quot; alt=&quot;Full demo with &amp;quot;in context&amp;quot; historical view.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;How should we understand the two panels shown above? The panel on the right represents program &lt;em&gt;structure&lt;/em&gt;, i.e. what we usually think of as “the program”. The structure under consideration is an &lt;a href=&quot;/introducing-the-editor/#structure-s-expressions&quot;&gt;s-expression&lt;/a&gt;, recursively defined as either a list-expression of further s-expressions between parentheses &lt;code class=&quot;highlighter-rouge&quot;&gt;(&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;)&lt;/code&gt;, or an atom.&lt;/p&gt;
+
+&lt;p&gt;The panel on the left represents a historic overview of the program’s &lt;em&gt;construction&lt;/em&gt;: something we usually think of as “Version Management”, although in &lt;em&gt;Expressions of Change&lt;/em&gt; we avoid that term, because we view the history of the program as at least equally as important as the program itself.&lt;/p&gt;
+
+&lt;p&gt;In the above, the representation of construction is “in its structural context”. That is: each line shows how a certain modification affects the existing structure: parts of the structure that already existed before the modification are shown in grey, parts that are added by the modification are shown in black.&lt;sup id=&quot;fnref:not-diff&quot;&gt;&lt;a href=&quot;#fn:not-diff&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; (Deletions would be shown in red, but the example above contains no deletions). The single line with inverted colors denotes the cursor in the historic view.&lt;/p&gt;
+
+&lt;p&gt;Importantly, the two panels are connected: whenever we select some &lt;nobr&gt;s-expression&lt;/nobr&gt; in the structural view on the right, the panel on the left follows suit, and shows the history of that structure.&lt;sup id=&quot;fnref:always-follow&quot;&gt;&lt;a href=&quot;#fn:always-follow&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;In the above, we select the expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(+ (* 6 9) 12)&lt;/code&gt;, its sub-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(* 6 9))&lt;/code&gt; and the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt; respectively, each time showing the relevant histories.&lt;/p&gt;
+
+&lt;h3 id=&quot;animations--transitions&quot;&gt;Animations / transitions&lt;/h3&gt;
+
+&lt;p&gt;The innovation from the past few weeks is that, whenever we switch between the display of one history and another, we show the relationship between the two using an animation.&lt;/p&gt;
+
+&lt;p&gt;The simplest example of such a relationship is the one between the history of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt; (a trivial history, consisting only of its creation) and the history of the whole expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(+ (* 6 9) 12)&lt;/code&gt;. When we switch from the former to the latter, we see two additional types of information: first, we see that the creation of the &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt; is preceded by the construction of the rest of the expression beginning with the creation of the list &lt;code class=&quot;highlighter-rouge&quot;&gt;()&lt;/code&gt; and ending with the addition of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;12&lt;/code&gt;. Second, we see where it fits into the greater expression, i.e. to the right of the &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt; and left of a closing bracket. Here this single transition is singled out:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/movies/transition-9.gif&quot; alt=&quot;Transition of &#39;9&#39;.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The transition between the histories of &lt;code class=&quot;highlighter-rouge&quot;&gt;(+ (* 6 9) 12)&lt;/code&gt; and the sub-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(* 6 9))&lt;/code&gt; forms a more exiting example: we can see how each of the 4 elements of the latter relate to the history of the former, and how they fit into a larger context. Again, we show only the single transition here:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/movies/transition-star-6-9.gif&quot; alt=&quot;Transition of &#39;(* 6 9)&#39;.&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;why-bother&quot;&gt;Why bother?&lt;/h3&gt;
+
+&lt;p&gt;I believe these animations are useful for two separate reasons. First, when explaining the concepts of &lt;em&gt;Expressions of Change&lt;/em&gt;, a (moving) picture says more than a 1000 words. In this case, the point that’s being explained visually is the idea of “history at any level”.&lt;/p&gt;
+
+&lt;p&gt;Second, in an editor for actual use, the animations serve as a visual aid: transitioning smoothly from one history to the next really helps you keep your bearings while navigating.&lt;/p&gt;
+
+&lt;p&gt;By the way, the animations in the &lt;em&gt;gifs&lt;/em&gt; shown in the above are slowed down to a full 1.5 seconds for both dramatic effect and to ease understanding of what’s happening in the context of a blog-post. In an actual edit environment we’ll want to balance between too fast and too slow: the former makes it impossible to see what’s going on, the latter leads to annoying waits. I found personally found 0.5 seconds per animation to be a good trade-off:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/movies/normal-speed.gif&quot; alt=&quot;Transitions at normal speed.&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;explicit-notes&quot;&gt;“Explicit” notes&lt;/h3&gt;
+
+&lt;p&gt;The example animations shown in this blog-post correspond directly with the main example from the paper &lt;a href=&quot;/assets/papers/clef-design.pdf&quot;&gt;“Clef design”&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In that paper, we used a more explicit notation for the modifications (called “notes”): those were themselves modelled as s-expressions, rather than displayed by showing how they affect some structure.&lt;sup id=&quot;fnref:notational-difference&quot;&gt;&lt;a href=&quot;#fn:notational-difference&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;If we apply the ideas of this blog-post to the notation from the paper, it looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/movies/transitions-clef-design.gif&quot; alt=&quot;Full demo with &amp;quot;Clef Design&amp;quot; historical view.&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:not-diff&quot;&gt;
+      &lt;p&gt;One might even be tempted to call this a “diff”, but that would suggest a primacy of &lt;em&gt;structure&lt;/em&gt; rather than &lt;em&gt;construction&lt;/em&gt;, i.e. it somewhat implies there are two structures first, and we simply calculate the difference. &lt;a href=&quot;#fnref:not-diff&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:always-follow&quot;&gt;
+      &lt;p&gt;In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed. &lt;a href=&quot;#fnref:always-follow&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:notational-difference&quot;&gt;
+      &lt;p&gt;In fact, the &lt;em&gt;Clef&lt;/em&gt; in the demonstrations above differs from the &lt;em&gt;Clef&lt;/em&gt; in the paper in one way: &lt;code class=&quot;highlighter-rouge&quot;&gt;(insert  ...&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;(delete ...&lt;/code&gt; taking a single note, rather than a score, as an argument. &lt;a href=&quot;#fnref:notational-difference&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/animating-history-transitions/&quot;&gt;Animating history transitions&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 01, 2018.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -1758,100 +1837,6 @@ This also applies to the way we model the evolution of computer programs, such a
 &lt;p&gt;Examples of such programs are plentiful: Operating Systems, business administration software, inventory management, stock trading etc.&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/lehman-spe-classification/&quot;&gt;Lehman's SPE-classfication&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Hash Consing]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/hash-consing/" />
-  <id>http://www.expressionsofchange.org/hash-consing</id>
-  <published>2017-07-04T00:00:00+02:00</published>
-  <updated>2017-07-04T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;When introducing the editor we introduced &lt;a href=&quot;/introducing-the-editor/#a-clef-for-construction&quot;&gt;a set of operations that represent changes&lt;/a&gt; (we called this a &lt;em&gt;clef&lt;/em&gt;). Two of the operations presented so far take a full history as one of their parameters:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Insert index history&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Replace index history&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter &lt;code class=&quot;highlighter-rouge&quot;&gt;history&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;In this article we’ll show how this is presently implemented in the editor.&lt;/p&gt;
-
-&lt;h3 id=&quot;the-problem-history-size&quot;&gt;The problem: history-size&lt;/h3&gt;
-
-&lt;p&gt;In a naive implementation we might serialize the full history and include it into the serialization of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation. The problem with this approach is that histories tend to grow over time (by definition).&lt;/p&gt;
-
-&lt;p&gt;To see to which degree this would be an unworkable approach, consider the following. The &lt;em&gt;raison d’être&lt;/em&gt; of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.&lt;/p&gt;
-
-&lt;p&gt;As an example of a practical application of that principle would be to keep track of the history of a single computer’s Operating System and applications. In the composed approach, such a system-level history is composed of the histories of each application, which are composed of the histories of their modules, functions, etc. down to the histories of the smallest expressions of which the applications are composed.&lt;/p&gt;
-
-&lt;p&gt;The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation. This would then result in the following &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operations:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The history of the system as a whole is extended with a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
-  &lt;li&gt;The history of some software application as it was previously, but extended with a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
-  &lt;li&gt;The history of some module as it was previously, but extended with a &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operation which takes as a parameter…&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;etc.&lt;/p&gt;
-
-&lt;p&gt;If we model the serialization of such &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; operations naively, by including the full history as a parameter, the top-level &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).&lt;/p&gt;
-
-&lt;p&gt;The challenge is therefore: being able to reference arbitrarily large histories at a constant cost.&lt;/p&gt;
-
-&lt;h3 id=&quot;hashes-to-the-rescue&quot;&gt;Hashes to the rescue&lt;/h3&gt;
-
-&lt;p&gt;The present prototype of the editor solves this problem as such:&lt;/p&gt;
-
-&lt;p&gt;First, we recognise that the history is a list of changes; the oldest change being the first element, the newest change being the last element in the list.&lt;/p&gt;
-
-&lt;p&gt;Any list of serializable elements may be modeled as a collection of records, where each record consists of 2 fields:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;The element, as a serialized string of bytes.&lt;/li&gt;
-  &lt;li&gt;Either [a] a hash of the previous record [b] a special value to denote no such record exists.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;We can compute such a hash if the layout of the record is well-defined; the simplest such defintion (which is the one used in the editor) is to concatenate the serialized values of the 2 fields.&lt;/p&gt;
-
-&lt;p&gt;If we keep a single hash table in which we can look up records given their hash, and this hash table contains (at least) all records from a given list, we can always reconstruct lists from a given the hash of the last element of the list.&lt;/p&gt;
-
-&lt;p&gt;A similar technique in Lisp implementations is called &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_consing&quot;&gt;Hash Consing&lt;/a&gt;.&lt;sup id=&quot;fnref:terminology-notes&quot;&gt;&lt;a href=&quot;#fn:terminology-notes&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; More recent analogues are git’s commit object structure (though it implements a directed acyclic graph rather than a list because multiple ‘previous’ records may be referenced) and bitcoin’s blockchain.&lt;/p&gt;
-
-&lt;p&gt;Recognizing that any list can be written in the Hash Consing style, and that histories are lists, we’ve implemented histories as such.&lt;/p&gt;
-
-&lt;p&gt;It is precisely the hash of such a record that we can refer to from when serializing the operations &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt;, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.&lt;/p&gt;
-
-&lt;h3 id=&quot;considerations&quot;&gt;Considerations&lt;/h3&gt;
-
-&lt;p&gt;Finally, we’ll look at some considerations.&lt;/p&gt;
-
-&lt;p&gt;It is not strictly necessary to use a hash-based scheme to achieve the above-mentioned advantages in space-complexity. In principle, any scheme that deduplicates shared histories would suffice.&lt;/p&gt;
-
-&lt;p&gt;For exampe, we might implement the histories as backlinked lists in-memory, and implement &lt;code class=&quot;highlighter-rouge&quot;&gt;Replace&lt;/code&gt; to contain a pointer to the relevant item from the list.&lt;/p&gt;
-
-&lt;p&gt;However, using a hash-based scheme brings several advantages over such an approach:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;There is no tie-in to the memory addressing scheme of a particular process; the in-memory format may thus be used as a serialization format for storage on disk or sharing over the network.&lt;/li&gt;
-  &lt;li&gt;Deduplication of any shared history is automatic, there is no need to keep track of shared histories programatically.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:terminology-notes&quot;&gt;
-      &lt;p&gt;It would be tempting but incorrect to use the term &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_list&quot;&gt;“hash list”&lt;/a&gt; to describe such a construct: that term is used to denote a structure where a list of hashses is used as an input to a single root hash. In other words: the individual elements of a hash list are not linking to each other, but are linked together at a single point. The term &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_chain&quot;&gt;“hash chain”&lt;/a&gt; seems to be reserved for repeated application a hash function to a single input. &lt;a href=&quot;#fnref:terminology-notes&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/hash-consing/&quot;&gt;Hash Consing&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>

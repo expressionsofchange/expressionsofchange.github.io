@@ -1,0 +1,247 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Animating history transitions &#8211; Expressions of Change</title>
+<meta name="description" content="We can use animations to show transitions between histories of different part of the program structure when navigating.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Animating history transitions &#8211; Expressions of Change">
+<meta property="og:description" content="We can use animations to show transitions between histories of different part of the program structure when navigating.">
+<meta property="og:url" content="/animating-history-transitions/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/" >Home</a></li>
+            
+                <li><a href="/about/" >About</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/recent/" >All posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Animating history transitions</h1>
+            <p class="date">Jun 01, 2018
+
+              
+                  
+                      — Tags:
+                      
+                      <a href="/the-editor/">The editor</a>
+                      
+                      
+                  
+              
+            </p>
+
+            <p class="intro">Over the past few weeks I’ve been working on a way to visualize the relationships between histories of different part of the program structure. The results are shown in the below.
+</p>
+          </hgroup>
+        </header>
+
+        <p>In this <em>Expressions of Change</em> we take modifications to programs to be the primary building block of program construction. We do this in the expectation that that the availability of well-structured historic information across our toolchain will prove invaluable when facing the typical challenges of program modification.</p>
+
+<p>One of the first such benefits is the ability to inspect history at any level of program granularity as it pertains to that level. That is: if a program consists of e.g. modules, classes, functions, statements and expressions, to be able to inspect the history of each of these, and to see how these histories relate.</p>
+
+<p>Over the past few weeks I’ve been working on a way to visualize this central idea, under the working titles of “animations” or “transitions”. Here you can see it in action:</p>
+
+<p><img src="/images/movies/transitions-in-context.gif" alt="Full demo with &quot;in context&quot; historical view." /></p>
+
+<p>How should we understand the two panels shown above? The panel on the right represents program <em>structure</em>, i.e. what we usually think of as “the program”. The structure under consideration is an <a href="/introducing-the-editor/#structure-s-expressions">s-expression</a>, recursively defined as either a list-expression of further s-expressions between parentheses <code class="highlighter-rouge">(</code> and <code class="highlighter-rouge">)</code>, or an atom.</p>
+
+<p>The panel on the left represents a historic overview of the program’s <em>construction</em>: something we usually think of as “Version Management”, although in <em>Expressions of Change</em> we avoid that term, because we view the history of the program as at least equally as important as the program itself.</p>
+
+<p>In the above, the representation of construction is “in its structural context”. That is: each line shows how a certain modification affects the existing structure: parts of the structure that already existed before the modification are shown in grey, parts that are added by the modification are shown in black.<sup id="fnref:not-diff"><a href="#fn:not-diff" class="footnote">1</a></sup> (Deletions would be shown in red, but the example above contains no deletions). The single line with inverted colors denotes the cursor in the historic view.</p>
+
+<p>Importantly, the two panels are connected: whenever we select some <nobr>s-expression</nobr> in the structural view on the right, the panel on the left follows suit, and shows the history of that structure.<sup id="fnref:always-follow"><a href="#fn:always-follow" class="footnote">2</a></sup></p>
+
+<p>In the above, we select the expression <code class="highlighter-rouge">(+ (* 6 9) 12)</code>, its sub-expression <code class="highlighter-rouge">(* 6 9))</code> and the atom <code class="highlighter-rouge">9</code> respectively, each time showing the relevant histories.</p>
+
+<h3 id="animations--transitions">Animations / transitions</h3>
+
+<p>The innovation from the past few weeks is that, whenever we switch between the display of one history and another, we show the relationship between the two using an animation.</p>
+
+<p>The simplest example of such a relationship is the one between the history of the atom <code class="highlighter-rouge">9</code> (a trivial history, consisting only of its creation) and the history of the whole expression <code class="highlighter-rouge">(+ (* 6 9) 12)</code>. When we switch from the former to the latter, we see two additional types of information: first, we see that the creation of the <code class="highlighter-rouge">9</code> is preceded by the construction of the rest of the expression beginning with the creation of the list <code class="highlighter-rouge">()</code> and ending with the addition of the atom <code class="highlighter-rouge">12</code>. Second, we see where it fits into the greater expression, i.e. to the right of the <code class="highlighter-rouge">6</code> and left of a closing bracket. Here this single transition is singled out:</p>
+
+<p><img src="/images/movies/transition-9.gif" alt="Transition of '9'." /></p>
+
+<p>The transition between the histories of <code class="highlighter-rouge">(+ (* 6 9) 12)</code> and the sub-expression <code class="highlighter-rouge">(* 6 9))</code> forms a more exiting example: we can see how each of the 4 elements of the latter relate to the history of the former, and how they fit into a larger context. Again, we show only the single transition here:</p>
+
+<p><img src="/images/movies/transition-star-6-9.gif" alt="Transition of '(* 6 9)'." /></p>
+
+<h3 id="why-bother">Why bother?</h3>
+
+<p>I believe these animations are useful for two separate reasons. First, when explaining the concepts of <em>Expressions of Change</em>, a (moving) picture says more than a 1000 words. In this case, the point that’s being explained visually is the idea of “history at any level”.</p>
+
+<p>Second, in an editor for actual use, the animations serve as a visual aid: transitioning smoothly from one history to the next really helps you keep your bearings while navigating.</p>
+
+<p>By the way, the animations in the <em>gifs</em> shown in the above are slowed down to a full 1.5 seconds for both dramatic effect and to ease understanding of what’s happening in the context of a blog-post. In an actual edit environment we’ll want to balance between too fast and too slow: the former makes it impossible to see what’s going on, the latter leads to annoying waits. I found personally found 0.5 seconds per animation to be a good trade-off:</p>
+
+<p><img src="/images/movies/normal-speed.gif" alt="Transitions at normal speed." /></p>
+
+<h3 id="explicit-notes">“Explicit” notes</h3>
+
+<p>The example animations shown in this blog-post correspond directly with the main example from the paper <a href="/assets/papers/clef-design.pdf">“Clef design”</a>.</p>
+
+<p>In that paper, we used a more explicit notation for the modifications (called “notes”): those were themselves modelled as s-expressions, rather than displayed by showing how they affect some structure.<sup id="fnref:notational-difference"><a href="#fn:notational-difference" class="footnote">3</a></sup></p>
+
+<p>If we apply the ideas of this blog-post to the notation from the paper, it looks like this:</p>
+
+<p><img src="/images/movies/transitions-clef-design.gif" alt="Full demo with &quot;Clef Design&quot; historical view." /></p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:not-diff">
+      <p>One might even be tempted to call this a “diff”, but that would suggest a primacy of <em>structure</em> rather than <em>construction</em>, i.e. it somewhat implies there are two structures first, and we simply calculate the difference. <a href="#fnref:not-diff" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:always-follow">
+      <p>In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed. <a href="#fnref:always-follow" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:notational-difference">
+      <p>In fact, the <em>Clef</em> in the demonstrations above differs from the <em>Clef</em> in the paper in one way: <code class="highlighter-rouge">(insert  ...</code> and <code class="highlighter-rouge">(delete ...</code> taking a single note, rather than a score, as an argument. <a href="#fnref:notational-difference" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+        
+            <li>
+              <span class="recent-title"><a href="/animating-history-transitions/" title="Animating history transitions">Animating history transitions </a></span>
+              <span class="date">Jun 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/source-code-published/" title="Source code published">Source code published </a></span>
+              <span class="date">May 05, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/clef-design-marbella-talk-live/" title="Talk at the European Lisp Symposium">Talk at the European Lisp S... </a></span>
+              <span class="date">Apr 19, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/european-lisp-symposium-paper-accepted/" title="ELS 2018: Paper accepted">ELS 2018: Paper accepted </a></span>
+              <span class="date">Mar 20, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/clojure-meetup/" title="Talk at Clojure Meetup">Talk at Clojure Meetup </a></span>
+              <span class="date">Mar 14, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/dont-say-homoiconic/" title="Don't say “Homoiconic”">Don't say “Homoiconic” </a></span>
+              <span class="date">Mar 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            <li><a href="https://www.linkedin.com/in/klaasvanschelven/"><span class="foot-link">© Klaas van Schelven</span></a></li>
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2018 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
