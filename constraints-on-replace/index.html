@@ -97,10 +97,17 @@
 
             <p class="intro">The operation <code class="highlighter-rouge">Replace</code> replaces a child node with a new one. This new node is recursively described using a history of changes. In this article we compare two scenarios: in one we impose the constraint that the new history must be an continuation of the history so far. In the other we don’t impose this constraint, which is to say that the new history may be anything.
 </p>
+
           </hgroup>
         </header>
 
-        <p>Before we do so, some quick pointers to important background information.</p>
+            
+            <p class="important-notice">NOTE: (June 2018): the article below describes the situation as of late 2017. Experiments with this an approach as in this article may be found in <a href="https://github.com/expressionsofchange/nerf0">“nerf0”</a>. The current situation differs in at least 2 ways from the one desribed in this article. [1]: the present version of the project has continuation-only “replace” (now called “extend”); [2]: notes are now denoted using an s-expression rather than the Pythonic notation in the below.
+</p>
+            
+
+
+        <p>Let’s start with some quick pointers to important background information.</p>
 
 <p>The context of this article is <a href="/introducing-the-editor/">an editor of s-expressions</a> in which the primitives are the mechanisms of construction rather than the resulting structures.</p>
 
