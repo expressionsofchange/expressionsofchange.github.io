@@ -1,0 +1,222 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Some future plans &#8211; Expressions of Change</title>
+<meta name="description" content="My sabbatical is ending, and I will be returning to work as a contractor. While I do so, I still intend to spend the occasional evening on the project though...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Some future plans &#8211; Expressions of Change">
+<meta property="og:description" content="My sabbatical is ending, and I will be returning to work as a contractor. While I do so, I still intend to spend the occasional evening on the project though...">
+<meta property="og:url" content="/next-steps/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/" >Home</a></li>
+            
+                <li><a href="/about/" >About</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/recent/" >All posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Some future plans</h1>
+            <p class="date">Jun 07, 2018
+
+              
+            </p>
+
+            <p class="intro">My sabbatical is ending, and I will be returning to work as a contractor. While I do so, I still intend to spend the occasional evening on the project though. In this post I describe a number of possible next steps to take by myself or other contributers.
+</p>
+
+          </hgroup>
+        </header>
+
+            
+
+
+        <h3 id="1-demonstration-of-chords">1. Demonstration of Chords</h3>
+
+<p>One important aspect of composition in <em>Expressions of Change</em> is the idea of “history at any level”. A visual demonstration of that idea has been given in <a href="/animating-history-transitions/">a previous article</a>.</p>
+
+<p>An even more direct mechanism is that of <em>Chords</em>: arbitrary hierarchical groupings of multiple related notes. The history pane of the editor already supports expansion &amp; collapsing of chords. I would like to demonstrate this in a separate post (which should include animated gifs or a video).</p>
+
+<h3 id="2-demonstration-of-static-analysis">2. Demonstration of static analysis</h3>
+
+<p>As part of <a href="https://github.com/expressionsofchange/nerf0">Nerf 0</a> I have added quite a few examples of Static Analysis, such as unused variable analysis and undefined variable analysis.</p>
+
+<p>One of the ideas of <em>Expressions of Change</em> is that the approach of the project makes it possible to say <em>when</em> an error occured as well as <em>where</em>. I would like to prove this idea “by example”.</p>
+
+<p>For this it is necessary to create a visual representation of the static analyses, as well as a visual representation of their “deltas” (such as “variable becomes defined in this change”, “variable becomes undefined in this change”).</p>
+
+<h3 id="3-demonstrate-understanding-through-refactoring">3. Demonstrate “understanding through refactoring”</h3>
+
+<p>It is one of the core tenets of <em>Expressions of Change</em> that code is in part understood in its historical context.</p>
+
+<p>To illustrate this idea, as well as illustrate some cool CS concepts, it would be nice to record a number of explanations-through-refactoring using <a href="/the-editor/">the editor</a>.</p>
+
+<p>Examples could be: the derivation of the <a href="https://mvanier.livejournal.com/2897.html">Y Combinator by Mike Vanier</a>, or <a href="https://youtu.be/44Z2buIu9cE?t=14m22s">my own explanation of the concept of a catamorphism using consecutive refactorings</a></p>
+
+<h3 id="4-animations-of-structure">4. Animations of “structure”</h3>
+
+<p><em>Expressions of Change</em> introduces a full new dimension to programming: that of the time of programming construction. One question that follows directly from this observation is: “how can we visualize this dimension for our users?”</p>
+
+<p>One answer is: by using animations, an example being the <a href="/animating-history-transitions/">animations of how various histories relate to each other</a>.</p>
+
+<p>An even more direct animation would be: animating program change itself (rather than the more traditional form of visualising program change: the diff).</p>
+
+<p>Such animations would at least provide an answer to the question: “how can be visualize that a move is just a move, rather than the combination of removing something and then re-adding it elsewhere?”</p>
+
+<h3 id="5-demonstration-of-self-applicability">5. Demonstration of self-applicability</h3>
+
+<p>I have complained in the past that modern <a href="http://www.expressionsofchange.org/self-applicability/">Version Control Systems cannot be applied to themselves</a>, i.e. that when rewriting history in Git, you lose precisely the ability to undo mistakes that Git gives you.</p>
+
+<p><em>Expressions of Change</em> does not suffer from this limitation: it is trivially possible to edit the expressions that constitute the description of history by using another layer of history.</p>
+
+<p>It would be nice to actually demonstrate this in the editor.</p>
+
+<p><a href="lightning talks zodra er weer een mooie demo te geven is dus.">//</a>: # X. ‘Loosely coupled’ static analysis</p>
+
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+        
+            <li>
+              <span class="recent-title"><a href="/animating-history-transitions/" title="Animating history transitions">Animating history transitions </a></span>
+              <span class="date">Jun 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/source-code-published/" title="Source code published">Source code published </a></span>
+              <span class="date">May 05, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/clef-design-marbella-talk-live/" title="Talk at the European Lisp Symposium">Talk at the European Lisp S... </a></span>
+              <span class="date">Apr 19, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/european-lisp-symposium-paper-accepted/" title="ELS 2018: Paper accepted">ELS 2018: Paper accepted </a></span>
+              <span class="date">Mar 20, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/clojure-meetup/" title="Talk at Clojure Meetup">Talk at Clojure Meetup </a></span>
+              <span class="date">Mar 14, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/dont-say-homoiconic/" title="Don't say “Homoiconic”">Don't say “Homoiconic” </a></span>
+              <span class="date">Mar 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            <li><a href="https://www.linkedin.com/in/klaasvanschelven/"><span class="foot-link">© Klaas van Schelven</span></a></li>
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2018 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
