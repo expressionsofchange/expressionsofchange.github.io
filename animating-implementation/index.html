@@ -1,0 +1,392 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Animating history: Implementation &#8211; Expressions of Change</title>
+<meta name="description" content="In the previous article we have seen how we can show animations in the history pane of the editor to subtly illustrate how the construction of different leve...">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Animating history: Implementation &#8211; Expressions of Change">
+<meta property="og:description" content="In the previous article we have seen how we can show animations in the history pane of the editor to subtly illustrate how the construction of different leve...">
+<meta property="og:url" content="/animating-implementation/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/" >Home</a></li>
+            
+                <li><a href="/about/" >About</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/recent/" >All posts</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Animating history: Implementation</h1>
+            <p class="date">Oct 16, 2018
+
+              
+                  
+                      — Tags:
+                      
+                      <a href="/the-editor/">The editor</a>
+                      
+                      
+                  
+              
+            </p>
+
+            <p class="intro">In the previous article we have seen how we can show animations in the history pane of the editor to subtly illustrate how the construction of different levels of our program relate to each other. Here we provide some notes on these animations are implemented.
+</p>
+
+          </hgroup>
+        </header>
+
+            
+
+
+        <h2 id="what-are-history-animations">What are history-animations?</h2>
+
+<p>History-animations build on the following feature (one that was already existing):
+whenever we select an s-expression in our “tree” (the structural
+view on the right hand side of the window) we show the history of that
+particular s-expression in the panel on the left. That is, whenever we change the cursor in
+the tree, we switch what is shown in the history.</p>
+
+<p>The animation under discussion: any part of history that shows up both before
+and after this switch will “float” from its pre-switch position to its
+post-switch position in a number of steps. The idea is to make it visually more
+clear that there is a relationship between the histories at different levels of
+the tree.</p>
+
+<p>More details and examples can be found in a <a href="/animating-history-transitions/">separate
+article</a>. In the present article we’ll zoom in
+on the implementation.</p>
+
+<p>The current version of the editor supports 2 versions of rendering histories:
+one in which the histories are rendered as s-expressions themselves, as
+presented in the paper <a href="/assets/papers/clef-design.pdf">the paper “Clef
+Design”</a>; one in which the effects of each note
+are shown in the context of the structure on which it is played (i.e.: more
+like a traditional rendering of a <em>diff</em>). Animations of transitions are
+implemented for both of these; where the implementations diverge this will be
+pointed out in the below.</p>
+
+<h2 id="identity-of-notes-and-textures">Identity of notes and textures</h2>
+
+<p>The key idea in the animations is to float textures from some pre-switch to a
+post-switch location. This hinges on the assumption that we have a shared
+identity for the textures pre- and post-switch. E.g. to float some open-bracket
+from one location to the next, we need to know which open-bracket we’re talking
+about (there are many, and they look very similar).</p>
+
+<p>Note that the particular animation under consideration is the following: when
+swichting which part of our structural view (the “tree”) is selected, update
+the historical view.</p>
+
+<p>Thus, the assumption of shared identity, in this case, is: there is overlap
+between the histories of different parts of our tree. For each of the elements
+(notes) of the history we can establish an identity, and when viewing a
+different history, we can establish whether any two notes across these two
+histories are the same one, i.e. share this identity.</p>
+
+<p>The fact that parts of histories are shared across different parts of our
+structure is detailed in <a href="/assets/papers/clef-design.pdf">the paper “Clef
+Design”</a></p>
+
+<p>In terms of the implementation, the solution is to have some addressing scheme
+for the textures that is global in the sense that it is shared between the
+pre-and post-switch environments.  Using this addressing scheme we can identify
+textures: same address means same texture.</p>
+
+<p>Such an addressing scheme for textures is obtained in a number of steps.</p>
+
+<h3 id="noteaddress">NoteAddress</h3>
+
+<p>The first step is to annotate each note in the “global history” (the history of
+the whole tree) in such a way that we can uniquely identify each note.
+<a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L154">Implementation</a>
+and
+<a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L161">calling</a>
+<a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/ic_history.py#L322">locations</a></p>
+
+<p>The formalization of the note-address is implemented in the class <a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1d5e166565519b1c910afdce8d19c/dsn/s_expr/note_address.py#L6"><code class="highlighter-rouge">NoteAddress</code></a></p>
+
+<p>The intuition here is: when the whole history is written out as an expression,
+the address of a particular note is a path trough that expression. An example
+could be: of the global score, take the 6th item; of that item take the only
+child, of that item again take the only child. The 2 main possible parts of such
+paths are: the <em>nth</em> item of a Score, and the only child. <a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1d5e166565519b1c910afdce8d19c/doctests/note_address.txt">The
+doctests</a>
+provide further details.</p>
+
+<h3 id="push-global-noteaddress-to-the-tree">Push global NoteAddress to the tree</h3>
+
+<p>In the second step, we construct a tree by playing this global history of notes,
+annotated with their global address
+(<a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L163">here</a>
+and
+<a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/ic_history.py#L324">here</a>).
+We use the regular mechanism of playing a score to get a tree (<a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L167">This
+one</a>
+– in fact, it’s not 100% identical for implementation reasons, as documented
+in the code, but in terms of behavior it is). The only difference is: because the
+input Notes have now been annotated with a global address, the scores as
+constructed at each sub-expression in the resulting tree are now consisting of
+notes which have a global address. This means that when we fetch the “local
+score” (the score to be rendered) we have information about the global address
+of each note.</p>
+
+<h3 id="texture-addresses">Texture-addresses</h3>
+
+<p>Finally, we make sure to keep the annotations around in each step of the
+conversion to textures, as well as add conversion-specific information when
+needed. The implementations of this final step are unique for each of the two
+different styles of rendering.</p>
+
+<h4 id="els18-style-rendering">ELS’18 style rendering</h4>
+
+<p>In the case rendering of in the style of the ELS’18 paper, the tree of notes is
+first converted to an s-expr, and these s-expressions are then converted to the
+actual textures with locations.</p>
+
+<p>We need step-specific address information for each of these steps. When converting to
+an s-expression, we annotate the elements that are specific to the fact that the
+note is being rendered as an s-expression (i.e. the fact that the Note’s fields
+and its type, when converted to an s-expression, turn into particular
+further s-expressions). <a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L31">Let’s consider the case of <code class="highlighter-rouge">become-atom</code> as an
+example</a>:
+when the note <code class="highlighter-rouge">(become-atom foo)</code> is represented as an s-expression the whole
+s-expression is annotated as representing the whole note (by not providing any
+further annotation), the atom <code class="highlighter-rouge">become-atom</code> is annotated as being the name of
+the note, and the atom <code class="highlighter-rouge">foo</code> is annotated as being the field <code class="highlighter-rouge">atom</code> of that
+note.</p>
+
+<p>When converting these s-expressions to textures similar further annotations
+are necessary. For example: a list-expression is rendered as 2 textures, one
+for <a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L348">each</a> <a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L361">bracket</a></p>
+
+<p>A particular property of this style of rendering histories, is that the
+recursive nature of the histories is preserved in the rendering. That is: a note
+may contain further notes; when the note is rendered, the notes it contains are
+also rendered.</p>
+
+<p>With regards to the assignment of addresses to textures, the implication is
+straightforward: each rendered note is assigned with the address of that
+particular note.</p>
+
+<p>An example is drawn below: if the chord below is the item at position 1 in some
+other history, the children of that chord are at some subpath.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
+^       ^                        ^
+|       |                        |
+(@1) (@1, @0)                 (@1, @1)
+</code></pre>
+</div>
+
+<p>The effect of this approach on the animation is precisely as intended: when
+switching from a larger context to a smaller one, the “surrounding” notes that
+are not applicable in the smaller context float out of view; but those that are
+applicable in both views (the inner ones), float from their old position on the
+screen to the new one. (The reverse applies when switching from a smaller
+context to one surrounding it)</p>
+
+<p><img src="/images/movies/transitions-clef-design.gif" alt="Surrounding context disappears." /></p>
+
+<h4 id="ic-history">IC History</h4>
+
+<p>Another way of rendering notes is by rendering them “in their structural
+context”. That is: by showing their effect on the existing structure on which
+they are being played. This is how <em>diffs</em> are traditionally displayed.</p>
+
+<p>In this view, the recursive nature of notes is not made explicit.  For each note
+in some list of notes (for example: those that make up a single score), the
+effect of each indivual note on a structure are grouped together. The fact each
+such note may itself be composed of any number of other notes is left implict.</p>
+
+<p>Thus, when switching from a larger historical context to a smaller one, it is
+not the case that some surrounding <em>notes</em> disappear, while notes contained by
+them remain in view.</p>
+
+<p>There simply is no direct rendering of notes in this view: everything that is
+rendered is a structure and some effects on that structure. This means that any
+addressing must also apply to such structures. And that any floating of related
+elements is always floating of some structural element.</p>
+
+<p>It is at this structural level that a similar effect as in the above, of
+surrounding context disappearing, can be seen: when switching to a smaller
+structural context, less surrounding structure is shown in the in-context
+rendering of history, and vise versa for switching to a larger, surrounding,
+context:</p>
+
+<p><img src="/images/movies/transition-9.gif" alt="Transition of '9'." /></p>
+
+<p>The implentation details are in the implementing class,
+<a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1/dsn/s_expr/in_context_display.py#L45"><code class="highlighter-rouge">ICHAddress</code></a>.</p>
+
+<p>The mixing of ‘construction’ and ‘structure’ is reflected in the address of the
+rendered elements; each rendered element is denoted first by the note which it
+represents (in terms of a <code class="highlighter-rouge">NoteAddress</code>), and second by an address (<code class="highlighter-rouge">t_address</code>,
+for stability over time) in the tree. (further steps in the rendering chain add
+further details, i.e.  <code class="highlighter-rouge">icd_specific</code> and <code class="highlighter-rouge">render_specific</code>)</p>
+
+<p>One final caveat: the NoteAddress <code class="highlighter-rouge">NoteAddress</code> part of this <code class="highlighter-rouge">ICHAddress</code> is
+always the address of the <a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1/widgets/ic_history.py#L91">deepest</a> (leaf-most) possible note. For example, when
+rendering the note <code class="highlighter-rouge">(extend 0 (insert 0 (become-list)))</code>, the address of
+<code class="highlighter-rouge">(become-list)</code> is used in the <code class="highlighter-rouge">ICHAddress</code>.  This ensures we have a singular
+identity across context-switches. (It is only this deepest NoteAddress that can
+be relied on to always be availalble).</p>
+
+<h3 id="the-animation">The animation</h3>
+
+<p>The actual animation is rather straightforward: do a linear interpolation for
+(source, target) for the attributes (x, y, alpha).</p>
+
+<p>We set a clock at an interval (I’ve set 1/60, but I’m not actually getting this
+<em>at all</em> on my local machine).  Kivy will tell you how much time has actually
+passed since the last tick. We then calculate the fraction <code class="highlighter-rouge">dt / remaining_time</code>.
+This approach is automatically robust for missed frames (i.e. the missed frame
+will not be rendered, but the total animation time and the position of the
+texture at the next frame are unaffected)</p>
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+        
+            <li>
+              <span class="recent-title"><a href="/animating-implementation/" title="Animating history: Implementation">Animating history: Implemen... </a></span>
+              <span class="date">Oct 16, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/animating-history-transitions/" title="Animating history transitions">Animating history transitions </a></span>
+              <span class="date">Jun 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/source-code-published/" title="Source code published">Source code published </a></span>
+              <span class="date">May 05, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/clef-design-marbella-talk-live/" title="Talk at the European Lisp Symposium">Talk at the European Lisp S... </a></span>
+              <span class="date">Apr 19, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/european-lisp-symposium-paper-accepted/" title="ELS 2018: Paper accepted">ELS 2018: Paper accepted </a></span>
+              <span class="date">Mar 20, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/clojure-meetup/" title="Talk at Clojure Meetup">Talk at Clojure Meetup </a></span>
+              <span class="date">Mar 14, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            <li><a href="https://www.linkedin.com/in/klaasvanschelven/"><span class="foot-link">© Klaas van Schelven</span></a></li>
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2018 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+
