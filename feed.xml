@@ -4,13 +4,233 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-06-01T12:03:02+02:00</updated>
+<updated>2018-10-16T22:16:19+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Animating history: Implementation]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/animating-implementation/" />
+  <id>http://www.expressionsofchange.org/animating-implementation</id>
+  <published>2018-10-16T00:00:00+02:00</published>
+  <updated>2018-10-16T00:00:00+02:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;h2 id=&quot;what-are-history-animations&quot;&gt;What are history-animations?&lt;/h2&gt;
+
+&lt;p&gt;History-animations build on the following feature (one that was already existing):
+whenever we select an s-expression in our “tree” (the structural
+view on the right hand side of the window) we show the history of that
+particular s-expression in the panel on the left. That is, whenever we change the cursor in
+the tree, we switch what is shown in the history.&lt;/p&gt;
+
+&lt;p&gt;The animation under discussion: any part of history that shows up both before
+and after this switch will “float” from its pre-switch position to its
+post-switch position in a number of steps. The idea is to make it visually more
+clear that there is a relationship between the histories at different levels of
+the tree.&lt;/p&gt;
+
+&lt;p&gt;More details and examples can be found in a &lt;a href=&quot;/animating-history-transitions/&quot;&gt;separate
+article&lt;/a&gt;. In the present article we’ll zoom in
+on the implementation.&lt;/p&gt;
+
+&lt;p&gt;The current version of the editor supports 2 versions of rendering histories:
+one in which the histories are rendered as s-expressions themselves, as
+presented in the paper &lt;a href=&quot;/assets/papers/clef-design.pdf&quot;&gt;the paper “Clef
+Design”&lt;/a&gt;; one in which the effects of each note
+are shown in the context of the structure on which it is played (i.e.: more
+like a traditional rendering of a &lt;em&gt;diff&lt;/em&gt;). Animations of transitions are
+implemented for both of these; where the implementations diverge this will be
+pointed out in the below.&lt;/p&gt;
+
+&lt;h2 id=&quot;identity-of-notes-and-textures&quot;&gt;Identity of notes and textures&lt;/h2&gt;
+
+&lt;p&gt;The key idea in the animations is to float textures from some pre-switch to a
+post-switch location. This hinges on the assumption that we have a shared
+identity for the textures pre- and post-switch. E.g. to float some open-bracket
+from one location to the next, we need to know which open-bracket we’re talking
+about (there are many, and they look very similar).&lt;/p&gt;
+
+&lt;p&gt;Note that the particular animation under consideration is the following: when
+swichting which part of our structural view (the “tree”) is selected, update
+the historical view.&lt;/p&gt;
+
+&lt;p&gt;Thus, the assumption of shared identity, in this case, is: there is overlap
+between the histories of different parts of our tree. For each of the elements
+(notes) of the history we can establish an identity, and when viewing a
+different history, we can establish whether any two notes across these two
+histories are the same one, i.e. share this identity.&lt;/p&gt;
+
+&lt;p&gt;The fact that parts of histories are shared across different parts of our
+structure is detailed in &lt;a href=&quot;/assets/papers/clef-design.pdf&quot;&gt;the paper “Clef
+Design”&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In terms of the implementation, the solution is to have some addressing scheme
+for the textures that is global in the sense that it is shared between the
+pre-and post-switch environments.  Using this addressing scheme we can identify
+textures: same address means same texture.&lt;/p&gt;
+
+&lt;p&gt;Such an addressing scheme for textures is obtained in a number of steps.&lt;/p&gt;
+
+&lt;h3 id=&quot;noteaddress&quot;&gt;NoteAddress&lt;/h3&gt;
+
+&lt;p&gt;The first step is to annotate each note in the “global history” (the history of
+the whole tree) in such a way that we can uniquely identify each note.
+&lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L154&quot;&gt;Implementation&lt;/a&gt;
+and
+&lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L161&quot;&gt;calling&lt;/a&gt;
+&lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/ic_history.py#L322&quot;&gt;locations&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The formalization of the note-address is implemented in the class &lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1d5e166565519b1c910afdce8d19c/dsn/s_expr/note_address.py#L6&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NoteAddress&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The intuition here is: when the whole history is written out as an expression,
+the address of a particular note is a path trough that expression. An example
+could be: of the global score, take the 6th item; of that item take the only
+child, of that item again take the only child. The 2 main possible parts of such
+paths are: the &lt;em&gt;nth&lt;/em&gt; item of a Score, and the only child. &lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1d5e166565519b1c910afdce8d19c/doctests/note_address.txt&quot;&gt;The
+doctests&lt;/a&gt;
+provide further details.&lt;/p&gt;
+
+&lt;h3 id=&quot;push-global-noteaddress-to-the-tree&quot;&gt;Push global NoteAddress to the tree&lt;/h3&gt;
+
+&lt;p&gt;In the second step, we construct a tree by playing this global history of notes,
+annotated with their global address
+(&lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L163&quot;&gt;here&lt;/a&gt;
+and
+&lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/ic_history.py#L324&quot;&gt;here&lt;/a&gt;).
+We use the regular mechanism of playing a score to get a tree (&lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L167&quot;&gt;This
+one&lt;/a&gt;
+– in fact, it’s not 100% identical for implementation reasons, as documented
+in the code, but in terms of behavior it is). The only difference is: because the
+input Notes have now been annotated with a global address, the scores as
+constructed at each sub-expression in the resulting tree are now consisting of
+notes which have a global address. This means that when we fetch the “local
+score” (the score to be rendered) we have information about the global address
+of each note.&lt;/p&gt;
+
+&lt;h3 id=&quot;texture-addresses&quot;&gt;Texture-addresses&lt;/h3&gt;
+
+&lt;p&gt;Finally, we make sure to keep the annotations around in each step of the
+conversion to textures, as well as add conversion-specific information when
+needed. The implementations of this final step are unique for each of the two
+different styles of rendering.&lt;/p&gt;
+
+&lt;h4 id=&quot;els18-style-rendering&quot;&gt;ELS’18 style rendering&lt;/h4&gt;
+
+&lt;p&gt;In the case rendering of in the style of the ELS’18 paper, the tree of notes is
+first converted to an s-expr, and these s-expressions are then converted to the
+actual textures with locations.&lt;/p&gt;
+
+&lt;p&gt;We need step-specific address information for each of these steps. When converting to
+an s-expression, we annotate the elements that are specific to the fact that the
+note is being rendered as an s-expression (i.e. the fact that the Note’s fields
+and its type, when converted to an s-expression, turn into particular
+further s-expressions). &lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L31&quot;&gt;Let’s consider the case of &lt;code class=&quot;highlighter-rouge&quot;&gt;become-atom&lt;/code&gt; as an
+example&lt;/a&gt;:
+when the note &lt;code class=&quot;highlighter-rouge&quot;&gt;(become-atom foo)&lt;/code&gt; is represented as an s-expression the whole
+s-expression is annotated as representing the whole note (by not providing any
+further annotation), the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;become-atom&lt;/code&gt; is annotated as being the name of
+the note, and the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;foo&lt;/code&gt; is annotated as being the field &lt;code class=&quot;highlighter-rouge&quot;&gt;atom&lt;/code&gt; of that
+note.&lt;/p&gt;
+
+&lt;p&gt;When converting these s-expressions to textures similar further annotations
+are necessary. For example: a list-expression is rendered as 2 textures, one
+for &lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L348&quot;&gt;each&lt;/a&gt; &lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L361&quot;&gt;bracket&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;A particular property of this style of rendering histories, is that the
+recursive nature of the histories is preserved in the rendering. That is: a note
+may contain further notes; when the note is rendered, the notes it contains are
+also rendered.&lt;/p&gt;
+
+&lt;p&gt;With regards to the assignment of addresses to textures, the implication is
+straightforward: each rendered note is assigned with the address of that
+particular note.&lt;/p&gt;
+
+&lt;p&gt;An example is drawn below: if the chord below is the item at position 1 in some
+other history, the children of that chord are at some subpath.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
+^       ^                        ^
+|       |                        |
+(@1) (@1, @0)                 (@1, @1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The effect of this approach on the animation is precisely as intended: when
+switching from a larger context to a smaller one, the “surrounding” notes that
+are not applicable in the smaller context float out of view; but those that are
+applicable in both views (the inner ones), float from their old position on the
+screen to the new one. (The reverse applies when switching from a smaller
+context to one surrounding it)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/movies/transitions-clef-design.gif&quot; alt=&quot;Surrounding context disappears.&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;ic-history&quot;&gt;IC History&lt;/h4&gt;
+
+&lt;p&gt;Another way of rendering notes is by rendering them “in their structural
+context”. That is: by showing their effect on the existing structure on which
+they are being played. This is how &lt;em&gt;diffs&lt;/em&gt; are traditionally displayed.&lt;/p&gt;
+
+&lt;p&gt;In this view, the recursive nature of notes is not made explicit.  For each note
+in some list of notes (for example: those that make up a single score), the
+effect of each indivual note on a structure are grouped together. The fact each
+such note may itself be composed of any number of other notes is left implict.&lt;/p&gt;
+
+&lt;p&gt;Thus, when switching from a larger historical context to a smaller one, it is
+not the case that some surrounding &lt;em&gt;notes&lt;/em&gt; disappear, while notes contained by
+them remain in view.&lt;/p&gt;
+
+&lt;p&gt;There simply is no direct rendering of notes in this view: everything that is
+rendered is a structure and some effects on that structure. This means that any
+addressing must also apply to such structures. And that any floating of related
+elements is always floating of some structural element.&lt;/p&gt;
+
+&lt;p&gt;It is at this structural level that a similar effect as in the above, of
+surrounding context disappearing, can be seen: when switching to a smaller
+structural context, less surrounding structure is shown in the in-context
+rendering of history, and vise versa for switching to a larger, surrounding,
+context:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/movies/transition-9.gif&quot; alt=&quot;Transition of '9'.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The implentation details are in the implementing class,
+&lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1/dsn/s_expr/in_context_display.py#L45&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ICHAddress&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The mixing of ‘construction’ and ‘structure’ is reflected in the address of the
+rendered elements; each rendered element is denoted first by the note which it
+represents (in terms of a &lt;code class=&quot;highlighter-rouge&quot;&gt;NoteAddress&lt;/code&gt;), and second by an address (&lt;code class=&quot;highlighter-rouge&quot;&gt;t_address&lt;/code&gt;,
+for stability over time) in the tree. (further steps in the rendering chain add
+further details, i.e.  &lt;code class=&quot;highlighter-rouge&quot;&gt;icd_specific&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;render_specific&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;One final caveat: the NoteAddress &lt;code class=&quot;highlighter-rouge&quot;&gt;NoteAddress&lt;/code&gt; part of this &lt;code class=&quot;highlighter-rouge&quot;&gt;ICHAddress&lt;/code&gt; is
+always the address of the &lt;a href=&quot;https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1/widgets/ic_history.py#L91&quot;&gt;deepest&lt;/a&gt; (leaf-most) possible note. For example, when
+rendering the note &lt;code class=&quot;highlighter-rouge&quot;&gt;(extend 0 (insert 0 (become-list)))&lt;/code&gt;, the address of
+&lt;code class=&quot;highlighter-rouge&quot;&gt;(become-list)&lt;/code&gt; is used in the &lt;code class=&quot;highlighter-rouge&quot;&gt;ICHAddress&lt;/code&gt;.  This ensures we have a singular
+identity across context-switches. (It is only this deepest NoteAddress that can
+be relied on to always be availalble).&lt;/p&gt;
+
+&lt;h3 id=&quot;the-animation&quot;&gt;The animation&lt;/h3&gt;
+
+&lt;p&gt;The actual animation is rather straightforward: do a linear interpolation for
+(source, target) for the attributes (x, y, alpha).&lt;/p&gt;
+
+&lt;p&gt;We set a clock at an interval (I’ve set 1/60, but I’m not actually getting this
+&lt;em&gt;at all&lt;/em&gt; on my local machine).  Kivy will tell you how much time has actually
+passed since the last tick. We then calculate the fraction &lt;code class=&quot;highlighter-rouge&quot;&gt;dt / remaining_time&lt;/code&gt;.
+This approach is automatically robust for missed frames (i.e. the missed frame
+will not be rendered, but the total animation time and the position of the
+texture at the next frame are unaffected)&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/animating-implementation/&quot;&gt;Animating history: Implementation&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on October 16, 2018.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -48,11 +268,11 @@
 
 &lt;p&gt;The simplest example of such a relationship is the one between the history of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt; (a trivial history, consisting only of its creation) and the history of the whole expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(+ (* 6 9) 12)&lt;/code&gt;. When we switch from the former to the latter, we see two additional types of information: first, we see that the creation of the &lt;code class=&quot;highlighter-rouge&quot;&gt;9&lt;/code&gt; is preceded by the construction of the rest of the expression beginning with the creation of the list &lt;code class=&quot;highlighter-rouge&quot;&gt;()&lt;/code&gt; and ending with the addition of the atom &lt;code class=&quot;highlighter-rouge&quot;&gt;12&lt;/code&gt;. Second, we see where it fits into the greater expression, i.e. to the right of the &lt;code class=&quot;highlighter-rouge&quot;&gt;6&lt;/code&gt; and left of a closing bracket. Here this single transition is singled out:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/movies/transition-9.gif&quot; alt=&quot;Transition of &#39;9&#39;.&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/movies/transition-9.gif&quot; alt=&quot;Transition of '9'.&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The transition between the histories of &lt;code class=&quot;highlighter-rouge&quot;&gt;(+ (* 6 9) 12)&lt;/code&gt; and the sub-expression &lt;code class=&quot;highlighter-rouge&quot;&gt;(* 6 9))&lt;/code&gt; forms a more exiting example: we can see how each of the 4 elements of the latter relate to the history of the former, and how they fit into a larger context. Again, we show only the single transition here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/movies/transition-star-6-9.gif&quot; alt=&quot;Transition of &#39;(* 6 9)&#39;.&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/movies/transition-star-6-9.gif&quot; alt=&quot;Transition of '(* 6 9)'.&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;why-bother&quot;&gt;Why bother?&lt;/h3&gt;
 
@@ -77,13 +297,13 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:not-diff&quot;&gt;
-      &lt;p&gt;One might even be tempted to call this a “diff”, but that would suggest a primacy of &lt;em&gt;structure&lt;/em&gt; rather than &lt;em&gt;construction&lt;/em&gt;, i.e. it somewhat implies there are two structures first, and we simply calculate the difference. &lt;a href=&quot;#fnref:not-diff&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;One might even be tempted to call this a “diff”, but that would suggest a primacy of &lt;em&gt;structure&lt;/em&gt; rather than &lt;em&gt;construction&lt;/em&gt;, i.e. it somewhat implies there are two structures first, and we simply calculate the difference.&amp;nbsp;&lt;a href=&quot;#fnref:not-diff&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:always-follow&quot;&gt;
-      &lt;p&gt;In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed. &lt;a href=&quot;#fnref:always-follow&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed.&amp;nbsp;&lt;a href=&quot;#fnref:always-follow&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:notational-difference&quot;&gt;
-      &lt;p&gt;In fact, the &lt;em&gt;Clef&lt;/em&gt; in the demonstrations above differs from the &lt;em&gt;Clef&lt;/em&gt; in the paper in one way: &lt;code class=&quot;highlighter-rouge&quot;&gt;(insert  ...&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;(delete ...&lt;/code&gt; taking a single note, rather than a score, as an argument. &lt;a href=&quot;#fnref:notational-difference&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;In fact, the &lt;em&gt;Clef&lt;/em&gt; in the demonstrations above differs from the &lt;em&gt;Clef&lt;/em&gt; in the paper in one way: &lt;code class=&quot;highlighter-rouge&quot;&gt;(insert  ...&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;(delete ...&lt;/code&gt; taking a single note, rather than a score, as an argument.&amp;nbsp;&lt;a href=&quot;#fnref:notational-difference&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -130,7 +350,7 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:nerf-explained&quot;&gt;
-      &lt;p&gt;“nerf”, the Dutch word for wood grain, is yet another metaphore of how the mechanism of growth has a direct effect on the grown product. &lt;a href=&quot;#fnref:nerf-explained&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;“nerf”, the Dutch word for wood grain, is yet another metaphore of how the mechanism of growth has a direct effect on the grown product.&amp;nbsp;&lt;a href=&quot;#fnref:nerf-explained&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -396,16 +616,16 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:trac-footnote&quot;&gt;
-      &lt;p&gt;A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on &lt;em&gt;semiotics&lt;/em&gt;, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time. &lt;a href=&quot;#fnref:trac-footnote&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on &lt;em&gt;semiotics&lt;/em&gt;, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time.&amp;nbsp;&lt;a href=&quot;#fnref:trac-footnote&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:sicp-meta-circular&quot;&gt;
-      &lt;p&gt;The definition in the influential &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt;, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice. &lt;a href=&quot;#fnref:sicp-meta-circular&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;The definition in the influential &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt;, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice.&amp;nbsp;&lt;a href=&quot;#fnref:sicp-meta-circular&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:lisp-not-homoiconic&quot;&gt;
-      &lt;p&gt;In fact, the original article &lt;em&gt;excludes&lt;/em&gt; Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).” &lt;a href=&quot;#fnref:lisp-not-homoiconic&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;In fact, the original article &lt;em&gt;excludes&lt;/em&gt; Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).”&amp;nbsp;&lt;a href=&quot;#fnref:lisp-not-homoiconic&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:what-is-internal&quot;&gt;
-      &lt;p&gt;Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings &lt;em&gt;by definition&lt;/em&gt;; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU. &lt;a href=&quot;#fnref:what-is-internal&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings &lt;em&gt;by definition&lt;/em&gt;; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU.&amp;nbsp;&lt;a href=&quot;#fnref:what-is-internal&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -546,7 +766,7 @@
 
 &lt;p&gt;The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt; at each node. The algorithm calculates the sum of these numbers:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -558,7 +778,7 @@
 
 &lt;p&gt;&lt;a name=&quot;pretty_print&quot;&gt;&lt;/a&gt;This function is also provided in sketched form in Python (we leave out some details):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;(&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;)&quot;&lt;/span&gt;
 
@@ -586,7 +806,7 @@
 
 &lt;p&gt;The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but the node being passed to it has as its children not further nodes, but the results of recursive application.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt;
@@ -747,7 +967,7 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:more-about-catamorphisms&quot;&gt;
-      &lt;p&gt;The canonical introduction is &lt;a href=&quot;https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w&quot;&gt;Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire&lt;/a&gt;, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by &lt;a href=&quot;https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/&quot;&gt;Bartosz Milewski&lt;/a&gt; is also excellent. &lt;a href=&quot;#fnref:more-about-catamorphisms&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;The canonical introduction is &lt;a href=&quot;https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w&quot;&gt;Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire&lt;/a&gt;, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by &lt;a href=&quot;https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/&quot;&gt;Bartosz Milewski&lt;/a&gt; is also excellent.&amp;nbsp;&lt;a href=&quot;#fnref:more-about-catamorphisms&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -882,10 +1102,10 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:sicp-form-analysis&quot;&gt;
-      &lt;p&gt;This is not a unique idea; it is, for example, explored in quite some detail in the &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt; in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328. &lt;a href=&quot;#fnref:sicp-form-analysis&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;This is not a unique idea; it is, for example, explored in quite some detail in the &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt; in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328.&amp;nbsp;&lt;a href=&quot;#fnref:sicp-form-analysis&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:object&quot;&gt;
-      &lt;p&gt;How such an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc. &lt;a href=&quot;#fnref:object&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;How such an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc.&amp;nbsp;&lt;a href=&quot;#fnref:object&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -943,7 +1163,7 @@
 
 &lt;p&gt;As an example, given this definition, consider the following s-expression:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+&lt;div class=&quot;language-scheme highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;factorial&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1033,7 +1253,7 @@
     <uri>http://www.expressionsofchange.org</uri>
     <email>klaas@vanschelven.com</email>
   </author>
-  <content type="html">&lt;p&gt;Before we do so, some quick pointers to important background information.&lt;/p&gt;
+  <content type="html">&lt;p&gt;Let’s start with some quick pointers to important background information.&lt;/p&gt;
 
 &lt;p&gt;The context of this article is &lt;a href=&quot;/introducing-the-editor/&quot;&gt;an editor of s-expressions&lt;/a&gt; in which the primitives are the mechanisms of construction rather than the resulting structures.&lt;/p&gt;
 
@@ -1379,7 +1599,7 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:t-addresses-everywhere-is-not-possible&quot;&gt;
-      &lt;p&gt;One might be tempted to take t-addresses as the basis of modeling of the 3 operations if it is indeed a useful representation. Note however that for insertions we always need the s-address, and hence such a model would lead to an inconsistant mix of s-addresses and t-addresses in the operations. &lt;a href=&quot;#fnref:t-addresses-everywhere-is-not-possible&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;One might be tempted to take t-addresses as the basis of modeling of the 3 operations if it is indeed a useful representation. Note however that for insertions we always need the s-address, and hence such a model would lead to an inconsistant mix of s-addresses and t-addresses in the operations.&amp;nbsp;&lt;a href=&quot;#fnref:t-addresses-everywhere-is-not-possible&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -1403,7 +1623,7 @@
 
 &lt;p&gt;The concept is best explained using an example. Consider the following output of &lt;code class=&quot;highlighter-rouge&quot;&gt;git show&lt;/code&gt;, which shows a change to a piece of Python code:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;commit 9dadc2.........
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;commit 9dadc2.........
 Author: ......
 Date: ......
 
@@ -1411,7 +1631,7 @@ Date: ......
     
     These methods are moved from OneClass to AnotherClass, as the latter
     is the correct location because of some reasons that would certainly
-    exist if this wasn&#39;t a toy example.
+    exist if this wasn't a toy example.
 
 &lt;span class=&quot;gh&quot;&gt;diff --git a/example.py b/example.py
 index 1cde8fb..f487c7e 100644
@@ -1456,7 +1676,7 @@ index 1cde8fb..f487c7e 100644
 
 &lt;h4 id=&quot;before-the-commit&quot;&gt;Before the commit:&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
      &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
          &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_a ...&lt;/span&gt;
  
@@ -1478,7 +1698,7 @@ index 1cde8fb..f487c7e 100644
 
 &lt;h4 id=&quot;after-the-commit&quot;&gt;After the commit:&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
          &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
              &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_a ...&lt;/span&gt;
      
@@ -1528,7 +1748,7 @@ index 1cde8fb..f487c7e 100644
 
 &lt;p&gt;A more regular occurrence is a diff like the below:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/example.py
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/example.py
 &lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ b/example.py
 &lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -1,3 +1,8 @@
 &lt;/span&gt; @decorated_function
@@ -1548,7 +1768,7 @@ index 1cde8fb..f487c7e 100644
 
 &lt;p&gt;A final example uses lists, in which it would be more logical to show the earlier opening bracket as the new addition. Such an approach would lead to a diff with balanced brackets, as opposed to the close-then-open we get now:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/matrix.py
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/matrix.py
 &lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ b/matrix.py
 &lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -5,6 +5,11 @@ matrix = [
 &lt;/span&gt;         3,
@@ -1580,7 +1800,7 @@ index 1cde8fb..f487c7e 100644
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:or-any-text-based-vcs&quot;&gt;
-      &lt;p&gt;Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control. &lt;a href=&quot;#fnref:or-any-text-based-vcs&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control.&amp;nbsp;&lt;a href=&quot;#fnref:or-any-text-based-vcs&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -1636,207 +1856,6 @@ index 1cde8fb..f487c7e 100644
 &lt;p&gt;Stay tuned for further updates.&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/september-status-update/&quot;&gt;September status update&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on September 12, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Ship of Theseus]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/ship-of-theseus/" />
-  <id>http://www.expressionsofchange.org/ship-of-theseus</id>
-  <published>2017-07-12T00:00:00+02:00</published>
-  <updated>2017-07-12T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;In the original form of the riddle the mythological hero &lt;a href=&quot;https://en.wikipedia.org/wiki/Theseus&quot;&gt;Theseus&lt;/a&gt; returns to Athens on a ship after defeating a monster, the Minotaur.  After his return, the Athenians preserve his ship for many centuries so that it may serve a role in religious ceremonies. Over the years they replace the planks one by one as they are affected by rot.&lt;/p&gt;
-
-&lt;p&gt;The puzzle is: at some point all planks of the ship have been replaced. Is it still the same ship as before? Is it still Theseus ship?&lt;/p&gt;
-
-&lt;p&gt;The paradoxical nature of the thought experiment seems to arise as such: Repairing objects, in this case by replacing a single plank, does not fundamentally alter their identity. If the ship was Theseus ship before the repair, it clearly is Theseus ship after the repair too. After many such repairs however, the original ship and the ship with all planks replaced have nothing in common. How can two things that have nothing in common be the same? Is a thing not that out of which it consists?&lt;/p&gt;
-
-&lt;p&gt;Before answering, consider a variation on the theme, as put forward by Thomas Hobbes:&lt;/p&gt;
-
-&lt;p&gt;In Hobbes’ variation, we use the planks that are taken away from the original ship to construct a new ship. After all planks have been replaced, we have 2 ships: one which started out as the original, but had each plank replaced, and one which consists entirely of the original planks. Which of these ships is Theseus ship? If it is the newly constructed one, at which point is the identity transferred?&lt;/p&gt;
-
-&lt;h2 id=&quot;potential-solutions&quot;&gt;Potential solutions&lt;/h2&gt;
-
-&lt;p&gt;Since the Ship of Theseus is an ancient thought experiment, numerous solutions have been put forth over time. We explore some of them and their ramifications below.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;A thing is (exclusively) its parts&lt;/strong&gt; — in this solution, the ship of Theseus is exclusively the planks out of which it was originally made. In the original version, by replacing the planks, the ship slowly dissolves over time. After 40% of the planks have been replaced, we can only speak of the “60% ship of Theseus”. In Hobbes’ version, the second ship slowly assumes the identity of Theseus ship over time. This solution is unsatisfying, if only for the fact that we don’t use such gradual notions of identity in day to day speech.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Threshold value&lt;/strong&gt; — we might instead consider setting some threshold number of planks that carry with it the identity.  The problem with this solution is that it seems quite hard to come up with a non-arbitrary such threshold, that can be applied across various sorts of objects. It is quite easy to come up with new variants of the riddle that make this evident. For example: what if we distribute the planks from the original ship over 5 new ships?&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Reject identity in the face of change&lt;/strong&gt; — having seen two failed approaches, we might reject the idea of persistent identity in the face of change altogether. Each time a plank is replaced, we end up with a fully new ship, the previous one having been destroyed. The problem with this solution is that it’s not a solution at all: it simply amounts to giving up in the face of a seemingly hard problem. As a consequence, we lose the ability to meaningfully talk about identity in the face of change.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;4-dimensionalism&lt;/strong&gt; — in the &lt;a href=&quot;https://en.wikipedia.org/wiki/Perdurantism&quot;&gt;4-dimenionalist&lt;/a&gt; view we say that Theseus ship is an object that exists across 3 spatial dimensions and 1 dimension of time. In this view the ship before and after the replacement of the planks are 3 dimensional slices of the 4-dimensional object which extends across time. This solution works for the original problem, but it’s not immediately clear how it answers the further complications as proposed by Hobbes: it does help us answer which of the 2 ships is the ship of Theseus.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;“Semantics”&lt;/strong&gt; — finally, we might say that the mistake is in assigning identity to objects in the first place. In this view, identity is simply a definition given in language by people to objects, but no property of the object itself. Asking questions about the object’s identity as if it is, as we do in the riddle, is nonsensical. In other words: the ship of Theseus is simply that what we call the ship of Theseus, or what the Athenians deem to be it, or even just the ship that is currently legally owned by Theseus. This solution seems to be the most useful, but by saying that it’s all just semantics, it’s also somewhat dismissive of how such semantics may come to be. By carefully examining the original puzzle we can point at the introduction of such semantics.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;revisiting-the-problem&quot;&gt;Revisiting the problem&lt;/h2&gt;
-
-&lt;p&gt;In the setup of the puzzle, a ship is described, whose planks are replaced one by one. By this very formulation, an identity across time is implied: the thing whose planks are replaced is something we can talk about, all the way up the last plank. It is the formulation of the puzzle itself that creates the identity of the single ship, consisting of different planks over time.&lt;/p&gt;
-
-&lt;p&gt;After this setup comes the trick: in the final line of the riddle we’re asked to consider the ship’s material form at two points in time, and question whether these are the same. The paradoxical nature of the riddle then arises from 2 sources:&lt;/p&gt;
-
-&lt;p&gt;First, there’s the fact that the setup talks about the historical ship and the process of plank-replacing at length. By doing so, we imply that it is somehow relevant to the question at hand. But in the question at the end this historical context is ignored, and only the first and last form of the ship are presented, asking us to make a statement about these forms while precisely ignoring this historical context.&lt;/p&gt;
-
-&lt;p&gt;(In cases where the riddle is presented as a video-animation, we can actually see this source of the confusion in the animation. In such videos the final part of the riddle is invariably modeled as the morphing of a long series of ships into 2 unequal instances of such ships)&lt;/p&gt;
-
-&lt;p&gt;Second, and perhaps more to the point, there’s the fact that the forms of the ship at any given point in time are not distinguished from the identity of the ship across time, despite them being of an entirely different class.&lt;/p&gt;
-
-&lt;p&gt;When such a distinction is properly made, the paradox disappears. We might ask then:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;is the form of the ship as it appears after the planks are replaced the same as before it? — no.&lt;/li&gt;
-  &lt;li&gt;is the form of the ship at some point in time the same as the ship in all time? — no.&lt;/li&gt;
-  &lt;li&gt;are both the forms of the ship before and after the planks have been replaced forms of the ship at some point in time? — yes.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Finallly, we might want to consider what to name this ship. In the above we established the existence of a single ship across time, as implied by the very phrasing of the riddle itself. Whether this single ship should be called the “ship of Theseus” is slightly less evident. We could argue it should be: At the beginning of the puzzle the puzzle speaks of the ship of Theseus, and since there is only one ship, there is no real ambiguity if we speak of the ship of Theseus by the end of the puzzle as well. If such lack of ambiguity is not sufficient to our taste, we could always speak of “the ship from the riddle” instead.&lt;/p&gt;
-
-&lt;p&gt;Summarizing, the original riddle is only paradoxical because it defines a historical identity and then, in imprecise language, asks us whether certain ships are this historical identity. In the form of a Q &amp;amp; A:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Q&lt;/strong&gt;: “what is the ship of Theseus?”&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;A&lt;/strong&gt;: “didn’t you just tell me? it is the ship from the riddle!”&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;hobbes&quot;&gt;Hobbes&lt;/h2&gt;
-
-&lt;p&gt;The paradoxical nature of the Hobbes variation is caused by quite a different error in reasoning.&lt;/p&gt;
-
-&lt;p&gt;Remember, in Hobbes’ version, the riddle does not describe a process of plank-replacing on a single ship. Instead, 2 ships are described, as well as a process of transferring planks from one to the other. After these descriptions, the question is put to us: “which of these is the ship of Theseus?”&lt;/p&gt;
-
-&lt;p&gt;We are, in short, dealing with the opposite situation from the original problem. In the original, an definition (abeit implicitly) for was implicitly provided by the riddle; after which the riddle pretends this never happened. Here, the task of defining a single ship of Theseus is put squarely in our court.&lt;/p&gt;
-
-&lt;p&gt;The problem is that, for each such definition, it’s quite possible to come up with arguments as to why this definition does not work well. This raises the question: why should we expect that it’s possible to come up with a meaningful such definition in the first place? The answer to this question would seem to be: because it was possible to do so in the original problem.&lt;/p&gt;
-
-&lt;p&gt;However, in the original problem there was only a single ship, changing in form over time; in the Hobbes formulation there are multiple such ships.&lt;/p&gt;
-
-&lt;p&gt;In other words: the Hobbes formulation is only paradoxical if you believe that, just because it is sometimes possible to come up with meaningful definitions, it is always possible to do so.&lt;/p&gt;
-
-&lt;p&gt;In short:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Q&lt;/strong&gt;: “what is the ship of Theseus?”&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;A&lt;/strong&gt;: “why don’t &lt;em&gt;you&lt;/em&gt; tell me?”&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
-
-&lt;p&gt;Having examined the ship of Theseus in two variations we may ask ourselves what was actually achieved. Setting up a riddle, only to solve it by showing the errors of logic in the riddle itself surely smells of trickery. This is surely how some of the commentators on the videos floating around the internet about the subject feel (“Moot semantics”, “This is why I hate philosophy”, “Merely a matter of semantics, but it pays better to try and make a great deal out of it.”)&lt;/p&gt;
-
-&lt;p&gt;One might counter that any problem once understood is trivial — including those that flow directly from bad definitions. In particular, the riddles and their solutions provide a number of useful insights when modeling the world, for example while writing computer programs.&lt;/p&gt;
-
-&lt;p&gt;First, the semantics of identity as implied in the original puzzle, namely those of a single historical object which changes over time, are common and useful. Identifying it as a pattern is helpful.&lt;/p&gt;
-
-&lt;p&gt;Second, errors such as the ones presented in the riddles above are extremely easy to make and common. Having a clear thought experiment available to us to clarify the error is useful.&lt;/p&gt;
-
-&lt;p&gt;In fact, such confusion of semantics may happen any time we talk informally about mutable objects. Examples of those are everywhere in everyday computing: files, web pages, rows in databases, variables etc.&lt;/p&gt;
-
-&lt;p&gt;Each time we talk about such a thing, we run into exactly the same problems of the original puzzle. Consider the question “is the file &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/passwords&lt;/code&gt; the same file as it was 10 minutes ago?” — and how it is phrased quite similarly to the original problem. This is the more pressing an issue, because in many cases the only thing our tools and languages allow us to talk about are the things across all of time. In HTML, for example, one may link to a web page, but there is no way to link to a particular version of a web page. In many programming languages, all variables are references to mutable objects.&lt;/p&gt;
-
-&lt;p&gt;Third, the Hobbes variation tells us that it is not always immediately clear which defintion of historical identity is the most appropriate.&lt;br /&gt;
-This also applies to the way we model the evolution of computer programs, such as we do in the project that this website is about.&lt;/p&gt;
-
-&lt;p&gt;Examples of real-life changes to computer programs that may lead to direct parallels with Hobbes’ riddle are:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;when splitting a single module into 2 modules, which of the 2 resulting modules (if any) has the same identity as the original?&lt;/li&gt;
-  &lt;li&gt;when moving a module to a different location, is it still the same module in the new location?&lt;/li&gt;
-  &lt;li&gt;when rename in function, does it acquire a new identity?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;As in Hobbes’ riddle, multiple answers may be given to these questions, and which answer is the best is highly contextual. We therefore take the view that it is not up to the tooling (editors, programming languages) to decide on the answer, but rather that the tooling should be flexible enough so that the user may pick the most appropriate definition of historical identity.&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/ship-of-theseus/&quot;&gt;Ship of Theseus&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 12, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Lehman's SPE-classfication]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/lehman-spe-classification/" />
-  <id>http://www.expressionsofchange.org/lehman-spe-classification</id>
-  <published>2017-07-04T00:00:00+02:00</published>
-  <updated>2017-07-04T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;S-type programs&lt;/strong&gt; — programs whose function is formally defined by and derivable from a &lt;em&gt;specification&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;P-type programs&lt;/strong&gt; — programs for which the &lt;em&gt;problem&lt;/em&gt; may be precisely formulated, but for which the solution must inevitably reflect an approximation of the real world.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;E-type programs&lt;/strong&gt; — programs that mechanize a human or societal activity and are &lt;em&gt;embedded&lt;/em&gt; in the real world.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;P-type and E-type programs differ from S-type programs in that they represent a computer &lt;em&gt;application&lt;/em&gt; in the real world. They are together called A-type programs.&lt;/p&gt;
-
-&lt;p&gt;It is A-type programs that are most prone to change.&lt;/p&gt;
-
-&lt;p&gt;A longer summary of Lehman’s SPE-classification is given below, quoting heavily from the &lt;a href=&quot;https://cs.uwaterloo.ca/~a78khan/cs446/additional-material/scribe/27-refactoring/Lehman-LawsOfSoftwareEvolution.pdf&quot;&gt;original article&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;s-type-programs&quot;&gt;S-type programs&lt;/h3&gt;
-
-&lt;p&gt;S-programs are programs whose function is formally defined by and derivable from a specification (hence the &lt;em&gt;S&lt;/em&gt;).&lt;/p&gt;
-
-&lt;p&gt;Examples are the lowest common multiple of two integers, eight queens and dining philosophers.&lt;/p&gt;
-
-&lt;p&gt;Such problems may relate directly and primarily to the external world, but be completely defined.&lt;/p&gt;
-
-&lt;p&gt;Correct solution of the problem as stated, in terms of the programming language being used, becomes the programmer’s sole concern. At most, questions of elegance or efficiency may also creep in.&lt;/p&gt;
-
-&lt;p&gt;When this view can be legitimately taken the resultant program is conceptually static. One may change it to improve its clarity or its elegance, to decrease resource usage when the program is executed, even to increase confidence in its correctness.  But any such changes must not effect the mapping between input and output that it achieves in execution.&lt;/p&gt;
-
-&lt;p&gt;In S-programs, judgments about the correctness, and therefore the value, of the programs relate by definition only to its specification.&lt;/p&gt;
-
-&lt;h3 id=&quot;p-type-programs&quot;&gt;P-type programs&lt;/h3&gt;
-
-&lt;p&gt;P-programs are programs for which the problem may be precisely formulated, but for which the solution must inevitably reflect an approximation of the real world. (&lt;em&gt;P&lt;/em&gt; for real world &lt;em&gt;problem&lt;/em&gt; solution).&lt;/p&gt;
-
-&lt;p&gt;As an example, consider a program to play chess. The rules of the game of chess are completely specified; a procedure to make the best move at any given position can also be completely specified formally. Such a procedure is for example to, at any given position, create the tree of all games that may develop from it and adopt a minimax evaluation strategy to select the next move.&lt;/p&gt;
-
-&lt;p&gt;Because this search tree is very large, such an approach is not feasible in practice. Practical approaches to chess programs must therefore make some approximations.&lt;/p&gt;
-
-&lt;p&gt;The process of creating P-programs happens in the context of an intrinsic feedback loop.&lt;/p&gt;
-
-&lt;p&gt;Despite the fact that the problem to be solved can be precisely defined, the acceptability of a solution is determined by the environment in which it is embedded.&lt;/p&gt;
-
-&lt;p&gt;The solution obtained will be evaluated by comparison with the real environment.&lt;/p&gt;
-
-&lt;p&gt;In P-programs, the concern is not centered on the problem statement but on the value and validity of the solution obtained in its real-world context.&lt;/p&gt;
-
-&lt;h3 id=&quot;e-type-programs&quot;&gt;E-type programs&lt;/h3&gt;
-
-&lt;p&gt;E-programs are those programs that mechanize a human or societal activity. The program has become a part of the world it models, it is embedded in it (hence the &lt;em&gt;E&lt;/em&gt;).&lt;/p&gt;
-
-&lt;p&gt;They are are inherently even more change prone than P-programs in the following ways:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;It is not necessarily possible to precisely formulate the problem in the first place; the formulation of the specification must involve opinion and judgement. Once the program starts to be used, it creates feedback about this problem formulation, which leads to pressure for change.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The program affects the world it is embedded in: the usage patterns, habits, capabilities and expectations of its users and others. By so affecting the world, further pressure for change is created.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The world that’s being modeled may itself change, independently from the program. To stay relevant in the changing world, the program must change.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Examples of such programs are plentiful: Operating Systems, business administration software, inventory management, stock trading etc.&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/lehman-spe-classification/&quot;&gt;Lehman's SPE-classfication&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on July 04, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>
