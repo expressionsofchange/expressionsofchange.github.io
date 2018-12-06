@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-12-07T13:09:40+01:00</updated>
+<updated>2018-12-07T13:25:23+01:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -447,9 +447,9 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;A video of this event is posted below.&lt;/p&gt;
 
-&lt;div class=&quot;videoWrapper&quot;&gt;
+&lt;p class=&quot;videoWrapper&quot;&gt;
 &lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/pFJ4-fTmCgU&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
+&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/clojure-meetup/&quot;&gt;Talk at Clojure Meetup&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on March 14, 2018.&lt;/p&gt;</content>
@@ -646,9 +646,9 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;It was held on 22 &amp;amp; 24 February 2018 in Kraków, Poland.&lt;/p&gt;
 
-&lt;div class=&quot;videoWrapper&quot;&gt;
+&lt;p class=&quot;videoWrapper&quot;&gt;
 &lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/KA2TjX595tA?cc_load_policy=1&amp;amp;cc_lang_pref=en&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
+&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/lambda-days-2018-lightning-talk/&quot;&gt;Lambda Days 2018&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on February 26, 2018.&lt;/p&gt;</content>
@@ -672,9 +672,9 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;On the upside, there’s about 5 times more information in this talk than in the lightning talk it was a practice run for.&lt;/p&gt;
 
-&lt;div class=&quot;videoWrapper&quot;&gt;
+&lt;p class=&quot;videoWrapper&quot;&gt;
 &lt;iframe width=&quot;680&quot; height=&quot;382&quot; src=&quot;https://www.youtube.com/embed/oJAZ7gBFf0U?cc_load_policy=1&amp;amp;cc_lang_pref=en&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
+&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/expressions-of-change-in-under-15-minutes/&quot;&gt;Expressions of Change in under 15 minutes&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on February 20, 2018.&lt;/p&gt;</content>
