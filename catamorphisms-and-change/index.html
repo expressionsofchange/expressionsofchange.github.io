@@ -102,19 +102,18 @@
 
 <p>The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute <code class="highlighter-rouge">value</code> at each node. The algorithm calculates the sum of these numbers:</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">sum_of_values</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Not every recursive algorithm on a data-structure can be so written. As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.</p>
 
 <p><a name="pretty_print"></a>This function is also provided in sketched form in Python (we leave out some details):</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">single_line_mode</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">single_line_mode</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">single_line_mode</span><span class="p">:</span>
         <span class="k">return</span> <span class="s">"("</span> <span class="o">+</span> <span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">])</span> <span class="o">+</span> <span class="s">")"</span>
 
@@ -127,8 +126,7 @@
 
     <span class="n">result</span> <span class="o">+=</span> <span class="s">")"</span>
     <span class="k">return</span> <span class="n">result</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The key point of the example above is: The recursive call contains more information than simply the fact that some calculation must be done recursively. This information is not knowable from the child node, it is a property of its context. In this case: whether the present node must be printed on a single line as a result of being part of another node’s first element or not.</p>
 
@@ -142,7 +140,7 @@
 
 <p>The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but the node being passed to it has as its children not further nodes, but the results of recursive application.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
     <span class="k">for</span> <span class="n">child_result</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">child_result</span>
@@ -157,8 +155,7 @@
 
 
 <span class="n">sum_of_values</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">catamorphism</span><span class="p">(</span><span class="n">sum_of_values_algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This separates the concerns of recursively calling (which is in the utility function <code class="highlighter-rouge">node_catamorphism</code>) and composing the results (which is in <code class="highlighter-rouge">sum_of_values_algebra</code>).</p>
 
@@ -303,7 +300,7 @@
 <div class="footnotes">
   <ol>
     <li id="fn:more-about-catamorphisms">
-      <p>The canonical introduction is <a href="https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w">Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire</a>, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by <a href="https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/">Bartosz Milewski</a> is also excellent.&nbsp;<a href="#fnref:more-about-catamorphisms" class="reversefootnote">&#8617;</a></p>
+      <p>The canonical introduction is <a href="https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w">Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire</a>, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by <a href="https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/">Bartosz Milewski</a> is also excellent. <a href="#fnref:more-about-catamorphisms" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

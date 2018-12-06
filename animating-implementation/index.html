@@ -237,12 +237,11 @@ particular note.</p>
 <p>An example is drawn below: if the chord below is the item at position 1 in some
 other history, the children of that chord are at some subpath.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
 ^       ^                        ^
 |       |                        |
 (@1) (@1, @0)                 (@1, @1)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The effect of this approach on the animation is precisely as intended: when
 switching from a larger context to a smaller one, the “surrounding” notes that

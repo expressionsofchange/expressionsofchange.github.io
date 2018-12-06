@@ -124,18 +124,16 @@
 
 <p>As a minimal example we’ll use a grammar that is only slightly more sophisticated: a parser of typical (elementary school) mathematical expressions using only addition and multiplication. A typical expression in the associated language would be:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>1 + 2 + 3 + 4 + 5
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 + 2 + 3 + 4 + 5
+</code></pre></div></div>
 
 <p>And we know from elementary school that there are precedence rules, i.e. <code class="highlighter-rouge">*</code> binds more strongly than <code class="highlighter-rouge">+</code>. From our “implementation of programming languages” course at uni we remember how to write the grammar for this, which codifies these precendence rules. In BNF:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;expr&gt; -&gt; &lt;expr&gt; + &lt;term&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;expr&gt; -&gt; &lt;expr&gt; + &lt;term&gt;
       | &lt;term&gt;
 &lt;term&gt; -&gt; &lt;term&gt; * &lt;number&gt;
       | &lt;number&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Note that this definition does not have the property of explicit structure that we talked about in the beginning: to know whether something is an <code class="highlighter-rouge">expr</code>, or a <code class="highlighter-rouge">term</code>, further recursive parsing must occur. That is: we don’t start each node in the parse-tree with a special token denoting which one it is.</p>
 
