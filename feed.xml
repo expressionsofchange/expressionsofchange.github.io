@@ -243,7 +243,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
     <uri>http://www.expressionsofchange.org</uri>
     <email>klaas@vanschelven.com</email>
   </author>
-  <content type="html">&lt;p&gt;In this &lt;em&gt;Expressions of Change&lt;/em&gt; we take modifications to programs to be the primary building block of program construction. We do this in the expectation that that the availability of well-structured historic information across our toolchain will prove invaluable when facing the typical challenges of program modification.&lt;/p&gt;
+  <content type="html">&lt;p&gt;In &lt;em&gt;Expressions of Change&lt;/em&gt; we take modifications to programs to be the primary building block of program construction. We do this in the expectation that that the availability of well-structured historic information across our toolchain will prove invaluable when facing the typical challenges of program modification.&lt;/p&gt;
 
 &lt;p&gt;One of the first such benefits is the ability to inspect history at any level of program granularity as it pertains to that level. That is: if a program consists of e.g. modules, classes, functions, statements and expressions, to be able to inspect the history of each of these, and to see how these histories relate.&lt;/p&gt;
 
