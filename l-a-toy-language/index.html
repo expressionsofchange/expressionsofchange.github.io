@@ -145,7 +145,7 @@
 
 <p>As an example, given this definition, consider the following s-expression:</p>
 
-<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">begin</span>
+<div class="language-scheme highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">begin</span>
   <span class="p">(</span><span class="k">define</span> <span class="nv">factorial</span>
     <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">n</span><span class="p">)</span>
       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span>
@@ -153,7 +153,8 @@
         <span class="p">(</span><span class="nb">*</span> <span class="nv">n</span> <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))))))</span>
   <span class="p">(</span><span class="nf">factorial</span> <span class="mi">5</span><span class="p">)</span>
 <span class="p">)</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Evaluating this in an environment where the mathematical symbols are bound to procedures expressing their usual meaning yields the value <code class="highlighter-rouge">120</code>.</p>
 
@@ -228,7 +229,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2018 Klaas van Schelven.</small>
+    <small>&copy; 2019 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

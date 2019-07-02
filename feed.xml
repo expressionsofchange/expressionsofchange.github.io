@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2018-12-07T13:25:23+01:00</updated>
+<updated>2019-07-02T15:24:14+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -157,11 +157,12 @@ particular note.&lt;/p&gt;
 &lt;p&gt;An example is drawn below: if the chord below is the item at position 1 in some
 other history, the children of that chord are at some subpath.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
 ^       ^                        ^
 |       |                        |
 (@1) (@1, @0)                 (@1, @1)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;The effect of this approach on the animation is precisely as intended: when
 switching from a larger context to a smaller one, the “surrounding” notes that
@@ -296,13 +297,13 @@ texture at the next frame are unaffected)&lt;/p&gt;
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:not-diff&quot;&gt;
-      &lt;p&gt;One might even be tempted to call this a “diff”, but that would suggest a primacy of &lt;em&gt;structure&lt;/em&gt; rather than &lt;em&gt;construction&lt;/em&gt;, i.e. it somewhat implies there are two structures first, and we simply calculate the difference. &lt;a href=&quot;#fnref:not-diff&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;One might even be tempted to call this a “diff”, but that would suggest a primacy of &lt;em&gt;structure&lt;/em&gt; rather than &lt;em&gt;construction&lt;/em&gt;, i.e. it somewhat implies there are two structures first, and we simply calculate the difference.&amp;nbsp;&lt;a href=&quot;#fnref:not-diff&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:always-follow&quot;&gt;
-      &lt;p&gt;In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed. &lt;a href=&quot;#fnref:always-follow&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed.&amp;nbsp;&lt;a href=&quot;#fnref:always-follow&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:notational-difference&quot;&gt;
-      &lt;p&gt;In fact, the &lt;em&gt;Clef&lt;/em&gt; in the demonstrations above differs from the &lt;em&gt;Clef&lt;/em&gt; in the paper in one way: &lt;code class=&quot;highlighter-rouge&quot;&gt;(insert  ...&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;(delete ...&lt;/code&gt; taking a single note, rather than a score, as an argument. &lt;a href=&quot;#fnref:notational-difference&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;In fact, the &lt;em&gt;Clef&lt;/em&gt; in the demonstrations above differs from the &lt;em&gt;Clef&lt;/em&gt; in the paper in one way: &lt;code class=&quot;highlighter-rouge&quot;&gt;(insert  ...&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;(delete ...&lt;/code&gt; taking a single note, rather than a score, as an argument.&amp;nbsp;&lt;a href=&quot;#fnref:notational-difference&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -349,7 +350,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:nerf-explained&quot;&gt;
-      &lt;p&gt;“nerf”, the Dutch word for wood grain, is yet another metaphore of how the mechanism of growth has a direct effect on the grown product. &lt;a href=&quot;#fnref:nerf-explained&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;“nerf”, the Dutch word for wood grain, is yet another metaphore of how the mechanism of growth has a direct effect on the grown product.&amp;nbsp;&lt;a href=&quot;#fnref:nerf-explained&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -381,7 +382,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;The relevant bibtex entry may be found below.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@INPROCEEDINGS{VanSchelven2018,
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@INPROCEEDINGS{VanSchelven2018,
     author = &quot;Klaas van Schelven&quot;,
     pages = {&quot;94-101&quot;},
     title = {Clef Design, Thoughts on the Formalization of Program Construction},
@@ -390,7 +391,8 @@ texture at the next frame are unaffected)&lt;/p&gt;
     isbn = {978-1-4503-5183-6},
     year = {2018}
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/clef-design-marbella-talk-live/&quot;&gt;Talk at the European Lisp Symposium&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on April 19, 2018.&lt;/p&gt;</content>
 </entry>
@@ -415,7 +417,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;The relevant bibtex entry may be found below.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@INPROCEEDINGS{VanSchelven2018,
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@INPROCEEDINGS{VanSchelven2018,
     author = &quot;Klaas van Schelven&quot;,
     pages = {&quot;94-101&quot;},
     title = {Clef Design, Thoughts on the Formalization of Program Construction},
@@ -424,7 +426,8 @@ texture at the next frame are unaffected)&lt;/p&gt;
     isbn = {978-1-4503-5183-6},
     year = {2018}
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/european-lisp-symposium-paper-accepted/&quot;&gt;ELS 2018: Paper accepted&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on March 20, 2018.&lt;/p&gt;</content>
 </entry>
@@ -613,16 +616,16 @@ texture at the next frame are unaffected)&lt;/p&gt;
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:trac-footnote&quot;&gt;
-      &lt;p&gt;A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on &lt;em&gt;semiotics&lt;/em&gt;, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time. &lt;a href=&quot;#fnref:trac-footnote&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on &lt;em&gt;semiotics&lt;/em&gt;, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time.&amp;nbsp;&lt;a href=&quot;#fnref:trac-footnote&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:sicp-meta-circular&quot;&gt;
-      &lt;p&gt;The definition in the influential &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt;, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice. &lt;a href=&quot;#fnref:sicp-meta-circular&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;The definition in the influential &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt;, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice.&amp;nbsp;&lt;a href=&quot;#fnref:sicp-meta-circular&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:lisp-not-homoiconic&quot;&gt;
-      &lt;p&gt;In fact, the original article &lt;em&gt;excludes&lt;/em&gt; Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).” &lt;a href=&quot;#fnref:lisp-not-homoiconic&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;In fact, the original article &lt;em&gt;excludes&lt;/em&gt; Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).”&amp;nbsp;&lt;a href=&quot;#fnref:lisp-not-homoiconic&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:what-is-internal&quot;&gt;
-      &lt;p&gt;Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings &lt;em&gt;by definition&lt;/em&gt;; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU. &lt;a href=&quot;#fnref:what-is-internal&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings &lt;em&gt;by definition&lt;/em&gt;; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU.&amp;nbsp;&lt;a href=&quot;#fnref:what-is-internal&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -763,18 +766,19 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt; at each node. The algorithm calculates the sum of these numbers:&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum_of_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Not every recursive algorithm on a data-structure can be so written. As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.&lt;/p&gt;
 
 &lt;p&gt;&lt;a name=&quot;pretty_print&quot;&gt;&lt;/a&gt;This function is also provided in sketched form in Python (we leave out some details):&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;single_line_mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;(&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pretty_print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;)&quot;&lt;/span&gt;
 
@@ -787,7 +791,8 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;)&quot;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;The key point of the example above is: The recursive call contains more information than simply the fact that some calculation must be done recursively. This information is not knowable from the child node, it is a property of its context. In this case: whether the present node must be printed on a single line as a result of being part of another node’s first element or not.&lt;/p&gt;
 
@@ -801,7 +806,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but the node being passed to it has as its children not further nodes, but the results of recursive application.&lt;/p&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_result&lt;/span&gt;
@@ -816,7 +821,8 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 
 &lt;span class=&quot;n&quot;&gt;sum_of_values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;catamorphism&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sum_of_values_algebra&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;This separates the concerns of recursively calling (which is in the utility function &lt;code class=&quot;highlighter-rouge&quot;&gt;node_catamorphism&lt;/code&gt;) and composing the results (which is in &lt;code class=&quot;highlighter-rouge&quot;&gt;sum_of_values_algebra&lt;/code&gt;).&lt;/p&gt;
 
@@ -961,7 +967,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:more-about-catamorphisms&quot;&gt;
-      &lt;p&gt;The canonical introduction is &lt;a href=&quot;https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w&quot;&gt;Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire&lt;/a&gt;, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by &lt;a href=&quot;https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/&quot;&gt;Bartosz Milewski&lt;/a&gt; is also excellent. &lt;a href=&quot;#fnref:more-about-catamorphisms&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;The canonical introduction is &lt;a href=&quot;https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w&quot;&gt;Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire&lt;/a&gt;, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by &lt;a href=&quot;https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/&quot;&gt;Bartosz Milewski&lt;/a&gt; is also excellent.&amp;nbsp;&lt;a href=&quot;#fnref:more-about-catamorphisms&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -1096,10 +1102,10 @@ texture at the next frame are unaffected)&lt;/p&gt;
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:sicp-form-analysis&quot;&gt;
-      &lt;p&gt;This is not a unique idea; it is, for example, explored in quite some detail in the &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt; in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328. &lt;a href=&quot;#fnref:sicp-form-analysis&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;This is not a unique idea; it is, for example, explored in quite some detail in the &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/6515.pdf&quot;&gt;Structure and Interpretation of Computer Programs&lt;/a&gt; in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328.&amp;nbsp;&lt;a href=&quot;#fnref:sicp-form-analysis&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:object&quot;&gt;
-      &lt;p&gt;How such an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc. &lt;a href=&quot;#fnref:object&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;How such an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc.&amp;nbsp;&lt;a href=&quot;#fnref:object&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -1157,7 +1163,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;As an example, given this definition, consider the following s-expression:&lt;/p&gt;
 
-&lt;div class=&quot;language-scheme highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+&lt;div class=&quot;language-scheme highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;factorial&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1165,7 +1171,8 @@ texture at the next frame are unaffected)&lt;/p&gt;
         &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))))&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Evaluating this in an environment where the mathematical symbols are bound to procedures expressing their usual meaning yields the value &lt;code class=&quot;highlighter-rouge&quot;&gt;120&lt;/code&gt;.&lt;/p&gt;
 
@@ -1592,7 +1599,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:t-addresses-everywhere-is-not-possible&quot;&gt;
-      &lt;p&gt;One might be tempted to take t-addresses as the basis of modeling of the 3 operations if it is indeed a useful representation. Note however that for insertions we always need the s-address, and hence such a model would lead to an inconsistant mix of s-addresses and t-addresses in the operations. &lt;a href=&quot;#fnref:t-addresses-everywhere-is-not-possible&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;One might be tempted to take t-addresses as the basis of modeling of the 3 operations if it is indeed a useful representation. Note however that for insertions we always need the s-address, and hence such a model would lead to an inconsistant mix of s-addresses and t-addresses in the operations.&amp;nbsp;&lt;a href=&quot;#fnref:t-addresses-everywhere-is-not-possible&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -1616,7 +1623,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;p&gt;The concept is best explained using an example. Consider the following output of &lt;code class=&quot;highlighter-rouge&quot;&gt;git show&lt;/code&gt;, which shows a change to a piece of Python code:&lt;/p&gt;
 
-&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;commit 9dadc2.........
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;commit 9dadc2.........
 Author: ......
 Date: ......
 
@@ -1652,7 +1659,8 @@ index 1cde8fb..f487c7e 100644
 +
 &lt;/span&gt;     def method_e(self):
          pass  # implementation of method_e
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;How should we interpret this diff?&lt;/p&gt;
 
@@ -1668,7 +1676,7 @@ index 1cde8fb..f487c7e 100644
 
 &lt;h4 id=&quot;before-the-commit&quot;&gt;Before the commit:&lt;/h4&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
      &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
          &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_a ...&lt;/span&gt;
  
@@ -1685,11 +1693,12 @@ index 1cde8fb..f487c7e 100644
  
      &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
          &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_e&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h4 id=&quot;after-the-commit&quot;&gt;After the commit:&lt;/h4&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AnotherClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
          &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
              &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_a ...&lt;/span&gt;
      
@@ -1706,7 +1715,8 @@ index 1cde8fb..f487c7e 100644
 
          &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method_e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
              &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# implementation of method_e&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;First note that these 2 versions actually correspond to the commit message: the 2 methods &lt;code class=&quot;highlighter-rouge&quot;&gt;method_c&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;method_d&lt;/code&gt; are indeed moved from &lt;code class=&quot;highlighter-rouge&quot;&gt;OneClass&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;AnotherClass&lt;/code&gt;.&lt;/p&gt;
 
@@ -1738,7 +1748,7 @@ index 1cde8fb..f487c7e 100644
 
 &lt;p&gt;A more regular occurrence is a diff like the below:&lt;/p&gt;
 
-&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/example.py
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/example.py
 &lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ b/example.py
 &lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -1,3 +1,8 @@
 &lt;/span&gt; @decorated_function
@@ -1749,7 +1759,8 @@ index 1cde8fb..f487c7e 100644
 +@decorated_function
 &lt;/span&gt; def oldfunction():
      pass  # this is oldfunction
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;In the above example, the more logical diff would identify the first of the 2 decorators (&lt;code class=&quot;highlighter-rouge&quot;&gt;@decorated_function&lt;/code&gt;) as being the newly added one. However, git cannot distinguish between the 2 identical occurrences of that line, and identifies the second one as the new one.&lt;/p&gt;
 
@@ -1757,7 +1768,7 @@ index 1cde8fb..f487c7e 100644
 
 &lt;p&gt;A final example uses lists, in which it would be more logical to show the earlier opening bracket as the new addition. Such an approach would lead to a diff with balanced brackets, as opposed to the close-then-open we get now:&lt;/p&gt;
 
-&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/matrix.py
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- a/matrix.py
 &lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ b/matrix.py
 &lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -5,6 +5,11 @@ matrix = [
 &lt;/span&gt;         3,
@@ -1771,7 +1782,8 @@ index 1cde8fb..f487c7e 100644
 &lt;/span&gt;         4,
          5,
          6,
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;In short: examples of the problem are easily found. However: the most regular occurrences are also generally the least confusing.&lt;/p&gt;
 
@@ -1788,7 +1800,7 @@ index 1cde8fb..f487c7e 100644
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:or-any-text-based-vcs&quot;&gt;
-      &lt;p&gt;Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control. &lt;a href=&quot;#fnref:or-any-text-based-vcs&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control.&amp;nbsp;&lt;a href=&quot;#fnref:or-any-text-based-vcs&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;

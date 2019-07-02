@@ -110,7 +110,7 @@
 
 <p>The concept is best explained using an example. Consider the following output of <code class="highlighter-rouge">git show</code>, which shows a change to a piece of Python code:</p>
 
-<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commit 9dadc2.........
+<div class="language-diff highlighter-rouge"><pre class="highlight"><code>commit 9dadc2.........
 Author: ......
 Date: ......
 
@@ -146,7 +146,8 @@ index 1cde8fb..f487c7e 100644
 +
 </span>     def method_e(self):
          pass  # implementation of method_e
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>How should we interpret this diff?</p>
 
@@ -162,7 +163,7 @@ index 1cde8fb..f487c7e 100644
 
 <h4 id="before-the-commit">Before the commit:</h4>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
      <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
          <span class="k">pass</span>  <span class="c"># implementation of method_a ...</span>
  
@@ -179,11 +180,12 @@ index 1cde8fb..f487c7e 100644
  
      <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
          <span class="k">pass</span>  <span class="c"># implementation of method_e</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h4 id="after-the-commit">After the commit:</h4>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
          <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
              <span class="k">pass</span>  <span class="c"># implementation of method_a ...</span>
      
@@ -200,7 +202,8 @@ index 1cde8fb..f487c7e 100644
 
          <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
              <span class="k">pass</span>  <span class="c"># implementation of method_e</span>
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>First note that these 2 versions actually correspond to the commit message: the 2 methods <code class="highlighter-rouge">method_c</code> and <code class="highlighter-rouge">method_d</code> are indeed moved from <code class="highlighter-rouge">OneClass</code> to <code class="highlighter-rouge">AnotherClass</code>.</p>
 
@@ -232,7 +235,7 @@ index 1cde8fb..f487c7e 100644
 
 <p>A more regular occurrence is a diff like the below:</p>
 
-<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">--- a/example.py
+<div class="language-diff highlighter-rouge"><pre class="highlight"><code><span class="gd">--- a/example.py
 </span><span class="gi">+++ b/example.py
 </span><span class="gu">@@ -1,3 +1,8 @@
 </span> @decorated_function
@@ -243,7 +246,8 @@ index 1cde8fb..f487c7e 100644
 +@decorated_function
 </span> def oldfunction():
      pass  # this is oldfunction
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In the above example, the more logical diff would identify the first of the 2 decorators (<code class="highlighter-rouge">@decorated_function</code>) as being the newly added one. However, git cannot distinguish between the 2 identical occurrences of that line, and identifies the second one as the new one.</p>
 
@@ -251,7 +255,7 @@ index 1cde8fb..f487c7e 100644
 
 <p>A final example uses lists, in which it would be more logical to show the earlier opening bracket as the new addition. Such an approach would lead to a diff with balanced brackets, as opposed to the close-then-open we get now:</p>
 
-<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">--- a/matrix.py
+<div class="language-diff highlighter-rouge"><pre class="highlight"><code><span class="gd">--- a/matrix.py
 </span><span class="gi">+++ b/matrix.py
 </span><span class="gu">@@ -5,6 +5,11 @@ matrix = [
 </span>         3,
@@ -265,7 +269,8 @@ index 1cde8fb..f487c7e 100644
 </span>         4,
          5,
          6,
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>In short: examples of the problem are easily found. However: the most regular occurrences are also generally the least confusing.</p>
 
@@ -282,7 +287,7 @@ index 1cde8fb..f487c7e 100644
 <div class="footnotes">
   <ol>
     <li id="fn:or-any-text-based-vcs">
-      <p>Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control. <a href="#fnref:or-any-text-based-vcs" class="reversefootnote">&#8617;</a></p>
+      <p>Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control.&nbsp;<a href="#fnref:or-any-text-based-vcs" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -354,7 +359,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2018 Klaas van Schelven.</small>
+    <small>&copy; 2019 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->
