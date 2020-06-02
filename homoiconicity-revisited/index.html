@@ -1,0 +1,413 @@
+<html lang="en">
+<meta charset="utf-8">
+<title>Homoiconicity revisited &#8211; Expressions of Change</title>
+<meta name="description" content="In which we explore the possible meaning of “Homoiconic” by ignoring all pre-existing definitions and providing one of our own.">
+<meta name="keywords" content="">
+
+
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Homoiconicity revisited &#8211; Expressions of Change">
+<meta property="og:description" content="In which we explore the possible meaning of “Homoiconic” by ignoring all pre-existing definitions and providing one of our own.">
+<meta property="og:url" content="/homoiconicity-revisited/">
+<meta property="og:site_name" content="Expressions of Change">
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Expressions of Change Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Type -->
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700,700italic" rel='stylesheet' type='text/css' />
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/css/entypo.css" media="all">
+
+<!-- In order to use Calendas Plus, you must first purchase it. Then, create a font-face package using FontSquirrel.
+<link rel='stylesheet' href='/assets/cal.css' media='all' />
+-->
+
+
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/i.css">
+<link rel="stylesheet" href="/assets/css/syntax.css">
+
+<!-- Fresh Squeezed jQuery -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+
+<div id="bump">
+  <body class="">
+    <header class="site-header">
+      <div class="wrap">
+        <hgroup>
+          <h1><a href="/">Expressions of Change</a></h1>
+        </hgroup>
+        <a href="#nav" class="menu"><span class='icons'>☰</span></a>
+        <nav role="navigation">
+          <ul>
+            
+                <li><a href="/" >Home</a></li>
+            
+                <li><a href="/about/" >About</a></li>
+            
+                <li><a href="/project-motivation/" >Motivation</a></li>
+            
+                <li><a href="/the-editor/" >The Editor</a></li>
+            
+                <li><a href="/recent/" >All posts</a></li>
+            
+                <li><a href="/videos/" >Videos</a></li>
+            
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+<section class="article">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>Homoiconicity revisited</h1>
+            <p class="date">Jun 02, 2020
+
+              
+                  
+                      — Tags:
+                      
+                      <a href="/musings/">Musings</a>
+                      
+                      
+                  
+              
+            </p>
+
+            <p class="intro">In which we explore the possible meaning of “Homoiconic” by ignoring all pre-existing definitions and providing one of our own.
+</p>
+
+          </hgroup>
+        </header>
+
+            
+
+
+        <p>In an <a href="dont-say-homoiconic/">earlier article</a>, I concluded that you probably
+shouldn’t use the word “homoiconic”: starting with the original definition of
+the word, I noted that this this definition is problematic for a number of
+reasons, and that the best we can say is that there is a degree to which a
+language is homoiconic: languages that have a smaller conceptual distance
+between their program text and machine operation are more homoiconic and
+vice versa.</p>
+
+<p>That article also explored some of the plethora of competing, often mutually
+exclusive definitions in active use – a fact that should come as a warning
+anyone who’s intention is to clearly communicate their ideas.</p>
+
+<p>It is therefore somewhat disappointing (though not unsurprising) that when the
+<a href="https://news.ycombinator.com/item?id=20657798">article was discussed on Hacker
+News</a>, the top voted comment
+started like this:</p>
+
+<blockquote>
+  <p>I’m going to keep using the word ‘homoiconic’ because it is a
+useful term.</p>
+</blockquote>
+
+<p>In style, that commenter neither explained why the term would be
+useful, nor provided a definition of their own.</p>
+
+<p>Given that people will continue to use the word, what are we to understand if
+they do? Let’s revisit the topic, but start at the other end: instead of
+taking the official definition as a starting point, let’s say a word means what
+the people who use it mean by it. Even if that meaning has little to do with
+the original definition, and even if they are not willing to put forward a
+definition of their own.</p>
+
+<p>If we don’t want to start with the official definition, we’re faced with a bit
+of a challenge though: what are we to take as a starting point for the
+discussion? To get it around it, we’ll simply start with a definition of our
+own, and then match this back to typical examples and counter-examples of
+homoiconicity to see how it fits.</p>
+
+<h3 id="homoiconic-a-working-definition">Homoiconic, a working definition</h3>
+
+<p>Homoiconic usually refers some combination of the following (weights assigned
+to the bullets below will depend on the speaker):</p>
+
+<ol>
+  <li>
+    <p>Strong language support for simple, composable (i.e. tree-like) data
+structures, preferably using a minimal syntax (i.e. literals).</p>
+  </li>
+  <li>
+    <p>The language semantics are directly defined in terms of such data structures
+and the programs are formed using instances of these structures.</p>
+  </li>
+  <li>
+    <p>The structure of such data-structures is explicitly reflected in their
+visual representation on-screen; it is immediately apparant <em>for humans</em>.</p>
+  </li>
+  <li>
+    <p>High similarlity between representations of the program in (some of):</p>
+    <ul>
+      <li>the head of the programmer</li>
+      <li>the visual representation on-screen</li>
+      <li>the formal semantics of the language</li>
+      <li>the implementation of the (virtual) machine</li>
+    </ul>
+  </li>
+</ol>
+
+<p>The benefit of homoiconicity is then: first, the structured manipulation of
+programs, possibly by other programs, becomes trivial and natural. Second,
+there is little mental effort spent in mapping the program text to the program
+structure, and in imagining how the machine operates on said structure.</p>
+
+<h3 id="examples-and-counter-examples">Examples and counter-examples</h3>
+
+<p>Lisps tick all, or most of, of the boxes:</p>
+
+<ol>
+  <li>S-expressions take the role of the simple, composable data structures.</li>
+  <li>Lisps’ semantics are directly defined in terms of s-expressions and
+lisp programs are formed using s-expressions.</li>
+  <li>S-expressions are trees, and the nesting of items is immediately apparent:
+<code class="highlighter-rouge">(</code> denotes the start of a child, and <code class="highlighter-rouge">)</code> its end. Children are nested
+inside their parents.</li>
+  <li>Lisp programmers think in s-expressions, which are always on-screen, and
+form the basis of the semantics of the language (always) and the
+implementation of the VM (if it is an interpreter).</li>
+</ol>
+
+<p>Other languages tick only some of the boxes, or none of them.</p>
+
+<ul>
+  <li>
+    <p>JavaScript has strong language support for composable, tree-like, structures
+(bullet 1) and the structure is immediately apparent by looking at the pairs
+of <code class="highlighter-rouge"><span class="p">{</span></code> and <code class="highlighter-rouge">}</code> brackets (bullet 3). However, the language semantics are not
+defined in such terms (bullet 2) and a JavaScript program is not provided as
+a JavaScript object (or JSON object).</p>
+  </li>
+  <li>
+    <p>For machine code, little mapping between the representations for the human
+and the machine is required, for the simple reason that no special representation
+for humans exist (bullet 4). However, machine code fails on bullets 1 to 3.
+I’d argue that few people that praise the benefits of homoiconicity actually
+think of machine code while doing so, though they might admit machine code
+fits some definition of homoiconicity when pressed.</p>
+  </li>
+  <li>
+    <p>XSLT is defined in XML, i.e. in composable, tree-like structures, so it gets
+a pass on bullets 1, 2 &amp; 3 (with the exception of “simple syntax”). This is
+another one for “homoiconic, but not a poster child”.</p>
+  </li>
+  <li>
+    <p>TRACK probably fails on bullets 1, 2 &amp; 3, even though it was the language in
+the context of which the term homoiconic was coined. This is simply a
+reflection of the fact that the term has evolved, and that modern-day usage
+is different from the original meaning.</p>
+  </li>
+  <li>
+    <p>Java has no strong language support for literal representation of simple
+composable data in the language (bullet 1) and also fails to meet the
+other criteria.</p>
+  </li>
+</ul>
+
+<h3 id="what-lispers-dont-tell-you">What Lispers don’t tell you</h3>
+
+<p>So is the above definition new in any way? I think it is, in the sense that is
+spells out some things that might be so obvious to Lispers that they forget to
+include them in their definitions. (“What’s water?” says the fish)</p>
+
+<p>Take for example the definition on <a href="https://wiki.c2.com/?HomoiconicLanguages">Wards Wiki</a></p>
+
+<blockquote>
+  <p>In a homoiconic language, the primary representation of programs is also a
+data structure in a primitive type of the language itself.</p>
+</blockquote>
+
+<p>A <a href="https://wiki.c2.com/?HomoiconicExampleInJava">common objection against this definition being
+meaningful</a> is that this is or
+can be the case for most languages: e.g. in Java the primary representation of
+programs is as text (strings), and strings are also a primitive type of the
+language itself. Such an objection (understandably) glosses over the meaning
+implied by “a datastructure in”.</p>
+
+<p>For non-lispers, that phrase might not evoke much, or may perhaps suggest an
+implementation detail (since “data structure” is often used to refer to the
+implementation of data types, i.e. a string might be implemented as an array,
+in which case the array is the underlying datastructure).</p>
+
+<p>For Lispers, this part is essential though, because for them it is naturally a
+reference to s-expressions. And thus for Lispers it evokes 2 parts of the
+definition that I made explicit in the above under bullets 1 and 2, namely:</p>
+
+<ul>
+  <li>the compositional nature of the data type under consideration</li>
+  <li>the fact that data and programs can be composed in the same way</li>
+</ul>
+
+<p>As a second example, consider the opening line of the current definition on
+<a href="https://en.wikipedia.org/wiki/Homoiconicity">Wikipedia</a>:</p>
+
+<blockquote>
+  <p>A language is homoiconic if a program written in it can be manipulated as
+data using the language</p>
+</blockquote>
+
+<p>Here, again, the objection can be raised that this is true for all languages.
+That is, all languages allow for programs written in them to be manipulated by
+them “as data” (i.e. as strings). After all, strings are data.</p>
+
+<p>Well… not for Lispers, to whom “data” will likely evoke something more
+structured, such as s-expressions (again). In other words, the key property
+here is that the program <em>is</em> a piece of <em>hierarchically structured</em> data
+(bullets 1 &amp; 2 in the above).</p>
+
+<p>Finally, let’s consider how Wikipedia continues:</p>
+
+<blockquote>
+  <p>and thus the program’s internal representation can be inferred just by
+reading the program itself.</p>
+</blockquote>
+
+<p>Here, the typical counterpoint would be that one can either never be true
+(because the inner workings of the machine are hidden from us) or is always
+true (if we assume that we are being provided the specification).</p>
+
+<p>Fitting this sentence back to bullets 3 &amp; 4 makes more sense though: the key
+point is not that the inner representation <em>can be inferred</em>, but rather that
+a “good enough model” is easy enough to imagine while looking at the program
+text.</p>
+
+<h3 id="homo-reinterpreted">“Homo” reinterpreted</h3>
+
+<p>If we indeed accept the working definition in the above as what most people
+who speak about homoiconicity actually mean, it seems that an interesting
+shift has occurred. Take one more look at the original definition:</p>
+
+<blockquote>
+  <p>Because TRAC procedures and text have the same representation inside and
+outside the processor, the term homo-iconic is applicable, from homo meaning
+the same, and icon meaning representation.</p>
+</blockquote>
+
+<p>Now compare this with the working definition in the above: bullets 1, 2, and 3
+are not at all concerned with sameness of internal and external representation.
+However, they are concerned with different kinds of sameness: Mostly, the fact
+that datastructures in the code, and the program text, are represented in the
+same way.</p>
+
+<h3 id="conclusions">Conclusions</h3>
+
+<p>I’d still argue that homoiconicity is a concept that confuses more than it
+clarifies, mostly because of <a href="/dont-say-homoiconic/#alternate-definitions">the many competing
+definitions</a>.</p>
+
+<p>Anyone who wants to get a point across is better off by simply referring to
+more direct properties of a language such as “has a nice literal syntax for
+structured data” or “the shape of the AST is immediately apparent from looking
+at your screen”.</p>
+
+<p>Still, faced with continued usage, the working definition above might at least
+serve as a dictionary for the perplexed.</p>
+
+
+
+      
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://expressionsofchange.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      
+
+      </article>
+    </section>
+</div>
+
+<div class="push"></div>
+  <footer>
+    <aside class="wrap">
+      <ol class="prev-posts">
+        <p class="list-title">Recent Posts</p>
+        
+            <li>
+              <span class="recent-title"><a href="/homoiconicity-revisited/" title="Homoiconicity revisited">Homoiconicity revisited </a></span>
+              <span class="date">Jun 02, 2020</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/animating-implementation/" title="Animating history: Implementation">Animating history: Implemen... </a></span>
+              <span class="date">Oct 16, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/animating-history-transitions/" title="Animating history transitions">Animating history transitions </a></span>
+              <span class="date">Jun 01, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/source-code-published/" title="Source code published">Source code published </a></span>
+              <span class="date">May 05, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/clef-design-marbella-talk-live/" title="Talk at the European Lisp Symposium">Talk at the European Lisp S... </a></span>
+              <span class="date">Apr 19, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/european-lisp-symposium-paper-accepted/" title="ELS 2018: Paper accepted">ELS 2018: Paper accepted </a></span>
+              <span class="date">Mar 20, 2018</span>
+            </li>
+        
+            <li>
+              <span class="recent-title"><a href="/recent/" title="More...">More... </a></span>
+            </li>
+      </ol>
+
+      <div class="social">
+        <ul>
+            <li><a href="https://www.linkedin.com/in/klaasvanschelven/"><span class="foot-link">© Klaas van Schelven</span></a></li>
+        </ul>
+    </div>
+    </aside>
+    <small>&copy; 2020 Klaas van Schelven.</small>
+  </footer>
+
+  <!-- If they're out, get some from the cellar -->
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+  <script src="/assets/js/retina.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/assets/js/scripts.js"></script>
+
+
+  </body>
+</html>
+

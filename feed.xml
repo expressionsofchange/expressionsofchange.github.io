@@ -4,13 +4,252 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2019-07-25T21:19:01+02:00</updated>
+<updated>2020-06-02T23:07:26+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
   <uri>http://www.expressionsofchange.org/</uri>
   <email>klaas@vanschelven.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Homoiconicity revisited]]></title>
+  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/homoiconicity-revisited/" />
+  <id>http://www.expressionsofchange.org/homoiconicity-revisited</id>
+  <published>2020-06-02T00:00:00+02:00</published>
+  <updated>2020-06-02T00:00:00+02:00</updated>
+  <author>
+    <name>Klaas van Schelven</name>
+    <uri>http://www.expressionsofchange.org</uri>
+    <email>klaas@vanschelven.com</email>
+  </author>
+  <content type="html">&lt;p&gt;In an &lt;a href=&quot;dont-say-homoiconic/&quot;&gt;earlier article&lt;/a&gt;, I concluded that you probably
+shouldn’t use the word “homoiconic”: starting with the original definition of
+the word, I noted that this this definition is problematic for a number of
+reasons, and that the best we can say is that there is a degree to which a
+language is homoiconic: languages that have a smaller conceptual distance
+between their program text and machine operation are more homoiconic and
+vice versa.&lt;/p&gt;
+
+&lt;p&gt;That article also explored some of the plethora of competing, often mutually
+exclusive definitions in active use – a fact that should come as a warning
+anyone who’s intention is to clearly communicate their ideas.&lt;/p&gt;
+
+&lt;p&gt;It is therefore somewhat disappointing (though not unsurprising) that when the
+&lt;a href=&quot;https://news.ycombinator.com/item?id=20657798&quot;&gt;article was discussed on Hacker
+News&lt;/a&gt;, the top voted comment
+started like this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I’m going to keep using the word ‘homoiconic’ because it is a
+useful term.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In style, that commenter neither explained why the term would be
+useful, nor provided a definition of their own.&lt;/p&gt;
+
+&lt;p&gt;Given that people will continue to use the word, what are we to understand if
+they do? Let’s revisit the topic, but start at the other end: instead of
+taking the official definition as a starting point, let’s say a word means what
+the people who use it mean by it. Even if that meaning has little to do with
+the original definition, and even if they are not willing to put forward a
+definition of their own.&lt;/p&gt;
+
+&lt;p&gt;If we don’t want to start with the official definition, we’re faced with a bit
+of a challenge though: what are we to take as a starting point for the
+discussion? To get it around it, we’ll simply start with a definition of our
+own, and then match this back to typical examples and counter-examples of
+homoiconicity to see how it fits.&lt;/p&gt;
+
+&lt;h3 id=&quot;homoiconic-a-working-definition&quot;&gt;Homoiconic, a working definition&lt;/h3&gt;
+
+&lt;p&gt;Homoiconic usually refers some combination of the following (weights assigned
+to the bullets below will depend on the speaker):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Strong language support for simple, composable (i.e. tree-like) data
+structures, preferably using a minimal syntax (i.e. literals).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The language semantics are directly defined in terms of such data structures
+and the programs are formed using instances of these structures.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The structure of such data-structures is explicitly reflected in their
+visual representation on-screen; it is immediately apparant &lt;em&gt;for humans&lt;/em&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;High similarlity between representations of the program in (some of):&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;the head of the programmer&lt;/li&gt;
+      &lt;li&gt;the visual representation on-screen&lt;/li&gt;
+      &lt;li&gt;the formal semantics of the language&lt;/li&gt;
+      &lt;li&gt;the implementation of the (virtual) machine&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The benefit of homoiconicity is then: first, the structured manipulation of
+programs, possibly by other programs, becomes trivial and natural. Second,
+there is little mental effort spent in mapping the program text to the program
+structure, and in imagining how the machine operates on said structure.&lt;/p&gt;
+
+&lt;h3 id=&quot;examples-and-counter-examples&quot;&gt;Examples and counter-examples&lt;/h3&gt;
+
+&lt;p&gt;Lisps tick all, or most of, of the boxes:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;S-expressions take the role of the simple, composable data structures.&lt;/li&gt;
+  &lt;li&gt;Lisps’ semantics are directly defined in terms of s-expressions and
+lisp programs are formed using s-expressions.&lt;/li&gt;
+  &lt;li&gt;S-expressions are trees, and the nesting of items is immediately apparent:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;(&lt;/code&gt; denotes the start of a child, and &lt;code class=&quot;highlighter-rouge&quot;&gt;)&lt;/code&gt; its end. Children are nested
+inside their parents.&lt;/li&gt;
+  &lt;li&gt;Lisp programmers think in s-expressions, which are always on-screen, and
+form the basis of the semantics of the language (always) and the
+implementation of the VM (if it is an interpreter).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Other languages tick only some of the boxes, or none of them.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;JavaScript has strong language support for composable, tree-like, structures
+(bullet 1) and the structure is immediately apparent by looking at the pairs
+of &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;}&lt;/code&gt; brackets (bullet 3). However, the language semantics are not
+defined in such terms (bullet 2) and a JavaScript program is not provided as
+a JavaScript object (or JSON object).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;For machine code, little mapping between the representations for the human
+and the machine is required, for the simple reason that no special representation
+for humans exist (bullet 4). However, machine code fails on bullets 1 to 3.
+I’d argue that few people that praise the benefits of homoiconicity actually
+think of machine code while doing so, though they might admit machine code
+fits some definition of homoiconicity when pressed.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;XSLT is defined in XML, i.e. in composable, tree-like structures, so it gets
+a pass on bullets 1, 2 &amp;amp; 3 (with the exception of “simple syntax”). This is
+another one for “homoiconic, but not a poster child”.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;TRACK probably fails on bullets 1, 2 &amp;amp; 3, even though it was the language in
+the context of which the term homoiconic was coined. This is simply a
+reflection of the fact that the term has evolved, and that modern-day usage
+is different from the original meaning.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Java has no strong language support for literal representation of simple
+composable data in the language (bullet 1) and also fails to meet the
+other criteria.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;what-lispers-dont-tell-you&quot;&gt;What Lispers don’t tell you&lt;/h3&gt;
+
+&lt;p&gt;So is the above definition new in any way? I think it is, in the sense that is
+spells out some things that might be so obvious to Lispers that they forget to
+include them in their definitions. (“What’s water?” says the fish)&lt;/p&gt;
+
+&lt;p&gt;Take for example the definition on &lt;a href=&quot;https://wiki.c2.com/?HomoiconicLanguages&quot;&gt;Wards Wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In a homoiconic language, the primary representation of programs is also a
+data structure in a primitive type of the language itself.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A &lt;a href=&quot;https://wiki.c2.com/?HomoiconicExampleInJava&quot;&gt;common objection against this definition being
+meaningful&lt;/a&gt; is that this is or
+can be the case for most languages: e.g. in Java the primary representation of
+programs is as text (strings), and strings are also a primitive type of the
+language itself. Such an objection (understandably) glosses over the meaning
+implied by “a datastructure in”.&lt;/p&gt;
+
+&lt;p&gt;For non-lispers, that phrase might not evoke much, or may perhaps suggest an
+implementation detail (since “data structure” is often used to refer to the
+implementation of data types, i.e. a string might be implemented as an array,
+in which case the array is the underlying datastructure).&lt;/p&gt;
+
+&lt;p&gt;For Lispers, this part is essential though, because for them it is naturally a
+reference to s-expressions. And thus for Lispers it evokes 2 parts of the
+definition that I made explicit in the above under bullets 1 and 2, namely:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;the compositional nature of the data type under consideration&lt;/li&gt;
+  &lt;li&gt;the fact that data and programs can be composed in the same way&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As a second example, consider the opening line of the current definition on
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Homoiconicity&quot;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A language is homoiconic if a program written in it can be manipulated as
+data using the language&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here, again, the objection can be raised that this is true for all languages.
+That is, all languages allow for programs written in them to be manipulated by
+them “as data” (i.e. as strings). After all, strings are data.&lt;/p&gt;
+
+&lt;p&gt;Well… not for Lispers, to whom “data” will likely evoke something more
+structured, such as s-expressions (again). In other words, the key property
+here is that the program &lt;em&gt;is&lt;/em&gt; a piece of &lt;em&gt;hierarchically structured&lt;/em&gt; data
+(bullets 1 &amp;amp; 2 in the above).&lt;/p&gt;
+
+&lt;p&gt;Finally, let’s consider how Wikipedia continues:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;and thus the program’s internal representation can be inferred just by
+reading the program itself.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here, the typical counterpoint would be that one can either never be true
+(because the inner workings of the machine are hidden from us) or is always
+true (if we assume that we are being provided the specification).&lt;/p&gt;
+
+&lt;p&gt;Fitting this sentence back to bullets 3 &amp;amp; 4 makes more sense though: the key
+point is not that the inner representation &lt;em&gt;can be inferred&lt;/em&gt;, but rather that
+a “good enough model” is easy enough to imagine while looking at the program
+text.&lt;/p&gt;
+
+&lt;h3 id=&quot;homo-reinterpreted&quot;&gt;“Homo” reinterpreted&lt;/h3&gt;
+
+&lt;p&gt;If we indeed accept the working definition in the above as what most people
+who speak about homoiconicity actually mean, it seems that an interesting
+shift has occurred. Take one more look at the original definition:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Because TRAC procedures and text have the same representation inside and
+outside the processor, the term homo-iconic is applicable, from homo meaning
+the same, and icon meaning representation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Now compare this with the working definition in the above: bullets 1, 2, and 3
+are not at all concerned with sameness of internal and external representation.
+However, they are concerned with different kinds of sameness: Mostly, the fact
+that datastructures in the code, and the program text, are represented in the
+same way.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h3&gt;
+
+&lt;p&gt;I’d still argue that homoiconicity is a concept that confuses more than it
+clarifies, mostly because of &lt;a href=&quot;/dont-say-homoiconic/#alternate-definitions&quot;&gt;the many competing
+definitions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Anyone who wants to get a point across is better off by simply referring to
+more direct properties of a language such as “has a nice literal syntax for
+structured data” or “the shape of the AST is immediately apparent from looking
+at your screen”.&lt;/p&gt;
+
+&lt;p&gt;Still, faced with continued usage, the working definition above might at least
+serve as a dictionary for the perplexed.&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/homoiconicity-revisited/&quot;&gt;Homoiconicity revisited&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on June 02, 2020.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -1808,56 +2047,6 @@ index 1cde8fb..f487c7e 100644
 &lt;/div&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/git-is-ignorant-by-design/&quot;&gt;Git is ignorant by design&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on November 08, 2017.&lt;/p&gt;</content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[September status update]]></title>
-  <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org/september-status-update/" />
-  <id>http://www.expressionsofchange.org/september-status-update</id>
-  <published>2017-09-12T00:00:00+02:00</published>
-  <updated>2017-09-12T00:00:00+02:00</updated>
-  <author>
-    <name>Klaas van Schelven</name>
-    <uri>http://www.expressionsofchange.org</uri>
-    <email>klaas@vanschelven.com</email>
-  </author>
-  <content type="html">&lt;p&gt;Given the fact that it’s been a bit quiet on this website for the past few months, I figured it was time for a short status update.&lt;/p&gt;
-
-&lt;p&gt;In this project I experiment with better tooling for constructing ever-changing computer programs. The project is split into 2 major related parts: an editor in which changes take a central role, and the interpretation of artifacts as produced by the editor as computer programs.&lt;/p&gt;
-
-&lt;p&gt;I have decided to let the editor be for now, and have recently switched my attention to working on a small Lisp interpreter. This takes as its input a mechanism of construction of an S-Expression, rather than just the constructed end-product.&lt;/p&gt;
-
-&lt;p&gt;As some key parts of the modelling I have identified:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;A small set of Lisp forms&lt;/li&gt;
-  &lt;li&gt;A vocabulary of change on these forms (A “&lt;em&gt;Clef&lt;/em&gt;”).&lt;/li&gt;
-  &lt;li&gt;A mapping of changes to S-Expressions to changes to Lisp forms.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The above is (roughly) implemented.&lt;/p&gt;
-
-&lt;p&gt;The current step is to make sure the Lisp forms lead to an actually functioning interpreter. Doing so as a prototype should, hopefully, be fairly simple.&lt;/p&gt;
-
-&lt;p&gt;An important goal in the implementation of this interpreter is to stay faithful to the notion of expressions of change. In particular: rather than interpret fully constructed programs, the focus is in interpreting the meaning of changes to existing programs.&lt;/p&gt;
-
-&lt;p&gt;A related goal is to express certain kinds of program analysis in terms of analyses to changes to programs. (“incremental analysis”)&lt;/p&gt;
-
-&lt;p&gt;Some candidates for such analyses are:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Analysing variable usage &amp;amp; binding incrementally. By doing so we improve the programmer experience from “this variable is undefined” to “this variable became undefined at such and such edit operation” and similarly for “this variable is unused” and “this variable shadows another variable”.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Static type-analyses may similarly be formulated incremtally.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Stay tuned for further updates.&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://www.expressionsofchange.org/september-status-update/&quot;&gt;September status update&lt;/a&gt; was originally published by Klaas van Schelven at &lt;a href=&quot;http://www.expressionsofchange.org&quot;&gt;Expressions of Change&lt;/a&gt; on September 12, 2017.&lt;/p&gt;</content>
 </entry>
 
 </feed>
