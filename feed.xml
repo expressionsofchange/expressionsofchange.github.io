@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2020-06-02T23:07:26+02:00</updated>
+<updated>2020-06-04T10:51:53+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -24,7 +24,7 @@
     <uri>http://www.expressionsofchange.org</uri>
     <email>klaas@vanschelven.com</email>
   </author>
-  <content type="html">&lt;p&gt;In an &lt;a href=&quot;dont-say-homoiconic/&quot;&gt;earlier article&lt;/a&gt;, I concluded that you probably
+  <content type="html">&lt;p&gt;In an &lt;a href=&quot;/dont-say-homoiconic/&quot;&gt;earlier article&lt;/a&gt;, I concluded that you probably
 shouldn’t use the word “homoiconic”: starting with the original definition of
 the word, I noted that this this definition is problematic for a number of
 reasons, and that the best we can say is that there is a degree to which a
