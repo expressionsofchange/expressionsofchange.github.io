@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://www.expressionsofchange.org/feed.xml" />
 <link rel="alternate" type="text/html" href="http://www.expressionsofchange.org" />
-<updated>2020-06-05T12:36:57+02:00</updated>
+<updated>2020-06-06T08:46:09+02:00</updated>
 <id>http://www.expressionsofchange.org/</id>
 <author>
   <name>Klaas van Schelven</name>
@@ -717,7 +717,7 @@ texture at the next frame are unaffected)&lt;/p&gt;
 
 &lt;h2 id=&quot;historic-definition&quot;&gt;Historic definition&lt;/h2&gt;
 
-&lt;p&gt;The term homoiconic was first coined in the article &lt;a href=&quot;https://dl.acm.org/citation.cfm?doid=800197.806048&quot;&gt;TRAC, A Text-Handling Language&lt;/a&gt; by Calvin Mooers and L. Peter Deutsch.&lt;sup id=&quot;fnref:trac-footnote&quot;&gt;&lt;a href=&quot;#fn:trac-footnote&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; In the original article, the meaning of homoiconicity seems to be spelled out quite clearly. The article opens by stating that the TRAC language is homoiconic, although without yet using that term explicitly:&lt;/p&gt;
+&lt;p&gt;The term homoiconic was first coined by Calvin Mooers in the article &lt;a href=&quot;https://dl.acm.org/citation.cfm?doid=800197.806048&quot;&gt;TRAC, A Text-Handling Language&lt;/a&gt; (L. Peter Deutsch was the other author of that article, but he has made it clear to me that Mooers was the originator of the term and Deutsch’s contribution was only on the technical side).&lt;sup id=&quot;fnref:trac-footnote&quot;&gt;&lt;a href=&quot;#fn:trac-footnote&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; In the original article, the meaning of homoiconicity seems to be spelled out quite clearly. The article opens by stating that the TRAC language is homoiconic, although without yet using that term explicitly:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;The external and internal forms of the TRAC language are the same.&lt;/p&gt;
@@ -853,6 +853,32 @@ texture at the next frame are unaffected)&lt;/p&gt;
 &lt;p&gt;However, that’s not a very good position to be in. I’d say it’s much easier to just talk about certain properties of your favorite language directly. For example, “the syntax is easy to parse”, or “the semantics of the language are completely defined on the single page of a book”. That is, there is much to be said in favor of Lisp’s s-expressions without resorting to use such a poorly defined term.&lt;/p&gt;
 
 &lt;p&gt;Maybe it’s time to stop saying “homoiconic”.&lt;/p&gt;
+
+&lt;h3 id=&quot;afterword-l-peter-deutsch-responds&quot;&gt;Afterword: L. Peter Deutsch responds&lt;/h3&gt;
+
+&lt;p&gt;In June 2020, I reached out to L. Peter Deutsch with the request to read and comment on the above. He wrote the following:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I did not coin this word [homoiconic] – it was 100% the creation of my friend the late
+Calvin Mooers, who was the original conceiver of TRAC.  My contribution in
+working with Calvin was to take his concept, turn it into a rigorous
+language definition, and implement it.&lt;/p&gt;
+
+  &lt;p&gt;Having read through your blog article, I would say that I essentially agree
+with your argument.  In my view, the root “icon” refers specifically to the
+&lt;em&gt;concrete appearance&lt;/em&gt; of something.  For example, “WYSIWYG” in the context
+of text editing is arguably the same idea as “homoiconic” in the context of
+programming languages, contrasted to languages like TeX where the document
+has two very different appearances (the TeX input file and the output
+document).  WYSIWYG editors are homo-iconic not simply in the &lt;em&gt;characters&lt;/em&gt;
+of the document, but also in their &lt;em&gt;formatting&lt;/em&gt; (font, spacing, …); but I
+think the same concept applies.&lt;/p&gt;
+
+  &lt;p&gt;There are other homoiconic macro languages: while TRAC may be the earliest
+on record (I don’t remember the date or specifications of Strachey’s GPM),
+m4, which I use actively as a preprocessor for other languages, also fits
+the concept.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
