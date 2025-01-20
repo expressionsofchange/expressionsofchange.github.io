@@ -107,8 +107,8 @@
 <p>The main cause for this is the one to one correspondance between certain tokens, and (types of) nodes in the AST. That is:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">(</code> denotes the start of a list-expression,</li>
-  <li><code class="highlighter-rouge">)</code> the end of one,</li>
+  <li><code class="language-plaintext highlighter-rouge">(</code> denotes the start of a list-expression,</li>
+  <li><code class="language-plaintext highlighter-rouge">)</code> the end of one,</li>
   <li>whitespace separates atoms</li>
 </ul>
 
@@ -126,20 +126,18 @@
 
 <p>As a minimal example we’ll use a grammar that is only slightly more sophisticated: a parser of typical (elementary school) mathematical expressions using only addition and multiplication. A typical expression in the associated language would be:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>1 + 2 + 3 + 4 + 5
-</code></pre>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 + 2 + 3 + 4 + 5
+</code></pre></div></div>
 
-<p>And we know from elementary school that there are precedence rules, i.e. <code class="highlighter-rouge">*</code> binds more strongly than <code class="highlighter-rouge">+</code>. From our “implementation of programming languages” course at uni we remember how to write the grammar for this, which codifies these precendence rules. In BNF:</p>
+<p>And we know from elementary school that there are precedence rules, i.e. <code class="language-plaintext highlighter-rouge">*</code> binds more strongly than <code class="language-plaintext highlighter-rouge">+</code>. From our “implementation of programming languages” course at uni we remember how to write the grammar for this, which codifies these precendence rules. In BNF:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;expr&gt; -&gt; &lt;expr&gt; + &lt;term&gt;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;expr&gt; -&gt; &lt;expr&gt; + &lt;term&gt;
       | &lt;term&gt;
 &lt;term&gt; -&gt; &lt;term&gt; * &lt;number&gt;
       | &lt;number&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>Note that this definition does not have the property of explicit structure that we talked about in the beginning: to know whether something is an <code class="highlighter-rouge">expr</code>, or a <code class="highlighter-rouge">term</code>, further recursive parsing must occur. That is: we don’t start each node in the parse-tree with a special token denoting which one it is.</p>
+<p>Note that this definition does not have the property of explicit structure that we talked about in the beginning: to know whether something is an <code class="language-plaintext highlighter-rouge">expr</code>, or a <code class="language-plaintext highlighter-rouge">term</code>, further recursive parsing must occur. That is: we don’t start each node in the parse-tree with a special token denoting which one it is.</p>
 
 <h3 id="human-understanding-of-sophisticated-grammars">Human understanding of sophisticated grammars</h3>
 
@@ -197,9 +195,9 @@
 
 <h3 id="analyses-for-sophisticated-asts">Analyses for sophisticated ASTs</h3>
 
-<p>In more sophisticated grammars, this is not the case. The basic reason is: you have all this cruft in your abstract syntax tree. For example, in the case of the expression <code class="highlighter-rouge">1 + 2 + 3 + 4 + 5</code>, there was this deeply nested imbalanced tree.</p>
+<p>In more sophisticated grammars, this is not the case. The basic reason is: you have all this cruft in your abstract syntax tree. For example, in the case of the expression <code class="language-plaintext highlighter-rouge">1 + 2 + 3 + 4 + 5</code>, there was this deeply nested imbalanced tree.</p>
 
-<p>Of course, from the perspective of the computer that does the static analysis, or even the person creating the static analysis, such deeply nested ASTs are not a problem. This is because each part of the analysis is generally expressed in terms of a single node and its environment. So we can just go “okay, well how does the <code class="highlighter-rouge">+</code> operator work? Well just add up the left hand side and the right hand side.” They don’t care that if you add up ten things and it’s A + B + C + D etc., that this creates this huge binary tree; that’s just more applications of the same thing.</p>
+<p>Of course, from the perspective of the computer that does the static analysis, or even the person creating the static analysis, such deeply nested ASTs are not a problem. This is because each part of the analysis is generally expressed in terms of a single node and its environment. So we can just go “okay, well how does the <code class="language-plaintext highlighter-rouge">+</code> operator work? Well just add up the left hand side and the right hand side.” They don’t care that if you add up ten things and it’s A + B + C + D etc., that this creates this huge binary tree; that’s just more applications of the same thing.</p>
 
 <p>However, If we want to visualize all this stuff then it becomes really problematic, because then we do have to show the whole tree.</p>
 
@@ -340,7 +338,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

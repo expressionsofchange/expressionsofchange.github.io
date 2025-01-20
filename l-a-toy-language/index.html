@@ -131,12 +131,12 @@
 <ul>
   <li>an atom which is either a string or a numbers is a <strong>value</strong>; its evaluation results in this value itself.</li>
   <li>any other atom is a <strong>variable</strong>; its evaluation results in the value resulting from looking up this variable in the present environment.</li>
-  <li><code class="highlighter-rouge">(quote «s-expr»)</code> is a <strong>quoted expression</strong>; its evaluation results in the quoted s-expression as-is (i.e., specifically by not further evaluation the quoted s-expression).</li>
-  <li><code class="highlighter-rouge">(quote «predicate» «consequent» «alternative»)</code> is an <strong>if-expression</strong>; its evaluation depends on the value resulting from evaluating the <em>predicate</em>; if this is <code class="highlighter-rouge">true</code>, it is the result of evaluating of the <em>conseqeuent</em>, otherwise that of evaluating the <em>alternative</em>.</li>
-  <li><code class="highlighter-rouge">(define «variable-name» «definition»)</code> is a <strong>definition</strong>; its evaluation does not result in a (meaningful) value; however, as an effect of evaluating the result of evaluating the definition is bound to the variable-name in the present environment.</li>
-  <li><code class="highlighter-rouge">(lambda «parameter names» «body ...»)</code> is a <strong>lambda</strong>; it evaluates to a procedure object which contains the parameter names and body. (Note: unlike in Scheme, in which a special form of <code class="highlighter-rouge">define</code> is interpreted as a procedure, in <em>L</em> lambda’s can only be defined directly using the associated special form)</li>
-  <li><code class="highlighter-rouge">(begin «... ...»)</code> is a <strong>sequence</strong>; it evaluates each s-expression in turn, the evaluation of the sequence results in the last element’s evaluation.</li>
-  <li><code class="highlighter-rouge">(«procedure» «arguments ...»)</code> is a <strong>procedure application</strong>; evaluation results in the value that is arrived at as follows: first, evaluate the procedure and all arguments in the present environment. Create a new (sub-)environment in which each of the procedure’s parameter names is bound to the value of the associated argument. Evaluate the procedure’s body in this environment. This is the result of evaluating the procedure application.</li>
+  <li><code class="language-plaintext highlighter-rouge">(quote «s-expr»)</code> is a <strong>quoted expression</strong>; its evaluation results in the quoted s-expression as-is (i.e., specifically by not further evaluation the quoted s-expression).</li>
+  <li><code class="language-plaintext highlighter-rouge">(quote «predicate» «consequent» «alternative»)</code> is an <strong>if-expression</strong>; its evaluation depends on the value resulting from evaluating the <em>predicate</em>; if this is <code class="language-plaintext highlighter-rouge">true</code>, it is the result of evaluating of the <em>conseqeuent</em>, otherwise that of evaluating the <em>alternative</em>.</li>
+  <li><code class="language-plaintext highlighter-rouge">(define «variable-name» «definition»)</code> is a <strong>definition</strong>; its evaluation does not result in a (meaningful) value; however, as an effect of evaluating the result of evaluating the definition is bound to the variable-name in the present environment.</li>
+  <li><code class="language-plaintext highlighter-rouge">(lambda «parameter names» «body ...»)</code> is a <strong>lambda</strong>; it evaluates to a procedure object which contains the parameter names and body. (Note: unlike in Scheme, in which a special form of <code class="language-plaintext highlighter-rouge">define</code> is interpreted as a procedure, in <em>L</em> lambda’s can only be defined directly using the associated special form)</li>
+  <li><code class="language-plaintext highlighter-rouge">(begin «... ...»)</code> is a <strong>sequence</strong>; it evaluates each s-expression in turn, the evaluation of the sequence results in the last element’s evaluation.</li>
+  <li><code class="language-plaintext highlighter-rouge">(«procedure» «arguments ...»)</code> is a <strong>procedure application</strong>; evaluation results in the value that is arrived at as follows: first, evaluate the procedure and all arguments in the present environment. Create a new (sub-)environment in which each of the procedure’s parameter names is bound to the value of the associated argument. Evaluate the procedure’s body in this environment. This is the result of evaluating the procedure application.</li>
 </ul>
 
 <p>For the sake of simplicity, <em>L</em> has no primitive procedures; this is no problem, since we can always evaluate programs in some “global” environment in which all required primitive procedures are bound to some name.</p>
@@ -145,7 +145,7 @@
 
 <p>As an example, given this definition, consider the following s-expression:</p>
 
-<div class="language-scheme highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">begin</span>
+<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">begin</span>
   <span class="p">(</span><span class="k">define</span> <span class="nv">factorial</span>
     <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">n</span><span class="p">)</span>
       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span>
@@ -153,10 +153,9 @@
         <span class="p">(</span><span class="nb">*</span> <span class="nv">n</span> <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))))))</span>
   <span class="p">(</span><span class="nf">factorial</span> <span class="mi">5</span><span class="p">)</span>
 <span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>Evaluating this in an environment where the mathematical symbols are bound to procedures expressing their usual meaning yields the value <code class="highlighter-rouge">120</code>.</p>
+<p>Evaluating this in an environment where the mathematical symbols are bound to procedures expressing their usual meaning yields the value <code class="language-plaintext highlighter-rouge">120</code>.</p>
 
 <h3 id="conclusions">Conclusions</h3>
 
@@ -229,7 +228,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

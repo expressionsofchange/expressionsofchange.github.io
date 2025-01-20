@@ -109,33 +109,33 @@
         <p>When introducing the editor we introduced <a href="/introducing-the-editor/#a-clef-for-construction">a set of operations that represent changes</a> (we called this a <em>clef</em>). Two of the operations presented so far take a full history as one of their parameters:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Insert index history</code></li>
-  <li><code class="highlighter-rouge">Replace index history</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Insert index history</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Replace index history</code></li>
 </ul>
 
-<p>We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter <code class="highlighter-rouge">history</code>.</p>
+<p>We might wonder how to represent a serialization of such an operation, with the purpose of storing it in memory on disk or sending it over a network. Such a serialization must include a serialization of the parameter <code class="language-plaintext highlighter-rouge">history</code>.</p>
 
 <p>In this article we’ll show how this is presently implemented in the editor.</p>
 
 <h3 id="the-problem-history-size">The problem: history-size</h3>
 
-<p>In a naive implementation we might serialize the full history and include it into the serialization of the <code class="highlighter-rouge">Replace</code> operation. The problem with this approach is that histories tend to grow over time (by definition).</p>
+<p>In a naive implementation we might serialize the full history and include it into the serialization of the <code class="language-plaintext highlighter-rouge">Replace</code> operation. The problem with this approach is that histories tend to grow over time (by definition).</p>
 
-<p>To see to which degree this would be an unworkable approach, consider the following. The <em>raison d’être</em> of the <code class="highlighter-rouge">Replace</code> operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.</p>
+<p>To see to which degree this would be an unworkable approach, consider the following. The <em>raison d’être</em> of the <code class="language-plaintext highlighter-rouge">Replace</code> operation as defined above is to allow the histories of arbitrary hierarchical structures to be composed of the histories of their substructures.</p>
 
 <p>As an example of a practical application of that principle would be to keep track of the history of a single computer’s Operating System and applications. In the composed approach, such a system-level history is composed of the histories of each application, which are composed of the histories of their modules, functions, etc. down to the histories of the smallest expressions of which the applications are composed.</p>
 
-<p>The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the <code class="highlighter-rouge">Replace</code> operation. This would then result in the following <code class="highlighter-rouge">Replace</code> operations:</p>
+<p>The smallest change to such a system would be to make a single change to one such of the smallest such sub-expressions, and then to bubble up the change through recursive application of the <code class="language-plaintext highlighter-rouge">Replace</code> operation. This would then result in the following <code class="language-plaintext highlighter-rouge">Replace</code> operations:</p>
 
 <ul>
-  <li>The history of the system as a whole is extended with a <code class="highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
-  <li>The history of some software application as it was previously, but extended with a <code class="highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
-  <li>The history of some module as it was previously, but extended with a <code class="highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
+  <li>The history of the system as a whole is extended with a <code class="language-plaintext highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
+  <li>The history of some software application as it was previously, but extended with a <code class="language-plaintext highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
+  <li>The history of some module as it was previously, but extended with a <code class="language-plaintext highlighter-rouge">Replace</code> operation which takes as a parameter…</li>
 </ul>
 
 <p>etc.</p>
 
-<p>If we model the serialization of such <code class="highlighter-rouge">Replace</code> operations naively, by including the full history as a parameter, the top-level <code class="highlighter-rouge">Replace</code> from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).</p>
+<p>If we model the serialization of such <code class="language-plaintext highlighter-rouge">Replace</code> operations naively, by including the full history as a parameter, the top-level <code class="language-plaintext highlighter-rouge">Replace</code> from the above example would need to contain the full history of some application, which in turn contains full histories of modules, etc etc. This leads to polynomial space-complexity in the length of the history (with the depth of the tree being the exponent).</p>
 
 <p>The challenge is therefore: being able to reference arbitrarily large histories at a constant cost.</p>
 
@@ -156,11 +156,11 @@
 
 <p>If we keep a single hash table in which we can look up records given their hash, and this hash table contains (at least) all records from a given list, we can always reconstruct lists from a given the hash of the last element of the list.</p>
 
-<p>A similar technique in Lisp implementations is called <a href="https://en.wikipedia.org/wiki/Hash_consing">Hash Consing</a>.<sup id="fnref:terminology-notes"><a href="#fn:terminology-notes" class="footnote">1</a></sup> More recent analogues are git’s commit object structure (though it implements a directed acyclic graph rather than a list because multiple ‘previous’ records may be referenced) and bitcoin’s blockchain.</p>
+<p>A similar technique in Lisp implementations is called <a href="https://en.wikipedia.org/wiki/Hash_consing">Hash Consing</a>.<sup id="fnref:terminology-notes"><a href="#fn:terminology-notes" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> More recent analogues are git’s commit object structure (though it implements a directed acyclic graph rather than a list because multiple ‘previous’ records may be referenced) and bitcoin’s blockchain.</p>
 
 <p>Recognizing that any list can be written in the Hash Consing style, and that histories are lists, we’ve implemented histories as such.</p>
 
-<p>It is precisely the hash of such a record that we can refer to from when serializing the operations <code class="highlighter-rouge">Insert</code> and <code class="highlighter-rouge">Replace</code>, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.</p>
+<p>It is precisely the hash of such a record that we can refer to from when serializing the operations <code class="language-plaintext highlighter-rouge">Insert</code> and <code class="language-plaintext highlighter-rouge">Replace</code>, which takes constant space. This means that the space-complexity of our implementation of history is bounded by the product of the depth of the tree and the length of the history.</p>
 
 <h3 id="considerations">Considerations</h3>
 
@@ -168,7 +168,7 @@
 
 <p>It is not strictly necessary to use a hash-based scheme to achieve the above-mentioned advantages in space-complexity. In principle, any scheme that deduplicates shared histories would suffice.</p>
 
-<p>For exampe, we might implement the histories as backlinked lists in-memory, and implement <code class="highlighter-rouge">Replace</code> to contain a pointer to the relevant item from the list.</p>
+<p>For exampe, we might implement the histories as backlinked lists in-memory, and implement <code class="language-plaintext highlighter-rouge">Replace</code> to contain a pointer to the relevant item from the list.</p>
 
 <p>However, using a hash-based scheme brings several advantages over such an approach:</p>
 
@@ -177,10 +177,10 @@
   <li>Deduplication of any shared history is automatic, there is no need to keep track of shared histories programatically.</li>
 </ul>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:terminology-notes">
-      <p>It would be tempting but incorrect to use the term <a href="https://en.wikipedia.org/wiki/Hash_list">“hash list”</a> to describe such a construct: that term is used to denote a structure where a list of hashses is used as an input to a single root hash. In other words: the individual elements of a hash list are not linking to each other, but are linked together at a single point. The term <a href="https://en.wikipedia.org/wiki/Hash_chain">“hash chain”</a> seems to be reserved for repeated application a hash function to a single input.&nbsp;<a href="#fnref:terminology-notes" class="reversefootnote">&#8617;</a></p>
+      <p>It would be tempting but incorrect to use the term <a href="https://en.wikipedia.org/wiki/Hash_list">“hash list”</a> to describe such a construct: that term is used to denote a structure where a list of hashses is used as an input to a single root hash. In other words: the individual elements of a hash list are not linking to each other, but are linked together at a single point. The term <a href="https://en.wikipedia.org/wiki/Hash_chain">“hash chain”</a> seems to be reserved for repeated application a hash function to a single input. <a href="#fnref:terminology-notes" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -252,7 +252,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

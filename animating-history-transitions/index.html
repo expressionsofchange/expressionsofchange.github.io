@@ -114,25 +114,25 @@
 
 <p><img src="/images/movies/transitions-in-context.gif" alt="Full demo with &quot;in context&quot; historical view." /></p>
 
-<p>How should we understand the two panels shown above? The panel on the right represents program <em>structure</em>, i.e. what we usually think of as “the program”. The structure under consideration is an <a href="/introducing-the-editor/#structure-s-expressions">s-expression</a>, recursively defined as either a list-expression of further s-expressions between parentheses <code class="highlighter-rouge">(</code> and <code class="highlighter-rouge">)</code>, or an atom.</p>
+<p>How should we understand the two panels shown above? The panel on the right represents program <em>structure</em>, i.e. what we usually think of as “the program”. The structure under consideration is an <a href="/introducing-the-editor/#structure-s-expressions">s-expression</a>, recursively defined as either a list-expression of further s-expressions between parentheses <code class="language-plaintext highlighter-rouge">(</code> and <code class="language-plaintext highlighter-rouge">)</code>, or an atom.</p>
 
 <p>The panel on the left represents a historic overview of the program’s <em>construction</em>: something we usually think of as “Version Management”, although in <em>Expressions of Change</em> we avoid that term, because we view the history of the program as at least equally as important as the program itself.</p>
 
-<p>In the above, the representation of construction is “in its structural context”. That is: each line shows how a certain modification affects the existing structure: parts of the structure that already existed before the modification are shown in grey, parts that are added by the modification are shown in black.<sup id="fnref:not-diff"><a href="#fn:not-diff" class="footnote">1</a></sup> (Deletions would be shown in red, but the example above contains no deletions). The single line with inverted colors denotes the cursor in the historic view.</p>
+<p>In the above, the representation of construction is “in its structural context”. That is: each line shows how a certain modification affects the existing structure: parts of the structure that already existed before the modification are shown in grey, parts that are added by the modification are shown in black.<sup id="fnref:not-diff"><a href="#fn:not-diff" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> (Deletions would be shown in red, but the example above contains no deletions). The single line with inverted colors denotes the cursor in the historic view.</p>
 
-<p>Importantly, the two panels are connected: whenever we select some <nobr>s-expression</nobr> in the structural view on the right, the panel on the left follows suit, and shows the history of that structure.<sup id="fnref:always-follow"><a href="#fn:always-follow" class="footnote">2</a></sup></p>
+<p>Importantly, the two panels are connected: whenever we select some <nobr>s-expression</nobr> in the structural view on the right, the panel on the left follows suit, and shows the history of that structure.<sup id="fnref:always-follow"><a href="#fn:always-follow" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
-<p>In the above, we select the expression <code class="highlighter-rouge">(+ (* 6 9) 12)</code>, its sub-expression <code class="highlighter-rouge">(* 6 9))</code> and the atom <code class="highlighter-rouge">9</code> respectively, each time showing the relevant histories.</p>
+<p>In the above, we select the expression <code class="language-plaintext highlighter-rouge">(+ (* 6 9) 12)</code>, its sub-expression <code class="language-plaintext highlighter-rouge">(* 6 9))</code> and the atom <code class="language-plaintext highlighter-rouge">9</code> respectively, each time showing the relevant histories.</p>
 
 <h3 id="animations--transitions">Animations / transitions</h3>
 
 <p>The innovation from the past few weeks is that, whenever we switch between the display of one history and another, we show the relationship between the two using an animation.</p>
 
-<p>The simplest example of such a relationship is the one between the history of the atom <code class="highlighter-rouge">9</code> (a trivial history, consisting only of its creation) and the history of the whole expression <code class="highlighter-rouge">(+ (* 6 9) 12)</code>. When we switch from the former to the latter, we see two additional types of information: first, we see that the creation of the <code class="highlighter-rouge">9</code> is preceded by the construction of the rest of the expression beginning with the creation of the list <code class="highlighter-rouge">()</code> and ending with the addition of the atom <code class="highlighter-rouge">12</code>. Second, we see where it fits into the greater expression, i.e. to the right of the <code class="highlighter-rouge">6</code> and left of a closing bracket. Here this single transition is singled out:</p>
+<p>The simplest example of such a relationship is the one between the history of the atom <code class="language-plaintext highlighter-rouge">9</code> (a trivial history, consisting only of its creation) and the history of the whole expression <code class="language-plaintext highlighter-rouge">(+ (* 6 9) 12)</code>. When we switch from the former to the latter, we see two additional types of information: first, we see that the creation of the <code class="language-plaintext highlighter-rouge">9</code> is preceded by the construction of the rest of the expression beginning with the creation of the list <code class="language-plaintext highlighter-rouge">()</code> and ending with the addition of the atom <code class="language-plaintext highlighter-rouge">12</code>. Second, we see where it fits into the greater expression, i.e. to the right of the <code class="language-plaintext highlighter-rouge">6</code> and left of a closing bracket. Here this single transition is singled out:</p>
 
 <p><img src="/images/movies/transition-9.gif" alt="Transition of '9'." /></p>
 
-<p>The transition between the histories of <code class="highlighter-rouge">(+ (* 6 9) 12)</code> and the sub-expression <code class="highlighter-rouge">(* 6 9))</code> forms a more exiting example: we can see how each of the 4 elements of the latter relate to the history of the former, and how they fit into a larger context. Again, we show only the single transition here:</p>
+<p>The transition between the histories of <code class="language-plaintext highlighter-rouge">(+ (* 6 9) 12)</code> and the sub-expression <code class="language-plaintext highlighter-rouge">(* 6 9))</code> forms a more exiting example: we can see how each of the 4 elements of the latter relate to the history of the former, and how they fit into a larger context. Again, we show only the single transition here:</p>
 
 <p><img src="/images/movies/transition-star-6-9.gif" alt="Transition of '(* 6 9)'." /></p>
 
@@ -150,22 +150,22 @@
 
 <p>The example animations shown in this blog-post correspond directly with the main example from the paper <a href="/assets/papers/clef-design.pdf">“Clef design”</a>.</p>
 
-<p>In that paper, we used a more explicit notation for the modifications (called “notes”): those were themselves modelled as s-expressions, rather than displayed by showing how they affect some structure.<sup id="fnref:notational-difference"><a href="#fn:notational-difference" class="footnote">3</a></sup></p>
+<p>In that paper, we used a more explicit notation for the modifications (called “notes”): those were themselves modelled as s-expressions, rather than displayed by showing how they affect some structure.<sup id="fnref:notational-difference"><a href="#fn:notational-difference" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></p>
 
 <p>If we apply the ideas of this blog-post to the notation from the paper, it looks like this:</p>
 
 <p><img src="/images/movies/transitions-clef-design.gif" alt="Full demo with &quot;Clef Design&quot; historical view." /></p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:not-diff">
-      <p>One might even be tempted to call this a “diff”, but that would suggest a primacy of <em>structure</em> rather than <em>construction</em>, i.e. it somewhat implies there are two structures first, and we simply calculate the difference.&nbsp;<a href="#fnref:not-diff" class="reversefootnote">&#8617;</a></p>
+      <p>One might even be tempted to call this a “diff”, but that would suggest a primacy of <em>structure</em> rather than <em>construction</em>, i.e. it somewhat implies there are two structures first, and we simply calculate the difference. <a href="#fnref:not-diff" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:always-follow">
-      <p>In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed.&nbsp;<a href="#fnref:always-follow" class="reversefootnote">&#8617;</a></p>
+      <p>In the above the view of construction always follows the structure’s cursor. In practical situations it’s probably useful to be able to toggle this following of the cursor on or off, retaining the ability to see the history of sub-expressions in their larger context as needed. <a href="#fnref:always-follow" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:notational-difference">
-      <p>In fact, the <em>Clef</em> in the demonstrations above differs from the <em>Clef</em> in the paper in one way: <code class="highlighter-rouge">(insert  ...</code> and <code class="highlighter-rouge">(delete ...</code> taking a single note, rather than a score, as an argument.&nbsp;<a href="#fnref:notational-difference" class="reversefootnote">&#8617;</a></p>
+      <p>In fact, the <em>Clef</em> in the demonstrations above differs from the <em>Clef</em> in the paper in one way: <code class="language-plaintext highlighter-rouge">(insert  ...</code> and <code class="language-plaintext highlighter-rouge">(delete ...</code> taking a single note, rather than a score, as an argument. <a href="#fnref:notational-difference" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -237,7 +237,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

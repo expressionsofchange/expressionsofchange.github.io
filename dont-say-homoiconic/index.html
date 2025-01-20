@@ -112,7 +112,7 @@
 
 <h2 id="historic-definition">Historic definition</h2>
 
-<p>The term homoiconic was first coined in the article <a href="https://dl.acm.org/citation.cfm?doid=800197.806048">TRAC, A Text-Handling Language</a> by Calvin Mooers and L. Peter Deutsch.<sup id="fnref:trac-footnote"><a href="#fn:trac-footnote" class="footnote">1</a></sup> In the original article, the meaning of homoiconicity seems to be spelled out quite clearly. The article opens by stating that the TRAC language is homoiconic, although without yet using that term explicitly:</p>
+<p>The term homoiconic was first coined in the article <a href="https://dl.acm.org/citation.cfm?doid=800197.806048">TRAC, A Text-Handling Language</a> by Calvin Mooers and L. Peter Deutsch.<sup id="fnref:trac-footnote"><a href="#fn:trac-footnote" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> In the original article, the meaning of homoiconicity seems to be spelled out quite clearly. The article opens by stating that the TRAC language is homoiconic, although without yet using that term explicitly:</p>
 
 <blockquote>
   <p>The external and internal forms of the TRAC language are the same.</p>
@@ -177,7 +177,7 @@
   <p>A typical demonstration of homoiconicity is the meta-circular evaluator.</p>
 </blockquote>
 
-<p>To understand this claim, let’s first examine what a meta-circular evaluator is. The term was coined originally in 1972 by John C. Reynolds in his paper <a href="http://people.cs.uchicago.edu/~blume/classes/aut2008/proglang/papers/definterp.pdf">Definitional Interpreters for Higher-Order Programming Languages</a>.<sup id="fnref:sicp-meta-circular"><a href="#fn:sicp-meta-circular" class="footnote">2</a></sup></p>
+<p>To understand this claim, let’s first examine what a meta-circular evaluator is. The term was coined originally in 1972 by John C. Reynolds in his paper <a href="http://people.cs.uchicago.edu/~blume/classes/aut2008/proglang/papers/definterp.pdf">Definitional Interpreters for Higher-Order Programming Languages</a>.<sup id="fnref:sicp-meta-circular"><a href="#fn:sicp-meta-circular" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
 <blockquote>
   <p>We have coined the word “meta-circular” to indicate the basic character of this interpreter: It defines each feature of the defined language by using the corresponding feature of the defining language. For example, when eval is applied to an application expression [..] of the defined language, it evaluates an application expression [..] in the defining language.</p>
@@ -205,7 +205,7 @@
 
 <h2 id="an-example">An example</h2>
 
-<p>Now we know what homoiconicity is not, the way is cleared for a discussion on what it is. Let’s return to the original definition, and try to fit this to an example. Remember, the original definition of homoiconicity centers on <em>a similarity between the internal and external representations of a language</em>. In the literature, Lisps are the favorite example of homoiconicity; we will stick with that tradition here, and examine the case of an arbitrary Lisp program in an arbitray language in the Lisp family.<sup id="fnref:lisp-not-homoiconic"><a href="#fn:lisp-not-homoiconic" class="footnote">3</a></sup></p>
+<p>Now we know what homoiconicity is not, the way is cleared for a discussion on what it is. Let’s return to the original definition, and try to fit this to an example. Remember, the original definition of homoiconicity centers on <em>a similarity between the internal and external representations of a language</em>. In the literature, Lisps are the favorite example of homoiconicity; we will stick with that tradition here, and examine the case of an arbitrary Lisp program in an arbitray language in the Lisp family.<sup id="fnref:lisp-not-homoiconic"><a href="#fn:lisp-not-homoiconic" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></p>
 
 <p>First, the external representation: the basic syntactical element of Lisps is the s-expression. Thus, a typical program in Lisp is represented to the programmer as nothing more than an s-expression.</p>
 
@@ -231,7 +231,7 @@
 
 <p>Regarding the external representation: parsing of s-expressions is trivial, as is the reverse operation of converting s-expressions to some printable form. The use of explicit brackets for all list-expressions ensures that the structure of s-expressions is always explicitly visible. Thus, to say that the external representation of a Lisp program is an s-expression holds at least some truth.</p>
 
-<p>Regarding the internal representation: even though an actual Lisp interpreter might be optimized, its operational semantics are defined in terms of a virtual machine that operates on s-expressions. Any properly implemented optimization will have the same behavior (barring performance) as its non-optimized counterpart. Thus, from the perspective of the programmer the internal representation is still the s-expression.<sup id="fnref:what-is-internal"><a href="#fn:what-is-internal" class="footnote">4</a></sup> Thus, to say that the internal representation is an s-expression holds some truth as well.</p>
+<p>Regarding the internal representation: even though an actual Lisp interpreter might be optimized, its operational semantics are defined in terms of a virtual machine that operates on s-expressions. Any properly implemented optimization will have the same behavior (barring performance) as its non-optimized counterpart. Thus, from the perspective of the programmer the internal representation is still the s-expression.<sup id="fnref:what-is-internal"><a href="#fn:what-is-internal" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> Thus, to say that the internal representation is an s-expression holds some truth as well.</p>
 
 <p>For comparison with a “less homoiconic” language, we could consider the example of compiled <em>C</em>: the external representation of a <em>C</em> program is as a piece of program text; the internal representation is in the form of machine code. Strings of text and machine code are quite dissimilar, and to map between them takes considerable effort.</p>
 
@@ -249,19 +249,19 @@
 
 <p>Maybe it’s time to stop saying “homoiconic”.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:trac-footnote">
-      <p>A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on <em>semiotics</em>, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time.&nbsp;<a href="#fnref:trac-footnote" class="reversefootnote">&#8617;</a></p>
+      <p>A footnote in that article points out that this was “following suggestion of McCullough W.S., based upon terminology due to Peirce, C.S.” It appears that the “Peirce” in question is Charles Sander Peirce, who wrote extensively on <em>semiotics</em>, which the study of signs, although it is not clear whether and where he used the phrase homo-iconic explicitly. W.S. McCulloch is likely to be Warren Sturgis McCulloch, who was in Cambridge at the time. <a href="#fnref:trac-footnote" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:sicp-meta-circular">
-      <p>The definition in the influential <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Structure and Interpretation of Computer Programs</a>, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice.&nbsp;<a href="#fnref:sicp-meta-circular" class="reversefootnote">&#8617;</a></p>
+      <p>The definition in the influential <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Structure and Interpretation of Computer Programs</a>, differs somewhat: “An evaluator that is written in the same language that it evaluates is said to be metacircular.” Although the constraint that each feature of the defined language is implemented in using the corresponding feature of the defined language is not repeated in that definition, the metacircular evaluator as defined in the book satisfies it in practice. <a href="#fnref:sicp-meta-circular" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:lisp-not-homoiconic">
-      <p>In fact, the original article <em>excludes</em> Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).”&nbsp;<a href="#fnref:lisp-not-homoiconic" class="reversefootnote">&#8617;</a></p>
+      <p>In fact, the original article <em>excludes</em> Lisp as an example of homoiconicity, but only because Lisp had not settled on a single representation in terms of s-expressions at the time of writing: “Finally, LISP is troubled with a dual language problem: an M-language, which is easy to read, and is used externally, and an S-language, with which the LISP processor operates, and which is usable externally only by the hardened initiates.  It should be noted here that were the S-language the only LISP language, LISP would be close to being homo-iconic (excluding the machine-language functions).” <a href="#fnref:lisp-not-homoiconic" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:what-is-internal">
-      <p>Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings <em>by definition</em>; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU.&nbsp;<a href="#fnref:what-is-internal" class="reversefootnote">&#8617;</a></p>
+      <p>Taking this view to its ultimate consequence, however, raises even further questions around the concept of homoiconicity: for a well-encapsulated machine, we cannot observe its inner workings <em>by definition</em>; in that view, making any statement about the internal representation of the machine is meaningless. More generally, the original definition has the problem that the idea that there is a single external and a single internal representation of the program does not match with reality. In fact, there is a whole chain of representations, including electrons in the brain of the programmer, photons emitted from the screen, program text, machine code, and electrons moving in the CPU. <a href="#fnref:what-is-internal" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -333,7 +333,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

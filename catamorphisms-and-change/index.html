@@ -102,35 +102,33 @@
 
 <p>Some recursive algorithms on hierarchical data structures (i.e. trees) have the property that they are expressed as a function which [1] does a single recursive function call on each of its children, and [2] that this call takes no parameters other than the child node.</p>
 
-<p>The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute <code class="highlighter-rouge">value</code> at each node. The algorithm calculates the sum of these numbers:</p>
+<p>The below is an example of such an algorithm in Python. It takes as its input a tree, which contains a number in the attribute <code class="language-plaintext highlighter-rouge">value</code> at each node. The algorithm calculates the sum of these numbers:</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
-    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">+=</span> <span class="n">sum_of_values</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="p">.</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="nf">sum_of_values</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Not every recursive algorithm on a data-structure can be so written. As an example consider a mechanism for pretty-printing an Abstract Syntax Tree, in which the first child of any node is always printed on a single line, and all other nodes are each printed on their own line.</p>
 
 <p><a name="pretty_print"></a>This function is also provided in sketched form in Python (we leave out some details):</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">single_line_mode</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">single_line_mode</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">single_line_mode</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">"("</span> <span class="o">+</span> <span class="s">" "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">])</span> <span class="o">+</span> <span class="s">")"</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">(</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">([</span><span class="nf">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">children</span><span class="p">])</span> <span class="o">+</span> <span class="sh">"</span><span class="s">)</span><span class="sh">"</span>
 
-    <span class="n">result</span> <span class="o">=</span> <span class="s">"("</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">+=</span> <span class="n">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="sh">"</span><span class="s">(</span><span class="sh">"</span>
+    <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-        <span class="n">result</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="n">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
 
-    <span class="n">result</span> <span class="o">+=</span> <span class="s">")"</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="sh">"</span><span class="s">)</span><span class="sh">"</span>
     <span class="k">return</span> <span class="n">result</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The key point of the example above is: The recursive call contains more information than simply the fact that some calculation must be done recursively. This information is not knowable from the child node, it is a property of its context. In this case: whether the present node must be printed on a single line as a result of being part of another node’s first element or not.</p>
 
@@ -138,31 +136,30 @@
 
 <p>So we can see a distinction: algorithms in which we can do calculations for constituent parts of a composite data structure independently from the data structure of which they are a part, and those for which this is not possible.</p>
 
-<p>Recursive algorithms of the first kind are called <a href="https://en.wikipedia.org/wiki/Catamorphism">catamorphisms</a>.<sup id="fnref:more-about-catamorphisms"><a href="#fn:more-about-catamorphisms" class="footnote">1</a></sup></p>
+<p>Recursive algorithms of the first kind are called <a href="https://en.wikipedia.org/wiki/Catamorphism">catamorphisms</a>.<sup id="fnref:more-about-catamorphisms"><a href="#fn:more-about-catamorphisms" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 
 <p>Catamorphisms are often described as “generalized folding over arbitrary data structures”. The mechanism of folding the results from the children into a single result is called the <em>algebra</em>.</p>
 
 <p>The function that describes this algebra can be factored out from the catamorphism. The function describing the algebra is quite similar to the original function, but the node being passed to it has as its children not further nodes, but the results of recursive application.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
-    <span class="k">for</span> <span class="n">child_result</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sum_of_values_algebra</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="p">.</span><span class="n">value</span>
+    <span class="k">for</span> <span class="n">child_result</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">children</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">+=</span> <span class="n">child_result</span>
     <span class="k">return</span> <span class="n">result</span>
 
 
 <span class="k">def</span> <span class="nf">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
     <span class="n">child_results</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-        <span class="n">child_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">child</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">algebra</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">child_results</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">child_results</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">catamorphism</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">child</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nf">algebra</span><span class="p">(</span><span class="nc">Node</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">child_results</span><span class="p">))</span>
 
 
-<span class="n">sum_of_values</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">catamorphism</span><span class="p">(</span><span class="n">sum_of_values_algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
-</code></pre>
-</div>
+<span class="n">sum_of_values</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="nf">catamorphism</span><span class="p">(</span><span class="n">sum_of_values_algebra</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+</code></pre></div></div>
 
-<p>This separates the concerns of recursively calling (which is in the utility function <code class="highlighter-rouge">node_catamorphism</code>) and composing the results (which is in <code class="highlighter-rouge">sum_of_values_algebra</code>).</p>
+<p>This separates the concerns of recursively calling (which is in the utility function <code class="language-plaintext highlighter-rouge">node_catamorphism</code>) and composing the results (which is in <code class="language-plaintext highlighter-rouge">sum_of_values_algebra</code>).</p>
 
 <h3 id="working-examples">Working examples</h3>
 
@@ -171,7 +168,7 @@
 <ul>
   <li>Calculating the size of an s-expression; either defined as the number of nodes it contains or the total in-memory size needed for storage.</li>
   <li>Serialization of an s-expression for storage on-disk or in-memory.</li>
-  <li>Counting occurrences of specific terms, e.g. “total number of occurrences of the symbol <code class="highlighter-rouge">lambda</code> in this s-expression”.</li>
+  <li>Counting occurrences of specific terms, e.g. “total number of occurrences of the symbol <code class="language-plaintext highlighter-rouge">lambda</code> in this s-expression”.</li>
   <li>Calculating the set of symbols occurring in the s-expression.</li>
 </ul>
 
@@ -198,7 +195,7 @@
   <li>A single new child is inserted.</li>
 </ul>
 
-<p>It is certainly possible that the Clef will be extended at some point in the future, for example to include a <code class="highlighter-rouge">Swap</code> operation. However, the general property, that notes from the <em>clef</em> act on a specific subset of children of the s-expression under consideration, while not changing any of the other children, will always be preserved: it is a key part of the design.</p>
+<p>It is certainly possible that the Clef will be extended at some point in the future, for example to include a <code class="language-plaintext highlighter-rouge">Swap</code> operation. However, the general property, that notes from the <em>clef</em> act on a specific subset of children of the s-expression under consideration, while not changing any of the other children, will always be preserved: it is a key part of the design.</p>
 
 <h3 id="catamorphisms--controlled-modification">Catamorphisms &amp; controlled modification</h3>
 
@@ -237,15 +234,15 @@
 
 <p>We start by considering the cost of recursively computing the result for a new child.</p>
 
-<p>Note that for <code class="highlighter-rouge">Delete</code> there is no new child, and hence there is no cost. <code class="highlighter-rouge">Insert</code> and <code class="highlighter-rouge">Replace</code> both take as one of their parameters a history: a sequence of modifications.</p>
+<p>Note that for <code class="language-plaintext highlighter-rouge">Delete</code> there is no new child, and hence there is no cost. <code class="language-plaintext highlighter-rouge">Insert</code> and <code class="language-plaintext highlighter-rouge">Replace</code> both take as one of their parameters a history: a sequence of modifications.</p>
 
 <p>The cost of recursive construction of a child is then: the sum of the costs for each modification in this history. That is to say: the cost of the step-wise recursive application of the algorithm. The cost of a each modification in the history is thus recursively described by the section “Performance characteristics” of this article.</p>
 
 <p>The other factor is the length of the history for which recalculations must be done.</p>
 
-<p>In the case of a <code class="highlighter-rouge">Replace</code> it is the number of <em>new</em> items in the provided history at least if we apply the constraint that replace can only replace with <a href="/constraints-on-replace/">a continuation of the existing history</a>. That is because only for new items in the provided history recalculations need to be done.</p>
+<p>In the case of a <code class="language-plaintext highlighter-rouge">Replace</code> it is the number of <em>new</em> items in the provided history at least if we apply the constraint that replace can only replace with <a href="/constraints-on-replace/">a continuation of the existing history</a>. That is because only for new items in the provided history recalculations need to be done.</p>
 
-<p>In the case of <code class="highlighter-rouge">Insert</code> this is the full length of the provided history: no earlier result is available, so we must calculate from scratch.</p>
+<p>In the case of <code class="language-plaintext highlighter-rouge">Insert</code> this is the full length of the provided history: no earlier result is available, so we must calculate from scratch.</p>
 
 <h3 id="combining-results-the-algebra">Combining results: the algebra</h3>
 
@@ -302,10 +299,10 @@
 
 <p>For some algebras we can do even better: we can ignore the values of the presently existing children entirely, and calculate a new value based purely by applying the results of deletion and insertion.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:more-about-catamorphisms">
-      <p>The canonical introduction is <a href="https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w">Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire</a>, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by <a href="https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/">Bartosz Milewski</a> is also excellent.&nbsp;<a href="#fnref:more-about-catamorphisms" class="reversefootnote">&#8617;</a></p>
+      <p>The canonical introduction is <a href="https://research.utwente.nl/en/publications/functional-programming-with-bananas-lenses-envelopes-and-barbed-w">Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire</a>, but the squiggol notation may make it somewhat hard to understand for readers not familiar with that notation. The article by <a href="https://bartoszmilewski.com/2013/06/10/understanding-f-algebras/">Bartosz Milewski</a> is also excellent. <a href="#fnref:more-about-catamorphisms" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -377,7 +374,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

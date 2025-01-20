@@ -108,24 +108,24 @@
 
         <h3 id="an-example">An example</h3>
 
-<p>The concept is best explained using an example. Consider the following output of <code class="highlighter-rouge">git show</code>, which shows a change to a piece of Python code:</p>
+<p>The concept is best explained using an example. Consider the following output of <code class="language-plaintext highlighter-rouge">git show</code>, which shows a change to a piece of Python code:</p>
 
-<div class="language-diff highlighter-rouge"><pre class="highlight"><code>commit 9dadc2.........
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">commit 9dadc2.........
 Author: ......
 Date: ......
-
-    Refactoring: move method_c and method_d
+</span><span class="err">
+</span>    Refactoring: move method_c and method_d
     
     These methods are moved from OneClass to AnotherClass, as the latter
     is the correct location because of some reasons that would certainly
     exist if this wasn't a toy example.
-
-<span class="gh">diff --git a/example.py b/example.py
+<span class="err">
+</span><span class="gh">diff --git a/example.py b/example.py
 index 1cde8fb..f487c7e 100644
 </span><span class="gd">--- a/example.py
 </span><span class="gi">+++ b/example.py
-</span><span class="gu">@@ -2,17 +2,17 @@ class AnotherClass(object):
-</span>     def method_a(self):
+</span><span class="p">@@ -2,17 +2,17 @@</span> class AnotherClass(object):
+     def method_a(self):
          pass  # implementation of method_a ...
  
 <span class="gd">-
@@ -146,76 +146,73 @@ index 1cde8fb..f487c7e 100644
 +
 </span>     def method_e(self):
          pass  # implementation of method_e
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>How should we interpret this diff?</p>
 
-<p>Let’s start by reading what the author ostensibly intended. The commit message talks about moving the two methods <code class="highlighter-rouge">method_c</code> and <code class="highlighter-rouge">method_d</code> from <code class="highlighter-rouge">OneClass</code> to <code class="highlighter-rouge">AnotherClass</code>.</p>
+<p>Let’s start by reading what the author ostensibly intended. The commit message talks about moving the two methods <code class="language-plaintext highlighter-rouge">method_c</code> and <code class="language-plaintext highlighter-rouge">method_d</code> from <code class="language-plaintext highlighter-rouge">OneClass</code> to <code class="language-plaintext highlighter-rouge">AnotherClass</code>.</p>
 
-<p>However, if we look at the actual diff, we see something else entirely: the removal of the definition of <code class="highlighter-rouge">OneClass</code> and its method <code class="highlighter-rouge">method_b</code> in one place, and the reintroduction of these elements in another place.</p>
+<p>However, if we look at the actual diff, we see something else entirely: the removal of the definition of <code class="language-plaintext highlighter-rouge">OneClass</code> and its method <code class="language-plaintext highlighter-rouge">method_b</code> in one place, and the reintroduction of these elements in another place.</p>
 
-<p>It might seem that either the commit message or the actual contents of the commit are wrong. It turns out that neither is the case. Instead, the source of confusion lies in the way <code class="highlighter-rouge">git</code> works<sup id="fnref:or-any-text-based-vcs"><a href="#fn:or-any-text-based-vcs" class="footnote">1</a></sup>.</p>
+<p>It might seem that either the commit message or the actual contents of the commit are wrong. It turns out that neither is the case. Instead, the source of confusion lies in the way <code class="language-plaintext highlighter-rouge">git</code> works<sup id="fnref:or-any-text-based-vcs"><a href="#fn:or-any-text-based-vcs" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</p>
 
 <h3 id="snapshots-on-text-files">Snapshots on text files</h3>
 
-<p>Git views the world as a collection of files (usually: text files), of which snapshots are made each time a commit is made. This means that, for the example above, <code class="highlighter-rouge">git</code> got to see the following two versions:</p>
+<p>Git views the world as a collection of files (usually: text files), of which snapshots are made each time a commit is made. This means that, for the example above, <code class="language-plaintext highlighter-rouge">git</code> got to see the following two versions:</p>
 
 <h4 id="before-the-commit">Before the commit:</h4>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-     <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-         <span class="k">pass</span>  <span class="c"># implementation of method_a ...</span>
- 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+     <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c1"># implementation of method_a ...
+</span> 
 
 <span class="k">class</span> <span class="nc">OneClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>  <span class="c"># implementation of method_b ...</span>
-
-     <span class="k">def</span> <span class="nf">method_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-         <span class="k">pass</span>  <span class="c"># implementation of method_c ...</span>
- 
-     <span class="k">def</span> <span class="nf">method_d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-         <span class="k">pass</span>  <span class="c"># implementation of method_d ...</span>
- 
-     <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-         <span class="k">pass</span>  <span class="c"># implementation of method_e</span>
-</code></pre>
-</div>
+    <span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># implementation of method_b ...
+</span>
+     <span class="k">def</span> <span class="nf">method_c</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c1"># implementation of method_c ...
+</span> 
+     <span class="k">def</span> <span class="nf">method_d</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c1"># implementation of method_d ...
+</span> 
+     <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+         <span class="k">pass</span>  <span class="c1"># implementation of method_e
+</span></code></pre></div></div>
 
 <h4 id="after-the-commit">After the commit:</h4>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-         <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-             <span class="k">pass</span>  <span class="c"># implementation of method_a ...</span>
-     
-         <span class="k">def</span> <span class="nf">method_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-             <span class="k">pass</span>  <span class="c"># implementation of method_c ...</span>
-     
-         <span class="k">def</span> <span class="nf">method_d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-             <span class="k">pass</span>  <span class="c"># implementation of method_d ...</span>
-     
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">class</span> <span class="nc">AnotherClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+         <span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c1"># implementation of method_a ...
+</span>     
+         <span class="k">def</span> <span class="nf">method_c</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c1"># implementation of method_c ...
+</span>     
+         <span class="k">def</span> <span class="nf">method_d</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c1"># implementation of method_d ...
+</span>     
 
     <span class="k">class</span> <span class="nc">OneClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">pass</span>  <span class="c"># implementation of method_b ...</span>
+        <span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+            <span class="k">pass</span>  <span class="c1"># implementation of method_b ...
+</span>
+         <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+             <span class="k">pass</span>  <span class="c1"># implementation of method_e
+</span></code></pre></div></div>
 
-         <span class="k">def</span> <span class="nf">method_e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-             <span class="k">pass</span>  <span class="c"># implementation of method_e</span>
-</code></pre>
-</div>
+<p>First note that these 2 versions actually correspond to the commit message: the 2 methods <code class="language-plaintext highlighter-rouge">method_c</code> and <code class="language-plaintext highlighter-rouge">method_d</code> are indeed moved from <code class="language-plaintext highlighter-rouge">OneClass</code> to <code class="language-plaintext highlighter-rouge">AnotherClass</code>.</p>
 
-<p>First note that these 2 versions actually correspond to the commit message: the 2 methods <code class="highlighter-rouge">method_c</code> and <code class="highlighter-rouge">method_d</code> are indeed moved from <code class="highlighter-rouge">OneClass</code> to <code class="highlighter-rouge">AnotherClass</code>.</p>
-
-<p>Now, why does <code class="highlighter-rouge">git</code> present a diff that seems to tell a different story? To answer this, we must first understand what <code class="highlighter-rouge">git diff</code> and <code class="highlighter-rouge">git show</code> do in the first place: Given two versions of a file these commands attempt to calculate the smallest difference between them and present this.</p>
+<p>Now, why does <code class="language-plaintext highlighter-rouge">git</code> present a diff that seems to tell a different story? To answer this, we must first understand what <code class="language-plaintext highlighter-rouge">git diff</code> and <code class="language-plaintext highlighter-rouge">git show</code> do in the first place: Given two versions of a file these commands attempt to calculate the smallest difference between them and present this.</p>
 
 <p>Regarding the meaning of the content of the files Git makes only a very minimal number of assumptions. Most of these have to do with “plain text files”. For example, it knows the special meaning of newline-characters. Using this knowledge the goal of finding a minimal difference is interpreted to mean “with a minimal number of different lines”.</p>
 
-<p>Given these goals, the diff as presented in the original example is exactly what you’d expect: removing <code class="highlighter-rouge">OneClass</code> and <code class="highlighter-rouge">method_b</code> in one place and adding them in another is simply more efficient than the alternative of removing and adding <code class="highlighter-rouge">method_c</code> and <code class="highlighter-rouge">method_d</code>. The former affects 5 removed lines and 5 added lines for a total of 10 while the latter affects 2 × 6 = 12 lines. (In both cases empty lines contribute to the numbers). Given that <em>Git</em> attempts to show the smallest diff, it prefers the former options over the latter.</p>
+<p>Given these goals, the diff as presented in the original example is exactly what you’d expect: removing <code class="language-plaintext highlighter-rouge">OneClass</code> and <code class="language-plaintext highlighter-rouge">method_b</code> in one place and adding them in another is simply more efficient than the alternative of removing and adding <code class="language-plaintext highlighter-rouge">method_c</code> and <code class="language-plaintext highlighter-rouge">method_d</code>. The former affects 5 removed lines and 5 added lines for a total of 10 while the latter affects 2 × 6 = 12 lines. (In both cases empty lines contribute to the numbers). Given that <em>Git</em> attempts to show the smallest diff, it prefers the former options over the latter.</p>
 
 <h3 id="the-problem-defined">The problem defined</h3>
 
-<p>Given that <code class="highlighter-rouge">git diff</code> behaves according to specification, what’s the problem? Can we make the suggestion that the original example is confusing more precise? In fact we can!</p>
+<p>Given that <code class="language-plaintext highlighter-rouge">git diff</code> behaves according to specification, what’s the problem? Can we make the suggestion that the original example is confusing more precise? In fact we can!</p>
 
 <p>The key to this is in realizing the following: Our example deals with a piece of Python code, in which concepts such as “classes” and “methods” exist. These concepts have a hierarchical nature: classes are structures that may contain other structures such as methods. When editing the file, we are aware of this structure – in fact, it forms the very reason we edit the file, an intent that the author even captured in the commit message.</p>
 
@@ -235,10 +232,10 @@ index 1cde8fb..f487c7e 100644
 
 <p>A more regular occurrence is a diff like the below:</p>
 
-<div class="language-diff highlighter-rouge"><pre class="highlight"><code><span class="gd">--- a/example.py
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">--- a/example.py
 </span><span class="gi">+++ b/example.py
-</span><span class="gu">@@ -1,3 +1,8 @@
-</span> @decorated_function
+</span><span class="p">@@ -1,3 +1,8 @@</span>
+ @decorated_function
 <span class="gi">+def newfunction():
 +    pass  # this is newfunction
 +
@@ -246,19 +243,18 @@ index 1cde8fb..f487c7e 100644
 +@decorated_function
 </span> def oldfunction():
      pass  # this is oldfunction
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<p>In the above example, the more logical diff would identify the first of the 2 decorators (<code class="highlighter-rouge">@decorated_function</code>) as being the newly added one. However, git cannot distinguish between the 2 identical occurrences of that line, and identifies the second one as the new one.</p>
+<p>In the above example, the more logical diff would identify the first of the 2 decorators (<code class="language-plaintext highlighter-rouge">@decorated_function</code>) as being the newly added one. However, git cannot distinguish between the 2 identical occurrences of that line, and identifies the second one as the new one.</p>
 
-<p>If we read this diff like a story, git seems to tell us the following: the decorator of the function <code class="highlighter-rouge">oldfunction</code> was repurposed for a newly added function <code class="highlighter-rouge">newfunction</code>. The function <code class="highlighter-rouge">oldfunction</code> was then given a new (identical) decorator to compensate for its loss. A simpler and more correct story would be: a new function <code class="highlighter-rouge">newfunction</code> was added with its own decorator.</p>
+<p>If we read this diff like a story, git seems to tell us the following: the decorator of the function <code class="language-plaintext highlighter-rouge">oldfunction</code> was repurposed for a newly added function <code class="language-plaintext highlighter-rouge">newfunction</code>. The function <code class="language-plaintext highlighter-rouge">oldfunction</code> was then given a new (identical) decorator to compensate for its loss. A simpler and more correct story would be: a new function <code class="language-plaintext highlighter-rouge">newfunction</code> was added with its own decorator.</p>
 
 <p>A final example uses lists, in which it would be more logical to show the earlier opening bracket as the new addition. Such an approach would lead to a diff with balanced brackets, as opposed to the close-then-open we get now:</p>
 
-<div class="language-diff highlighter-rouge"><pre class="highlight"><code><span class="gd">--- a/matrix.py
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">--- a/matrix.py
 </span><span class="gi">+++ b/matrix.py
-</span><span class="gu">@@ -5,6 +5,11 @@ matrix = [
-</span>         3,
+</span><span class="p">@@ -5,6 +5,11 @@</span> matrix = [
+         3,
      ],
      [
 <span class="gi">+        7,
@@ -269,8 +265,7 @@ index 1cde8fb..f487c7e 100644
 </span>         4,
          5,
          6,
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In short: examples of the problem are easily found. However: the most regular occurrences are also generally the least confusing.</p>
 
@@ -280,14 +275,14 @@ index 1cde8fb..f487c7e 100644
 
 <p>As noted in the above, git’s ignorance is a fundamentally unsolvable problem: diffs that are based on text alone can never fundamentally know what the underlying structures of those text files were. This does not mean that finding better heuristics for presenting diffs is entirely impossible.</p>
 
-<p>The option <code class="highlighter-rouge">--indent-heuristic</code>, introduced in Git version 2.11, attempts to do just that: it uses indentation as a heuristic for hierarchical structure; this corresponds to the reality in many programming languages and data formats.</p>
+<p>The option <code class="language-plaintext highlighter-rouge">--indent-heuristic</code>, introduced in Git version 2.11, attempts to do just that: it uses indentation as a heuristic for hierarchical structure; this corresponds to the reality in many programming languages and data formats.</p>
 
 <p>However, for obvious reasons, a solution using heuristics can only lead to limited results. Thoughts on more fundamental solutions which require no heuristics at all are the subject of the rest of this website.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:or-any-text-based-vcs">
-      <p>Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control.&nbsp;<a href="#fnref:or-any-text-based-vcs" class="reversefootnote">&#8617;</a></p>
+      <p>Git, being the most popular Version Control System, is singled out here; most remarks in this article apply in fact to any modern VCS that ignores the underlying structure of the (text) files under its control. <a href="#fnref:or-any-text-based-vcs" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -359,7 +354,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

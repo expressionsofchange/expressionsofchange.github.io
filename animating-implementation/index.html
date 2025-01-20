@@ -171,7 +171,7 @@ and
 <a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/history.py#L161">calling</a>
 <a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/widgets/ic_history.py#L322">locations</a></p>
 
-<p>The formalization of the note-address is implemented in the class <a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1d5e166565519b1c910afdce8d19c/dsn/s_expr/note_address.py#L6"><code class="highlighter-rouge">NoteAddress</code></a></p>
+<p>The formalization of the note-address is implemented in the class <a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1d5e166565519b1c910afdce8d19c/dsn/s_expr/note_address.py#L6"><code class="language-plaintext highlighter-rouge">NoteAddress</code></a></p>
 
 <p>The intuition here is: when the whole history is written out as an expression,
 the address of a particular note is a path trough that expression. An example
@@ -215,12 +215,12 @@ actual textures with locations.</p>
 an s-expression, we annotate the elements that are specific to the fact that the
 note is being rendered as an s-expression (i.e. the fact that the Note’s fields
 and its type, when converted to an s-expression, turn into particular
-further s-expressions). <a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L31">Let’s consider the case of <code class="highlighter-rouge">become-atom</code> as an
+further s-expressions). <a href="https://github.com/expressionsofchange/nerf1/blob/e7a74705c7de/dsn/s_expr/clef_address.py#L31">Let’s consider the case of <code class="language-plaintext highlighter-rouge">become-atom</code> as an
 example</a>:
-when the note <code class="highlighter-rouge">(become-atom foo)</code> is represented as an s-expression the whole
+when the note <code class="language-plaintext highlighter-rouge">(become-atom foo)</code> is represented as an s-expression the whole
 s-expression is annotated as representing the whole note (by not providing any
-further annotation), the atom <code class="highlighter-rouge">become-atom</code> is annotated as being the name of
-the note, and the atom <code class="highlighter-rouge">foo</code> is annotated as being the field <code class="highlighter-rouge">atom</code> of that
+further annotation), the atom <code class="language-plaintext highlighter-rouge">become-atom</code> is annotated as being the name of
+the note, and the atom <code class="language-plaintext highlighter-rouge">foo</code> is annotated as being the field <code class="language-plaintext highlighter-rouge">atom</code> of that
 note.</p>
 
 <p>When converting these s-expressions to textures similar further annotations
@@ -239,12 +239,11 @@ particular note.</p>
 <p>An example is drawn below: if the chord below is the item at position 1 in some
 other history, the children of that chord are at some subpath.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(chord ((insert 0 (become-list)) (extend 0 (insert 0 (become-list)))))
 ^       ^                        ^
 |       |                        |
 (@1) (@1, @0)                 (@1, @1)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The effect of this approach on the animation is precisely as intended: when
 switching from a larger context to a smaller one, the “surrounding” notes that
@@ -284,18 +283,18 @@ context:</p>
 <p><img src="/images/movies/transition-9.gif" alt="Transition of '9'." /></p>
 
 <p>The implentation details are in the implementing class,
-<a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1/dsn/s_expr/in_context_display.py#L45"><code class="highlighter-rouge">ICHAddress</code></a>.</p>
+<a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1/dsn/s_expr/in_context_display.py#L45"><code class="language-plaintext highlighter-rouge">ICHAddress</code></a>.</p>
 
 <p>The mixing of ‘construction’ and ‘structure’ is reflected in the address of the
 rendered elements; each rendered element is denoted first by the note which it
-represents (in terms of a <code class="highlighter-rouge">NoteAddress</code>), and second by an address (<code class="highlighter-rouge">t_address</code>,
+represents (in terms of a <code class="language-plaintext highlighter-rouge">NoteAddress</code>), and second by an address (<code class="language-plaintext highlighter-rouge">t_address</code>,
 for stability over time) in the tree. (further steps in the rendering chain add
-further details, i.e.  <code class="highlighter-rouge">icd_specific</code> and <code class="highlighter-rouge">render_specific</code>)</p>
+further details, i.e.  <code class="language-plaintext highlighter-rouge">icd_specific</code> and <code class="language-plaintext highlighter-rouge">render_specific</code>)</p>
 
-<p>One final caveat: the NoteAddress <code class="highlighter-rouge">NoteAddress</code> part of this <code class="highlighter-rouge">ICHAddress</code> is
+<p>One final caveat: the NoteAddress <code class="language-plaintext highlighter-rouge">NoteAddress</code> part of this <code class="language-plaintext highlighter-rouge">ICHAddress</code> is
 always the address of the <a href="https://github.com/expressionsofchange/nerf1/blob/4e519b03dee1/widgets/ic_history.py#L91">deepest</a> (leaf-most) possible note. For example, when
-rendering the note <code class="highlighter-rouge">(extend 0 (insert 0 (become-list)))</code>, the address of
-<code class="highlighter-rouge">(become-list)</code> is used in the <code class="highlighter-rouge">ICHAddress</code>.  This ensures we have a singular
+rendering the note <code class="language-plaintext highlighter-rouge">(extend 0 (insert 0 (become-list)))</code>, the address of
+<code class="language-plaintext highlighter-rouge">(become-list)</code> is used in the <code class="language-plaintext highlighter-rouge">ICHAddress</code>.  This ensures we have a singular
 identity across context-switches. (It is only this deepest NoteAddress that can
 be relied on to always be availalble).</p>
 
@@ -306,7 +305,7 @@ be relied on to always be availalble).</p>
 
 <p>We set a clock at an interval (I’ve set 1/60, but I’m not actually getting this
 <em>at all</em> on my local machine).  Kivy will tell you how much time has actually
-passed since the last tick. We then calculate the fraction <code class="highlighter-rouge">dt / remaining_time</code>.
+passed since the last tick. We then calculate the fraction <code class="language-plaintext highlighter-rouge">dt / remaining_time</code>.
 This approach is automatically robust for missed frames (i.e. the missed frame
 will not be rendered, but the total animation time and the position of the
 texture at the next frame are unaffected)</p>
@@ -378,7 +377,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

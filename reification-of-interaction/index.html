@@ -129,7 +129,7 @@
 
 <p>A more fancy way to say this is: the user-computer interaction is <a href="https://en.wikipedia.org/wiki/Reification_(computer_science)">reified</a>.</p>
 
-<p>Note how this contrasts with the typical interaction in a GUI: There, after clicking on some button or icon, the GUI will respond in some way, e.g. by opening a new screen or copying a file. However, the action of clicking the button itself can no longer be observed, manipulated or shared after it has happened.<sup id="fnref:gui-reification"><a href="#fn:gui-reification" class="footnote">1</a></sup></p>
+<p>Note how this contrasts with the typical interaction in a GUI: There, after clicking on some button or icon, the GUI will respond in some way, e.g. by opening a new screen or copying a file. However, the action of clicking the button itself can no longer be observed, manipulated or shared after it has happened.<sup id="fnref:gui-reification"><a href="#fn:gui-reification" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 
 <p>In CLIs, as mentioned above, the commands as given and their outputs are displayed on screen. In typical setups the support for reification is a bit more powerful than that:</p>
 
@@ -141,7 +141,7 @@
     <p><strong>Copy/paste</strong> — support for copy/paste makes it so that arbitrary text from the screen may be copied, and that text from arbitrary sources (including the screen itself) may be pasted as a new command. Note the symmetry between the input and output formats: everything is text. This allows for the copying of an entire session’s output into the documentation, an internet forum or script. Conversely, solutions from internet forums may be copied into the session without friction.</p>
   </li>
   <li>
-    <p><strong>Persistent history</strong> — the full history of commands is written to a file, which can include the date and time they were issued.<sup id="fnref:config-notes"><a href="#fn:config-notes" class="footnote">2</a></sup> This allows for the answering of questions such as:</p>
+    <p><strong>Persistent history</strong> — the full history of commands is written to a file, which can include the date and time they were issued.<sup id="fnref:config-notes"><a href="#fn:config-notes" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> This allows for the answering of questions such as:</p>
     <ul>
       <li>“How did I use this command last time I used it?”</li>
       <li>“Which packages have been installed on this system?”</li>
@@ -172,7 +172,7 @@
 
 <ul>
   <li>
-    <p>The history is not properly organized. The commands may interact with one another via their “environment”, but the relevant information to reproduce the interactions is not stored. For example, the <code class="highlighter-rouge">cd</code> command may change the working directory; consecutive commands should then be interpreted as being executed from that directory. However, the history does not reflect the closing of sessions or the creation of new ones, so we cannot say about a command from which directory it was executed.</p>
+    <p>The history is not properly organized. The commands may interact with one another via their “environment”, but the relevant information to reproduce the interactions is not stored. For example, the <code class="language-plaintext highlighter-rouge">cd</code> command may change the working directory; consecutive commands should then be interpreted as being executed from that directory. However, the history does not reflect the closing of sessions or the creation of new ones, so we cannot say about a command from which directory it was executed.</p>
   </li>
   <li>
     <p>The history is incomplete. Your interaction with the system as a whole is not restricted to the interaction via the CLI but will typically include interaction with arbitray applicationsand the meaning of the commands themselves is not constricted in any way. We cannot make <em>any</em> statement about how these arbitrary commands and applications affect the system with certainty.</p>
@@ -191,13 +191,13 @@
 
 <p>We have also seen a number of typical limitations to the reification of interaction as typically available in the CLIs of UNIX-like systems; such limitations are not fundamental to the reification, but are a consequence of the reification being accidental rather than being an explicit design goal in the design of the UNIX.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:gui-reification">
-      <p>Tools to record interactions with GUIs do exist, but they are significantly less useful and robust than their (built-in) counterpart in CLIs.&nbsp;<a href="#fnref:gui-reification" class="reversefootnote">&#8617;</a></p>
+      <p>Tools to record interactions with GUIs do exist, but they are significantly less useful and robust than their (built-in) counterpart in CLIs. <a href="#fnref:gui-reification" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:config-notes">
-      <p>Making sure the saved history has (virtually — from the human perspective) unlimited length and saving the timestamps typically requires some configuration.&nbsp;<a href="#fnref:config-notes" class="reversefootnote">&#8617;</a></p>
+      <p>Making sure the saved history has (virtually — from the human perspective) unlimited length and saving the timestamps typically requires some configuration. <a href="#fnref:config-notes" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -269,7 +269,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

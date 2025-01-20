@@ -114,21 +114,21 @@
 <ul>
   <li>an atom which is either a string or a numbers is a <strong>value</strong></li>
   <li>any other atom is a <strong>variable</strong></li>
-  <li><code class="highlighter-rouge">(quote «s-expr»)</code> is a <strong>quoted expression</strong></li>
-  <li><code class="highlighter-rouge">(quote «predicate» «consequent» «alternative»)</code> is an <strong>if-expression</strong></li>
-  <li><code class="highlighter-rouge">(define «variable-name» «definition»)</code> is a <strong>definition</strong></li>
-  <li><code class="highlighter-rouge">(lambda «parameter names» «body ...»)</code> is a <strong>lambda</strong></li>
-  <li><code class="highlighter-rouge">(begin «... ...»)</code> is a <strong>sequence</strong></li>
-  <li><code class="highlighter-rouge">(«procedure» «arguments ...»)</code> is a <strong>procedure application</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">(quote «s-expr»)</code> is a <strong>quoted expression</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">(quote «predicate» «consequent» «alternative»)</code> is an <strong>if-expression</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">(define «variable-name» «definition»)</code> is a <strong>definition</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">(lambda «parameter names» «body ...»)</code> is a <strong>lambda</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">(begin «... ...»)</code> is a <strong>sequence</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">(«procedure» «arguments ...»)</code> is a <strong>procedure application</strong></li>
 </ul>
 
-<p>In the process of evaluation of s-expressions, any given s-expression may be evaluated multiple times. Consider for example how, in <a href="/l-a-toy-language/#an-example">our running example</a> of the <code class="highlighter-rouge">factorial</code> procedure, when called with <code class="highlighter-rouge">(factorial 5)</code>, the body of that procedure is subjected to the case analysis for each invocation, for a total of 5 times. An interpreter that implements the above definition of evaluation directly, i.e. by operating on s-expressions, will repeat the case-analysis for each such evaluation.</p>
+<p>In the process of evaluation of s-expressions, any given s-expression may be evaluated multiple times. Consider for example how, in <a href="/l-a-toy-language/#an-example">our running example</a> of the <code class="language-plaintext highlighter-rouge">factorial</code> procedure, when called with <code class="language-plaintext highlighter-rouge">(factorial 5)</code>, the body of that procedure is subjected to the case analysis for each invocation, for a total of 5 times. An interpreter that implements the above definition of evaluation directly, i.e. by operating on s-expressions, will repeat the case-analysis for each such evaluation.</p>
 
 <h3 id="static-nature-of-the-problem">Static nature of the problem</h3>
 
-<p>However, the outcome of the analysis depends exclusively on certain static, structural aspects of the s-expression under consideration: first, whether it is an atom or a list; second, in case it’s a list, whether its first element is one of a specific set of atoms (<code class="highlighter-rouge">lambda</code>, <code class="highlighter-rouge">if</code>, …).</p>
+<p>However, the outcome of the analysis depends exclusively on certain static, structural aspects of the s-expression under consideration: first, whether it is an atom or a list; second, in case it’s a list, whether its first element is one of a specific set of atoms (<code class="language-plaintext highlighter-rouge">lambda</code>, <code class="language-plaintext highlighter-rouge">if</code>, …).</p>
 
-<p>This means that, for any given s-expression, the result of the case-analysis will always be the same, independent of any dynamic aspects of the evaluation. Another way to say this is: the case-analysis can be done <em>statically</em>.<sup id="fnref:sicp-form-analysis"><a href="#fn:sicp-form-analysis" class="footnote">1</a></sup> That is, given an s-expression, we can identify which form it has, and recursively which forms that form is composed of.  The output of such an analysis can be used as the input for a mechanism of evaluation.</p>
+<p>This means that, for any given s-expression, the result of the case-analysis will always be the same, independent of any dynamic aspects of the evaluation. Another way to say this is: the case-analysis can be done <em>statically</em>.<sup id="fnref:sicp-form-analysis"><a href="#fn:sicp-form-analysis" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> That is, given an s-expression, we can identify which form it has, and recursively which forms that form is composed of.  The output of such an analysis can be used as the input for a mechanism of evaluation.</p>
 
 <h3 id="why-do-static-analysis">Why do static analysis?</h3>
 
@@ -136,7 +136,7 @@
 
 <p>First, as implied in the above, an interpreter which statically analyses its s-expression only once, before evaluation, can avoid repeating the same case analysis over an over at evaluation-time. This is beneficial for the interpreter’s performance.</p>
 
-<p>Second, not every form is a legal form. For example, an s-expression denoting an <em>if-form</em> must have precisely 4 elements: [1] the symbol <code class="highlighter-rouge">if</code>, [2] a <em>predicate</em>, [3] a <em>consequent</em> and [4] an <em>alternative</em>; any other number of elements is illegal. A static analysis of forms will bring any malformed forms to light before evaluation-time. This means that such errors can be corrected sooner and with lower cost.</p>
+<p>Second, not every form is a legal form. For example, an s-expression denoting an <em>if-form</em> must have precisely 4 elements: [1] the symbol <code class="language-plaintext highlighter-rouge">if</code>, [2] a <em>predicate</em>, [3] a <em>consequent</em> and [4] an <em>alternative</em>; any other number of elements is illegal. A static analysis of forms will bring any malformed forms to light before evaluation-time. This means that such errors can be corrected sooner and with lower cost.</p>
 
 <p>Third, a static model of the program’s forms is a prerequisite for nearly all other forms of static analysis. We better do it before proceeding.</p>
 
@@ -146,9 +146,9 @@
 
 <p>In the below we provide a rough sketch of a static form analysis.</p>
 
-<p>Static form analysis is defined recursively on s-expressions. For each s-expression under consideration we do a case-analysis on the structure of the s-expression. The patterns on which we match correspond precisely to those enumerated above, i.e. we distinguish between various kinds of atoms, and for list-expressions we make a distinction based on their first element (<code class="highlighter-rouge">lambda</code>, <code class="highlighter-rouge">if</code>, …).</p>
+<p>Static form analysis is defined recursively on s-expressions. For each s-expression under consideration we do a case-analysis on the structure of the s-expression. The patterns on which we match correspond precisely to those enumerated above, i.e. we distinguish between various kinds of atoms, and for list-expressions we make a distinction based on their first element (<code class="language-plaintext highlighter-rouge">lambda</code>, <code class="language-plaintext highlighter-rouge">if</code>, …).</p>
 
-<p>For each matched pattern an object of a specific type, with attributes which are specific to the form at hand, is constructed. For example, for an <em>if-form</em> we construct an <em>if-form</em> object, which has the 3 attributes <em>predicte</em>, <em>consequent</em> and <em>alternative</em>, each themselves being a form object.<sup id="fnref:object"><a href="#fn:object" class="footnote">2</a></sup></p>
+<p>For each matched pattern an object of a specific type, with attributes which are specific to the form at hand, is constructed. For example, for an <em>if-form</em> we construct an <em>if-form</em> object, which has the 3 attributes <em>predicte</em>, <em>consequent</em> and <em>alternative</em>, each themselves being a form object.<sup id="fnref:object"><a href="#fn:object" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
 <p>To construct the sub-forms out of s-expressions, we recurse. For most cases, the paths of recursion are analogous to those for evaluation. Some examples:</p>
 
@@ -173,10 +173,10 @@
 <p>Nota bene: the fact that the analysis is recursively defined does not imply that an analysis of a given list-expression always recurses into all elements of that list. Instead, the paths of recursion are dependent on the form currently under consideration. In particular, the following sub-expressions are not subjected to further form-analysis at all:</p>
 
 <ul>
-  <li>the form-identifying atoms (<code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">lambda</code>, <code class="highlighter-rouge">begin</code> etc.) – these atoms determine the form associated with the s-expression containing them, but are not themselves subjected to further analysis.</li>
+  <li>the form-identifying atoms (<code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">lambda</code>, <code class="language-plaintext highlighter-rouge">begin</code> etc.) – these atoms determine the form associated with the s-expression containing them, but are not themselves subjected to further analysis.</li>
   <li>the quoted s-expressions of <em>quote</em> forms – the point of quoting is precisely that the quoted s-expression is not to be seen as a form: it is stored as-is as part of the quoted form.</li>
-  <li>the single variable name in <code class="highlighter-rouge">define</code> – this variable name is stored as-is as an attribute of the definition.</li>
-  <li>the list of parameter-names in <code class="highlighter-rouge">lambda</code> – stored as-is as a list of names.</li>
+  <li>the single variable name in <code class="language-plaintext highlighter-rouge">define</code> – this variable name is stored as-is as an attribute of the definition.</li>
+  <li>the list of parameter-names in <code class="language-plaintext highlighter-rouge">lambda</code> – stored as-is as a list of names.</li>
 </ul>
 
 <p>This implies that we <em>must</em> approach the analysis in a top-down manner, because even the question as to whether we must analyze an s-expression to begin with is entirely dependent on its location in the tree.</p>
@@ -185,15 +185,15 @@
 
 <p>Readers who prefer pictures over words may find the following section useful. In it, we show two diagrams.</p>
 
-<p>In the first diagram an s-expression is presented, representing the expression <code class="highlighter-rouge">(if (= 1 2) 3 4)</code>.</p>
+<p>In the first diagram an s-expression is presented, representing the expression <code class="language-plaintext highlighter-rouge">(if (= 1 2) 3 4)</code>.</p>
 
-<p>In this diagram list-expressions simply show up as pairs of brackets, i.e. <code class="highlighter-rouge">()</code>, with the elements of those expressions below them.</p>
+<p>In this diagram list-expressions simply show up as pairs of brackets, i.e. <code class="language-plaintext highlighter-rouge">()</code>, with the elements of those expressions below them.</p>
 
 <p><img src="/images/if-s-expr.jpg" alt="An s-expression representing an if" /></p>
 
 <p>The second diagram represents the output of the form-analysis. In it, each special form has been recognized and labeled as such. The outgoing branches of the tree also have labels, which denote the specific role of each child-node in the tree.</p>
 
-<p>Note that there is no 1-to-1 correspondence of nodes amongst the two trees. For example: the top-level s-expression <code class="highlighter-rouge">()</code> and its first element, the atom <code class="highlighter-rouge">if</code>, are combined into a single node in the tree representing form-analysis. Similarly: both the atoms <code class="highlighter-rouge">1</code> and <code class="highlighter-rouge">2</code> are folded into a single attribute of the function application representing all the function’s arguments.</p>
+<p>Note that there is no 1-to-1 correspondence of nodes amongst the two trees. For example: the top-level s-expression <code class="language-plaintext highlighter-rouge">()</code> and its first element, the atom <code class="language-plaintext highlighter-rouge">if</code>, are combined into a single node in the tree representing form-analysis. Similarly: both the atoms <code class="language-plaintext highlighter-rouge">1</code> and <code class="language-plaintext highlighter-rouge">2</code> are folded into a single attribute of the function application representing all the function’s arguments.</p>
 
 <p><img src="/images/if-form.jpg" alt="The associated form" /></p>
 
@@ -219,13 +219,13 @@
 
 <p>Such an incremental form analysis is the subject of the next (as of yet to be written) article.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:sicp-form-analysis">
-      <p>This is not a unique idea; it is, for example, explored in quite some detail in the <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Structure and Interpretation of Computer Programs</a> in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328.&nbsp;<a href="#fnref:sicp-form-analysis" class="reversefootnote">&#8617;</a></p>
+      <p>This is not a unique idea; it is, for example, explored in quite some detail in the <a href="https://mitpress.mit.edu/sites/default/files/6515.pdf">Structure and Interpretation of Computer Programs</a> in chapter 4.1.7, “Separating Syntactic Analysis from Execution”, p. 328. <a href="#fnref:sicp-form-analysis" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:object">
-      <p>How such an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc.&nbsp;<a href="#fnref:object" class="reversefootnote">&#8617;</a></p>
+      <p>How such an object is implemented depends on the language of implementation, e.g. in strongly typed functional languages one may implement such objects using algebraic data types, in Lisps using closures etc. <a href="#fnref:object" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -297,7 +297,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->

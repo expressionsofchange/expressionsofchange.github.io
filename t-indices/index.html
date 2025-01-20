@@ -112,9 +112,9 @@
 
 <p>Because it is the tree-like properties that we’re interested in in this article, we will use the terminology of trees (nodes, children, parents) in the below. We will mostly ignore atoms and talk almost exclusively of list-expressions, as these are the only non-trivial case, being the only type of node that can have children.</p>
 
-<p>If we want to talk about a particular child of a node, a straightforward way of doing so is to reference it by its <a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html">zero-based</a> index in the list of children. I.e. in s-expression <code class="highlighter-rouge">(a b)</code> we can say that the atom <code class="highlighter-rouge">a</code> is the child at index <code class="highlighter-rouge">0</code>, and the atom <code class="highlighter-rouge">b</code> is the child at index <code class="highlighter-rouge">1</code>.</p>
+<p>If we want to talk about a particular child of a node, a straightforward way of doing so is to reference it by its <a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html">zero-based</a> index in the list of children. I.e. in s-expression <code class="language-plaintext highlighter-rouge">(a b)</code> we can say that the atom <code class="language-plaintext highlighter-rouge">a</code> is the child at index <code class="language-plaintext highlighter-rouge">0</code>, and the atom <code class="language-plaintext highlighter-rouge">b</code> is the child at index <code class="language-plaintext highlighter-rouge">1</code>.</p>
 
-<p>This observation can be generalized to refer to descendants at arbitrary depth by using a list of such indices and interpreting it as a path through the tree. I.e. in the s-expression <code class="highlighter-rouge">(a (b ((c d) e)))</code> the atom <code class="highlighter-rouge">c</code> can be reached by following the path <code class="highlighter-rouge">1, 1, 0, 0</code>.</p>
+<p>This observation can be generalized to refer to descendants at arbitrary depth by using a list of such indices and interpreting it as a path through the tree. I.e. in the s-expression <code class="language-plaintext highlighter-rouge">(a (b ((c d) e)))</code> the atom <code class="language-plaintext highlighter-rouge">c</code> can be reached by following the path <code class="language-plaintext highlighter-rouge">1, 1, 0, 0</code>.</p>
 
 <p>In this approach we use the <em>spatial</em> layout of the tree-structure to refer to its elements. It is for this reason that we will refer to such indices as <em>s-indices</em> in the below.</p>
 
@@ -122,20 +122,20 @@
 
 <p>In the editor presented in this project we <a href="...">treat the modifications to s-expressions as first level citizens</a>. The central motivation for doing this is the idea that changes to computer programs are such a central aspect of the programming experience that they must be put more centrally in the tooling.</p>
 
-<p>We do this by offering a small set of operations for constructing s-expressions, and storing those means of construction rather than the constructed structures. Key elements of this set of operations are <code class="highlighter-rouge">Insert</code>, <code class="highlighter-rouge">Delete</code> and <code class="highlighter-rouge">Replace</code>.</p>
+<p>We do this by offering a small set of operations for constructing s-expressions, and storing those means of construction rather than the constructed structures. Key elements of this set of operations are <code class="language-plaintext highlighter-rouge">Insert</code>, <code class="language-plaintext highlighter-rouge">Delete</code> and <code class="language-plaintext highlighter-rouge">Replace</code>.</p>
 
 <p>Given these operations, a second way of referring to the children of a node becomes available: by referring to them in their order of appearance. In other words: when were they inserted?</p>
 
 <p>Consider the following full history of operations on a list node:</p>
 
 <ul>
-  <li>Insert <code class="highlighter-rouge">b</code> at s-index 0.</li>
-  <li>Insert <code class="highlighter-rouge">a</code> at s-index 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">b</code> at s-index 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">a</code> at s-index 0.</li>
 </ul>
 
-<p>Constructing a node using these operations will yield the expression <code class="highlighter-rouge">(a b)</code>, given that insertion at a given s-index will shift any items at or above that s-index one place to the right</p>
+<p>Constructing a node using these operations will yield the expression <code class="language-plaintext highlighter-rouge">(a b)</code>, given that insertion at a given s-index will shift any items at or above that s-index one place to the right</p>
 
-<p>In a such constructed node, we may refer to the node <code class="highlighter-rouge">b</code> as created at <em>t=0</em> and the node <code class="highlighter-rouge">a</code> as created at <em>t=1</em>.</p>
+<p>In a such constructed node, we may refer to the node <code class="language-plaintext highlighter-rouge">b</code> as created at <em>t=0</em> and the node <code class="language-plaintext highlighter-rouge">a</code> as created at <em>t=1</em>.</p>
 
 <p>Because we we look at the node through the lens of <em>time</em> as opposed to its current <em>spatial</em> layout in this approach, we’ll denote this indexing scheme as the <em>t-index</em>.</p>
 
@@ -143,37 +143,37 @@
 
 <h4 id="delete">Delete</h4>
 
-<p>Referring to children in order of insertion raises the question: how does this interact with some of the other main operations, namely <code class="highlighter-rouge">Delete</code> and <code class="highlighter-rouge">Replace</code>?</p>
+<p>Referring to children in order of insertion raises the question: how does this interact with some of the other main operations, namely <code class="language-plaintext highlighter-rouge">Delete</code> and <code class="language-plaintext highlighter-rouge">Replace</code>?</p>
 
-<p>The answer for <code class="highlighter-rouge">Delete</code> is straightforward: deleting a child makes it go away in the current version, but does not alter the order of appearance. Consider the following full history of a node:</p>
+<p>The answer for <code class="language-plaintext highlighter-rouge">Delete</code> is straightforward: deleting a child makes it go away in the current version, but does not alter the order of appearance. Consider the following full history of a node:</p>
 
 <ul>
-  <li>Insert <code class="highlighter-rouge">b</code> at s-index 0.</li>
-  <li>Insert <code class="highlighter-rouge">a</code> at s-index 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">b</code> at s-index 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">a</code> at s-index 0.</li>
   <li>Delete the item at s-index 1.</li>
 </ul>
 
-<p>Constructing a node using these operations yields an expression <code class="highlighter-rouge">(a)</code>.</p>
+<p>Constructing a node using these operations yields an expression <code class="language-plaintext highlighter-rouge">(a)</code>.</p>
 
-<p>At t-index 1 we still have the node <code class="highlighter-rouge">a</code>, as in the previous example. At t-index 0, however, we now have nothing. This is because the child <code class="highlighter-rouge">b</code>, which lived at (spatial) index 1 at the time of deletion, was the item at t-index 0. Such an answer “nothing” may be implemented using a special <em>tombstone</em> or <em>sentinel</em> value.</p>
+<p>At t-index 1 we still have the node <code class="language-plaintext highlighter-rouge">a</code>, as in the previous example. At t-index 0, however, we now have nothing. This is because the child <code class="language-plaintext highlighter-rouge">b</code>, which lived at (spatial) index 1 at the time of deletion, was the item at t-index 0. Such an answer “nothing” may be implemented using a special <em>tombstone</em> or <em>sentinel</em> value.</p>
 
 <h4 id="replace">Replace</h4>
 
-<p>How <code class="highlighter-rouge">Replace</code> operations affect t-indices is less straightforward – in the design of the editor, one actually has to make a choice between one of 2 options.</p>
+<p>How <code class="language-plaintext highlighter-rouge">Replace</code> operations affect t-indices is less straightforward – in the design of the editor, one actually has to make a choice between one of 2 options.</p>
 
-<p>As a first attempt, we could simply view Replace as a shorthand for a <code class="highlighter-rouge">Delete</code> followed by and <code class="highlighter-rouge">Insert</code>. In that model, after a replace, the t-index previously pointing to the now-replaced child will yield the <em>tombstone</em>, and the new value for the child will be associated with a new consecutive t-index. Considering the following example:</p>
+<p>As a first attempt, we could simply view Replace as a shorthand for a <code class="language-plaintext highlighter-rouge">Delete</code> followed by and <code class="language-plaintext highlighter-rouge">Insert</code>. In that model, after a replace, the t-index previously pointing to the now-replaced child will yield the <em>tombstone</em>, and the new value for the child will be associated with a new consecutive t-index. Considering the following example:</p>
 
 <ul>
-  <li>Insert <code class="highlighter-rouge">b</code> at s-index 0.</li>
-  <li>Insert <code class="highlighter-rouge">a</code> at s-index 0.</li>
-  <li>Replace the item at s-index 1 with <code class="highlighter-rouge">c</code>.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">b</code> at s-index 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">a</code> at s-index 0.</li>
+  <li>Replace the item at s-index 1 with <code class="language-plaintext highlighter-rouge">c</code>.</li>
 </ul>
 
-<p>The t-index 0 would, just like in the example for Delete, yield no result. The t-index 2 would point to the child <code class="highlighter-rouge">c</code>.</p>
+<p>The t-index 0 would, just like in the example for Delete, yield no result. The t-index 2 would point to the child <code class="language-plaintext highlighter-rouge">c</code>.</p>
 
-<p>A second possible definition for the interplay between <code class="highlighter-rouge">Replace</code> and t-indices is quite different: In it, the t-index of the replaced child is reused to point to the new child after the replacement.</p>
+<p>A second possible definition for the interplay between <code class="language-plaintext highlighter-rouge">Replace</code> and t-indices is quite different: In it, the t-index of the replaced child is reused to point to the new child after the replacement.</p>
 
-<p>In this definition, after the same set of operation as in the last example, the t-index 0 points to the item <code class="highlighter-rouge">c</code> and the t-index 2 is as of yet unused.</p>
+<p>In this definition, after the same set of operation as in the last example, the t-index 0 points to the item <code class="language-plaintext highlighter-rouge">c</code> and the t-index 2 is as of yet unused.</p>
 
 <p>As such, we can use the t-index to answer the question “what is the child that was <em>nth</em> element in the order of insertion, and may since have been changed any number of times?”. This means that we can use t-indices as a reference <a href="/ship-of-theseus/">to an identity that persists under mutation</a>. In this model the identity is formed at insertion, and replace is interpreted as a mutation that does not alter identity.</p>
 
@@ -188,22 +188,22 @@
 <p>A first such use case is in presenting historical views to the user. Consider again the following 3 operations:</p>
 
 <ul>
-  <li>Insert <code class="highlighter-rouge">b</code> at s-index 0.</li>
-  <li>Insert <code class="highlighter-rouge">a</code> at s-index 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">b</code> at s-index 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">a</code> at s-index 0.</li>
   <li>Delete the item at s-index 1.</li>
 </ul>
 
-<p>It is not immediately obvious that the deletion operates on the item <code class="highlighter-rouge">b</code>, which has since its creation been shifted to s-index 1 because another item was inserted in its place. This is the case even for this trivial example; in any non-trivial example this lack of clarity renders historical views which only display an s-index quite useless from a UI perspective.</p>
+<p>It is not immediately obvious that the deletion operates on the item <code class="language-plaintext highlighter-rouge">b</code>, which has since its creation been shifted to s-index 1 because another item was inserted in its place. This is the case even for this trivial example; in any non-trivial example this lack of clarity renders historical views which only display an s-index quite useless from a UI perspective.</p>
 
 <p>To remedy this, we can use t-indices in our UI, and decorate the above to the show the following:</p>
 
 <ul>
-  <li>Insert <code class="highlighter-rouge">b</code> at s-index 0, yielding t-address 0.</li>
-  <li>Insert <code class="highlighter-rouge">a</code> at s-index 0, yielding t-address 1.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">b</code> at s-index 0, yielding t-address 0.</li>
+  <li>Insert <code class="language-plaintext highlighter-rouge">a</code> at s-index 0, yielding t-address 1.</li>
   <li>Delete the item at s-index 1 (which is t-address 0)</li>
 </ul>
 
-<p>Of course, in an actual UI we are not restricted to such a rather clumsy textual notation. Instead, we could e.g. use colors to highlight the relationships between various operations at the same t-address.<sup id="fnref:t-addresses-everywhere-is-not-possible"><a href="#fn:t-addresses-everywhere-is-not-possible" class="footnote">1</a></sup></p>
+<p>Of course, in an actual UI we are not restricted to such a rather clumsy textual notation. Instead, we could e.g. use colors to highlight the relationships between various operations at the same t-address.<sup id="fnref:t-addresses-everywhere-is-not-possible"><a href="#fn:t-addresses-everywhere-is-not-possible" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 
 <p>The idea of a node having an persistent identity in the context of changes to its value is useful more generally. One example is in an interface which has multiple views on a single document, e.g. in the form of multiple tabs or windows. In such a setup one can imagine certain windows displaying part of a larger tree; and edits to this part of the tree being consistently propagated from and to other windows that show the same part of the tree. The idea of sameness can then be modeled using t-paths.</p>
 
@@ -215,10 +215,10 @@
 
 <p>They require a historical view of the tree, but given such a view are quite trivially implemented.</p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:t-addresses-everywhere-is-not-possible">
-      <p>One might be tempted to take t-addresses as the basis of modeling of the 3 operations if it is indeed a useful representation. Note however that for insertions we always need the s-address, and hence such a model would lead to an inconsistant mix of s-addresses and t-addresses in the operations.&nbsp;<a href="#fnref:t-addresses-everywhere-is-not-possible" class="reversefootnote">&#8617;</a></p>
+      <p>One might be tempted to take t-addresses as the basis of modeling of the 3 operations if it is indeed a useful representation. Note however that for insertions we always need the s-address, and hence such a model would lead to an inconsistant mix of s-addresses and t-addresses in the operations. <a href="#fnref:t-addresses-everywhere-is-not-possible" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -290,7 +290,7 @@ s.setAttribute('data-timestamp', +new Date());
         </ul>
     </div>
     </aside>
-    <small>&copy; 2020 Klaas van Schelven.</small>
+    <small>&copy; 2025 Klaas van Schelven.</small>
   </footer>
 
   <!-- If they're out, get some from the cellar -->
